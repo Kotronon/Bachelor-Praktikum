@@ -73,13 +73,13 @@ public:
 
   std::string toString() const;
 
-  void setX(std::array<double, 3> x_arg);
+  void setX( std::array <double,3> newX);
 
-  void setV(std::array<double, 3> v_arg);
+  void setV(std::array <double,3> newV);
 
-  void setF(std::array<double, 3> f_arg);
+  void setF(std::array <double,3> newF);
 
-  void setOldF(std::array<double, 3> old_f_arg);
+  void setOldF(std::array <double,3> oldF);
 };
 
 std::ostream &operator<<(std::ostream &stream, Particle &p);
