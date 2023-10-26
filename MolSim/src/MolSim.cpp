@@ -119,6 +119,8 @@ void calculateF() {
       }
     }
     //TODO: change force and old force value of p1
+    p1.setOldF(p1.getF());
+    p1.setF(force);
     
   }
 }
@@ -138,6 +140,7 @@ void calculateX() {
     x_new[1] = x_old[1] + delta_t * v[1] + t_mul_m * f[1];
     x_new[2] = x_old[2] + delta_t * v[2] + t_mul_m * f[2];
    //TODO: change x value of p
+   p.setX(x_new);
   }
 }
 
@@ -154,6 +157,7 @@ void calculateV() {
     v_new[1] = v_old[1] + (delta_t / 2 * p.getM()) * (f_old[1] + f[1]);
     v_new[2] = v_old[2] + (delta_t / 2 * p.getM()) * (f_old[2] + f[2]);
     //TODO: change v value of p
+    p.setV(v_new);
 
   }
 }
