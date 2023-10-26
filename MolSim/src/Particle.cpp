@@ -70,18 +70,18 @@ std::ostream &operator<<(std::ostream &stream, Particle &p) {
   return stream;
 }
 
- void setX(std::array<double, 3> x_arg) {
+void setX(std::array<double, 3> x_arg) {
    x = x_arg;
  }
 
-  void setV(std::array<double, 3> v_arg) {
-   v = v_arg; 
-  }
+void setV(std::array<double, 3> v_arg) {
+  v = v_arg; 
+}
 
-  void setF(std::array<double, 3> f_arg){
-    f = f_arg;
-  }
+void setF(std::array<double, 3> f_arg){
+  f = f_arg;
+}
 
-  void setOldF(std::array<double, 3> old_f_arg) {
-    old_f = old_f_arg;
-  }
+void setOldF(std::array<double, 3> old_f_arg) {
+  old_f = old_f_arg;
+}
