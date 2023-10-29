@@ -48,7 +48,7 @@ int main(int argc, char *argsv[]) {
     FileReader fileReader;
     fileReader.readFile(particles, argsv[1]);
 
-    /*
+
     //getting end time and delta t from user
     std::string input;
     std::cout << "Please enter the end time. If you wanna use the defalt value 1000 please enter x." << std::endl;
@@ -56,13 +56,13 @@ int main(int argc, char *argsv[]) {
     if (input != "x"){
         end_time = std::stod(input);
     }
-    std::cout << "Please enter the delta time. If you wanna use the defalt value 1000 please enter x." << std::endl;
+    std::cout << "Please enter the delta time. If you wanna use the defalt value 0.014 please enter x." << std::endl;
     std::cin >> input;
     if (input != "x"){
         delta_t = stod(input);
     }
 
-  */
+
     double current_time = start_time;
 
     int iteration = 0;
