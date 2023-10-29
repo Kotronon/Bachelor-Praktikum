@@ -134,7 +134,7 @@ void calculateX() {
         std::array<double, 3> v = p.getV();
         std::array<double, 3> f = p.getOldF();
         //calculating ∆t)^2 /2mi
-        double t_mul_m = delta_t * delta_t / 2 * p.getM();
+        double t_mul_m = delta_t * delta_t / (2 * p.getM());
         std::array<double, 3> x_new;
         //calculating xi(tn) + ∆t * vi(tn) + (∆t)^2 * Fi(tn) /2mi
         x_new[0] = x_old[0] + delta_t * v[0] + t_mul_m * f[0];
@@ -153,9 +153,9 @@ void calculateV() {
         std::array<double, 3> f_old = p.getOldF();
         std::array<double, 3> v_new;
         //calculating vi(tn) + ∆t * Fi(tn) + Fi(tn+1) / 2mi
-        v_new[0] = v_old[0] + (delta_t / 2 * p.getM()) * (f_old[0] + f[0]);
-        v_new[1] = v_old[1] + (delta_t / 2 * p.getM()) * (f_old[1] + f[1]);
-        v_new[2] = v_old[2] + (delta_t / 2 * p.getM()) * (f_old[2] + f[2]);
+        v_new[0] = v_old[0] + (delta_t / (2 * p.getM())) * (f_old[0] + f[0]);
+        v_new[1] = v_old[1] + (delta_t / (2 * p.getM())) * (f_old[1] + f[1]);
+        v_new[2] = v_old[2] + (delta_t / (2 * p.getM())) * (f_old[2] + f[2]);
         p.setV(v_new);
 
     }
