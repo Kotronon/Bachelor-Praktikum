@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "C:\Users\katha\Bachelor-Praktikum\MolSim\src\Particle.h"
+#include  "Particle.h"
 
 #include <fstream>
 #include <list>

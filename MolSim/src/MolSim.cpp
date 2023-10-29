@@ -1,6 +1,7 @@
 
 #include "FileReader.h"
 #include "outputWriter/XYZWriter.h"
+#include "outputWriter/VTKWriter.h"
 #include "utils/ArrayUtils.h"
 
 #include <iostream>
@@ -47,7 +48,7 @@ int main(int argc, char *argsv[]) {
   FileReader fileReader;
   fileReader.readFile(particles, argsv[1]);
 
-
+  /*
   //getting end time and delta t from user
   std::string input;
   std::cout << "Please enter the end time. If you wanna use the defalt value 1000 please enter x." << std::endl;
@@ -61,7 +62,7 @@ int main(int argc, char *argsv[]) {
       delta_t = stod(input);
   }
   
-
+*/
   double current_time = start_time;
 
   int iteration = 0;
@@ -83,6 +84,7 @@ int main(int argc, char *argsv[]) {
 
     current_time += delta_t;
   }
+
 
   std::cout << "output written. Terminating..." << std::endl;
   return 0;
@@ -118,7 +120,6 @@ void calculateF() {
       force[2] += diffvec[2] * mass/lengthpow;
       }
     }
-    //TODO: change force and old force value of p1
     p1.setOldF(p1.getF());
     p1.setF(force);
     
@@ -139,7 +140,6 @@ void calculateX() {
     x_new[0] = x_old[0] + delta_t * v[0] + t_mul_m * f[0];
     x_new[1] = x_old[1] + delta_t * v[1] + t_mul_m * f[1];
     x_new[2] = x_old[2] + delta_t * v[2] + t_mul_m * f[2];
-   //TODO: change x value of p
    p.setX(x_new);
   }
 }
@@ -156,7 +156,6 @@ void calculateV() {
     v_new[0] = v_old[0] + (delta_t / 2 * p.getM()) * (f_old[0] + f[0]);
     v_new[1] = v_old[1] + (delta_t / 2 * p.getM()) * (f_old[1] + f[1]);
     v_new[2] = v_old[2] + (delta_t / 2 * p.getM()) * (f_old[2] + f[2]);
-    //TODO: change v value of p
     p.setV(v_new);
 
   }
@@ -168,4 +167,11 @@ void plotParticles(int iteration) {
 
   outputWriter::XYZWriter writer;
   writer.plotParticles(particles, out_name, iteration);
+
+  outputWriter::VTKWriter writer2;
+  writer2.initializeOutput(particles.size());
+    for (auto &p : particles){
+        writer2.plotParticle(p);
+    }
+writer2.writeFile(out_name, iteration);
 }
