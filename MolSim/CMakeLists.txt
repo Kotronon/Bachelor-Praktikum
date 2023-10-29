@@ -12,7 +12,7 @@ if(NOT CMAKE_BUILD_TYPE)
             "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-
+#[[
 #including Doxygen in Cmake like https://vicrucann.github.io/tutorials/quick-cmake-doxygen/
 #first indication of the documentation build as an option and set it on on
 option(BUILD_DOC "Build documentation" on)
@@ -37,7 +37,7 @@ if(DOXYGEN_FOUND)
 else (DOXYGEN_FOUND)
     message("Doxygen need to be installed to generate the doxygen documentation")
 endif(DOXYGEN_FOUND)
-
+]]
 
 # collect all cpp files
 file(GLOB_RECURSE MY_SRC

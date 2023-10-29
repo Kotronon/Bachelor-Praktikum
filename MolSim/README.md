@@ -3,7 +3,7 @@ MolSim
 
 The Molecular Dynamics teaching code.
 
-# Group X #
+# Group H #
 Members:
 * Samhitha Girish Jois
 * Katharina Miller

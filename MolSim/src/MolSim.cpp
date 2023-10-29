@@ -51,13 +51,15 @@ int main(int argc, char *argsv[]) {
 
     //getting end time and delta t from user
     std::string input;
-    std::cout << "Please enter the end time. If you wanna use the defalt value 1000 please enter x." << std::endl;
+    std::cout << "Please enter the end time. If you want to use the default value 1000 please enter x." << std::endl;
     std::cin >> input;
+    //TODO: more sanitization of input and error for not plausible values
     if (input != "x"){
         end_time = std::stod(input);
     }
-    std::cout << "Please enter the delta time. If you wanna use the defalt value 0.014 please enter x." << std::endl;
+    std::cout << "Please enter the delta time. If you want to use the default value 0.014 please enter x." << std::endl;
     std::cin >> input;
+    //TODO: more sanitization of input and error for not plausible values
     if (input != "x"){
         delta_t = stod(input);
     }
@@ -93,7 +95,7 @@ int main(int argc, char *argsv[]) {
 void calculateF() {
     std::list<Particle>::iterator iterator;
     iterator = particles.begin();
-    std::array<double, 3> force;
+    std::array<double, 3> force{};
     for (auto &p1: particles) {
         force = {0., 0., 0.};
         for (auto &p2: particles) {
@@ -103,21 +105,21 @@ void calculateF() {
                 //Fi = SUM Fij
                 //Fij = (MiMj * (xj-xi))/(||xi-xj||2^3)
                 double mass = p1.getM() * p2.getM();
-                std::array<double, 3> diffvec;
+                std::array<double, 3> diffvec{};
                 std::array<double, 3> x1 = p1.getX();
                 std::array<double, 3> x2 = p2.getX();
-                //calculating xj -xi
+                //calculating xj - xi
                 diffvec[0] = x2[0] - x1[0];
                 diffvec[1] = x2[1] - x1[1];
                 diffvec[2] = x2[2] - x1[2];
                 //calculating ||xi - xj||2
-                double bevorsqrt = diffvec[0] * diffvec[0] + diffvec[1] * diffvec[1] + diffvec[2] * diffvec[2];
-                double lengthdif = sqrt(bevorsqrt);
-                double lengthpow = pow(lengthdif, 3);
+                double before_sqrt = diffvec[0] * diffvec[0] + diffvec[1] * diffvec[1] + diffvec[2] * diffvec[2];
+                double length_dif = sqrt(before_sqrt);
+                double length_pow = pow(length_dif, 3);
                 //calculating old force + (MiMj * (xj-xi))/(||xi-xj||2^3)
-                force[0] += diffvec[0] * mass / lengthpow;
-                force[1] += diffvec[1] * mass / lengthpow;
-                force[2] += diffvec[2] * mass / lengthpow;
+                force[0] += diffvec[0] * (mass / length_pow);
+                force[1] += diffvec[1] * (mass / length_pow);
+                force[2] += diffvec[2] * (mass / length_pow);
             }
         }
         p1.setOldF(p1.getF());
@@ -132,10 +134,10 @@ void calculateX() {
         //xi(tn+1) = xi(tn) + ∆t * vi(tn) + (∆t)^2 * Fi(tn) /2mi
         std::array<double, 3> x_old = p.getX();
         std::array<double, 3> v = p.getV();
-        std::array<double, 3> f = p.getOldF();
-        //calculating ∆t)^2 /2mi
+        std::array<double, 3> f = p.getF();
+        //calculating (∆t)^2 /2mi
         double t_mul_m = delta_t * delta_t / (2 * p.getM());
-        std::array<double, 3> x_new;
+        std::array<double, 3> x_new{};
         //calculating xi(tn) + ∆t * vi(tn) + (∆t)^2 * Fi(tn) /2mi
         x_new[0] = x_old[0] + delta_t * v[0] + t_mul_m * f[0];
         x_new[1] = x_old[1] + delta_t * v[1] + t_mul_m * f[1];
@@ -151,7 +153,7 @@ void calculateV() {
         std::array<double, 3> v_old = p.getV();
         std::array<double, 3> f = p.getF();
         std::array<double, 3> f_old = p.getOldF();
-        std::array<double, 3> v_new;
+        std::array<double, 3> v_new{};
         //calculating vi(tn) + ∆t * Fi(tn) + Fi(tn+1) / 2mi
         v_new[0] = v_old[0] + (delta_t / (2 * p.getM())) * (f_old[0] + f[0]);
         v_new[1] = v_old[1] + (delta_t / (2 * p.getM())) * (f_old[1] + f[1]);
