@@ -25,8 +25,11 @@ if (DOXYGEN_FOUND)
     configure_file(${PROJECT_SOURCE_DIR}/Doxyfile.in ${PROJECT_SOURCE_DIR}/Doxyfile @ONLY)
     message("Doxygen build started")
 
+
+
     # Note: do not put "ALL" - this builds docs together with application EVERY TIME!
-    add_custom_target( docs ALL
+    add_custom_target( doc_doxygen ALL
+            #here something doesn't work right
             COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
             COMMENT "Generating API documentation with Doxygen"
