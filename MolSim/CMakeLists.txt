@@ -12,38 +12,6 @@ if(NOT CMAKE_BUILD_TYPE)
             "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-# Doxygen
-
-# look for Doxygen package
-OPTION(BUILD_DOC "Build documentation" on)
-if(BUILD_DOC)
-    find_package(Doxygen)
-
-    if (DOXYGEN_FOUND)
-          # configure doxygen configuration file
-        set(doxyfile_in ${CMAKE_CURRENT_SOURCE_DIR}/doxygen/Doxyfile.in)
-        set(doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-
-        configure_file(${PROJECT_SOURCE_DIR}/cmake/Doxyfile.in ${PROJECT_SOURCE_DIR}/cmake/Doxyfile @ONLY)
-        message("Doxygen build started")
-
-        # Note: do not put "ALL" - this builds docs together with application EVERY TIME!
-        add_custom_target( doc_doxygen ALL
-                #here something doesn't work right
-                COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
-                WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-                COMMENT "Generating API documentation with Doxygen"
-                VERBATIM )
-    else (DOXYGEN_FOUND)
-        message("Doxygen need to be installed to generate the doxygen documentation")
-    endif (DOXYGEN_FOUND)
-else(BUILD_DOC)
-    message("Doxygen won't start")
-endif (BUILD_DOC)
-unset(BUILD_DOC CACHE)
-
-
-
 
 # collect all cpp files
 file(GLOB_RECURSE MY_SRC
@@ -86,3 +54,34 @@ target_compile_options(MolSim
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
 
 include(doxygen)
+
+# Doxygen
+
+# look for Doxygen package
+OPTION(BUILD_DOC "Build documentation" on)
+if(BUILD_DOC)
+    find_package(Doxygen)
+
+    if (DOXYGEN_FOUND)
+        # configure doxygen configuration file
+        set(doxyfile_in ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in)
+        set(doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+
+        configure_file(${PROJECT_SOURCE_DIR}/cmake/Doxyfile.in ${PROJECT_SOURCE_DIR}/cmake/Doxyfile @ONLY)
+        message("Doxygen build started")
+
+        # Note: do not put "ALL" - this builds docs together with application EVERY TIME!
+        add_custom_target(doc_doxygen ALL
+                COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
+                WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+                COMMENT "Generating API documentation with Doxygen"
+                VERBATIM )
+    else (DOXYGEN_FOUND)
+        message("Doxygen need to be installed to generate the doxygen documentation")
+    endif (DOXYGEN_FOUND)
+else(BUILD_DOC)
+    message("Doxygen won't start")
+endif (BUILD_DOC)
+unset(BUILD_DOC CACHE)
+
+
