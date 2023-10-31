@@ -22,10 +22,8 @@ if (DOXYGEN_FOUND)
     set(doxyfile_in ${CMAKE_CURRENT_SOURCE_DIR}/doxygen/Doxyfile.in)
     set(doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
-    configure_file(${PROJECT_SOURCE_DIR}/Doxyfile.in ${PROJECT_SOURCE_DIR}/Doxyfile @ONLY)
+    configure_file(${PROJECT_SOURCE_DIR}/cmake/Doxyfile.in ${PROJECT_SOURCE_DIR}/cmake/Doxyfile @ONLY)
     message("Doxygen build started")
-
-
 
     # Note: do not put "ALL" - this builds docs together with application EVERY TIME!
     add_custom_target( doc_doxygen ALL
