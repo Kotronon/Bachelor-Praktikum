@@ -12,32 +12,32 @@ if(NOT CMAKE_BUILD_TYPE)
             "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-#[[
-#including Doxygen in Cmake like https://vicrucann.github.io/tutorials/quick-cmake-doxygen/
-#first indication of the documentation build as an option and set it on on
-option(BUILD_DOC "Build documentation" on)
+# Doxygen
 
-#check if Doxygen is installed
+# look for Doxygen package
 find_package(Doxygen)
-if(DOXYGEN_FOUND)
-    #set input and output files
-    set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/../docs/Doxyfile.in)
-    set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
-    #request to configure the file
-    configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+if (DOXYGEN_FOUND)
+      # configure doxygen configuration file
+    set(doxyfile_in ${CMAKE_CURRENT_SOURCE_DIR}/doxygen/Doxyfile.in)
+    set(doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+
+    configure_file(${PROJECT_SOURCE_DIR}/Doxyfile.in ${PROJECT_SOURCE_DIR}/Doxyfile @ONLY)
     message("Doxygen build started")
 
-    #note the option ALL which allows to build the docs together with the application
-    add_custom_target(doc_doxygen ALL
-        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Generating API documentation with Doxygen"
-        VERBATIM)
+    # Note: do not put "ALL" - this builds docs together with application EVERY TIME!
+    add_custom_target( docs ALL
+            COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+            COMMENT "Generating API documentation with Doxygen"
+            VERBATIM )
 else (DOXYGEN_FOUND)
     message("Doxygen need to be installed to generate the doxygen documentation")
-endif(DOXYGEN_FOUND)
-]]
+endif (DOXYGEN_FOUND)
+
+
+
+
 
 # collect all cpp files
 file(GLOB_RECURSE MY_SRC
