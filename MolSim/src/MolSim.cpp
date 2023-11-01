@@ -21,7 +21,7 @@ void calculateF();
 void calculateX();
 
 /**
- * calculate the position for all particles
+ *  calculate the position for all particles
  */
 void calculateV();
 
