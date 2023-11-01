@@ -16,27 +16,27 @@ private:
   /**
    * Position of the particle
    */
-  std::array<double, 3> x;
+  std::array<double, 3> x{};
 
   /**
    * Velocity of the particle
    */
-  std::array<double, 3> v;
+  std::array<double, 3> v{};
 
   /**
    * Force effective on this particle
    */
-  std::array<double, 3> f;
+  std::array<double, 3> f{};
 
   /**
    * Force which was effective on this particle
    */
-  std::array<double, 3> old_f;
+  std::array<double, 3> old_f{};
 
   /**
    * Mass of this particle
    */
-  double m;
+  double m{};
 
   /**
    * Type of the particle. Use it for whatever you want (e.g. to separate
@@ -57,21 +57,21 @@ public:
 
   virtual ~Particle();
 
-  const std::array<double, 3> &getX() const;
+  [[nodiscard]] const std::array<double, 3> &getX() const;
 
-  const std::array<double, 3> &getV() const;
+  [[nodiscard]] const std::array<double, 3> &getV() const;
 
-  const std::array<double, 3> &getF() const;
+  [[nodiscard]] const std::array<double, 3> &getF() const;
 
-  const std::array<double, 3> &getOldF() const;
+  [[nodiscard]] const std::array<double, 3> &getOldF() const;
 
-  double getM() const;
+  [[nodiscard]] double getM() const;
 
-  int getType() const;
+  [[nodiscard]] int getType() const;
 
   bool operator==(Particle &other);
 
-  std::string toString() const;
+  [[nodiscard]] std::string toString() const;
 
   void setX( std::array <double,3> newX);
 

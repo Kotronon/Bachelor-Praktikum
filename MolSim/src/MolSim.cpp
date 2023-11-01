@@ -34,7 +34,8 @@ constexpr double start_time = 0;
 double end_time = 1000;
 double delta_t = 0.014;
 
-// TODO: what data structure to pick?
+// What data structure to pick?
+// -> LinkedLists
 std::list<Particle> particles;
 
 int main(int argc, char *argsv[]) {
@@ -52,18 +53,42 @@ int main(int argc, char *argsv[]) {
     //getting end time and delta t from user
     std::string input;
     std::cout << "Please enter the end time. If you want to use the default value 1000 please enter x." << std::endl;
-    std::cin >> input;
-    //TODO: more sanitization of input and error for not plausible values
-    if (input != "x"){
-        end_time = std::stod(input);
-    }
-    std::cout << "Please enter the delta time. If you want to use the default value 0.014 please enter x." << std::endl;
-    std::cin >> input;
-    //TODO: more sanitization of input and error for not plausible values
-    if (input != "x"){
-        delta_t = stod(input);
+    bool valid_input_received = false;
+
+    while (!valid_input_received){
+        std::cin >> input;
+        if (input != "x"){
+            try{
+                end_time = std::stod(input);
+                valid_input_received = true;
+            }
+            catch(std::invalid_argument& e){
+                std::cout << "Invalid input. Please enter a valid value or x for the default value."<< std::endl;
+            }
+        }
+        else{
+            valid_input_received = true;
+        }
     }
 
+    std::cout << "Please enter the delta time. If you want to use the default value 0.014 please enter x." << std::endl;
+    valid_input_received = false;
+
+    while (!valid_input_received){
+        std::cin >> input;
+        if (input != "x"){
+            try{
+                delta_t = stod(input);
+                valid_input_received = true;
+            }
+            catch(std::invalid_argument& e){
+                std::cout << "Invalid input. Please enter a valid value or x for the default value."<< std::endl;
+            }
+        }
+        else{
+            valid_input_received = true;
+        }
+    }
 
     double current_time = start_time;
 
@@ -93,8 +118,6 @@ int main(int argc, char *argsv[]) {
 }
 
 void calculateF() {
-    std::list<Particle>::iterator iterator;
-    iterator = particles.begin();
     std::array<double, 3> force{};
     for (auto &p1: particles) {
         force = {0., 0., 0.};
