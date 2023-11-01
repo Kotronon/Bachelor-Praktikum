@@ -19,26 +19,22 @@ If you do not specify compiler and relevant flags, and we cannot simply compile 
 
 # Report #
 ## Task 1 ##
-* Working with C++ only works with Linux through VM.
+* Working with C++ works easily with Linux through VM. With WSL there were more problems.
 
 ## Task 2 ##
-* Calculation of force, x and v
-* C++ requires a lot of brackets for the calculations
+* Calculation of force, x and v of each particle for planet and comet simulation. 
+* Fi = SUM Fij with Fij = (MiMj * (xj-xi))/(||xi-xj||2^3)
+* xi(tn+1) = xi(tn) + ∆t * vi(tn) + (∆t)^2 * Fi(tn) / 2mi
+* vi (tn+1) = vi(tn) + ∆t * (Fi(tn) + Fi(tn+1)) / 2mi
 
 ## Task 3 ##
-* visualization of sun, moon, earth and Halley's Comet.
+* Visualization of sun, earth, jupiter and Halley's Comet movements.
 * Compile with all options enabled
 * run ./MolSim <path_to_file>/eingabe-sonne.txt
-* video see:
+* You will get asked for a delta_t and a t_end. You need to write something to the command line, otherwise the program won't go on.
 
 ## Task 4 ##
 * Refactoring and documentation
+* Doxygen option is on as default. But it can be set off in CMakeLists.txt
+* If you want to use doxygen please make sure you have it installed.
 
-# Misc #
-If you have any further comments for your submission...
-
-If you cannot finish all tasks or still have bugs in your code submit videos and pictures with explanations of the errors anyway. This helps during the grading. Otherwise it might be assumed that you did not do these tasks at all!
-
-You do not have to use the README markdown - you can also write it in latex or word as a report and submit as a PDF. The report/readme is only accepted as a markdown file (.md) or a PDF!
-
-Code structure and tidiness are very important in software engineering and we will deduct a significant amount of marks for ugly code. We will not spend hours trying to understand unreadable code.
