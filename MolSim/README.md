@@ -15,11 +15,10 @@ Members:
 * Revision: insert last commit number
 * Compiler: gcc 11.4.0
 
-If you do not specify compiler and relevant flags, and we cannot simply compile with whatever compiler we have immediately on hand, then you will lose marks for uncompilable code!
-
 # Report #
 ## Task 1 ##
-* Working with C++ works easily with Linux through VM. With WSL there were more problems.
+* Working with C++ works easily with Linux through VM or dual boot. 
+* With WSL there were more problems with installing packages.
 
 ## Task 2 ##
 * Calculation of force, x and v of each particle for planet and comet simulation. 
@@ -28,13 +27,19 @@ If you do not specify compiler and relevant flags, and we cannot simply compile 
 * vi (tn+1) = vi(tn) + ∆t * (Fi(tn) + Fi(tn+1)) / 2mi
 
 ## Task 3 ##
+* Compile with all options enabled.
+* run ./MolSim <path_to_file>/eingabe-sonne.txt 
+* If you want to change delta_t please use flag -d <value>. 
+* If you want to change end_time please use flag -e <value>.
 * Visualization of sun, earth, jupiter and Halley's Comet movements.
-* Compile with all options enabled
-* run ./MolSim <path_to_file>/eingabe-sonne.txt
-* You will get asked for a delta_t and a t_end. You need to write something to the command line, otherwise the program won't go on.
 
 ## Task 4 ##
-* Refactoring and documentation
-* Doxygen option is on as default. But it can be set off in CMakeLists.txt
-* If you want to use doxygen please make sure you have it installed.
+* Documentation: 
+  * Doxygen option (BUILD_DOC) is on as default. But it can be set off in CMakeLists.txt
+  * If you want to use doxygen please make sure you have it installed.
+  * run make doc_doxygen 
+* Refactoring:
+  * Encapsulated Particle into ParticleContainer
+  * Input immediately through command line from the beginning not while program runs
+
 
