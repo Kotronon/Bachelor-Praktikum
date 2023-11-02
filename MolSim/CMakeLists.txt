@@ -72,7 +72,6 @@ if(BUILD_DOC)
         configure_file(${PROJECT_SOURCE_DIR}/Doxyfile @ONLY)
         message("Doxygen build started")
 
-        # Note: do not put "ALL" - this builds docs together with application EVERY TIME!
         add_custom_target(doc_doxygen ALL
                 COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
