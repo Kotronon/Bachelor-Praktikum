@@ -172,7 +172,7 @@ void calculateX() {
 void calculateV() {
     for (auto &p: particles) {
         // @TODO: insert calculation of veclocity updates here!
-        //vi (tn+1) = vi(tn) + ∆t * Fi(tn) + Fi(tn+1) / 2mi
+        //vi (tn+1) = vi(tn) + ∆t * (Fi(tn) + Fi(tn+1)) / 2mi
         std::array<double, 3> v_old = p.getV();
         std::array<double, 3> f = p.getF();
         std::array<double, 3> f_old = p.getOldF();

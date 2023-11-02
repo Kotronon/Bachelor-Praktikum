@@ -67,9 +67,8 @@ if(BUILD_DOC)
         set(doxyfile_in ${PROJECT_SOURCE_DIR}/Doxyfile.in)
         set(doxyfile ${PROJECT_SOURCE_DIR}/Doxyfile)
 
-        configure_file(${PROJECT_SOURCE_DIR}/Doxyfile.in ${PROJECT_SOURCE_DIR}/Doxyfile @ONLY)
+        configure_file(${PROJECT_SOURCE_DIR}/Doxyfile  @ONLY)
         message("Doxygen build started")
-
         # Note: do not put "ALL" - this builds docs together with application EVERY TIME!
         add_custom_target(doc_doxygen ALL
                 COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
