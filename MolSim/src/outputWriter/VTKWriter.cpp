@@ -7,7 +7,6 @@
 
 #include "VTKWriter.h"
 
-#include <cstdlib>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -42,7 +41,7 @@ void VTKWriter::initializeOutput(int numParticles) {
   points.DataArray().push_back(pointCoordinates);
 
   Cells cells; // we don't have cells, => leave it empty
-  // for some reasons, we have to add a dummy entry for paraview
+  // for some reason, we have to add a dummy entry for paraview
   DataArray_t cells_data(type::Float32, "types", 0);
   cells.DataArray().push_back(cells_data);
 

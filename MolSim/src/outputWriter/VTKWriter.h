@@ -47,7 +47,7 @@ public:
   void writeFile(const std::string &filename, int iteration);
 
 private:
-  VTKFile_t *vtkFile;
+  VTKFile_t *vtkFile{};
 };
 
 } // namespace outputWriter

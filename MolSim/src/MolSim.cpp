@@ -30,6 +30,16 @@ void calculateV();
  */
 void plotParticles(int iteration);
 
+/**
+ * get a specific command option
+ */
+char* getCmdOption(char ** begin, char ** end, const std::string & option);
+
+/**
+ * check if a specific command option exists
+ */
+bool cmdOptionExists(char** begin, char** end, const std::string& option);
+
 constexpr double start_time = 0;
 double end_time = 1000;
 double delta_t = 0.014;
@@ -39,16 +49,31 @@ std::list<Particle> particles;
 int main(int argc, char *argsv[]) {
 
     std::cout << "Hello from MolSim for PSE!" << std::endl;
-    if (argc != 2) {
+    if (argc <= 2 || argc >= 8) {
         std::cout << "Erroneous programme call! " << std::endl;
-        std::cout << "./MolSim <filepath/filename>" << std::endl;
+        std::cout << "./MolSim <filepath/filename> [options]"<< std::endl;
+        std::cout << "Options: "<< std::endl;
+        std::cout << "-e : The end time of the simulation, default value is 1000"<< std::endl;
+        std::cout << "-d : ∆time of the simulation, default value is 0.014"<< std::endl;
     }
 
     FileReader fileReader;
-    fileReader.readFile(particles, argsv[1]);
+    FileReader::readFile(particles, argsv[1]);
 
 
-    //getting end time and delta t from user
+    //getting end time and delta t command options if specified
+
+    if(cmdOptionExists(argsv, argsv+argc, "-e"))
+    {
+        end_time = std::stod(getCmdOption(argsv, argsv + argc, "-e"));
+    }
+
+    if(cmdOptionExists(argsv, argsv+argc, "-d"))
+    {
+        end_time = std::stod(getCmdOption(argsv, argsv + argc, "-d"));
+    }
+
+    /*
     std::string input;
     std::cout << "Please enter the end time. If you want to use the default value 1000 please enter x." << std::endl;
     bool valid_input_received = false;
@@ -69,6 +94,7 @@ int main(int argc, char *argsv[]) {
         }
     }
 
+
     std::cout << "Please enter the delta time. If you want to use the default value 0.014 please enter x." << std::endl;
     valid_input_received = false;
 
@@ -87,6 +113,7 @@ int main(int argc, char *argsv[]) {
             valid_input_received = true;
         }
     }
+    */
 
     double current_time = start_time;
 
@@ -186,7 +213,7 @@ void plotParticles(int iteration) {
     std::string out_name("MD_vtk");
 
     outputWriter::XYZWriter writer;
-    writer.plotParticles(particles, out_name, iteration);
+    outputWriter::XYZWriter::plotParticles(particles, out_name, iteration);
 
     outputWriter::VTKWriter writer2;
     writer2.initializeOutput(particles.size());
@@ -194,4 +221,21 @@ void plotParticles(int iteration) {
         writer2.plotParticle(p);
     }
     writer2.writeFile(out_name, iteration);
+}
+
+//Adapted from https://stackoverflow.com/questions/865668/parsing-command-line-arguments-in-c
+char* getCmdOption(char ** begin, char ** end, const std::string & option)
+{
+    char ** itr = std::find(begin, end, option);
+    if (itr != end && ++itr != end)
+    {
+        return *itr;
+    }
+    return nullptr;
+}
+
+//Adapted from https://stackoverflow.com/questions/865668/parsing-command-line-arguments-in-c
+bool cmdOptionExists(char** begin, char** end, const std::string& option)
+{
+    return std::find(begin, end, option) != end;
 }
