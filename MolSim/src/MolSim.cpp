@@ -34,8 +34,6 @@ constexpr double start_time = 0;
 double end_time = 1000;
 double delta_t = 0.014;
 
-// What data structure to pick?
-// -> LinkedLists
 std::list<Particle> particles;
 
 int main(int argc, char *argsv[]) {
@@ -43,7 +41,7 @@ int main(int argc, char *argsv[]) {
     std::cout << "Hello from MolSim for PSE!" << std::endl;
     if (argc != 2) {
         std::cout << "Erroneous programme call! " << std::endl;
-        std::cout << "./molsym filename" << std::endl;
+        std::cout << "./MolSim <filepath/filename>" << std::endl;
     }
 
     FileReader fileReader;
@@ -122,7 +120,6 @@ void calculateF() {
     for (auto &p1: particles) {
         force = {0., 0., 0.};
         for (auto &p2: particles) {
-            // @TODO: insert calculation of forces here!
             if (p1 == p2) {}
             else {
                 //Fi = SUM Fij
@@ -153,7 +150,6 @@ void calculateF() {
 
 void calculateX() {
     for (auto &p: particles) {
-        // @TODO: insert calculation of position updates here!
         //xi(tn+1) = xi(tn) + ∆t * vi(tn) + (∆t)^2 * Fi(tn) /2mi
         std::array<double, 3> x_old = p.getX();
         std::array<double, 3> v = p.getV();
@@ -171,7 +167,6 @@ void calculateX() {
 
 void calculateV() {
     for (auto &p: particles) {
-        // @TODO: insert calculation of veclocity updates here!
         //vi (tn+1) = vi(tn) + ∆t * Fi(tn) + Fi(tn+1) / 2mi
         std::array<double, 3> v_old = p.getV();
         std::array<double, 3> f = p.getF();
