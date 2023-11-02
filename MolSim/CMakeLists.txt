@@ -21,7 +21,9 @@ file(GLOB_RECURSE MY_SRC
 )
 
 # create make target
-add_executable(MolSim ${MY_SRC})
+add_executable(MolSim ${MY_SRC}
+        src/ParticleContainer.cpp
+        src/ParticleContainer.h)
 
 # set cxx standard. You may raise this if you want.
 target_compile_features(MolSim
@@ -67,8 +69,9 @@ if(BUILD_DOC)
         set(doxyfile_in ${PROJECT_SOURCE_DIR}/Doxyfile.in)
         set(doxyfile ${PROJECT_SOURCE_DIR}/Doxyfile)
 
-        configure_file(${PROJECT_SOURCE_DIR}/Doxyfile  @ONLY)
+        configure_file(${PROJECT_SOURCE_DIR}/Doxyfile @ONLY)
         message("Doxygen build started")
+
         # Note: do not put "ALL" - this builds docs together with application EVERY TIME!
         add_custom_target(doc_doxygen ALL
                 COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}

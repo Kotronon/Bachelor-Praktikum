@@ -1,29 +1,35 @@
 //
-// Created by kathi on 01.11.23.
+// Created by maraconda on 02.11.23.
 //
 
-#ifndef PSEMOLDYN_PARTICLECONTAINER_H
-#define PSEMOLDYN_PARTICLECONTAINER_H
+#ifndef PSEMOLDYN_GROUPH_PARTICLECONTAINER_H
+#define PSEMOLDYN_GROUPH_PARTICLECONTAINER_H
 
 
-#pragma once
-
-#include <array>
-#include <string>
-#include <list>
+#include <forward_list>
 #include "Particle.h"
 
-class ParticleContainer: public Particle {
+class ParticleContainer {
+private:
+    /**
+   * List of all particles inside this particle container
+   */
+    std::forward_list<Particle> containedParticles{};
+
+    /**
+   * Number of contained particles
+   */
+   int numberOfParticles{};
+
 public:
-    ParticleContainer(std::list<Particle> particles);
-    ParticleContainer(std::pair<int, Particle> particles);
+    ParticleContainer();
 
-    void iterateThroughList(std::list<Particle> particles);
-    std::list<Particle> iterateThroughPairs(std::pair<int, Particle> particles);
-    };
+    ParticleContainer(const ParticleContainer &other);
+
+    virtual ~ParticleContainer();
+
+    void addParticle(const Particle &particle);
+};
 
 
-
-
-
-#endif //PSEMOLDYN_PARTICLECONTAINER_H
+#endif //PSEMOLDYN_GROUPH_PARTICLECONTAINER_H
