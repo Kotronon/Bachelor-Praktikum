@@ -3,9 +3,9 @@
 #include "outputWriter/XYZWriter.h"
 #include "outputWriter/VTKWriter.h"
 #include "utils/ArrayUtils.h"
+#include "ParticleContainer.h"
 
 #include <iostream>
-#include <list>
 #include <string>
 
 /**** forward declaration of the calculation functions ****/
@@ -44,7 +44,7 @@ constexpr double start_time = 0;
 double end_time = 1000;
 double delta_t = 0.014;
 
-std::list<Particle> particles;
+ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
 
@@ -58,7 +58,7 @@ int main(int argc, char *argsv[]) {
     }
 
     FileReader fileReader;
-    FileReader::readFile(particles, argsv[1]);
+    FileReader::readFile(container, argsv[1]);
 
 
     //getting end time and delta t command options if specified
@@ -68,52 +68,15 @@ int main(int argc, char *argsv[]) {
         end_time = std::stod(getCmdOption(argsv, argsv + argc, "-e"));
     }
 
+    std::cout << "end_time: " << end_time << std::endl;
+
     if(cmdOptionExists(argsv, argsv+argc, "-d"))
     {
         delta_t = std::stod(getCmdOption(argsv, argsv + argc, "-d"));
     }
 
-    /*
-    std::string input;
-    std::cout << "Please enter the end time. If you want to use the default value 1000 please enter x." << std::endl;
-    bool valid_input_received = false;
+    std::cout << "delta_time: " << delta_t << std::endl;
 
-    while (!valid_input_received){
-        std::cin >> input;
-        if (input != "x"){
-            try{
-                end_time = std::stod(input);
-                valid_input_received = true;
-            }
-            catch(std::invalid_argument& e){
-                std::cout << "Invalid input. Please enter a valid value or x for the default value."<< std::endl;
-            }
-        }
-        else{
-            valid_input_received = true;
-        }
-    }
-
-
-    std::cout << "Please enter the delta time. If you want to use the default value 0.014 please enter x." << std::endl;
-    valid_input_received = false;
-
-    while (!valid_input_received){
-        std::cin >> input;
-        if (input != "x"){
-            try{
-                delta_t = stod(input);
-                valid_input_received = true;
-            }
-            catch(std::invalid_argument& e){
-                std::cout << "Invalid input. Please enter a valid value or x for the default value."<< std::endl;
-            }
-        }
-        else{
-            valid_input_received = true;
-        }
-    }
-    */
 
     double current_time = start_time;
 
@@ -144,9 +107,9 @@ int main(int argc, char *argsv[]) {
 
 void calculateF() {
     std::array<double, 3> force{};
-    for (auto &p1: particles) {
+    for (auto &p1: container) {
         force = {0., 0., 0.};
-        for (auto &p2: particles) {
+        for (auto &p2: container) {
             if (p1 == p2) {}
             else {
                 //Fi = SUM Fij
@@ -176,7 +139,7 @@ void calculateF() {
 }
 
 void calculateX() {
-    for (auto &p: particles) {
+    for (auto &p: container) {
         //xi(tn+1) = xi(tn) + ∆t * vi(tn) + (∆t)^2 * Fi(tn) /2mi
         std::array<double, 3> x_old = p.getX();
         std::array<double, 3> v = p.getV();
@@ -193,7 +156,7 @@ void calculateX() {
 }
 
 void calculateV() {
-    for (auto &p: particles) {
+    for (auto &p: container) {
         //vi (tn+1) = vi(tn) + ∆t * Fi(tn) + Fi(tn+1) / 2mi
         std::array<double, 3> v_old = p.getV();
         std::array<double, 3> f = p.getF();
@@ -213,11 +176,11 @@ void plotParticles(int iteration) {
     std::string out_name("MD_vtk");
 
     outputWriter::XYZWriter writer;
-    outputWriter::XYZWriter::plotParticles(particles, out_name, iteration);
+    outputWriter::XYZWriter::plotParticles(container, out_name, iteration);
 
     outputWriter::VTKWriter writer2;
-    writer2.initializeOutput(particles.size());
-    for (auto &p: particles) {
+    writer2.initializeOutput(container.size());
+    for (auto &p: container) {
         writer2.plotParticle(p);
     }
     writer2.writeFile(out_name, iteration);

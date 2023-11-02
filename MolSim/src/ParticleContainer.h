@@ -28,7 +28,17 @@ public:
 
     virtual ~ParticleContainer();
 
+    int size();
+
     void addParticle(const Particle &particle);
+
+    void addParticle(int type_arg);
+
+    void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
+
+    std::_Fwd_list_iterator<Particle> begin();
+
+    std::_Fwd_list_iterator<Particle> end();
 };
 
 

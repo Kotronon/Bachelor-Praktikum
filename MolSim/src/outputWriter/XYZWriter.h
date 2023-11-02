@@ -8,9 +8,11 @@
 #pragma once
 
 #include  "Particle.h"
+#include "ParticleContainer.h"
 
 #include <fstream>
 #include <list>
+#include <forward_list>
 
 namespace outputWriter {
 
@@ -21,8 +23,7 @@ public:
 
   virtual ~XYZWriter();
 
-  static void plotParticles(const std::list<Particle>& particles, const std::string &filename,
-                     int iteration);
+    static void plotParticles(ParticleContainer container, const std::string &filename, int iteration);
 };
 
 } // namespace outputWriter
