@@ -12,7 +12,7 @@ Members:
 # Code #
 * Link:     https://github.com/Kotronon/Bachelor-Praktikum/tree/main/MolSim
 * Branch:   master
-* Revision: insert last commit number
+* Revision: 570e5fb
 * Compiler: gcc 11.4.0
 
 # Report #
