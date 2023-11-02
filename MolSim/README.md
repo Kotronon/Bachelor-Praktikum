@@ -41,5 +41,6 @@ Members:
 * Refactoring:
   * Encapsulated Particle into ParticleContainer
   * Input immediately through command line from the beginning not while program runs
+  * Best design pattern for list of Particles
 
 

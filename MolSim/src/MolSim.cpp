@@ -70,7 +70,7 @@ int main(int argc, char *argsv[]) {
 
     if(cmdOptionExists(argsv, argsv+argc, "-d"))
     {
-        end_time = std::stod(getCmdOption(argsv, argsv + argc, "-d"));
+        delta_t = std::stod(getCmdOption(argsv, argsv + argc, "-d"));
     }
 
     /*
