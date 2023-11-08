@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.10)
 # define project name, version
 project(PSEMolDyn_GroupH VERSION 0.0.1)
 
+include_directories(${CMAKE_SOURCE_DIR}/libs)
+
 # let ccmake and cmake-gui offer the default build type options
 set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug;Release;RelWithDebInfo;MinSizeRel")
 
@@ -84,5 +86,30 @@ else(BUILD_DOC)
     message("Doxygen won't start")
 endif (BUILD_DOC)
 unset(BUILD_DOC CACHE)
+
+include(GoogleTest)
+enable_testing()
+
+add_library(GTest::GTest INTERFACE IMPORTED)
+target_link_libraries(GTest::GTest INTERFACE gtest_main)
+
+add_executable(
+        tests ${MY_SRC}
+        src/test.cpp
+)
+target_link_libraries(
+        tests
+        PRIVATE
+        GTest::GTest
+
+)
+
+add_test(tests_gtest tests)
+
+
+gtest_discover_tests(tests)
+
+
+
 
 
