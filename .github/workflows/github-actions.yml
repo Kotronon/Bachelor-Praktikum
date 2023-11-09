@@ -1,0 +1,13 @@
+name: github-actions
+run-name: ${{ github.actor }} doesn't know what to do
+on: [push] and [pull]
+jobs:
+  run-tests:
+    runs-on:
+      steps:
+        - uses: actions/checkout@main
+        - uses:
+            with:
+              -run:
+
+
