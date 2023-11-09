@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.14)
 
 # define project name, version
 project(PSEMolDyn_GroupH VERSION 0.0.1)
+enable_testing()
 add_subdirectory(tests)
+
 
 
 # let ccmake and cmake-gui offer the default build type options

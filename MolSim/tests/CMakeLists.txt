@@ -20,17 +20,17 @@ if(NOT googletest_POPULATED)
     FetchContent_Populate(googletest)
     add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BUILD_DIR})
 endif ()
-
-enable_testing()
+include(CTest)
 include(GoogleTest)
 add_executable(
-        test
-        test.cpp
+        tests
+        tests.cpp
 )
 target_link_libraries(
-        test
+        tests
         GTest::gtest_main
 )
 
-add_test(NAME test COMMAND test)
-gtest_discover_tests(test)
+enable_testing()
+add_test(tests tests)
+gtest_discover_tests(tests)
