@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.14)
 
 # define project name, version
 project(PSEMolDyn_GroupH VERSION 0.0.1)
-
+add_subdirectory(tests)
 include_directories(${CMAKE_SOURCE_DIR}/libs)
 
 # let ccmake and cmake-gui offer the default build type options
@@ -87,27 +87,6 @@ else(BUILD_DOC)
 endif (BUILD_DOC)
 unset(BUILD_DOC CACHE)
 
-include(GoogleTest)
-enable_testing()
-
-add_library(GTest::GTest INTERFACE IMPORTED)
-target_link_libraries(GTest::GTest INTERFACE gtest_main)
-
-add_executable(
-        tests ${MY_SRC}
-        src/test.cpp
-)
-target_link_libraries(
-        tests
-        PRIVATE
-        GTest::GTest
-
-)
-
-add_test(tests_gtest tests)
-
-
-gtest_discover_tests(tests)
 
 
 
