@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.14)
 # define project name, version
 project(PSEMolDyn_GroupH VERSION 0.0.1)
 add_subdirectory(tests)
-include_directories(${CMAKE_SOURCE_DIR}/libs)
+
 
 # let ccmake and cmake-gui offer the default build type options
 set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug;Release;RelWithDebInfo;MinSizeRel")
