@@ -61,7 +61,7 @@ int main(int argc, char *argsv[]) {
     FileReader::readFile(container, argsv[1]);
 
 
-    //getting end time and delta t command options if specified
+    //Getting end time and delta t command options if specified
 
     if(cmdOptionExists(argsv, argsv+argc, "-e"))
     {
