@@ -1,5 +1,6 @@
 #https://www.jetbrains.com/help/clion/unit-testing-tutorial.html
 #http://google.github.io/googletest/quickstart-cmake.html
+#https://enccs.github.io/cmake-workshop/hello-ctest/
 cmake_minimum_required(VERSION 3.14)
 
 project(Tests)

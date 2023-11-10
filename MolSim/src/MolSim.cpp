@@ -4,6 +4,7 @@
 #include "outputWriter/VTKWriter.h"
 #include "utils/ArrayUtils.h"
 #include "ParticleContainer.h"
+#include "spdlog/spdlog.h"
 
 #include <iostream>
 #include <string>
