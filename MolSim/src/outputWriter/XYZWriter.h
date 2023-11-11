@@ -23,7 +23,7 @@ public:
 
   virtual ~XYZWriter();
 
-    static void plotParticles(ParticleContainer container, const std::string &filename, int iteration);
+    static void plotParticles(ParticleContainer &container, const std::string &filename, int iteration);
 };
 
 } // namespace outputWriter
