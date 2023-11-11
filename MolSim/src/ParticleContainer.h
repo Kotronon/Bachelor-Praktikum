@@ -5,8 +5,7 @@
 #ifndef PSEMOLDYN_GROUPH_PARTICLECONTAINER_H
 #define PSEMOLDYN_GROUPH_PARTICLECONTAINER_H
 
-
-#include <forward_list>
+#include <vector>
 #include "Particle.h"
 
 class ParticleContainer {
@@ -14,12 +13,7 @@ private:
     /**
    * List of all particles inside this particle container
    */
-    std::forward_list<Particle> containedParticles{};
-
-    /**
-   * Number of contained particles
-   */
-   int numberOfParticles{};
+    std::vector<Particle> containedParticles{};
 
 public:
     ParticleContainer();
@@ -36,9 +30,9 @@ public:
 
     void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
 
-    std::_Fwd_list_iterator<Particle> begin();
+    std::vector<Particle>::iterator begin();
 
-    std::_Fwd_list_iterator<Particle> end();
+    std::vector<Particle>::iterator end();
 };
 
 
