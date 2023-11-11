@@ -93,9 +93,8 @@ unset(BUILD_DOC CACHE)
 ## logging
 find_package(spdlog REQUIRED)
 
-target_link_libraries(MolSim PUBLIC spdlog::spdlog)
-# cmake --log-level=<level> or --loglevel=<level> with level = ERROR, WARNING, NOTICE, STATUS (default), VERBOSE, DEBUG, or TRACE.
-set( CMAKE_MESSAGE_LOG_LEVEL "STATUS" )
+target_link_libraries(MolSim PRIVATE spdlog::spdlog)
+
 # Locate header.
 find_path(SPDLOG_INCLUDE_DIR spdlog/spdlog.h
         HINTS ${SPDLOG_ROOT_DIR}/include)
@@ -126,5 +125,13 @@ if(SPDLOG_FOUND)
     endif()
 endif()
 
-
-
+# cmake --log-level=<level> or --loglevel=<level> with level = ERROR, WARNING, NOTICE, STATUS (default), VERBOSE, DEBUG, or TRACE.
+#trys of setting log level
+set( CMAKE_MESSAGE_LOG_LEVEL "STATUS" )
+target_compile_definitions(MolSim PUBLIC DEBUG)
+set(SPDLOG_INCLUDES_LEVEL "")
+if(SPDLOG_SYSTEM_INCLUDES)
+    set(SPDLOG_INCLUDES_LEVEL "SYSTEM")
+endif()
+target_include_directories(MolSim ${SPDLOG_INCLUDES_LEVEL} PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
+        "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
