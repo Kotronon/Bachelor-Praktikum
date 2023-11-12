@@ -48,32 +48,13 @@ double delta_t = 0.014;
 ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
-    spdlog::info("Welcome to spdlog!");
-    spdlog::error("Some error message with arg: {}", 1);
-
-    spdlog::warn("Easy padding in numbers like {:08d}", 12);
-    spdlog::critical("Support for int: {0:d};  hex: {0:x};  oct: {0:o}; bin: {0:b}", 42);
-    spdlog::info("Support for floats {:03.2f}", 1.23456);
-    spdlog::info("Positional args are {1} {0}..", "too", "supported");
-    spdlog::info("{:<30}", "left aligned");
-
-    spdlog::set_level(spdlog::level::debug); // Set global log level to debug
-    spdlog::debug("This message should be displayed..");
-
-    // change log pattern
-    spdlog::set_pattern("[%H:%M:%S %z] [%n] [%^---%L---%$] [thread %t] %v");
-
-    // Compile time log levels
-    // define SPDLOG_ACTIVE_LEVEL to desired level
-    SPDLOG_TRACE("Some trace message with param {}", 42);
-    SPDLOG_DEBUG("Some debug message");
-   /* std::cout << "Hello from MolSim for PSE!" << std::endl;
+    spdlog::info("Hello from MolSim for PSE!");
     if (argc <= 2 || argc >= 8) {
-        std::cout << "Erroneous programme call! " << std::endl;
-        std::cout << "./MolSim <filepath/filename> [options]"<< std::endl;
-        std::cout << "Options: "<< std::endl;
-        std::cout << "-e : The end time of the simulation, default value is 1000"<< std::endl;
-        std::cout << "-d : ∆time of the simulation, default value is 0.014"<< std::endl;
+        spdlog::info("Erroneous programme call! ");
+        spdlog::info("./MolSim <filepath/filename> [options]");
+        spdlog::info("Options: ");
+        spdlog::info("-e : The end time of the simulation, default value is 1000");
+        spdlog::info("-d : ∆time of the simulation, default value is 0.014");
     }
 
     FileReader fileReader;
@@ -87,14 +68,14 @@ int main(int argc, char *argsv[]) {
         end_time = std::stod(getCmdOption(argsv, argsv + argc, "-e"));
     }
 
-    std::cout << "end_time: " << end_time << std::endl;
+    spdlog::info("end_time: ", end_time);
 
     if(cmdOptionExists(argsv, argsv+argc, "-d"))
     {
         delta_t = std::stod(getCmdOption(argsv, argsv + argc, "-d"));
     }
 
-    std::cout << "delta_time: " << delta_t << std::endl;
+    spdlog::info("delta_time: ", delta_t);
 
 
     double current_time = start_time;
@@ -114,13 +95,13 @@ int main(int argc, char *argsv[]) {
         if (iteration % 10 == 0) {
             plotParticles(iteration);
         }
-        std::cout << "Iteration " << iteration << " finished." << std::endl;
+        spdlog::info("Iteration ", iteration, " finished.");
 
         current_time += delta_t;
     }
 
 
-    std::cout << "output written. Terminating..." << std::endl;*/
+    spdlog::info("output written. Terminating..." );
     return 0;
 }
 
