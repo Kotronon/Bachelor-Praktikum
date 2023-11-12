@@ -75,7 +75,7 @@ if(BUILD_DOC)
         configure_file(${PROJECT_SOURCE_DIR}/Doxyfile @ONLY)
         message("Doxygen build started")
 
-        add_custom_target(doc_doxygen ALL
+        add_custom_target(doc_doxygen
                 COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
                 COMMAND firefox ${CMAKE_CURRENT_SOURCE_DIR}/doxys_documentation/html/index.html
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
