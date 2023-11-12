@@ -5,9 +5,12 @@
 #include "VelocityCalculator.h"
 #include "ParticleContainer.h"
 #include "utils/ArrayUtils.h"
+#include "utils/MaxwellBoltzmannDistribution.h"
 
-void VelocityCalculator::BrownianMotionInitialization(ParticleContainer &container) {
-
+void VelocityCalculator::BrownianMotionInitialization(ParticleContainer &container, double avg_v) {
+    for (auto &p: container) {
+        p.setV(maxwellBoltzmannDistributedVelocity(avg_v, 3));
+    }
 }
 
 void VelocityCalculator::VelocityStoermerVerlet(ParticleContainer &container, double delta_t) {

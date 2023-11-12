@@ -20,6 +20,18 @@ void ForceCalculator::SimpleForceCalculation(ParticleContainer &container) {
     }
 }
 
-void ForceCalculator::LennardJonesForce(ParticleContainer &container) {
-
+void ForceCalculator::LennardJonesForce(ParticleContainer &container, double eps, double sig) {
+    std::array<double, 3> force{};
+    double L2Norm_p1_p2;
+    for (auto &p1: container) {
+        force = {0., 0., 0.};
+        for (auto &p2: container) {
+            if (!(p1 == p2)) {
+                L2Norm_p1_p2 = ArrayUtils::L2Norm(p1.getX() - p2.getX());
+                force = force + ((-24*eps / pow(L2Norm_p1_p2,2)) * (pow(sig/L2Norm_p1_p2,6) - (2 * pow(sig/L2Norm_p1_p2,12))) * (p1.getX() - p2.getX()));
+            }
+        }
+        p1.setOldF(p1.getF());
+        p1.setF(force);
+    }
 }
