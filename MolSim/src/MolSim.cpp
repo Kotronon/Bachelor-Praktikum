@@ -4,26 +4,12 @@
 #include "outputWriter/VTKWriter.h"
 #include "utils/ArrayUtils.h"
 #include "ParticleContainer.h"
+#include "ForceCalculator.h"
+#include "VelocityCalculator.h"
+#include "PositionCalculator.h"
 
 #include <iostream>
 #include <string>
-
-/**** forward declaration of the calculation functions ****/
-
-/**
- * calculate the force for all particles
- */
-void calculateF();
-
-/**
- * calculate the position for all particles
- */
-void calculateX();
-
-/**
- *  calculate the position for all particles
- */
-void calculateV();
 
 /**
  * plot the particles to a xyz-file
@@ -82,14 +68,17 @@ int main(int argc, char *argsv[]) {
 
     int iteration = 0;
 
+    //pre-calculation of f
+    ForceCalculator::SimpleForceCalculation(container);
+
     // for this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
         // calculate new x
-        calculateX();
+        PositionCalculator::PositionStoermerVerlet(container, delta_t);
         // calculate new f
-        calculateF();
+        ForceCalculator::SimpleForceCalculation(container);
         // calculate new v
-        calculateV();
+        VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
 
         iteration++;
         if (iteration % 10 == 0) {
@@ -103,35 +92,6 @@ int main(int argc, char *argsv[]) {
 
     std::cout << "output written. Terminating..." << std::endl;
     return 0;
-}
-
-void calculateF() {
-    std::array<double, 3> force{};
-    for (auto &p1: container) {
-        force = {0., 0., 0.};
-        for (auto &p2: container) {
-            if (!(p1 == p2)) {
-                force = force + (((p1.getM() * p2.getM()) / pow((ArrayUtils::L2Norm(p1.getX() - p2.getX())), 3)) * (p2.getX() - p1.getX()));
-            }
-        }
-        p1.setOldF(p1.getF());
-        p1.setF(force);
-
-    }
-}
-
-void calculateX() {
-    for (auto &p: container) {
-        //xi(tn+1) = xi(tn) + ∆t * vi(tn) + (∆t)^2 * Fi(tn) /2mi
-        p.setX(p.getX() + (delta_t * p.getV()) + ((delta_t*delta_t)/(2*p.getM())) * p.getF());
-    }
-}
-
-void calculateV() {
-    for (auto &p: container) {
-        //vi (tn+1) = vi(tn) + ∆t * Fi(tn) + Fi(tn+1) / 2mi
-        p.setV(p.getV() + ((delta_t / (2 * p.getM())) * (p.getOldF() + p.getF())));
-    }
 }
 
 void plotParticles(int iteration) {
