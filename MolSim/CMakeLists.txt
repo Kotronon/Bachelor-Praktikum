@@ -27,7 +27,13 @@ file(GLOB_RECURSE MY_SRC
 # create make target
 add_executable(MolSim ${MY_SRC}
         src/ParticleContainer.cpp
-        src/ParticleContainer.h)
+        src/ParticleContainer.h
+        src/ForceCalculator.cpp
+        src/ForceCalculator.h
+        src/VelocityCalculator.cpp
+        src/VelocityCalculator.h
+        src/PositionCalculator.cpp
+        src/PositionCalculator.h)
 
 # set cxx standard. You may raise this if you want.
 target_compile_features(MolSim
