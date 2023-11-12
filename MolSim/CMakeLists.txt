@@ -70,7 +70,6 @@ if(BUILD_DOC)
 
     if (DOXYGEN_FOUND)
         # configure doxygen configuration file
-        set(doxyfile_in ${PROJECT_SOURCE_DIR}/Doxyfile.in)
         set(doxyfile ${PROJECT_SOURCE_DIR}/Doxyfile)
 
         configure_file(${PROJECT_SOURCE_DIR}/Doxyfile @ONLY)
@@ -78,9 +77,11 @@ if(BUILD_DOC)
 
         add_custom_target(doc_doxygen ALL
                 COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
+                COMMAND firefox ${CMAKE_CURRENT_SOURCE_DIR}/doxys_documentation/html/index.html
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                 COMMENT "Generating API documentation with Doxygen"
                 VERBATIM )
+
     else (DOXYGEN_FOUND)
         message("Doxygen need to be installed to generate the doxygen documentation")
     endif (DOXYGEN_FOUND)
