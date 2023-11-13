@@ -40,8 +40,9 @@ int main(int argc, char *argsv[]) {
         spdlog::info("Options: ");
         spdlog::info("-e : The end time of the simulation, default value is 1000");
         spdlog::info("-d : ∆time of the simulation, default value is 0.014");
+        spdlog::info("-level : ∆the log leve, default is info");
     }
-
+    spdlog::set_level(spdlog::level::debug)
     FileReader fileReader;
     FileReader::readFile(container, argsv[1]);
 
@@ -59,7 +60,10 @@ int main(int argc, char *argsv[]) {
     {
         delta_t = std::stod(getCmdOption(argsv, argsv + argc, "-d"));
     }
-
+    if(cmdOptionExists(argsv, argsv+argc, "-d"))
+    {
+        delta_t = std::stod(getCmdOption(argsv, argsv + argc, "-d"));
+    }
     spdlog::info("delta_time: ", delta_t);
 
 
