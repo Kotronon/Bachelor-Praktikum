@@ -57,8 +57,8 @@ int main(int argc, char *argsv[]) {
         spdlog::info("-d : ∆time of the simulation, default value is 0.014");
     }
 
-    FileReader fileReader;
-    FileReader::readFile(container, argsv[1]);
+    // FileReader fileReader;
+   //  FileReader::readFile(container, argsv[1]);
 
 
     //getting end time and delta t command options if specified
@@ -77,13 +77,26 @@ int main(int argc, char *argsv[]) {
 
     spdlog::info("delta_time: ", delta_t);
 
+    if(cmdOptionExists(argsv, argsv+argc, "-level"))
+    {
+        std::string level = getCmdOption(argsv, argsv + argc, "-level");
+        if(level == "info") spdlog::set_level(spdlog::level::info);
+        if(level == "debug") spdlog::set_level(spdlog::level::debug);
+        if(level == "criticalr") spdlog::set_level(spdlog::level::critical);
+        if(level == "err") spdlog::set_level(spdlog::level::err);
+        if(level == "n_levels") spdlog::set_level(spdlog::level::n_levels);
+        if(level == "off") spdlog::set_level(spdlog::level::off);
+        if(level == "trace") spdlog::set_level(spdlog::level::trace);
+        if(level == "warn") spdlog::set_level(spdlog::level::warn);
+    }
+    spdlog::info("log_level: ", spdlog::get_level());
 
     double current_time = start_time;
 
     int iteration = 0;
 
     // for this loop, we assume: current x, current f and current v are known
-    while (current_time < end_time) {
+    while (current_time < 0) {
         // calculate new x
         calculateX();
         // calculate new f
@@ -102,6 +115,7 @@ int main(int argc, char *argsv[]) {
 
 
     spdlog::info("output written. Terminating..." );
+
     return 0;
 }
 
