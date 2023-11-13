@@ -1,0 +1,115 @@
+\doxysection{Particle\+Container Class Reference}
+\hypertarget{classParticleContainer}{}\label{classParticleContainer}\index{ParticleContainer@{ParticleContainer}}
+
+
+{\ttfamily \#include $<$Particle\+Container.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classParticleContainer_a76d21bdb5141158cf664d65e2d8b1db7}{Particle\+Container}} ()
+\item 
+\mbox{\hyperlink{classParticleContainer_a3b30976b8e530fb23cf39754ca47ed6f}{Particle\+Container}} (const \mbox{\hyperlink{classParticleContainer}{Particle\+Container}} \&other)
+\item 
+virtual \mbox{\hyperlink{classParticleContainer_a9629a8d31a3aa8c2fe944307c1263b66}{\texorpdfstring{$\sim$}{\string~}\+Particle\+Container}} ()
+\item 
+int \mbox{\hyperlink{classParticleContainer_ae67310a062690e380c78625b1f944537}{size}} ()
+\item 
+void \mbox{\hyperlink{classParticleContainer_a070d9c5415b98d99fac156a154b51103}{add\+Particle}} (const \mbox{\hyperlink{classParticle}{Particle}} \&particle)
+\item 
+void \mbox{\hyperlink{classParticleContainer_a032082f0ae89908b7c151b739134c4a9}{add\+Particle}} (int type\+\_\+arg)
+\item 
+void \mbox{\hyperlink{classParticleContainer_a8b65b21002c11ec37df3c452a1546d73}{add\+Particle}} (std\+::array$<$ double, 3 $>$ x\+\_\+arg, std\+::array$<$ double, 3 $>$ v\+\_\+arg, double m\+\_\+arg, int type\+\_\+arg)
+\item 
+std\+::\+\_\+\+Fwd\+\_\+list\+\_\+iterator$<$ \mbox{\hyperlink{classParticle}{Particle}} $>$ \mbox{\hyperlink{classParticleContainer_ac99bcea5bdfeb86fb0bf6462b8d36902}{begin}} ()
+\item 
+std\+::\+\_\+\+Fwd\+\_\+list\+\_\+iterator$<$ \mbox{\hyperlink{classParticle}{Particle}} $>$ \mbox{\hyperlink{classParticleContainer_abddc265912905edf091a4738522f5610}{end}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::forward\+\_\+list$<$ \mbox{\hyperlink{classParticle}{Particle}} $>$ \mbox{\hyperlink{classParticleContainer_a9a741461e61306645f2376d11eda26bc}{contained\+Particles}} \{\}
+\item 
+int \mbox{\hyperlink{classParticleContainer_a7209e6dfaabeae4f8b7c1d6578799a8c}{number\+Of\+Particles}} \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classParticleContainer_a76d21bdb5141158cf664d65e2d8b1db7}\label{classParticleContainer_a76d21bdb5141158cf664d65e2d8b1db7} 
+\index{ParticleContainer@{ParticleContainer}!ParticleContainer@{ParticleContainer}}
+\index{ParticleContainer@{ParticleContainer}!ParticleContainer@{ParticleContainer}}
+\doxysubsubsection{\texorpdfstring{ParticleContainer()}{ParticleContainer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Particle\+Container\+::\+Particle\+Container (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{classParticleContainer_a3b30976b8e530fb23cf39754ca47ed6f}\label{classParticleContainer_a3b30976b8e530fb23cf39754ca47ed6f} 
+\index{ParticleContainer@{ParticleContainer}!ParticleContainer@{ParticleContainer}}
+\index{ParticleContainer@{ParticleContainer}!ParticleContainer@{ParticleContainer}}
+\doxysubsubsection{\texorpdfstring{ParticleContainer()}{ParticleContainer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Particle\+Container\+::\+Particle\+Container (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classParticleContainer}{Particle\+Container}} \&}]{other }\end{DoxyParamCaption})}
+
+\Hypertarget{classParticleContainer_a9629a8d31a3aa8c2fe944307c1263b66}\label{classParticleContainer_a9629a8d31a3aa8c2fe944307c1263b66} 
+\index{ParticleContainer@{ParticleContainer}!````~ParticleContainer@{\texorpdfstring{$\sim$}{\string~}ParticleContainer}}
+\index{````~ParticleContainer@{\texorpdfstring{$\sim$}{\string~}ParticleContainer}!ParticleContainer@{ParticleContainer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}ParticleContainer()}{\string~ParticleContainer()}}
+{\footnotesize\ttfamily Particle\+Container\+::\texorpdfstring{$\sim$}{\string~}\+Particle\+Container (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classParticleContainer_a070d9c5415b98d99fac156a154b51103}\label{classParticleContainer_a070d9c5415b98d99fac156a154b51103} 
+\index{ParticleContainer@{ParticleContainer}!addParticle@{addParticle}}
+\index{addParticle@{addParticle}!ParticleContainer@{ParticleContainer}}
+\doxysubsubsection{\texorpdfstring{addParticle()}{addParticle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void Particle\+Container\+::add\+Particle (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classParticle}{Particle}} \&}]{particle }\end{DoxyParamCaption})}
+
+\Hypertarget{classParticleContainer_a032082f0ae89908b7c151b739134c4a9}\label{classParticleContainer_a032082f0ae89908b7c151b739134c4a9} 
+\index{ParticleContainer@{ParticleContainer}!addParticle@{addParticle}}
+\index{addParticle@{addParticle}!ParticleContainer@{ParticleContainer}}
+\doxysubsubsection{\texorpdfstring{addParticle()}{addParticle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void Particle\+Container\+::add\+Particle (\begin{DoxyParamCaption}\item[{int}]{type\+\_\+arg }\end{DoxyParamCaption})}
+
+\Hypertarget{classParticleContainer_a8b65b21002c11ec37df3c452a1546d73}\label{classParticleContainer_a8b65b21002c11ec37df3c452a1546d73} 
+\index{ParticleContainer@{ParticleContainer}!addParticle@{addParticle}}
+\index{addParticle@{addParticle}!ParticleContainer@{ParticleContainer}}
+\doxysubsubsection{\texorpdfstring{addParticle()}{addParticle()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void Particle\+Container\+::add\+Particle (\begin{DoxyParamCaption}\item[{std\+::array$<$ double, 3 $>$}]{x\+\_\+arg,  }\item[{std\+::array$<$ double, 3 $>$}]{v\+\_\+arg,  }\item[{double}]{m\+\_\+arg,  }\item[{int}]{type\+\_\+arg }\end{DoxyParamCaption})}
+
+\Hypertarget{classParticleContainer_ac99bcea5bdfeb86fb0bf6462b8d36902}\label{classParticleContainer_ac99bcea5bdfeb86fb0bf6462b8d36902} 
+\index{ParticleContainer@{ParticleContainer}!begin@{begin}}
+\index{begin@{begin}!ParticleContainer@{ParticleContainer}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily std\+::\+\_\+\+Fwd\+\_\+list\+\_\+iterator$<$ \mbox{\hyperlink{classParticle}{Particle}} $>$ Particle\+Container\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{classParticleContainer_abddc265912905edf091a4738522f5610}\label{classParticleContainer_abddc265912905edf091a4738522f5610} 
+\index{ParticleContainer@{ParticleContainer}!end@{end}}
+\index{end@{end}!ParticleContainer@{ParticleContainer}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}}
+{\footnotesize\ttfamily std\+::\+\_\+\+Fwd\+\_\+list\+\_\+iterator$<$ \mbox{\hyperlink{classParticle}{Particle}} $>$ Particle\+Container\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{classParticleContainer_ae67310a062690e380c78625b1f944537}\label{classParticleContainer_ae67310a062690e380c78625b1f944537} 
+\index{ParticleContainer@{ParticleContainer}!size@{size}}
+\index{size@{size}!ParticleContainer@{ParticleContainer}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily int Particle\+Container\+::size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classParticleContainer_a9a741461e61306645f2376d11eda26bc}\label{classParticleContainer_a9a741461e61306645f2376d11eda26bc} 
+\index{ParticleContainer@{ParticleContainer}!containedParticles@{containedParticles}}
+\index{containedParticles@{containedParticles}!ParticleContainer@{ParticleContainer}}
+\doxysubsubsection{\texorpdfstring{containedParticles}{containedParticles}}
+{\footnotesize\ttfamily std\+::forward\+\_\+list$<$\mbox{\hyperlink{classParticle}{Particle}}$>$ Particle\+Container\+::contained\+Particles \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+List of all particles inside this particle container \Hypertarget{classParticleContainer_a7209e6dfaabeae4f8b7c1d6578799a8c}\label{classParticleContainer_a7209e6dfaabeae4f8b7c1d6578799a8c} 
+\index{ParticleContainer@{ParticleContainer}!numberOfParticles@{numberOfParticles}}
+\index{numberOfParticles@{numberOfParticles}!ParticleContainer@{ParticleContainer}}
+\doxysubsubsection{\texorpdfstring{numberOfParticles}{numberOfParticles}}
+{\footnotesize\ttfamily int Particle\+Container\+::number\+Of\+Particles \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+Number of contained particles 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{ParticleContainer_8h}{Particle\+Container.\+h}}\item 
+src/\mbox{\hyperlink{ParticleContainer_8cpp}{Particle\+Container.\+cpp}}\end{DoxyCompactItemize}

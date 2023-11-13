@@ -1,0 +1,5 @@
+if(EXISTS "/home/kathi/Bachelor-Praktikum/MolSim/cmake/tests/tests[1]_tests.cmake")
+  include("/home/kathi/Bachelor-Praktikum/MolSim/cmake/tests/tests[1]_tests.cmake")
+else()
+  add_test(tests_NOT_BUILT tests_NOT_BUILT)
+endif()
