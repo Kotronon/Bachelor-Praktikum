@@ -42,7 +42,6 @@ int main(int argc, char *argsv[]) {
         spdlog::info("-d : ∆time of the simulation, default value is 0.014");
         spdlog::info("-level : ∆the log leve, default is info");
     }
-    spdlog::set_level(spdlog::level::debug)
     FileReader fileReader;
     FileReader::readFile(container, argsv[1]);
 
