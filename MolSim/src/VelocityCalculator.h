@@ -12,7 +12,7 @@ class VelocityCalculator {
 private:
 public:
     static void VelocityStoermerVerlet(ParticleContainer &container, double delta_t);
-    static void BrownianMotionInitialization(ParticleContainer &container, double avg_v);
+    static void BrownianMotionInitialization(ParticleContainer &container, double avg_v, int dim);
 };
 
 

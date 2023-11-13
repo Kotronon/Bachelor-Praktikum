@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <vector>
+#include <functional>
 #include "ParticleContainer.h"
 
 ParticleContainer::ParticleContainer() {
@@ -34,6 +35,17 @@ void ParticleContainer::addParticle(std::array<double, 3> x_arg, std::array<doub
     containedParticles.emplace_back(new_particle);
     std::cout << "Added newly created particle to container!" << std::endl;
     containedParticles.begin();
+}
+
+void ParticleContainer::addParticleContainer(ParticleContainer &container) {
+    for (auto &p: container) {
+        containedParticles.emplace_back(p);
+    }
+    std::cout << "Added particles contained in other container to this container!" << std::endl;
+}
+
+void ParticleContainer::applyForce(const std::function<void()>& forceCalculation){
+
 }
 
 std::vector<Particle>::iterator ParticleContainer::begin() {

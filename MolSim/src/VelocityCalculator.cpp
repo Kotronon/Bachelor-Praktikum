@@ -7,9 +7,9 @@
 #include "utils/ArrayUtils.h"
 #include "utils/MaxwellBoltzmannDistribution.h"
 
-void VelocityCalculator::BrownianMotionInitialization(ParticleContainer &container, double avg_v) {
+void VelocityCalculator::BrownianMotionInitialization(ParticleContainer &container, double avg_v, int dim) {
     for (auto &p: container) {
-        p.setV(maxwellBoltzmannDistributedVelocity(avg_v, 3));
+        p.setV(p.getV() + maxwellBoltzmannDistributedVelocity(avg_v, dim));
     }
 }
 

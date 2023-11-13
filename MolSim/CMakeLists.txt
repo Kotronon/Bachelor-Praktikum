@@ -33,7 +33,10 @@ add_executable(MolSim ${MY_SRC}
         src/VelocityCalculator.cpp
         src/VelocityCalculator.h
         src/PositionCalculator.cpp
-        src/PositionCalculator.h)
+        src/PositionCalculator.h
+        src/ParticleGenerator.cpp
+        src/ParticleGenerator.h
+)
 
 # set cxx standard. You may raise this if you want.
 target_compile_features(MolSim
