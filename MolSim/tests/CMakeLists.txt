@@ -1,12 +1,13 @@
 #https://www.jetbrains.com/help/clion/unit-testing-tutorial.html
 #http://google.github.io/googletest/quickstart-cmake.html
 #https://enccs.github.io/cmake-workshop/hello-ctest/
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.17)
 
 project(Tests)
 # GoogleTest requires at least C++14
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+include_directories(../src)
 include(FetchContent)
 FetchContent_Declare(
         googletest
@@ -22,19 +23,17 @@ if(NOT googletest_POPULATED)
 endif ()
 include(CTest)
 include(GoogleTest)
-
-
+find_package(GTest REQUIRED)
 include_directories(SYSTEM ${GMOCK_DIR}/include ${GMOCK_DIR}/gtest/include)
-add_executable(
-        tests
-        tests.cpp
-)
-target_link_libraries(
-        tests
-        GTest::gtest_main
-)
-target_link_libraries (tests gmock_main)
-
+set(gmock_build_include_dirs
+        "${gmock_SOURCE_DIR}/include"
+        "${gmock_SOURCE_DIR}"
+        "${gtest_SOURCE_DIR}/include"
+        # This directory is needed to build directly from Google Test sources.
+        "${gtest_SOURCE_DIR}")
+include_directories(${gmock_build_include_dirs})
+add_executable(tests Mocktests.cpp)
+target_link_libraries(tests gtest gmock ${GTEST_LIBRARIES} ${GMOCK_LIBRARIES} dl)
 enable_testing()
 add_test(tests tests)
 gtest_discover_tests(tests)
