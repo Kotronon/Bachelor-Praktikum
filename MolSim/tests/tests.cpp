@@ -61,8 +61,8 @@ TEST(ForceTest, SimpleForceCalculation){
     ParticleContainer particles;
     particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0);
     particles.addParticle({0, 3, 0}, {4, 3, 5}, 20, 0);
-    std::array<double, 3> res1 = {0, 1000, 0};
-    std::array<double, 3> res2 = {0, -1000, 0};
+    std::array<double, 3> res1 = {0, 111.111, 0};
+    std::array<double, 3> res2 = {0, -111.111, 0};
     ForceCalculator calculator;
     calculator.SimpleForceCalculation(particles);
     std::vector<Particle>::iterator particleVector = particles.begin();
@@ -74,8 +74,8 @@ TEST(ForceTest, LennardJonesForce){
     ParticleContainer particles;
     particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0);
     particles.addParticle({0, 3, 0}, {4, 3, 5}, 20, 0);
-    std::array<double, 3> res1 = {0, -8/531441, 0};
-    std::array<double, 3> res2 = {0, 8/531441, 0};
+    std::array<double, 3> res1 = {0, 0.0109438, 0};
+    std::array<double, 3> res2 = {0, -0.0109438, 0};
     ForceCalculator calculator;
     calculator.LennardJonesForce(particles, 1, 1);
     std::vector<Particle>::iterator particleVector = particles.begin();
