@@ -22,6 +22,9 @@ if(NOT googletest_POPULATED)
 endif ()
 include(CTest)
 include(GoogleTest)
+
+
+include_directories(SYSTEM ${GMOCK_DIR}/include ${GMOCK_DIR}/gtest/include)
 add_executable(
         tests
         tests.cpp
@@ -30,6 +33,7 @@ target_link_libraries(
         tests
         GTest::gtest_main
 )
+target_link_libraries (tests gmock_main)
 
 enable_testing()
 add_test(tests tests)
