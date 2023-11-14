@@ -83,19 +83,100 @@ tests/CMakeFiles/tests.dir/tests.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tests.dir/tests.cpp.s"
 	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kathi/Bachelor-Praktikum/MolSim/tests/tests.cpp -o CMakeFiles/tests.dir/tests.cpp.s
 
+tests/CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.o: tests/CMakeFiles/tests.dir/flags.make
+tests/CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.o: ../src/ParticleContainer.cpp
+tests/CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.o: tests/CMakeFiles/tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object tests/CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.o"
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT tests/CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.o -MF CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.o.d -o CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.o -c /home/kathi/Bachelor-Praktikum/MolSim/src/ParticleContainer.cpp
+
+tests/CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.i"
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kathi/Bachelor-Praktikum/MolSim/src/ParticleContainer.cpp > CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.i
+
+tests/CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.s"
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kathi/Bachelor-Praktikum/MolSim/src/ParticleContainer.cpp -o CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.s
+
+tests/CMakeFiles/tests.dir/__/src/Particle.cpp.o: tests/CMakeFiles/tests.dir/flags.make
+tests/CMakeFiles/tests.dir/__/src/Particle.cpp.o: ../src/Particle.cpp
+tests/CMakeFiles/tests.dir/__/src/Particle.cpp.o: tests/CMakeFiles/tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object tests/CMakeFiles/tests.dir/__/src/Particle.cpp.o"
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT tests/CMakeFiles/tests.dir/__/src/Particle.cpp.o -MF CMakeFiles/tests.dir/__/src/Particle.cpp.o.d -o CMakeFiles/tests.dir/__/src/Particle.cpp.o -c /home/kathi/Bachelor-Praktikum/MolSim/src/Particle.cpp
+
+tests/CMakeFiles/tests.dir/__/src/Particle.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tests.dir/__/src/Particle.cpp.i"
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kathi/Bachelor-Praktikum/MolSim/src/Particle.cpp > CMakeFiles/tests.dir/__/src/Particle.cpp.i
+
+tests/CMakeFiles/tests.dir/__/src/Particle.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tests.dir/__/src/Particle.cpp.s"
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kathi/Bachelor-Praktikum/MolSim/src/Particle.cpp -o CMakeFiles/tests.dir/__/src/Particle.cpp.s
+
+tests/CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.o: tests/CMakeFiles/tests.dir/flags.make
+tests/CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.o: ../src/PositionCalculator.cpp
+tests/CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.o: tests/CMakeFiles/tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object tests/CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.o"
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT tests/CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.o -MF CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.o.d -o CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.o -c /home/kathi/Bachelor-Praktikum/MolSim/src/PositionCalculator.cpp
+
+tests/CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.i"
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kathi/Bachelor-Praktikum/MolSim/src/PositionCalculator.cpp > CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.i
+
+tests/CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.s"
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kathi/Bachelor-Praktikum/MolSim/src/PositionCalculator.cpp -o CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.s
+
+tests/CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.o: tests/CMakeFiles/tests.dir/flags.make
+tests/CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.o: ../src/VelocityCalculator.cpp
+tests/CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.o: tests/CMakeFiles/tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object tests/CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.o"
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT tests/CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.o -MF CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.o.d -o CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.o -c /home/kathi/Bachelor-Praktikum/MolSim/src/VelocityCalculator.cpp
+
+tests/CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.i"
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kathi/Bachelor-Praktikum/MolSim/src/VelocityCalculator.cpp > CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.i
+
+tests/CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.s"
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kathi/Bachelor-Praktikum/MolSim/src/VelocityCalculator.cpp -o CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.s
+
+tests/CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.o: tests/CMakeFiles/tests.dir/flags.make
+tests/CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.o: ../src/ForceCalculator.cpp
+tests/CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.o: tests/CMakeFiles/tests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object tests/CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.o"
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT tests/CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.o -MF CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.o.d -o CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.o -c /home/kathi/Bachelor-Praktikum/MolSim/src/ForceCalculator.cpp
+
+tests/CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.i"
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kathi/Bachelor-Praktikum/MolSim/src/ForceCalculator.cpp > CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.i
+
+tests/CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.s"
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kathi/Bachelor-Praktikum/MolSim/src/ForceCalculator.cpp -o CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.s
+
 # Object files for target tests
 tests_OBJECTS = \
-"CMakeFiles/tests.dir/tests.cpp.o"
+"CMakeFiles/tests.dir/tests.cpp.o" \
+"CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.o" \
+"CMakeFiles/tests.dir/__/src/Particle.cpp.o" \
+"CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.o" \
+"CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.o" \
+"CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.o"
 
 # External object files for target tests
 tests_EXTERNAL_OBJECTS =
 
 tests/tests: tests/CMakeFiles/tests.dir/tests.cpp.o
+tests/tests: tests/CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.o
+tests/tests: tests/CMakeFiles/tests.dir/__/src/Particle.cpp.o
+tests/tests: tests/CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.o
+tests/tests: tests/CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.o
+tests/tests: tests/CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.o
 tests/tests: tests/CMakeFiles/tests.dir/build.make
-tests/tests: lib/libgtest_main.a
+tests/tests: lib/libgtest.a
+tests/tests: lib/libgmock.a
 tests/tests: lib/libgtest.a
 tests/tests: tests/CMakeFiles/tests.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable tests"
 	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/tests.dir/link.txt --verbose=$(VERBOSE)
 	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake/tests && /usr/bin/cmake -D TEST_TARGET=tests -D TEST_EXECUTABLE=/home/kathi/Bachelor-Praktikum/MolSim/cmake/tests/tests -D TEST_EXECUTOR= -D TEST_WORKING_DIR=/home/kathi/Bachelor-Praktikum/MolSim/cmake/tests -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_FILTER= -D NO_PRETTY_TYPES=FALSE -D NO_PRETTY_VALUES=FALSE -D TEST_LIST=tests_TESTS -D CTEST_FILE=/home/kathi/Bachelor-Praktikum/MolSim/cmake/tests/tests[1]_tests.cmake -D TEST_DISCOVERY_TIMEOUT=5 -D TEST_XML_OUTPUT_DIR= -P /usr/share/cmake-3.22/Modules/GoogleTestAddTests.cmake
 

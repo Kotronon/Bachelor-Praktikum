@@ -65,16 +65,6 @@ CMAKE_BINARY_DIR = /home/kathi/Bachelor-Praktikum/MolSim/cmake
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
@@ -650,6 +640,30 @@ src/FileReader.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MolSim.dir/build.make CMakeFiles/MolSim.dir/src/FileReader.cpp.s
 .PHONY : src/FileReader.cpp.s
 
+src/ForceCalculator.o: src/ForceCalculator.cpp.o
+.PHONY : src/ForceCalculator.o
+
+# target to build an object file
+src/ForceCalculator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MolSim.dir/build.make CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.o
+.PHONY : src/ForceCalculator.cpp.o
+
+src/ForceCalculator.i: src/ForceCalculator.cpp.i
+.PHONY : src/ForceCalculator.i
+
+# target to preprocess a source file
+src/ForceCalculator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MolSim.dir/build.make CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.i
+.PHONY : src/ForceCalculator.cpp.i
+
+src/ForceCalculator.s: src/ForceCalculator.cpp.s
+.PHONY : src/ForceCalculator.s
+
+# target to generate assembly for a file
+src/ForceCalculator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MolSim.dir/build.make CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.s
+.PHONY : src/ForceCalculator.cpp.s
+
 src/MolSim.o: src/MolSim.cpp.o
 .PHONY : src/MolSim.o
 
@@ -721,6 +735,54 @@ src/ParticleContainer.s: src/ParticleContainer.cpp.s
 src/ParticleContainer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MolSim.dir/build.make CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.s
 .PHONY : src/ParticleContainer.cpp.s
+
+src/PositionCalculator.o: src/PositionCalculator.cpp.o
+.PHONY : src/PositionCalculator.o
+
+# target to build an object file
+src/PositionCalculator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MolSim.dir/build.make CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.o
+.PHONY : src/PositionCalculator.cpp.o
+
+src/PositionCalculator.i: src/PositionCalculator.cpp.i
+.PHONY : src/PositionCalculator.i
+
+# target to preprocess a source file
+src/PositionCalculator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MolSim.dir/build.make CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.i
+.PHONY : src/PositionCalculator.cpp.i
+
+src/PositionCalculator.s: src/PositionCalculator.cpp.s
+.PHONY : src/PositionCalculator.s
+
+# target to generate assembly for a file
+src/PositionCalculator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MolSim.dir/build.make CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.s
+.PHONY : src/PositionCalculator.cpp.s
+
+src/VelocityCalculator.o: src/VelocityCalculator.cpp.o
+.PHONY : src/VelocityCalculator.o
+
+# target to build an object file
+src/VelocityCalculator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MolSim.dir/build.make CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.o
+.PHONY : src/VelocityCalculator.cpp.o
+
+src/VelocityCalculator.i: src/VelocityCalculator.cpp.i
+.PHONY : src/VelocityCalculator.i
+
+# target to preprocess a source file
+src/VelocityCalculator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MolSim.dir/build.make CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.i
+.PHONY : src/VelocityCalculator.cpp.i
+
+src/VelocityCalculator.s: src/VelocityCalculator.cpp.s
+.PHONY : src/VelocityCalculator.s
+
+# target to generate assembly for a file
+src/VelocityCalculator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MolSim.dir/build.make CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.s
+.PHONY : src/VelocityCalculator.cpp.s
 
 src/outputWriter/VTKWriter.o: src/outputWriter/VTKWriter.cpp.o
 .PHONY : src/outputWriter/VTKWriter.o
@@ -806,7 +868,6 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... test"
 	@echo "... Continuous"
 	@echo "... ContinuousBuild"
 	@echo "... ContinuousConfigure"
@@ -845,6 +906,9 @@ help:
 	@echo "... src/FileReader.o"
 	@echo "... src/FileReader.i"
 	@echo "... src/FileReader.s"
+	@echo "... src/ForceCalculator.o"
+	@echo "... src/ForceCalculator.i"
+	@echo "... src/ForceCalculator.s"
 	@echo "... src/MolSim.o"
 	@echo "... src/MolSim.i"
 	@echo "... src/MolSim.s"
@@ -854,6 +918,12 @@ help:
 	@echo "... src/ParticleContainer.o"
 	@echo "... src/ParticleContainer.i"
 	@echo "... src/ParticleContainer.s"
+	@echo "... src/PositionCalculator.o"
+	@echo "... src/PositionCalculator.i"
+	@echo "... src/PositionCalculator.s"
+	@echo "... src/VelocityCalculator.o"
+	@echo "... src/VelocityCalculator.i"
+	@echo "... src/VelocityCalculator.s"
 	@echo "... src/outputWriter/VTKWriter.o"
 	@echo "... src/outputWriter/VTKWriter.i"
 	@echo "... src/outputWriter/VTKWriter.s"

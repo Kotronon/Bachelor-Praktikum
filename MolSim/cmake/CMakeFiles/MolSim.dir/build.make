@@ -83,10 +83,24 @@ CMakeFiles/MolSim.dir/src/FileReader.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MolSim.dir/src/FileReader.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kathi/Bachelor-Praktikum/MolSim/src/FileReader.cpp -o CMakeFiles/MolSim.dir/src/FileReader.cpp.s
 
+CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.o: CMakeFiles/MolSim.dir/flags.make
+CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.o: ../src/ForceCalculator.cpp
+CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.o: CMakeFiles/MolSim.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.o -MF CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.o.d -o CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.o -c /home/kathi/Bachelor-Praktikum/MolSim/src/ForceCalculator.cpp
+
+CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kathi/Bachelor-Praktikum/MolSim/src/ForceCalculator.cpp > CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.i
+
+CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kathi/Bachelor-Praktikum/MolSim/src/ForceCalculator.cpp -o CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.s
+
 CMakeFiles/MolSim.dir/src/MolSim.cpp.o: CMakeFiles/MolSim.dir/flags.make
 CMakeFiles/MolSim.dir/src/MolSim.cpp.o: ../src/MolSim.cpp
 CMakeFiles/MolSim.dir/src/MolSim.cpp.o: CMakeFiles/MolSim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MolSim.dir/src/MolSim.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MolSim.dir/src/MolSim.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MolSim.dir/src/MolSim.cpp.o -MF CMakeFiles/MolSim.dir/src/MolSim.cpp.o.d -o CMakeFiles/MolSim.dir/src/MolSim.cpp.o -c /home/kathi/Bachelor-Praktikum/MolSim/src/MolSim.cpp
 
 CMakeFiles/MolSim.dir/src/MolSim.cpp.i: cmake_force
@@ -100,7 +114,7 @@ CMakeFiles/MolSim.dir/src/MolSim.cpp.s: cmake_force
 CMakeFiles/MolSim.dir/src/Particle.cpp.o: CMakeFiles/MolSim.dir/flags.make
 CMakeFiles/MolSim.dir/src/Particle.cpp.o: ../src/Particle.cpp
 CMakeFiles/MolSim.dir/src/Particle.cpp.o: CMakeFiles/MolSim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MolSim.dir/src/Particle.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MolSim.dir/src/Particle.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MolSim.dir/src/Particle.cpp.o -MF CMakeFiles/MolSim.dir/src/Particle.cpp.o.d -o CMakeFiles/MolSim.dir/src/Particle.cpp.o -c /home/kathi/Bachelor-Praktikum/MolSim/src/Particle.cpp
 
 CMakeFiles/MolSim.dir/src/Particle.cpp.i: cmake_force
@@ -114,7 +128,7 @@ CMakeFiles/MolSim.dir/src/Particle.cpp.s: cmake_force
 CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o: CMakeFiles/MolSim.dir/flags.make
 CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o: ../src/ParticleContainer.cpp
 CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o: CMakeFiles/MolSim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o -MF CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o.d -o CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o -c /home/kathi/Bachelor-Praktikum/MolSim/src/ParticleContainer.cpp
 
 CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.i: cmake_force
@@ -125,10 +139,38 @@ CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kathi/Bachelor-Praktikum/MolSim/src/ParticleContainer.cpp -o CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.s
 
+CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.o: CMakeFiles/MolSim.dir/flags.make
+CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.o: ../src/PositionCalculator.cpp
+CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.o: CMakeFiles/MolSim.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.o -MF CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.o.d -o CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.o -c /home/kathi/Bachelor-Praktikum/MolSim/src/PositionCalculator.cpp
+
+CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kathi/Bachelor-Praktikum/MolSim/src/PositionCalculator.cpp > CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.i
+
+CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kathi/Bachelor-Praktikum/MolSim/src/PositionCalculator.cpp -o CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.s
+
+CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.o: CMakeFiles/MolSim.dir/flags.make
+CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.o: ../src/VelocityCalculator.cpp
+CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.o: CMakeFiles/MolSim.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.o -MF CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.o.d -o CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.o -c /home/kathi/Bachelor-Praktikum/MolSim/src/VelocityCalculator.cpp
+
+CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kathi/Bachelor-Praktikum/MolSim/src/VelocityCalculator.cpp > CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.i
+
+CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kathi/Bachelor-Praktikum/MolSim/src/VelocityCalculator.cpp -o CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.s
+
 CMakeFiles/MolSim.dir/src/outputWriter/VTKWriter.cpp.o: CMakeFiles/MolSim.dir/flags.make
 CMakeFiles/MolSim.dir/src/outputWriter/VTKWriter.cpp.o: ../src/outputWriter/VTKWriter.cpp
 CMakeFiles/MolSim.dir/src/outputWriter/VTKWriter.cpp.o: CMakeFiles/MolSim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/MolSim.dir/src/outputWriter/VTKWriter.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/MolSim.dir/src/outputWriter/VTKWriter.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MolSim.dir/src/outputWriter/VTKWriter.cpp.o -MF CMakeFiles/MolSim.dir/src/outputWriter/VTKWriter.cpp.o.d -o CMakeFiles/MolSim.dir/src/outputWriter/VTKWriter.cpp.o -c /home/kathi/Bachelor-Praktikum/MolSim/src/outputWriter/VTKWriter.cpp
 
 CMakeFiles/MolSim.dir/src/outputWriter/VTKWriter.cpp.i: cmake_force
@@ -142,7 +184,7 @@ CMakeFiles/MolSim.dir/src/outputWriter/VTKWriter.cpp.s: cmake_force
 CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o: CMakeFiles/MolSim.dir/flags.make
 CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o: ../src/outputWriter/XYZWriter.cpp
 CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o: CMakeFiles/MolSim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o -MF CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o.d -o CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o -c /home/kathi/Bachelor-Praktikum/MolSim/src/outputWriter/XYZWriter.cpp
 
 CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.i: cmake_force
@@ -156,7 +198,7 @@ CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.s: cmake_force
 CMakeFiles/MolSim.dir/src/outputWriter/vtk-unstructured.cpp.o: CMakeFiles/MolSim.dir/flags.make
 CMakeFiles/MolSim.dir/src/outputWriter/vtk-unstructured.cpp.o: ../src/outputWriter/vtk-unstructured.cpp
 CMakeFiles/MolSim.dir/src/outputWriter/vtk-unstructured.cpp.o: CMakeFiles/MolSim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/MolSim.dir/src/outputWriter/vtk-unstructured.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/MolSim.dir/src/outputWriter/vtk-unstructured.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MolSim.dir/src/outputWriter/vtk-unstructured.cpp.o -MF CMakeFiles/MolSim.dir/src/outputWriter/vtk-unstructured.cpp.o.d -o CMakeFiles/MolSim.dir/src/outputWriter/vtk-unstructured.cpp.o -c /home/kathi/Bachelor-Praktikum/MolSim/src/outputWriter/vtk-unstructured.cpp
 
 CMakeFiles/MolSim.dir/src/outputWriter/vtk-unstructured.cpp.i: cmake_force
@@ -170,9 +212,12 @@ CMakeFiles/MolSim.dir/src/outputWriter/vtk-unstructured.cpp.s: cmake_force
 # Object files for target MolSim
 MolSim_OBJECTS = \
 "CMakeFiles/MolSim.dir/src/FileReader.cpp.o" \
+"CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.o" \
 "CMakeFiles/MolSim.dir/src/MolSim.cpp.o" \
 "CMakeFiles/MolSim.dir/src/Particle.cpp.o" \
 "CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o" \
+"CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.o" \
+"CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.o" \
 "CMakeFiles/MolSim.dir/src/outputWriter/VTKWriter.cpp.o" \
 "CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o" \
 "CMakeFiles/MolSim.dir/src/outputWriter/vtk-unstructured.cpp.o"
@@ -181,9 +226,12 @@ MolSim_OBJECTS = \
 MolSim_EXTERNAL_OBJECTS =
 
 MolSim: CMakeFiles/MolSim.dir/src/FileReader.cpp.o
+MolSim: CMakeFiles/MolSim.dir/src/ForceCalculator.cpp.o
 MolSim: CMakeFiles/MolSim.dir/src/MolSim.cpp.o
 MolSim: CMakeFiles/MolSim.dir/src/Particle.cpp.o
 MolSim: CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o
+MolSim: CMakeFiles/MolSim.dir/src/PositionCalculator.cpp.o
+MolSim: CMakeFiles/MolSim.dir/src/VelocityCalculator.cpp.o
 MolSim: CMakeFiles/MolSim.dir/src/outputWriter/VTKWriter.cpp.o
 MolSim: CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o
 MolSim: CMakeFiles/MolSim.dir/src/outputWriter/vtk-unstructured.cpp.o
@@ -191,7 +239,7 @@ MolSim: CMakeFiles/MolSim.dir/build.make
 MolSim: /usr/lib/x86_64-linux-gnu/libspdlog.so.1.9.2
 MolSim: /usr/lib/x86_64-linux-gnu/libfmt.so.8.1.1
 MolSim: CMakeFiles/MolSim.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable MolSim"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable MolSim"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MolSim.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

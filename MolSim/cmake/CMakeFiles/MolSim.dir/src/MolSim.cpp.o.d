@@ -136,12 +136,16 @@ CMakeFiles/MolSim.dir/src/MolSim.cpp.o: \
  /usr/include/c++/11/bits/charconv.h \
  /usr/include/c++/11/bits/basic_string.tcc \
  /home/kathi/Bachelor-Praktikum/MolSim/src/ParticleContainer.h \
- /usr/include/c++/11/forward_list /usr/include/c++/11/bits/forward_list.h \
- /usr/include/c++/11/ext/aligned_buffer.h \
- /usr/include/c++/11/bits/forward_list.tcc /usr/include/c++/11/list \
+ /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_uninitialized.h \
+ /usr/include/c++/11/bits/stl_vector.h \
+ /usr/include/c++/11/bits/stl_bvector.h \
+ /usr/include/c++/11/bits/vector.tcc /usr/include/c++/11/list \
  /usr/include/c++/11/bits/stl_list.h \
  /usr/include/c++/11/bits/allocated_ptr.h \
- /usr/include/c++/11/bits/list.tcc \
+ /usr/include/c++/11/ext/aligned_buffer.h \
+ /usr/include/c++/11/bits/list.tcc /usr/include/c++/11/forward_list \
+ /usr/include/c++/11/bits/forward_list.h \
+ /usr/include/c++/11/bits/forward_list.tcc \
  /home/kathi/Bachelor-Praktikum/MolSim/src/outputWriter/XYZWriter.h \
  /home/kathi/Bachelor-Praktikum/MolSim/src/ParticleContainer.h \
  /usr/include/c++/11/fstream /usr/include/c++/11/istream \
@@ -180,8 +184,7 @@ CMakeFiles/MolSim.dir/src/MolSim.cpp.o: \
  /usr/include/inttypes.h /usr/include/xercesc/util/XercesVersion.hpp \
  /home/kathi/Bachelor-Praktikum/MolSim/libs/libxsd/xsd/cxx/xml/exceptions.hxx \
  /home/kathi/Bachelor-Praktikum/MolSim/libs/libxsd/xsd/cxx/xml/char-utf8.txx \
- /usr/include/c++/11/memory /usr/include/c++/11/bits/stl_uninitialized.h \
- /usr/include/c++/11/bits/stl_tempbuf.h \
+ /usr/include/c++/11/memory /usr/include/c++/11/bits/stl_tempbuf.h \
  /usr/include/c++/11/bits/stl_raw_storage_iter.h \
  /usr/include/c++/11/bits/align.h /usr/include/c++/11/bit \
  /usr/include/c++/11/bits/uses_allocator.h \
@@ -196,9 +199,6 @@ CMakeFiles/MolSim.dir/src/MolSim.cpp.o: \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /usr/include/c++/11/pstl/execution_defs.h \
  /home/kathi/Bachelor-Praktikum/MolSim/libs/libxsd/xsd/cxx/tree/exceptions.hxx \
- /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_vector.h \
- /usr/include/c++/11/bits/stl_bvector.h \
- /usr/include/c++/11/bits/vector.tcc \
  /home/kathi/Bachelor-Praktikum/MolSim/libs/libxsd/xsd/cxx/exceptions.hxx \
  /home/kathi/Bachelor-Praktikum/MolSim/libs/libxsd/xsd/cxx/tree/exceptions.txx \
  /home/kathi/Bachelor-Praktikum/MolSim/libs/libxsd/xsd/cxx/tree/bits/literals.hxx \
@@ -368,18 +368,26 @@ CMakeFiles/MolSim.dir/src/MolSim.cpp.o: \
  /usr/include/c++/11/bits/stl_numeric.h \
  /usr/include/c++/11/pstl/glue_numeric_defs.h \
  /usr/include/c++/11/unordered_set \
- /usr/include/c++/11/bits/unordered_set.h /usr/include/spdlog/spdlog.h \
- /usr/include/spdlog/common.h /usr/include/spdlog/tweakme.h \
- /usr/include/spdlog/details/null_mutex.h /usr/include/c++/11/atomic \
- /usr/include/c++/11/chrono /usr/include/c++/11/ratio \
- /usr/include/c++/11/bits/parse_numbers.h /usr/include/spdlog/fmt/fmt.h \
- /usr/include/fmt/core.h /usr/include/fmt/format.h \
- /usr/include/fmt/core.h /usr/include/spdlog/details/registry.h \
- /usr/include/c++/11/mutex /usr/include/c++/11/bits/std_mutex.h \
+ /usr/include/c++/11/bits/unordered_set.h \
+ /home/kathi/Bachelor-Praktikum/MolSim/src/ForceCalculator.h \
+ /home/kathi/Bachelor-Praktikum/MolSim/src/VelocityCalculator.h \
+ /usr/include/spdlog/spdlog.h /usr/include/spdlog/common.h \
+ /usr/include/spdlog/tweakme.h /usr/include/spdlog/details/null_mutex.h \
+ /usr/include/c++/11/atomic /usr/include/c++/11/chrono \
+ /usr/include/c++/11/ratio /usr/include/c++/11/bits/parse_numbers.h \
+ /usr/include/spdlog/fmt/fmt.h /usr/include/fmt/core.h \
+ /usr/include/fmt/format.h /usr/include/fmt/core.h \
+ /usr/include/spdlog/details/registry.h /usr/include/c++/11/mutex \
+ /usr/include/c++/11/bits/std_mutex.h \
  /usr/include/c++/11/bits/unique_lock.h /usr/include/spdlog/logger.h \
  /usr/include/spdlog/details/log_msg.h \
  /usr/include/spdlog/details/backtracer.h \
  /usr/include/spdlog/details/log_msg_buffer.h \
  /usr/include/spdlog/details/circular_q.h /usr/include/spdlog/version.h \
  /usr/include/spdlog/details/synchronous_factory.h \
- /usr/include/c++/11/iostream
+ /home/kathi/Bachelor-Praktikum/MolSim/src/PositionCalculator.h \
+ /usr/include/c++/11/iostream \
+ /usr/include/spdlog/sinks/stdout_color_sinks.h \
+ /usr/include/spdlog/sinks/ansicolor_sink.h \
+ /usr/include/spdlog/details/console_globals.h \
+ /usr/include/spdlog/sinks/sink.h /usr/include/spdlog/formatter.h

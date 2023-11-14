@@ -18,20 +18,74 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a9e9629-41d9-4a87-8f36-c42b474c0fec" name="Changes" comment="after merge">
-      <change afterPath="$PROJECT_DIR$/MolSim/cmake/MolSim" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MolSim/src/ForceCalculator.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MolSim/src/ForceCalculator.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MolSim/src/PositionCalculator.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MolSim/src/PositionCalculator.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MolSim/src/VelocityCalculator.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MolSim/src/VelocityCalculator.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MolSim/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MolSim/src/MolSim.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/src/MolSim.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MolSim/src/ParticleContainer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/src/ParticleContainer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MolSim/src/ParticleContainer.h" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/src/ParticleContainer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MolSim/src/outputWriter/XYZWriter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/src/outputWriter/XYZWriter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MolSim/src/outputWriter/XYZWriter.h" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/src/outputWriter/XYZWriter.h" afterDir="false" />
+    <list default="true" id="8a9e9629-41d9-4a87-8f36-c42b474c0fec" name="Changes" comment="unit tests and mock tests">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/compiler_depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/compiler_depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/FileReader.cpp.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/FileReader.cpp.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/MolSim.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/MolSim.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/MolSim.cpp.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/MolSim.cpp.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/doc_doxygen.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/doc_doxygen.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/MolSim" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/MolSim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/compiler_depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/compiler_depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/compiler_depend.internal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/compiler_depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/compiler_depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/compiler_depend.internal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/lib/libgmock.a" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/lib/libgmock.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/lib/libgtest.a" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/lib/libgtest.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/compiler_depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/compiler_depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/tests.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/tests.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/tests.cpp.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/tests.cpp.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CTestTestfile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CTestTestfile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/tests" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/tests/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/tests/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/tests/tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/tests/tests.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,8 +139,8 @@
     "WebServerToolWindowFactoryState": "false",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "Merging kathi",
-    "last_opened_file_path": "/home/kathi/Bachelor-Praktikum/MolSim/src/MolSim.cpp",
+    "git-widget-placeholder": "kathi",
+    "last_opened_file_path": "/home/kathi/Bachelor-Praktikum/MolSim/tests",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -98,8 +152,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/MolSim/src" />
       <recent name="$PROJECT_DIR$/MolSim/tests" />
+      <recent name="$PROJECT_DIR$/MolSim/src" />
       <recent name="$PROJECT_DIR$/MolSim/cmake" />
     </key>
   </component>
@@ -155,7 +209,8 @@
       <workItem from="1699780387640" duration="2092000" />
       <workItem from="1699782532431" duration="2414000" />
       <workItem from="1699868241212" duration="2605000" />
-      <workItem from="1699880779221" duration="216000" />
+      <workItem from="1699880779221" duration="6009000" />
+      <workItem from="1699886854522" duration="21416000" />
     </task>
     <task id="LOCAL-00001" summary="generating vtk output files">
       <option name="closed" value="true" />
@@ -373,7 +428,31 @@
       <option name="project" value="LOCAL" />
       <updated>1699880856727</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="tests und doxygen documentation of functions">
+      <option name="closed" value="true" />
+      <created>1699961211114</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1699961211114</updated>
+    </task>
+    <task id="LOCAL-00029" summary="testing with mocktest">
+      <option name="closed" value="true" />
+      <created>1699967674083</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1699967674083</updated>
+    </task>
+    <task id="LOCAL-00030" summary="unit tests and mock tests">
+      <option name="closed" value="true" />
+      <created>1699979054779</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1699979054779</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -397,11 +476,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="gitignore and cmake with doxygen" />
-    <MESSAGE value="connection to make doc_doxygen" />
-    <MESSAGE value="generating Readme first version and including Doxygen in CmakeLists" />
-    <MESSAGE value="make doc_doxygen works" />
-    <MESSAGE value="made build_doxyygen as option; default value on" />
     <MESSAGE value="changing cmake and doxygen file" />
     <MESSAGE value="changed Readme content" />
     <MESSAGE value="doxygen generating html page and README as mainpage" />
@@ -422,6 +496,11 @@
     <MESSAGE value="for merging with main" />
     <MESSAGE value="Merge branch 'main' into kathi&#10;&#10;# Conflicts:&#10;#&#9;MolSim/src/MolSim.cpp&#10;" />
     <MESSAGE value="after merge" />
-    <option name="LAST_COMMIT_MESSAGE" value="after merge" />
+    <MESSAGE value="tests und doxygen documentation of functions" />
+    <MESSAGE value="testing with mocktest" />
+    <MESSAGE value="tests und doxygen" />
+    <MESSAGE value="unit tests and" />
+    <MESSAGE value="unit tests and mock tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="unit tests and mock tests" />
   </component>
 </project>

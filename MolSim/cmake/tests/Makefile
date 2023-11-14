@@ -65,16 +65,6 @@ CMAKE_BINARY_DIR = /home/kathi/Bachelor-Praktikum/MolSim/cmake
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
@@ -577,6 +567,126 @@ tests/fast:
 	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/build
 .PHONY : tests/fast
 
+__/src/ForceCalculator.o: __/src/ForceCalculator.cpp.o
+.PHONY : __/src/ForceCalculator.o
+
+# target to build an object file
+__/src/ForceCalculator.cpp.o:
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.o
+.PHONY : __/src/ForceCalculator.cpp.o
+
+__/src/ForceCalculator.i: __/src/ForceCalculator.cpp.i
+.PHONY : __/src/ForceCalculator.i
+
+# target to preprocess a source file
+__/src/ForceCalculator.cpp.i:
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.i
+.PHONY : __/src/ForceCalculator.cpp.i
+
+__/src/ForceCalculator.s: __/src/ForceCalculator.cpp.s
+.PHONY : __/src/ForceCalculator.s
+
+# target to generate assembly for a file
+__/src/ForceCalculator.cpp.s:
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.s
+.PHONY : __/src/ForceCalculator.cpp.s
+
+__/src/Particle.o: __/src/Particle.cpp.o
+.PHONY : __/src/Particle.o
+
+# target to build an object file
+__/src/Particle.cpp.o:
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/__/src/Particle.cpp.o
+.PHONY : __/src/Particle.cpp.o
+
+__/src/Particle.i: __/src/Particle.cpp.i
+.PHONY : __/src/Particle.i
+
+# target to preprocess a source file
+__/src/Particle.cpp.i:
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/__/src/Particle.cpp.i
+.PHONY : __/src/Particle.cpp.i
+
+__/src/Particle.s: __/src/Particle.cpp.s
+.PHONY : __/src/Particle.s
+
+# target to generate assembly for a file
+__/src/Particle.cpp.s:
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/__/src/Particle.cpp.s
+.PHONY : __/src/Particle.cpp.s
+
+__/src/ParticleContainer.o: __/src/ParticleContainer.cpp.o
+.PHONY : __/src/ParticleContainer.o
+
+# target to build an object file
+__/src/ParticleContainer.cpp.o:
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.o
+.PHONY : __/src/ParticleContainer.cpp.o
+
+__/src/ParticleContainer.i: __/src/ParticleContainer.cpp.i
+.PHONY : __/src/ParticleContainer.i
+
+# target to preprocess a source file
+__/src/ParticleContainer.cpp.i:
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.i
+.PHONY : __/src/ParticleContainer.cpp.i
+
+__/src/ParticleContainer.s: __/src/ParticleContainer.cpp.s
+.PHONY : __/src/ParticleContainer.s
+
+# target to generate assembly for a file
+__/src/ParticleContainer.cpp.s:
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/__/src/ParticleContainer.cpp.s
+.PHONY : __/src/ParticleContainer.cpp.s
+
+__/src/PositionCalculator.o: __/src/PositionCalculator.cpp.o
+.PHONY : __/src/PositionCalculator.o
+
+# target to build an object file
+__/src/PositionCalculator.cpp.o:
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.o
+.PHONY : __/src/PositionCalculator.cpp.o
+
+__/src/PositionCalculator.i: __/src/PositionCalculator.cpp.i
+.PHONY : __/src/PositionCalculator.i
+
+# target to preprocess a source file
+__/src/PositionCalculator.cpp.i:
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.i
+.PHONY : __/src/PositionCalculator.cpp.i
+
+__/src/PositionCalculator.s: __/src/PositionCalculator.cpp.s
+.PHONY : __/src/PositionCalculator.s
+
+# target to generate assembly for a file
+__/src/PositionCalculator.cpp.s:
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.s
+.PHONY : __/src/PositionCalculator.cpp.s
+
+__/src/VelocityCalculator.o: __/src/VelocityCalculator.cpp.o
+.PHONY : __/src/VelocityCalculator.o
+
+# target to build an object file
+__/src/VelocityCalculator.cpp.o:
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.o
+.PHONY : __/src/VelocityCalculator.cpp.o
+
+__/src/VelocityCalculator.i: __/src/VelocityCalculator.cpp.i
+.PHONY : __/src/VelocityCalculator.i
+
+# target to preprocess a source file
+__/src/VelocityCalculator.cpp.i:
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.i
+.PHONY : __/src/VelocityCalculator.cpp.i
+
+__/src/VelocityCalculator.s: __/src/VelocityCalculator.cpp.s
+.PHONY : __/src/VelocityCalculator.s
+
+# target to generate assembly for a file
+__/src/VelocityCalculator.cpp.s:
+	cd /home/kathi/Bachelor-Praktikum/MolSim/cmake && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/tests.dir/build.make tests/CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.s
+.PHONY : __/src/VelocityCalculator.cpp.s
+
 tests.o: tests.cpp.o
 .PHONY : tests.o
 
@@ -613,7 +723,6 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... test"
 	@echo "... Continuous"
 	@echo "... ContinuousBuild"
 	@echo "... ContinuousConfigure"
@@ -643,6 +752,21 @@ help:
 	@echo "... NightlyTest"
 	@echo "... NightlyUpdate"
 	@echo "... tests"
+	@echo "... __/src/ForceCalculator.o"
+	@echo "... __/src/ForceCalculator.i"
+	@echo "... __/src/ForceCalculator.s"
+	@echo "... __/src/Particle.o"
+	@echo "... __/src/Particle.i"
+	@echo "... __/src/Particle.s"
+	@echo "... __/src/ParticleContainer.o"
+	@echo "... __/src/ParticleContainer.i"
+	@echo "... __/src/ParticleContainer.s"
+	@echo "... __/src/PositionCalculator.o"
+	@echo "... __/src/PositionCalculator.i"
+	@echo "... __/src/PositionCalculator.s"
+	@echo "... __/src/VelocityCalculator.o"
+	@echo "... __/src/VelocityCalculator.i"
+	@echo "... __/src/VelocityCalculator.s"
 	@echo "... tests.o"
 	@echo "... tests.i"
 	@echo "... tests.s"
