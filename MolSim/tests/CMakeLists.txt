@@ -7,7 +7,6 @@ project(Tests)
 # GoogleTest requires at least C++14
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-include_directories(../src)
 include(FetchContent)
 FetchContent_Declare(
         googletest
@@ -32,8 +31,8 @@ set(gmock_build_include_dirs
         # This directory is needed to build directly from Google Test sources.
         "${gtest_SOURCE_DIR}")
 include_directories(${gmock_build_include_dirs})
-add_executable(tests Mocktests.cpp)
-target_link_libraries(tests gtest gmock ${GTEST_LIBRARIES} ${GMOCK_LIBRARIES} dl)
+add_executable(tests tests.cpp ../src/ParticleContainer.cpp ../src/Particle.cpp ../src/PositionCalculator.cpp ../src/VelocityCalculator.cpp ../src/ForceCalculator.cpp)
+target_link_libraries(tests gtest gmock ${GTEST_LIBRARIES} ${GMOCK_LIBRARIES} )
 enable_testing()
 add_test(tests tests)
 gtest_discover_tests(tests)

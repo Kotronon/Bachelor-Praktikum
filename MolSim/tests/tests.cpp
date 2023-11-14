@@ -11,10 +11,10 @@
 
 //@TODO write tests with TEST()
 //To compile tests write cmake --build . in terminal and afterwarts ctest works
-using ::testing::Mock;
+
 
 TEST(ParticleContainerTest, ParticleContainer){
-    ParticleContainer particles;
+    ParticleContainer particles = ParticleContainer();
     //test addParticle
     Particle particle({0, 0, 0}, {0, 3, 0}, 50, 0);
     particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0);
@@ -26,7 +26,7 @@ TEST(ParticleContainerTest, ParticleContainer){
     EXPECT_EQ(1, particles.size());
 }
 
-/*TEST(PositionTest, stroemerVelvet){
+TEST(PositionTest, stroemerVelvet){
     //Checking the correctness of the stoemer velvet position calculation
     //for force = 0
     ParticleContainer particles;
@@ -81,7 +81,7 @@ TEST(ForceTest, LennardJonesForce){
     std::vector<Particle>::iterator particleVector = particles.begin();
     EXPECT_EQ(res1, particleVector.base()->getF());
     EXPECT_EQ(res2, std::next(particleVector.base())->getF());
-}*/
+}
 
 int main(){
     testing::InitGoogleTest();
