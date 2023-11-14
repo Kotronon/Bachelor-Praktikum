@@ -10,6 +10,8 @@
 #include "PositionCalculator.h"
 #include <iostream>
 #include <string>
+#include "spdlog/sinks/stdout_color_sinks.h"
+
 
 /**
  * plot the particles to a xyz-file
@@ -33,15 +35,17 @@ double delta_t = 0.014;
 ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
-    spdlog::info("Hello from MolSim for PSE!");
+    auto console = spdlog::stdout_color_mt("consol_logger");
+    console->info("Hello from MolSim for PSE!");
     if (argc <= 2 || argc >= 8) {
-        spdlog::info("Erroneous programme call! ");
-        spdlog::info("./MolSim <filepath/filename> [options]");
-        spdlog::info("Options: ");
-        spdlog::info("-e : The end time of the simulation, default value is 1000");
-        spdlog::info("-d : ∆time of the simulation, default value is 0.014");
-        spdlog::info("-level : ∆the log leve, default is info");
+        console->info("Erroneous programme call! ");
+        console->info("./MolSim <filepath/filename> [options]");
+        console->info("Options: ");
+        console->info("-e : The end time of the simulation, default value is 1000");
+        console->info("-d : ∆time of the simulation, default value is 0.014");
+        console->info("-level : ∆the log leve, default is info");
     }
+
     // FileReader fileReader;
    //  FileReader::readFile(container, argsv[1]);
 
@@ -52,7 +56,7 @@ int main(int argc, char *argsv[]) {
         end_time = std::stod(getCmdOption(argsv, argsv + argc, "-e"));
     }
 
-    spdlog::info("end_time: ", end_time);
+    console->info("end_time: {}" , end_time);
 
     if(cmdOptionExists(argsv, argsv+argc, "-d"))
     {
@@ -62,22 +66,20 @@ int main(int argc, char *argsv[]) {
     {
         delta_t = std::stod(getCmdOption(argsv, argsv + argc, "-d"));
     }
-    spdlog::info("delta_time: ", delta_t);
-
-    if(cmdOptionExists(argsv, argsv+argc, "-level"))
+    console->info("delta_time: {}", delta_t);
     {
         std::string level = getCmdOption(argsv, argsv + argc, "-level");
-        if(level == "info") spdlog::set_level(spdlog::level::info);
-        if(level == "debug") spdlog::set_level(spdlog::level::debug);
-        if(level == "criticalr") spdlog::set_level(spdlog::level::critical);
-        if(level == "err") spdlog::set_level(spdlog::level::err);
-        if(level == "n_levels") spdlog::set_level(spdlog::level::n_levels);
-        if(level == "off") spdlog::set_level(spdlog::level::off);
-        if(level == "trace") spdlog::set_level(spdlog::level::trace);
-        if(level == "warn") spdlog::set_level(spdlog::level::warn);
+        if(level == "info") console->set_level(spdlog::level::info);
+        if(level == "debug") console->set_level(spdlog::level::debug);
+        if(level == "criticalr") console->set_level(spdlog::level::critical);
+        if(level == "err") console->set_level(spdlog::level::err);
+        if(level == "n_levels") console->set_level(spdlog::level::n_levels);
+        if(level == "off") console->set_level(spdlog::level::off);
+        if(level == "trace") console->set_level(spdlog::level::trace);
+        if(level == "warn") console->set_level(spdlog::level::warn);
     }
-    spdlog::info("log_level: ", spdlog::get_level());
-
+    console->info("log_level: {}", console->level());
+    console->dump_backtrace();
     double current_time = start_time;
 
     int iteration = 0;
@@ -86,7 +88,7 @@ int main(int argc, char *argsv[]) {
     ForceCalculator::SimpleForceCalculation(container);
 
     // for this loop, we assume: current x, current f and current v are known
-    while (current_time < 0) {
+    while (current_time < end_time) {
         // calculate new x
         PositionCalculator::PositionStoermerVerlet(container, delta_t);
         // calculate new f
@@ -98,13 +100,13 @@ int main(int argc, char *argsv[]) {
         if (iteration % 10 == 0) {
             plotParticles(iteration);
         }
-        spdlog::info("Iteration ", iteration, " finished.");
+        console->info("Iteration {} finished", iteration);
 
         current_time += delta_t;
     }
 
 
-    spdlog::info("output written. Terminating..." );
+    console->info("output written. Terminating..." );
 
     return 0;
 }

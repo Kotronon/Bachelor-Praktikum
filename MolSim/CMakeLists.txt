@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.14)
 
 # define project name, version
 project(PSEMolDyn_GroupH VERSION 0.0.1)
-enable_testing()
 add_subdirectory(tests)
 
 
@@ -135,10 +134,11 @@ endif()
 # cmake --log-level=<level> or --loglevel=<level> with level = ERROR, WARNING, NOTICE, STATUS (default), VERBOSE, DEBUG, or TRACE.
 #trys of setting log level
 set( CMAKE_MESSAGE_LOG_LEVEL "STATUS" )
-target_compile_definitions(MolSim PUBLIC DEBUG)
+target_compile_definitions(MolSim PUBLIC OFF)
 set(SPDLOG_INCLUDES_LEVEL "")
 if(SPDLOG_SYSTEM_INCLUDES)
     set(SPDLOG_INCLUDES_LEVEL "SYSTEM")
+    set(SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_OFF)
 endif()
 target_include_directories(MolSim ${SPDLOG_INCLUDES_LEVEL} PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")

@@ -6,6 +6,11 @@
 #include "ParticleContainer.h"
 #include "utils/ArrayUtils.h"
 
+
+/**
+ * Calculates the gravity force of all Particles in given ParticleContainer
+ * @param container
+ */
 void ForceCalculator::SimpleForceCalculation(ParticleContainer &container) {
     std::array<double, 3> force{};
     for (auto &p1: container) {
@@ -20,6 +25,12 @@ void ForceCalculator::SimpleForceCalculation(ParticleContainer &container) {
     }
 }
 
+/**
+ * Calculates the Lennord Jones force of all Particles in given ParticleContainer
+ * @param container
+ * @param eps
+ * @param sig
+ */
 void ForceCalculator::LennardJonesForce(ParticleContainer &container, double eps, double sig) {
     std::array<double, 3> force{};
     double L2Norm_p1_p2;
