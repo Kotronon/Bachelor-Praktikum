@@ -9,7 +9,6 @@
 #include "spdlog/spdlog.h"
 #include "calculations/PositionCalculator.h"
 #include <string>
-#include "spdlog/sinks/stdout_color_sinks.h"
 
 
 /**

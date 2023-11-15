@@ -6,7 +6,7 @@
 #define PSEMOLDYN_GROUPH_VELOCITYCALCULATOR_H
 
 
-#include "ParticleContainer.h"
+#include "../ParticleContainer.h"
 
 class VelocityCalculator {
 private:

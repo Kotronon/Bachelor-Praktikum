@@ -32,10 +32,9 @@ set(gmock_build_include_dirs
         # This directory is needed to build directly from Google Test sources.
         "${gtest_SOURCE_DIR}")
 include_directories(${gmock_build_include_dirs})
-add_executable(tests tests.cpp ../src/ParticleContainer.cpp ../src/Particle.cpp ../src/PositionCalculator.cpp ../src/VelocityCalculator.cpp ../src/ForceCalculator.cpp )
-include(GoogleTest)
+add_executable(tests tests.cpp ../src/ParticleContainer.cpp ../src/Particle.cpp ../src/calculations/PositionCalculator.cpp ../src/calculations/VelocityCalculator.cpp ../src/calculations/ForceCalculator.cpp )
 target_link_libraries(tests GTest::GTest GTest::Main ${GTEST_BOTH_LIBRARIES})
 target_link_libraries(tests gtest gtest_main)
-gtest_add_tests(TARGET tests TEST_PREFIX old:)
+gtest_add_tests(TARGET tests)
 gtest_discover_tests(tests)
-add_test(tests tests)
+#add_test(tests tests)

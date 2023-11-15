@@ -6,7 +6,7 @@
 #define PSEMOLDYN_GROUPH_POSITIONCALCULATOR_H
 
 
-#include "ParticleContainer.h"
+#include "../ParticleContainer.h"
 
 class PositionCalculator {
 private:

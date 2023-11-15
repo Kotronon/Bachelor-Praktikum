@@ -6,7 +6,7 @@
 #define PSEMOLDYN_GROUPH_FORCECALCULATOR_H
 
 
-#include "ParticleContainer.h"
+#include "../ParticleContainer.h"
 
 class ForceCalculator {
 private:

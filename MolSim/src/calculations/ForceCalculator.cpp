@@ -3,8 +3,8 @@
 //
 
 #include "ForceCalculator.h"
-#include "ParticleContainer.h"
-#include "utils/ArrayUtils.h"
+#include "../ParticleContainer.h"
+#include "../utils/ArrayUtils.h"
 
 
 /**
