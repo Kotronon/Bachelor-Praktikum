@@ -61,38 +61,28 @@ TEST(ForceTest, SimpleForceCalculation){
     ParticleContainer particles;
     particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0);
     particles.addParticle({0, 3, 0}, {4, 3, 5}, 20, 0);
-    std::array<double, 3> res1 = {0, 111.111, 0};
-    std::array<double, 3> res2 = {0, -111.111, 0};
+    double res = (50.0*20.0*3.0)/27.0;
+    std::array<double, 3> res1 = {0, res, 0};
+    std::array<double, 3> res2 = {0, -res, 0};
     ForceCalculator calculator;
     calculator.SimpleForceCalculation(particles);
     std::vector<Particle>::iterator particleVector = particles.begin();
-    double x1;
-    double x2;
-    for (size_t i=0; i<3; i++) {
-        x1 = (res1[i] - particleVector.base()->getF()[i]);
-        x2 = (res1[i] - std::next(particleVector.base())->getF()[i]);
-    }
-    EXPECT_EQ(x1, 0);
-    EXPECT_EQ(x2, 0);
+    EXPECT_EQ(res1, particleVector.base()->getF());
+    EXPECT_EQ(res2, std::next(particleVector.base())->getF());
 }
 
 TEST(ForceTest, LennardJonesForce){
     ParticleContainer particles;
     particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0);
     particles.addParticle({0, 3, 0}, {4, 3, 5}, 20, 0);
-    std::array<double, 3> res1 = {0, 0.0109438, 0};
-    std::array<double, 3> res2 = {0, -0.0109438, 0};
+    double res = (24.0/9.0)*(pow(1.0/3.0, 6.0)-2*pow(1.0/3.0, 12.0)) * 3;
+    std::array<double, 3> res1 = {0, res, 0};
+    std::array<double, 3> res2 = {0, -res, 0};
     ForceCalculator calculator;
     calculator.LennardJonesForce(particles, 1, 1);
     std::vector<Particle>::iterator particleVector = particles.begin();
-    double x1;
-    double x2;
-    for (size_t i=0; i<3; i++) {
-        x1 = (res1[i] - particleVector.base()->getF()[i]);
-        x2 = (res1[i] - std::next(particleVector.base())->getF()[i]);
-    }
-    EXPECT_EQ(x1, 0);
-    EXPECT_EQ(x2, 0);
+    EXPECT_EQ(res1, particleVector.base()->getF());
+    EXPECT_EQ(res2, std::next(particleVector.base())->getF());
 }
 
 int main(){
