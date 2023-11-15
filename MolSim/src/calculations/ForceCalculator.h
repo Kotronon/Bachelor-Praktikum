@@ -12,7 +12,7 @@ class ForceCalculator {
 private:
 public:
     static void SimpleForceCalculation(ParticleContainer &container);
-    void LennardJonesForce(ParticleContainer &container, double eps, double sig);
+    static void LennardJonesForce(ParticleContainer &container, double eps, double sig);
 };
 
 

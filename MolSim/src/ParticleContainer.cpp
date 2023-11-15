@@ -44,7 +44,7 @@ void ParticleContainer::addParticleContainer(ParticleContainer &container) {
     std::cout << "Added particles contained in other container to this container!" << std::endl;
 }
 
-void ParticleContainer::applyForce(const std::function<void()>& forceCalculation){
+void ParticleContainer::applyForcePairwise(const std::function<void()>& forceCalculation){
 
 }
 

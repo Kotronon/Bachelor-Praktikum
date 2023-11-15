@@ -8,8 +8,9 @@
 #include "utils/MaxwellBoltzmannDistribution.h"
 
 void VelocityCalculator::BrownianMotionInitialization(ParticleContainer &container, double avg_v, int dim) {
-    std::array<double, 3> brownian_motion = maxwellBoltzmannDistributedVelocity(avg_v, dim);
+    std::array<double, 3> brownian_motion{};
     for (auto &p: container) {
+        brownian_motion = maxwellBoltzmannDistributedVelocity(avg_v, dim);
         p.setV(p.getV() + brownian_motion);
     }
 }

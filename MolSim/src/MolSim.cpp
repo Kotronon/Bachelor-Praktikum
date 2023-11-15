@@ -3,6 +3,7 @@
 #include "outputWriter/XYZWriter.h"
 #include "outputWriter/VTKWriter.h"
 #include "ParticleContainer.h"
+#include "ParticleGenerator.h"
 #include "calculations/ForceCalculator.h"
 #include "calculations/VelocityCalculator.h"
 #include "spdlog/spdlog.h"
@@ -24,53 +25,69 @@ char* getCmdOption(char ** begin, char ** end, const std::string & option);
  */
 bool cmdOptionExists(char** begin, char** end, const std::string& option);
 
+//Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 1000;
-double delta_t = 0.014;
 double avg_v = 0.1;
 int dim = 3;
-
+int eps = 5;
+int sig = 1;
+//Creation of particle container to be filled with all relevant particles
 ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
     spdlog::info("Hello from MolSim for PSE!");
-    if (argc <= 2 || argc >= 8) {
+    if (argc <= 3 || ((argc - 3)%6 != 0 && (argc - 4)%6 != 0)) {
         spdlog::info("Erroneous programme call! ");
-        spdlog::info("./MolSim <filepath/filename> [options]");
+        spdlog::info("./MolSim end_time delta_time [options]");
+
+        spdlog::info("Parameters: ");
+        spdlog::info("end_time: The end time of the simulation");
+        spdlog::info("delta_time: ∆time of the simulation");
+
         spdlog::info("Options: ");
-        spdlog::info("-e : The end time of the simulation, default value is 1000");
-        spdlog::info("-d : ∆time of the simulation, default value is 0.014");
+        spdlog::info("-f : The filepath and filename of the file to be used in the simulation in the format filepath/filename");
+        spdlog::info("-c : Create and add a cuboid to the simulation. Has to be followed by 5 specific values describing the cuboid:");
+        spdlog::info(" -> the coordinate of the lower left front-side corner of the cuboid with each values separated by a comma (x,y,z)");
+        spdlog::info(" -> the initial velocity of all particles in the cuboid, each value separated by a comma (x,y,z)");
+        spdlog::info(" -> the number of particles per dimension in the cuboid, each value separated by a comma (N_x,N_y,N_z)");
+        spdlog::info(" -> the distance h of the particles");
+        spdlog::info(" -> the mass of one particle in the cuboid");
     }
-    //TODO: delta_t and end_time NOT optional anymore
 
     //TODO: Add input for file and/or cuboid
-    FileReader fileReader;
-    FileReader::readFile(container, argsv[1]);
 
-
-    //Getting end time and delta t command options if specified
-
-    if(cmdOptionExists(argsv, argsv+argc, "-e"))
-    {
-        end_time = std::stod(getCmdOption(argsv, argsv + argc, "-e"));
-    }
-
+    //Getting parameters end_time and delta_t
+    double end_time = std::stod(argsv[1]);
     spdlog::info("end_time: ", end_time);
 
-    if(cmdOptionExists(argsv, argsv+argc, "-d"))
-    {
-        delta_t = std::stod(getCmdOption(argsv, argsv + argc, "-d"));
-    }
-
+    double delta_t = std::stod(argsv[2]);
     spdlog::info("delta_time: ", delta_t);
 
+    //Check for optional file input
+    if(cmdOptionExists(argsv, argsv+argc, "-f"))
+    {
+        FileReader fileReader;
+        FileReader::readFile(container, getCmdOption(argsv, argsv + argc, "-f"));
+        spdlog::info("Read given file");
+    }
+
+    /*
+    //Check for additional cuboids to be created
+    if(cmdOptionExists(argsv + 3, argsv+argc, "-c"))
+    {
+        //TODO: Get list of values instead of only one
+        char* values = getCmdOption(argsv + 3, argsv + argc, "-c");
+
+        //char* coordinate = strtok()
+        //ParticleContainer cuboid = ParticleGenerator::createCuboid();
+    }
+    */
 
     double current_time = start_time;
-
     int iteration = 0;
 
     //Pre-calculation of f
-    ForceCalculator::SimpleForceCalculation(container);
+    ForceCalculator::LennardJonesForce(container, eps, sig);
     //Initialization with Brownian Motion
     VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
     //For this loop, we assume: current x, current f and current v are known
@@ -78,7 +95,7 @@ int main(int argc, char *argsv[]) {
         // calculate new x
         PositionCalculator::PositionStoermerVerlet(container, delta_t);
         // calculate new f
-        ForceCalculator::SimpleForceCalculation(container);
+        ForceCalculator::LennardJonesForce(container, eps, sig);
         // calculate new v
         VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
 
