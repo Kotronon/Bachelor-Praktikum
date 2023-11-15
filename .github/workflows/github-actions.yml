@@ -19,7 +19,7 @@ jobs:
 
   run-tests:
     runs-on: ubuntu-latest
-      - steps:
+    steps:
       - name : compile gtest
         run : g++ tests -I$GOOGLETESTDIR/include -L$GOOGLETESTDIR/lib -lgtest -lpthread -fsanitize=address
 
