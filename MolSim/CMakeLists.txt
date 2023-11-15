@@ -96,7 +96,6 @@ if(BUILD_DOC)
 else(BUILD_DOC)
     message("Doxygen won't start")
 endif (BUILD_DOC)
-unset(BUILD_DOC CACHE)
 
 
 ## logging
@@ -146,13 +145,10 @@ endif()
 target_include_directories(MolSim ${SPDLOG_INCLUDES_LEVEL} PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
 
-option(PACKAGE_TESTS "Build the tests" ON)
+option(PACKAGE_TESTS "Build the tests" off)
 
-if(PACKAGE_TESTS)
-    enable_testing()
-    find_package(GTest REQUIRED)
-    include(GoogleTest)
-    include(CTest)
-    add_subdirectory(tests)
+ if(PACKAGE_TESTS)
 
-endif()
+   add_subdirectory(tests)
+
+ endif()
