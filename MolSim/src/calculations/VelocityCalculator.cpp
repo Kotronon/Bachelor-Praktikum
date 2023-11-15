@@ -7,15 +7,16 @@
 #include "utils/ArrayUtils.h"
 #include "utils/MaxwellBoltzmannDistribution.h"
 
-
 /**
  * Calculation of the new velocity of all molecule in the given ParticleContainer according to Brownian Motion Initialization
  * @param container
  * @param avg_v
  */
-void VelocityCalculator::BrownianMotionInitialization(ParticleContainer &container, double avg_v) {
+void VelocityCalculator::BrownianMotionInitialization(ParticleContainer &container, double avg_v, int dim) {
+    std::array<double, 3> brownian_motion{};
     for (auto &p: container) {
-        p.setV(maxwellBoltzmannDistributedVelocity(avg_v, 3));
+        brownian_motion = maxwellBoltzmannDistributedVelocity(avg_v, dim);
+        p.setV(p.getV() + brownian_motion);
     }
 }
 

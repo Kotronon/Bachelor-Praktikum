@@ -6,6 +6,7 @@
 #define PSEMOLDYN_GROUPH_PARTICLECONTAINER_H
 
 #include <vector>
+#include <functional>
 #include "Particle.h"
 
 class ParticleContainer {
@@ -33,6 +34,10 @@ public:
     std::vector<Particle>::iterator begin();
 
     std::vector<Particle>::iterator end();
+
+    void addParticleContainer(ParticleContainer &container);
+
+    void applyForcePairwise(const std::function<void()> &forceCalculation);
 };
 
 

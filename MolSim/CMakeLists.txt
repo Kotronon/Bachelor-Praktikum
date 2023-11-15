@@ -27,12 +27,15 @@ file(GLOB_RECURSE MY_SRC
 add_executable(MolSim ${MY_SRC}
         src/ParticleContainer.cpp
         src/ParticleContainer.h
-        src/ForceCalculator.cpp
-        src/ForceCalculator.h
-        src/VelocityCalculator.cpp
-        src/VelocityCalculator.h
-        src/PositionCalculator.cpp
-        src/PositionCalculator.h)
+        src/calculations/ForceCalculator.cpp
+        src/calculations/ForceCalculator.h
+        src/calculations/VelocityCalculator.cpp
+        src/calculations/VelocityCalculator.h
+        src/calculations/PositionCalculator.cpp
+        src/calculations/PositionCalculator.h
+        src/ParticleGenerator.cpp
+        src/ParticleGenerator.h
+)
 
 # set cxx standard. You may raise this if you want.
 target_compile_features(MolSim

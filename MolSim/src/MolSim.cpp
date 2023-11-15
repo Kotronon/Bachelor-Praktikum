@@ -2,13 +2,12 @@
 #include "FileReader.h"
 #include "outputWriter/XYZWriter.h"
 #include "outputWriter/VTKWriter.h"
-#include "utils/ArrayUtils.h"
 #include "ParticleContainer.h"
-#include "ForceCalculator.h"
-#include "VelocityCalculator.h"
+#include "ParticleGenerator.h"
+#include "calculations/ForceCalculator.h"
+#include "calculations/VelocityCalculator.h"
 #include "spdlog/spdlog.h"
-#include "PositionCalculator.h"
-#include <iostream>
+#include "calculations/PositionCalculator.h"
 #include <string>
 #include "spdlog/sinks/stdout_color_sinks.h"
 
@@ -28,71 +27,77 @@ char* getCmdOption(char ** begin, char ** end, const std::string & option);
  */
 bool cmdOptionExists(char** begin, char** end, const std::string& option);
 
+//Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 1000;
-double delta_t = 0.014;
-
+double avg_v = 0.1;
+int dim = 3;
+int eps = 5;
+int sig = 1;
+//Creation of particle container to be filled with all relevant particles
 ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
-    auto console = spdlog::stdout_color_mt("consol_logger");
-    console->info("Hello from MolSim for PSE!");
-    if (argc <= 2 || argc >= 8) {
-        console->info("Erroneous programme call! ");
-        console->info("./MolSim <filepath/filename> [options]");
-        console->info("Options: ");
-        console->info("-e : The end time of the simulation, default value is 1000");
-        console->info("-d : ∆time of the simulation, default value is 0.014");
-        console->info("-level : ∆the log leve, default is info");
+    spdlog::info("Hello from MolSim for PSE!");
+    if (argc <= 3 || ((argc - 3)%6 != 0 && (argc - 4)%6 != 0)) {
+        spdlog::info("Erroneous programme call! ");
+        spdlog::info("./MolSim end_time delta_time [options]");
+
+        spdlog::info("Parameters: ");
+        spdlog::info("end_time: The end time of the simulation");
+        spdlog::info("delta_time: ∆time of the simulation");
+
+        spdlog::info("Options: ");
+        spdlog::info("-f : The filepath and filename of the file to be used in the simulation in the format filepath/filename");
+        spdlog::info("-c : Create and add a cuboid to the simulation. Has to be followed by 5 specific values describing the cuboid:");
+        spdlog::info(" -> the coordinate of the lower left front-side corner of the cuboid with each values separated by a comma (x,y,z)");
+        spdlog::info(" -> the initial velocity of all particles in the cuboid, each value separated by a comma (x,y,z)");
+        spdlog::info(" -> the number of particles per dimension in the cuboid, each value separated by a comma (N_x,N_y,N_z)");
+        spdlog::info(" -> the distance h of the particles");
+        spdlog::info(" -> the mass of one particle in the cuboid");
     }
 
-    // FileReader fileReader;
-   //  FileReader::readFile(container, argsv[1]);
+    //TODO: Add input for file and/or cuboid
 
-    //Getting end time and delta t command options if specified
+    //Getting parameters end_time and delta_t
+    double end_time = std::stod(argsv[1]);
+    spdlog::info("end_time: ", end_time);
 
-    if(cmdOptionExists(argsv, argsv+argc, "-e"))
+    double delta_t = std::stod(argsv[2]);
+    spdlog::info("delta_time: ", delta_t);
+
+    //Check for optional file input
+    if(cmdOptionExists(argsv, argsv+argc, "-f"))
     {
-        end_time = std::stod(getCmdOption(argsv, argsv + argc, "-e"));
+        FileReader fileReader;
+        FileReader::readFile(container, getCmdOption(argsv, argsv + argc, "-f"));
+        spdlog::info("Read given file");
     }
 
-    console->info("end_time: {}" , end_time);
+    /*
+    //Check for additional cuboids to be created
+    if(cmdOptionExists(argsv + 3, argsv+argc, "-c"))
+    {
+        //TODO: Get list of values instead of only one
+        char* values = getCmdOption(argsv + 3, argsv + argc, "-c");
 
-    if(cmdOptionExists(argsv, argsv+argc, "-d"))
-    {
-        delta_t = std::stod(getCmdOption(argsv, argsv + argc, "-d"));
+        //char* coordinate = strtok()
+        //ParticleContainer cuboid = ParticleGenerator::createCuboid();
     }
-    if(cmdOptionExists(argsv, argsv+argc, "-d"))
-    {
-        delta_t = std::stod(getCmdOption(argsv, argsv + argc, "-d"));
-    }
-    console->info("delta_time: {}", delta_t);
-    {
-        std::string level = getCmdOption(argsv, argsv + argc, "-level");
-        if(level == "info") console->set_level(spdlog::level::info);
-        if(level == "debug") console->set_level(spdlog::level::debug);
-        if(level == "criticalr") console->set_level(spdlog::level::critical);
-        if(level == "err") console->set_level(spdlog::level::err);
-        if(level == "n_levels") console->set_level(spdlog::level::n_levels);
-        if(level == "off") console->set_level(spdlog::level::off);
-        if(level == "trace") console->set_level(spdlog::level::trace);
-        if(level == "warn") console->set_level(spdlog::level::warn);
-    }
-    console->info("log_level: {}", console->level());
-    console->dump_backtrace();
+    */
+
     double current_time = start_time;
-
     int iteration = 0;
 
-    //pre-calculation of f
-    ForceCalculator::SimpleForceCalculation(container);
-
-    // for this loop, we assume: current x, current f and current v are known
+    //Pre-calculation of f
+    ForceCalculator::LennardJonesForce(container, eps, sig);
+    //Initialization with Brownian Motion
+    VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
+    //For this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
         // calculate new x
         PositionCalculator::PositionStoermerVerlet(container, delta_t);
         // calculate new f
-        ForceCalculator::SimpleForceCalculation(container);
+        ForceCalculator::LennardJonesForce(container, eps, sig);
         // calculate new v
         VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
 
@@ -100,14 +105,13 @@ int main(int argc, char *argsv[]) {
         if (iteration % 10 == 0) {
             plotParticles(iteration);
         }
-        console->info("Iteration {} finished", iteration);
+        spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
 
         current_time += delta_t;
     }
 
 
-    console->info("output written. Terminating..." );
-
+    spdlog::info("output written. Terminating..." );
     return 0;
 }
 
@@ -115,8 +119,8 @@ void plotParticles(int iteration) {
 
     std::string out_name("MD_vtk");
 
-    outputWriter::XYZWriter writer;
-    outputWriter::XYZWriter::plotParticles(container, out_name, iteration);
+    //outputWriter::XYZWriter writer;
+    //outputWriter::XYZWriter::plotParticles(container, out_name, iteration);
 
     outputWriter::VTKWriter writer2;
     writer2.initializeOutput(container.size());

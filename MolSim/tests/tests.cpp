@@ -1,10 +1,9 @@
 
 #include <gtest/gtest.h>
-#include "gmock/gmock.h"
 #include "../src/ParticleContainer.h"
-#include "../src/PositionCalculator.h"
-#include "../src/VelocityCalculator.h"
-#include "../src/ForceCalculator.h"
+#include "../src/calculations/PositionCalculator.h"
+#include "../src/calculations/VelocityCalculator.h"
+#include "../src/calculations/ForceCalculator.h"
 #include "../src/Particle.h"
 
 
