@@ -30,3 +30,16 @@ bin/
 
 # Ignore all `library.jar` in `bin` dir
 */bin/library.jar
+
+# Ignore unnecessary cmake files
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps

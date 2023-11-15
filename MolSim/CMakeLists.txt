@@ -145,6 +145,7 @@ endif()
 target_include_directories(MolSim ${SPDLOG_INCLUDES_LEVEL} PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
 
+#[[
 option(PACKAGE_TESTS "Build the tests" off)
 
  if(PACKAGE_TESTS)
@@ -152,3 +153,4 @@ option(PACKAGE_TESTS "Build the tests" off)
    add_subdirectory(tests)
 
  endif()
+]]
