@@ -4,9 +4,7 @@
 #include "../src/calculations/PositionCalculator.h"
 #include "../src/calculations/VelocityCalculator.h"
 #include "../src/calculations/ForceCalculator.h"
-#include "../src/Particle.h"
 #include <math.h>
-
 
 
 //@TODO write tests with TEST()
@@ -32,27 +30,25 @@ TEST(PositionTest, stroemerVelvet){
     ParticleContainer particles;
     particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0);
     std::array<double, 3> res = {0, 0.042, 0};
-    PositionCalculator calculator;
-    calculator.PositionStoermerVerlet(particles, 0.014);
+    PositionCalculator::PositionStoermerVerlet(particles, 0.014);
     std::vector<Particle>::iterator particleVector =  particles.begin();
     EXPECT_EQ(res, particleVector.base()->getX());
 
 }
 
-TEST(VelocityTest, BrownianMotionInitialization){
+/*TEST(VelocityTest, BrownianMotionInitialization){
     //Checking the correctness of the Brownian Motion Initialization velocity calculation
     ParticleContainer particles;
     particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0);
 }
-
+*/
 TEST(VelocityTest, stroemerVelvet) {
     //Checking the correctness of the stoemer velvet velocity calculation
     //for force = 0
     ParticleContainer particles;
     particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0);
     std::array<double, 3> res = {0, 3, 0};
-    VelocityCalculator calculator;
-    calculator.VelocityStoermerVerlet(particles, 0.014);
+    VelocityCalculator::VelocityStoermerVerlet(particles, 0.014);
     std::vector<Particle>::iterator particleVector = particles.begin();
     EXPECT_EQ(res, particleVector.base()->getV());
 }
@@ -64,8 +60,7 @@ TEST(ForceTest, SimpleForceCalculation){
     double res = (50.0*20.0*3.0)/27.0;
     std::array<double, 3> res1 = {0, res, 0};
     std::array<double, 3> res2 = {0, -res, 0};
-    ForceCalculator calculator;
-    calculator.SimpleForceCalculation(particles);
+    ForceCalculator::SimpleForceCalculation(particles);
     std::vector<Particle>::iterator particleVector = particles.begin();
     EXPECT_EQ(res1, particleVector.base()->getF());
     EXPECT_EQ(res2, std::next(particleVector.base())->getF());
@@ -78,8 +73,7 @@ TEST(ForceTest, LennardJonesForce){
     double res = (24.0/9.0)*(pow(1.0/3.0, 6.0)-2*pow(1.0/3.0, 12.0)) * 3;
     std::array<double, 3> res1 = {0, res, 0};
     std::array<double, 3> res2 = {0, -res, 0};
-    ForceCalculator calculator;
-    calculator.LennardJonesForce(particles, 1, 1);
+    ForceCalculator::LennardJonesForce(particles, 1, 1);
     std::vector<Particle>::iterator particleVector = particles.begin();
     EXPECT_EQ(res1, particleVector.base()->getF());
     EXPECT_EQ(res2, std::next(particleVector.base())->getF());

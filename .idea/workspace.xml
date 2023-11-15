@@ -10,42 +10,7 @@
     <option name="reloaded" value="true" />
   </component>
   <component name="CMakeRunConfigurationManager">
-    <generated>
-      <config projectName="PSEMolDyn_GroupH" targetName="ContinuousMemCheck" />
-      <config projectName="PSEMolDyn_GroupH" targetName="ExperimentalConfigure" />
-      <config projectName="PSEMolDyn_GroupH" targetName="ExperimentalTest" />
-      <config projectName="PSEMolDyn_GroupH" targetName="ExperimentalBuild" />
-      <config projectName="PSEMolDyn_GroupH" targetName="gmock_main" />
-      <config projectName="PSEMolDyn_GroupH" targetName="Continuous" />
-      <config projectName="PSEMolDyn_GroupH" targetName="NightlyMemoryCheck" />
-      <config projectName="PSEMolDyn_GroupH" targetName="NightlyStart" />
-      <config projectName="PSEMolDyn_GroupH" targetName="ContinuousStart" />
-      <config projectName="PSEMolDyn_GroupH" targetName="doc_doxygen" />
-      <config projectName="PSEMolDyn_GroupH" targetName="ContinuousTest" />
-      <config projectName="PSEMolDyn_GroupH" targetName="NightlyCoverage" />
-      <config projectName="PSEMolDyn_GroupH" targetName="ContinuousSubmit" />
-      <config projectName="PSEMolDyn_GroupH" targetName="ExperimentalUpdate" />
-      <config projectName="PSEMolDyn_GroupH" targetName="gtest" />
-      <config projectName="PSEMolDyn_GroupH" targetName="ContinuousConfigure" />
-      <config projectName="PSEMolDyn_GroupH" targetName="Nightly" />
-      <config projectName="PSEMolDyn_GroupH" targetName="ExperimentalMemCheck" />
-      <config projectName="PSEMolDyn_GroupH" targetName="gmock" />
-      <config projectName="PSEMolDyn_GroupH" targetName="ExperimentalCoverage" />
-      <config projectName="PSEMolDyn_GroupH" targetName="NightlyUpdate" />
-      <config projectName="PSEMolDyn_GroupH" targetName="NightlyBuild" />
-      <config projectName="PSEMolDyn_GroupH" targetName="ContinuousUpdate" />
-      <config projectName="PSEMolDyn_GroupH" targetName="NightlySubmit" />
-      <config projectName="PSEMolDyn_GroupH" targetName="ExperimentalStart" />
-      <config projectName="PSEMolDyn_GroupH" targetName="NightlyMemCheck" />
-      <config projectName="PSEMolDyn_GroupH" targetName="gtest_main" />
-      <config projectName="PSEMolDyn_GroupH" targetName="tests" />
-      <config projectName="PSEMolDyn_GroupH" targetName="ContinuousBuild" />
-      <config projectName="PSEMolDyn_GroupH" targetName="ContinuousCoverage" />
-      <config projectName="PSEMolDyn_GroupH" targetName="Experimental" />
-      <config projectName="PSEMolDyn_GroupH" targetName="NightlyTest" />
-      <config projectName="PSEMolDyn_GroupH" targetName="ExperimentalSubmit" />
-      <config projectName="PSEMolDyn_GroupH" targetName="NightlyConfigure" />
-    </generated>
+    <generated />
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -53,11 +18,73 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a9e9629-41d9-4a87-8f36-c42b474c0fec" name="Changes" comment="Big merge with updated calculations and MolSim simulation">
+    <list default="true" id="8a9e9629-41d9-4a87-8f36-c42b474c0fec" name="Changes" comment="cmake changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MolSim/src/MolSim.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/src/MolSim.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MolSim/src/ParticleContainer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/src/ParticleContainer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MolSim/src/ParticleContainer.h" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/src/ParticleContainer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/CMakeRuleHashes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/CMakeRuleHashes.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/compiler_depend.internal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/FileReader.cpp.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/FileReader.cpp.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/MolSim.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/MolSim.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/MolSim.cpp.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/MolSim.cpp.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/Particle.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/Particle.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/Particle.cpp.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/Particle.cpp.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/ParticleContainer.cpp.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/outputWriter/VTKWriter.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/outputWriter/VTKWriter.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/MolSim.dir/src/outputWriter/XYZWriter.cpp.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/doc_doxygen.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/doc_doxygen.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/MolSim" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/MolSim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/compiler_depend.internal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googlemock/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/compiler_depend.internal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/_deps/googletest-build/googletest/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/lib/libgmock.a" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/lib/libgmock.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/lib/libgtest.a" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/lib/libgtest.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/compiler_depend.internal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/tests.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/tests.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/tests.cpp.o.d" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/tests.cpp.o.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CTestTestfile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CTestTestfile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/tests/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/tests/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MolSim/tests/tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/tests/tests.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,27 +130,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "ctest.advertisement.all.test.configuration.is.created": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/kathi/Bachelor-Praktikum/MolSim/tests",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.fileTypes",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/kathi/Bachelor-Praktikum/MolSim/tests&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/MolSim/tests" />
@@ -131,197 +156,15 @@
       <recent name="$PROJECT_DIR$/MolSim/cmake" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.MolSim">
-    <configuration name="tests" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="PSEMolDyn_GroupH" RUN_TARGET_NAME="tests" TEST_MODE="SUITE_TEST">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-        <option name="BeforeTestRunTask" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="C/C++ File.Program">
     <configuration name="CMakeList" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_PATH="CMakeLists.txt" EXPLICIT_BUILD_TARGET_NAME="all">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Continuous" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="Continuous" CONFIG_NAME="Debug">
+    <configuration name="MolSim" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" RUN_PATH="MolSim" EXPLICIT_BUILD_TARGET_NAME="all">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ContinuousBuild" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ContinuousBuild" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ContinuousConfigure" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ContinuousConfigure" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ContinuousCoverage" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ContinuousCoverage" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ContinuousMemCheck" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ContinuousMemCheck" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ContinuousStart" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ContinuousStart" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ContinuousSubmit" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ContinuousSubmit" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ContinuousTest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ContinuousTest" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ContinuousUpdate" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ContinuousUpdate" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Experimental" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="Experimental" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ExperimentalBuild" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ExperimentalBuild" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ExperimentalConfigure" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ExperimentalConfigure" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ExperimentalCoverage" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ExperimentalCoverage" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ExperimentalMemCheck" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ExperimentalMemCheck" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ExperimentalStart" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ExperimentalStart" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ExperimentalSubmit" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ExperimentalSubmit" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ExperimentalTest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ExperimentalTest" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ExperimentalUpdate" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="ExperimentalUpdate" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MolSim" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="5 0.0002" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_PATH="MolSim" EXPLICIT_BUILD_TARGET_NAME="all">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Nightly" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="Nightly" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NightlyBuild" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="NightlyBuild" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NightlyConfigure" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="NightlyConfigure" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NightlyCoverage" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="NightlyCoverage" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NightlyMemCheck" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="NightlyMemCheck" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NightlyMemoryCheck" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="NightlyMemoryCheck" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NightlyStart" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="NightlyStart" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NightlySubmit" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="NightlySubmit" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NightlyTest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="NightlyTest" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NightlyUpdate" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="NightlyUpdate" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="doc_doxygen" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="doc_doxygen" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="gmock" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="gmock" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="gmock_main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="gmock_main" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="gtest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="gtest" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="gtest_main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn_GroupH" TARGET_NAME="gtest_main" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="All CTest" type="CTestRunConfiguration" factoryName="CTestRun" PROGRAM_PARAMS="--extra-verbose" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$CMakeCurrentLocalGenerationDir$" PASS_PARENT_ENVS_2="true" RUN_PATH="$CTestCurrentExecutableName$" EXPLICIT_BUILD_TARGET_NAME="all" TEST_MODE="SUITE_TEST">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-        <option name="BeforeTestRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="Program" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$/MolSim" PASS_PARENT_ENVS_2="true" PROJECT_NAME="PSEMolDyn" TARGET_NAME="MolSim.cpp - Default" CONFIG_NAME="Program">
@@ -334,42 +177,7 @@
     <list>
       <item itemvalue="C/C++ File.Program" />
       <item itemvalue="CMake Application.CMakeList" />
-      <item itemvalue="CMake Application.Continuous" />
-      <item itemvalue="CMake Application.ContinuousBuild" />
-      <item itemvalue="CMake Application.ContinuousConfigure" />
-      <item itemvalue="CMake Application.ContinuousCoverage" />
-      <item itemvalue="CMake Application.ContinuousMemCheck" />
-      <item itemvalue="CMake Application.ContinuousStart" />
-      <item itemvalue="CMake Application.ContinuousSubmit" />
-      <item itemvalue="CMake Application.ContinuousTest" />
-      <item itemvalue="CMake Application.ContinuousUpdate" />
-      <item itemvalue="CMake Application.doc_doxygen" />
-      <item itemvalue="CMake Application.Experimental" />
-      <item itemvalue="CMake Application.ExperimentalBuild" />
-      <item itemvalue="CMake Application.ExperimentalConfigure" />
-      <item itemvalue="CMake Application.ExperimentalCoverage" />
-      <item itemvalue="CMake Application.ExperimentalMemCheck" />
-      <item itemvalue="CMake Application.ExperimentalStart" />
-      <item itemvalue="CMake Application.ExperimentalSubmit" />
-      <item itemvalue="CMake Application.ExperimentalTest" />
-      <item itemvalue="CMake Application.ExperimentalUpdate" />
       <item itemvalue="CMake Application.MolSim" />
-      <item itemvalue="CMake Application.Nightly" />
-      <item itemvalue="CMake Application.NightlyBuild" />
-      <item itemvalue="CMake Application.NightlyConfigure" />
-      <item itemvalue="CMake Application.NightlyCoverage" />
-      <item itemvalue="CMake Application.NightlyMemCheck" />
-      <item itemvalue="CMake Application.NightlyMemoryCheck" />
-      <item itemvalue="CMake Application.NightlyStart" />
-      <item itemvalue="CMake Application.NightlySubmit" />
-      <item itemvalue="CMake Application.NightlyTest" />
-      <item itemvalue="CMake Application.NightlyUpdate" />
-      <item itemvalue="CMake Application.gmock" />
-      <item itemvalue="CMake Application.gmock_main" />
-      <item itemvalue="CMake Application.gtest" />
-      <item itemvalue="CMake Application.gtest_main" />
-      <item itemvalue="CTest Application.All CTest" />
-      <item itemvalue="Google Test.tests" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -403,7 +211,7 @@
       <workItem from="1699880779221" duration="6009000" />
       <workItem from="1699886854522" duration="21905000" />
       <workItem from="1700034453807" duration="6256000" />
-      <workItem from="1700059259598" duration="1145000" />
+      <workItem from="1700059259598" duration="5292000" />
     </task>
     <task id="LOCAL-00001" summary="generating vtk output files">
       <option name="closed" value="true" />
@@ -685,6 +493,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="small changes in input passing" />
     <MESSAGE value="Annas Readme changes, that failed to push on her computer" />
     <MESSAGE value="added testfile to src and changed cmake file" />
     <MESSAGE value="changed cmake files" />
@@ -709,7 +518,6 @@
     <MESSAGE value="for merge" />
     <MESSAGE value="tests are finally working with ctest" />
     <MESSAGE value="cmake changes" />
-    <MESSAGE value="Big merge with updated calculations and MolSim simulation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Big merge with updated calculations and MolSim simulation" />
+    <option name="LAST_COMMIT_MESSAGE" value="cmake changes" />
   </component>
 </project>
