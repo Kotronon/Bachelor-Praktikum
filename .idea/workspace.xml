@@ -18,11 +18,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a9e9629-41d9-4a87-8f36-c42b474c0fec" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/tests.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/cmake/tests/CMakeFiles/tests.dir/tests.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MolSim/tests/tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/MolSim/tests/tests.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="8a9e9629-41d9-4a87-8f36-c42b474c0fec" name="Changes" comment="Workspace.xml" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,6 +36,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="collision_of_two_bodies" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -148,6 +149,7 @@
       <workItem from="1699880779221" duration="6009000" />
       <workItem from="1699886854522" duration="21905000" />
       <workItem from="1700034453807" duration="6256000" />
+      <workItem from="1700058553227" duration="467000" />
     </task>
     <task id="LOCAL-00001" summary="generating vtk output files">
       <option name="closed" value="true" />
@@ -405,7 +407,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699982266176</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Workspace.xml">
+      <option name="closed" value="true" />
+      <created>1700058603543</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1700058603543</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -422,14 +432,25 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/collision_of_two_bodies" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="for pull" />
     <MESSAGE value="small changes in input passing" />
     <MESSAGE value="Annas Readme changes, that failed to push on her computer" />
     <MESSAGE value="added testfile to src and changed cmake file" />
@@ -454,6 +475,7 @@
     <MESSAGE value="unit tests and mock tests" />
     <MESSAGE value="for merge" />
     <MESSAGE value="tests are finally working with ctest" />
-    <option name="LAST_COMMIT_MESSAGE" value="tests are finally working with ctest" />
+    <MESSAGE value="Workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Workspace.xml" />
   </component>
 </project>
