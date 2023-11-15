@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps :
           - name: Check out code
-          - uses: actions/checkout@main
+            uses: actions/checkout@main
           - name : build cmake
             run : cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
           - name : compile gtest
