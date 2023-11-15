@@ -45,4 +45,4 @@ CTestTestfile.cmake
 _deps
 
 # Ignore workplace.xml
-workplace.xml
+workspace.xml
