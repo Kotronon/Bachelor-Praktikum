@@ -46,13 +46,16 @@ int main(int argc, char *argsv[]) {
         spdlog::info("delta_time: ∆time of the simulation");
 
         spdlog::info("Options: ");
+        spdlog::info("-level : The log level. The default log level is info");
         spdlog::info("-f : The filepath and filename of the file to be used in the simulation in the format filepath/filename");
         spdlog::info("-c : Create and add a cuboid to the simulation. Has to be followed by 5 specific values describing the cuboid:");
+        spdlog::info(" -> the number of cuboids you want to create");
         spdlog::info(" -> the coordinate of the lower left front-side corner of the cuboid with each values separated by a comma (x,y,z)");
         spdlog::info(" -> the initial velocity of all particles in the cuboid, each value separated by a comma (x,y,z)");
         spdlog::info(" -> the number of particles per dimension in the cuboid, each value separated by a comma (N_x,N_y,N_z)");
         spdlog::info(" -> the distance h of the particles");
         spdlog::info(" -> the mass of one particle in the cuboid");
+        spdlog::info(" -> everything from the left_corner of the next cuboid");
     }
 
     //TODO: Add input for file and/or cuboid
@@ -72,17 +75,104 @@ int main(int argc, char *argsv[]) {
         spdlog::info("Read given file");
     }
 
-    /*
+
     //Check for additional cuboids to be created
     if(cmdOptionExists(argsv + 3, argsv+argc, "-c"))
     {
-        //TODO: Get list of values instead of only one
-        char* values = getCmdOption(argsv + 3, argsv + argc, "-c");
+        int i = 3;
+        while(argsv[i] != "-c"){
+            i++;
+        }
+        i++;
+        int numbers_cuboid = std::stod(argsv[i]);
+        std::list<std::string> cuboids_left_corner;
+        std::list<std::string> cuboids_velocity;
+        std::list<std::string> cuboids_dimension;
+        std::list<std::string> cuboids_h;
+        std::list<std::string> cuboids_mass;
+        for(int j = 0; j < numbers_cuboid; j++){
+            cuboids_left_corner.push_back(argsv[i]);
+            i++;
+            cuboids_velocity.push_back(argsv[i]);
+            i++;
+            cuboids_dimension.push_back(argsv[i]);
+            i++;
+            cuboids_h.push_back(argsv[i]);
+            i++;
+            cuboids_mass.push_back(argsv[i]);
 
-        //char* coordinate = strtok()
+        }
         //ParticleContainer cuboid = ParticleGenerator::createCuboid();
+        for(int j = 0; j < numbers_cuboid; j++){
+            std::string first_particle = cuboids_left_corner.front();
+            cuboids_left_corner.pop_front();
+            first_particle.erase(0,1);
+            first_particle.pop_back();
+            std::string s;
+            std::array<double, 3> coordinates_left_corner;
+            int k = 0;
+            i = 0;
+            while (first_particle[i] != '\0') {
+                if (first_particle[i] != ',') {
+                    // Append the char to the temp string.
+                    s += first_particle[i];
+                } else {
+                    coordinates_left_corner[k] = std::stod(s);
+                    k++;
+                    s.clear();
+                }
+                i++;
+
+            }
+            std::string velocity_particle = cuboids_velocity.front();
+            cuboids_velocity.pop_front();
+            velocity_particle.erase(0,1);
+            velocity_particle.pop_back();
+            std::array<double, 3> coordinates_velocity;
+            k = 0;
+            i = 0;
+            while (velocity_particle[i] != '\0') {
+                if (velocity_particle[i] != ',') {
+                    // Append the char to the temp string.
+                    s += velocity_particle[i];
+                } else {
+                    coordinates_velocity[k] = std::stod(s);
+                    k++;
+                    s.clear();
+                }
+                i++;
+
+            }
+            std::string dimension = cuboids_dimension.front();
+            cuboids_dimension.pop_front();
+            dimension.erase(0,1);
+            dimension.pop_back();
+            std::array<int, 3> dimensions;
+            k = 0;
+            i = 0;
+            while (dimension[i] != '\0') {
+                if (dimension[i] != ',') {
+                    // Append the char to the temp string.
+                    s += dimension[i];
+                } else {
+                    dimensions[k] = std::stod(s);
+                    k++;
+                    s.clear();
+                }
+                i++;
+
+            }
+            double h = std::stod(cuboids_h.front());
+            cuboids_h.pop_front();
+
+            double m = std::stod(cuboids_mass.front());
+            cuboids_mass.pop_front();
+        }
+
+
     }
-    */
+
+
 
     double current_time = start_time;
     int iteration = 0;
