@@ -167,9 +167,10 @@ int main(int argc, char *argsv[]) {
 
             double m = std::stod(cuboids_mass.front());
             cuboids_mass.pop_front();
+
+            ParticleContainer new_cuboid = ParticleGenerator::createCuboid(coordinates_left_corner, coordinates_velocity, dimensions, h, m);
+            container.addParticleContainer(new_cuboid);
         }
-
-
     }
 
 
