@@ -65,8 +65,13 @@ void ParticleContainer::addParticleContainer(ParticleContainer &container) {
     spdlog::info("Added particles contained in other container to this container!");
 }
 
-void ParticleContainer::applyForcePairwise(const std::function<void()>& forceCalculation){
-
+void ParticleContainer::applyForcePairwise(const std::function<void(Particle, Particle)>& forceCalculation){
+    auto first = begin();
+    auto last = end();
+    for (; first != last; ++first) {
+        for(auto next = std::next(first); next != last; ++next)
+            forceCalculation(*first, *next);
+    }
 }
 
 /**

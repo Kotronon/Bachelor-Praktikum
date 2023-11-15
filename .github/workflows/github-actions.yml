@@ -1,27 +1,25 @@
 name: github-actions
 run-name: ${{ github.actor }} doesn't know what it is doing
 on:
-push:
+  push:
       branches: main
-      pull_request:
+  pull_request:
         branches: main
 
 env :
   BUILD_TYPE : RELEASE
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps :
-              - name: Check out code
-              - uses: actions/checkout@main
-              - name : build cmake
-                run : cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-
-  run-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name : compile gtest
-        run : g++ tests -I$GOOGLETESTDIR/include -L$GOOGLETESTDIR/lib -lgtest -lpthread -fsanitize=address
+          - name: Check out code
+            uses: actions/checkout@main
+          - name : build cmake
+            run : cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+          - name : compile gtest
+            run : g++ tests -I$GOOGLETESTDIR/include -L$GOOGLETESTDIR/lib -lgtest -lpthread -fsanitize=address
 
 
 

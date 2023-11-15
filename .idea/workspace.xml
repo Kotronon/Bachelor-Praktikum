@@ -469,15 +469,7 @@
       <option name="project" value="LOCAL" />
       <updated>1699982266176</updated>
     </task>
-    <task id="LOCAL-00033" summary="cmake changed; compiles know; but tests throw errors">
-      <option name="closed" value="true" />
-      <created>1700060490078</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1700060490079</updated>
-    </task>
-    <option name="localTasksCounter" value="34" />
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -501,6 +493,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="small changes in input passing" />
     <MESSAGE value="Annas Readme changes, that failed to push on her computer" />
     <MESSAGE value="added testfile to src and changed cmake file" />
     <MESSAGE value="changed cmake files" />
@@ -524,7 +517,6 @@
     <MESSAGE value="unit tests and mock tests" />
     <MESSAGE value="for merge" />
     <MESSAGE value="tests are finally working with ctest" />
-    <MESSAGE value="cmake changed; compiles know; but tests throw errors" />
     <MESSAGE value="cmake changes" />
     <option name="LAST_COMMIT_MESSAGE" value="cmake changes" />
   </component>

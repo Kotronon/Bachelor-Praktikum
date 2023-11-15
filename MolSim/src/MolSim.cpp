@@ -110,7 +110,7 @@ int main(int argc, char *argsv[]) {
     }
 
 
-    spdlog::info("output written. Terminating..." );
+    spdlog::info("Output written. Terminating..." );
     return 0;
 }
 
