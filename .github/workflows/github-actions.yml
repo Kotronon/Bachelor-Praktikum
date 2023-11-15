@@ -1,5 +1,5 @@
 name: github-actions
-run-name: ${{ github.actor }} doesn't know what to do
+run-name: ${{ github.actor }} doesn't know what it is doing
 on:
 push:
       branches: main
@@ -21,9 +21,8 @@ jobs:
     runs-on: ubuntu-latest
       - steps:
       - name : compile gtest
-        run : g++ tests -I$GOOGLETESTDIR/include -L$GOOGLETESTDIR/lib -lgtest -lpthread
-      - name : NOW run test
-        run : g++ test.cpp -lgtest -fsanitize=address
+        run : g++ tests -I$GOOGLETESTDIR/include -L$GOOGLETESTDIR/lib -lgtest -lpthread -fsanitize=address
+
 
 
 
