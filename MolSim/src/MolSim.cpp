@@ -2,13 +2,11 @@
 #include "FileReader.h"
 #include "outputWriter/XYZWriter.h"
 #include "outputWriter/VTKWriter.h"
-#include "utils/ArrayUtils.h"
 #include "ParticleContainer.h"
-#include "ForceCalculator.h"
-#include "VelocityCalculator.h"
+#include "calculations/ForceCalculator.h"
+#include "calculations/VelocityCalculator.h"
 #include "spdlog/spdlog.h"
-#include "PositionCalculator.h"
-#include <iostream>
+#include "calculations/PositionCalculator.h"
 #include <string>
 
 /**
@@ -29,6 +27,8 @@ bool cmdOptionExists(char** begin, char** end, const std::string& option);
 constexpr double start_time = 0;
 double end_time = 1000;
 double delta_t = 0.014;
+double avg_v = 0.1;
+int dim = 3;
 
 ParticleContainer container = ParticleContainer();
 
@@ -41,7 +41,9 @@ int main(int argc, char *argsv[]) {
         spdlog::info("-e : The end time of the simulation, default value is 1000");
         spdlog::info("-d : ∆time of the simulation, default value is 0.014");
     }
+    //TODO: delta_t and end_time NOT optional anymore
 
+    //TODO: Add input for file and/or cuboid
     FileReader fileReader;
     FileReader::readFile(container, argsv[1]);
 
@@ -67,10 +69,11 @@ int main(int argc, char *argsv[]) {
 
     int iteration = 0;
 
-    //pre-calculation of f
+    //Pre-calculation of f
     ForceCalculator::SimpleForceCalculation(container);
-
-    // for this loop, we assume: current x, current f and current v are known
+    //Initialization with Brownian Motion
+    VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
+    //For this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
         // calculate new x
         PositionCalculator::PositionStoermerVerlet(container, delta_t);
@@ -83,7 +86,7 @@ int main(int argc, char *argsv[]) {
         if (iteration % 10 == 0) {
             plotParticles(iteration);
         }
-        spdlog::info("Iteration ", iteration, " finished.");
+        spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
 
         current_time += delta_t;
     }
@@ -97,8 +100,8 @@ void plotParticles(int iteration) {
 
     std::string out_name("MD_vtk");
 
-    outputWriter::XYZWriter writer;
-    outputWriter::XYZWriter::plotParticles(container, out_name, iteration);
+    //outputWriter::XYZWriter writer;
+    //outputWriter::XYZWriter::plotParticles(container, out_name, iteration);
 
     outputWriter::VTKWriter writer2;
     writer2.initializeOutput(container.size());
