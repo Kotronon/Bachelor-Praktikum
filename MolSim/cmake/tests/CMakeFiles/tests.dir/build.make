@@ -172,8 +172,11 @@ tests/tests: tests/CMakeFiles/tests.dir/__/src/PositionCalculator.cpp.o
 tests/tests: tests/CMakeFiles/tests.dir/__/src/VelocityCalculator.cpp.o
 tests/tests: tests/CMakeFiles/tests.dir/__/src/ForceCalculator.cpp.o
 tests/tests: tests/CMakeFiles/tests.dir/build.make
+tests/tests: /usr/lib/x86_64-linux-gnu/libgtest.a
+tests/tests: /usr/lib/x86_64-linux-gnu/libgtest_main.a
 tests/tests: lib/libgtest.a
-tests/tests: lib/libgmock.a
+tests/tests: lib/libgtest_main.a
+tests/tests: /usr/lib/x86_64-linux-gnu/libgtest.a
 tests/tests: lib/libgtest.a
 tests/tests: tests/CMakeFiles/tests.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kathi/Bachelor-Praktikum/MolSim/cmake/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable tests"

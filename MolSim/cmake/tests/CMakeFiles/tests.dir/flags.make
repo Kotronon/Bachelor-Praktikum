@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -isystem /include -isystem /gtest/include -isystem /home/kathi/Bachelor-Praktikum/MolSim/cmake/_deps/googletest-src/googlemock/include -isystem /home/kathi/Bachelor-Praktikum/MolSim/cmake/_deps/googletest-src/googlemock -isystem /home/kathi/Bachelor-Praktikum/MolSim/cmake/_deps/googletest-src/googletest/include -isystem /home/kathi/Bachelor-Praktikum/MolSim/cmake/_deps/googletest-src/googletest
+CXX_INCLUDES = -I/home/kathi/Bachelor-Praktikum/MolSim -I/home/kathi/Bachelor-Praktikum/MolSim/cmake/_deps/googletest-src/googlemock/include -I/home/kathi/Bachelor-Praktikum/MolSim/cmake/_deps/googletest-src/googlemock -isystem /include -isystem /gtest/include -isystem /home/kathi/Bachelor-Praktikum/MolSim/cmake/_deps/googletest-src/googletest/include -isystem /home/kathi/Bachelor-Praktikum/MolSim/cmake/_deps/googletest-src/googletest
 
-CXX_FLAGS = -O3 -DNDEBUG -std=gnu++17
+CXX_FLAGS = -O3 -DNDEBUG -DGTEST_HAS_PTHREAD=1 -std=gnu++17
 

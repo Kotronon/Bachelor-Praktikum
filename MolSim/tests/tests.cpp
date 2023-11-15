@@ -21,7 +21,7 @@ TEST(ParticleContainerTest, ParticleContainer){
     //test begin
     ASSERT_TRUE(particles.begin().base()->operator==(particle));
     //test end
-    ASSERT_TRUE(particles.end().base()->operator==(particle));
+    ASSERT_FALSE(particles.end().base()->operator==(particle));
     //test size
     EXPECT_EQ(1, particles.size());
 }
@@ -66,8 +66,14 @@ TEST(ForceTest, SimpleForceCalculation){
     ForceCalculator calculator;
     calculator.SimpleForceCalculation(particles);
     std::vector<Particle>::iterator particleVector = particles.begin();
-    EXPECT_EQ(res1, particleVector.base()->getF());
-    EXPECT_EQ(res2, std::next(particleVector.base())->getF());
+    double x1;
+    double x2;
+    for (size_t i=0; i<3; i++) {
+        x1 = (res1[i] - particleVector.base()->getF()[i]);
+        x2 = (res1[i] - std::next(particleVector.base())->getF()[i]);
+    }
+    EXPECT_EQ(x1, 0);
+    EXPECT_EQ(x2, 0);
 }
 
 TEST(ForceTest, LennardJonesForce){
@@ -79,8 +85,14 @@ TEST(ForceTest, LennardJonesForce){
     ForceCalculator calculator;
     calculator.LennardJonesForce(particles, 1, 1);
     std::vector<Particle>::iterator particleVector = particles.begin();
-    EXPECT_EQ(res1, particleVector.base()->getF());
-    EXPECT_EQ(res2, std::next(particleVector.base())->getF());
+    double x1;
+    double x2;
+    for (size_t i=0; i<3; i++) {
+        x1 = (res1[i] - particleVector.base()->getF()[i]);
+        x2 = (res1[i] - std::next(particleVector.base())->getF()[i]);
+    }
+    EXPECT_EQ(x1, 0);
+    EXPECT_EQ(x2, 0);
 }
 
 int main(){

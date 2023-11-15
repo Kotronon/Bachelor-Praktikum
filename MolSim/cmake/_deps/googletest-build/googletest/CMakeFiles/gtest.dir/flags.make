@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/kathi/Bachelor-Praktikum/MolSim/cmake/_deps/googletest-src/googletest/include -I/home/kathi/Bachelor-Praktikum/MolSim/cmake/_deps/googletest-src/googletest
+CXX_INCLUDES = -I/home/kathi/Bachelor-Praktikum/MolSim -I/home/kathi/Bachelor-Praktikum/MolSim/cmake/_deps/googletest-src/googletest/include -I/home/kathi/Bachelor-Praktikum/MolSim/cmake/_deps/googletest-src/googletest
 
 CXX_FLAGS = -O3 -DNDEBUG -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -std=c++17
 

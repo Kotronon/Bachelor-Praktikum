@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 
 # define project name, version
 project(PSEMolDyn_GroupH VERSION 0.0.1)
-add_subdirectory(tests)
+
 
 
 
@@ -142,3 +142,14 @@ if(SPDLOG_SYSTEM_INCLUDES)
 endif()
 target_include_directories(MolSim ${SPDLOG_INCLUDES_LEVEL} PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
+
+option(PACKAGE_TESTS "Build the tests" ON)
+
+if(PACKAGE_TESTS)
+    enable_testing()
+    find_package(GTest REQUIRED)
+    include(GoogleTest)
+    include(CTest)
+    add_subdirectory(tests)
+
+endif()

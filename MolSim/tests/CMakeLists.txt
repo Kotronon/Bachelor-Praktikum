@@ -7,6 +7,8 @@ project(Tests)
 # GoogleTest requires at least C++14
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+include_directories(${CMAKE_SOURCE_DIR})
+include_directories(${GTEST_INCLUDE_DIRS})
 include(FetchContent)
 FetchContent_Declare(
         googletest
@@ -18,12 +20,11 @@ FetchContent_MakeAvailable(googletest)
 FETCHCONTENT_GETPROPERTIES(googletest)
 if(NOT googletest_POPULATED)
     FetchContent_Populate(googletest)
-    add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BUILD_DIR})
+    add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BUILD_DIR} ${googletest_BINARY_DIR})
 endif ()
-include(CTest)
-include(GoogleTest)
 find_package(GTest REQUIRED)
 include_directories(SYSTEM ${GMOCK_DIR}/include ${GMOCK_DIR}/gtest/include)
+enable_testing()
 set(gmock_build_include_dirs
         "${gmock_SOURCE_DIR}/include"
         "${gmock_SOURCE_DIR}"
@@ -31,8 +32,10 @@ set(gmock_build_include_dirs
         # This directory is needed to build directly from Google Test sources.
         "${gtest_SOURCE_DIR}")
 include_directories(${gmock_build_include_dirs})
-add_executable(tests tests.cpp ../src/ParticleContainer.cpp ../src/Particle.cpp ../src/PositionCalculator.cpp ../src/VelocityCalculator.cpp ../src/ForceCalculator.cpp)
-target_link_libraries(tests gtest gmock ${GTEST_LIBRARIES} ${GMOCK_LIBRARIES} )
-enable_testing()
-add_test(tests tests)
+add_executable(tests tests.cpp ../src/ParticleContainer.cpp ../src/Particle.cpp ../src/PositionCalculator.cpp ../src/VelocityCalculator.cpp ../src/ForceCalculator.cpp )
+include(GoogleTest)
+target_link_libraries(tests GTest::GTest GTest::Main ${GTEST_BOTH_LIBRARIES})
+target_link_libraries(tests gtest gtest_main)
+gtest_add_tests(TARGET tests TEST_PREFIX old:)
 gtest_discover_tests(tests)
+add_test(tests tests)
