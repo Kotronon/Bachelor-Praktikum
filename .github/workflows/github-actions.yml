@@ -17,7 +17,7 @@ jobs:
           - name: Check out code
             uses: actions/checkout@main
           - name : build cmake
-            run : cmake {{github.workspace}}/MolSim/cmake
+            run : cmake --build ${{ github.workspace }}/MolSim/cmake
           - name : compile gtest
             run : g++ tests -I$GOOGLETESTDIR/include -L$GOOGLETESTDIR/lib -lgtest -lpthread -fsanitize=address
 
