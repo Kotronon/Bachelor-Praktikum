@@ -50,9 +50,9 @@ int main(int argc, char *argsv[]) {
         spdlog::info("-f : The filepath and filename of the file to be used in the simulation in the format filepath/filename");
         spdlog::info("-c : Create and add a cuboid to the simulation. Has to be followed by 5 specific values describing the cuboid:");
         spdlog::info(" -> the number of cuboids you want to create");
-        spdlog::info(" -> the coordinate of the lower left front-side corner of the cuboid with each values separated by a comma (x,y,z)");
-        spdlog::info(" -> the initial velocity of all particles in the cuboid, each value separated by a comma (x,y,z)");
-        spdlog::info(" -> the number of particles per dimension in the cuboid, each value separated by a comma (N_x,N_y,N_z)");
+        spdlog::info(" -> the coordinate of the lower left front-side corner of the cuboid with each values separated by a comma x,y,z");
+        spdlog::info(" -> the initial velocity of all particles in the cuboid, each value separated by a comma x,y,z");
+        spdlog::info(" -> the number of particles per dimension in the cuboid, each value separated by a comma N_x,N_y,N_z");
         spdlog::info(" -> the distance h of the particles");
         spdlog::info(" -> the mass of one particle in the cuboid");
         spdlog::info(" -> everything from the left_corner of the next cuboid");
@@ -101,7 +101,7 @@ int main(int argc, char *argsv[]) {
         }
         i++;
         int numbers_cuboid = std::stoi(argsv[i]);
-        spdlog::info("value: {}", numbers_cuboid);
+
         i++;
         //iterating through each cuboid thet needs to be generated
         for(int j = 0; j < numbers_cuboid; j++){
@@ -123,6 +123,7 @@ int main(int argc, char *argsv[]) {
                 it++;
 
             }
+            coordinates_left_corner[k] = std::stod(s);
             i++;
             //get velocity of the cuboid
             std::string velocity_particle = argsv[i];
@@ -141,6 +142,7 @@ int main(int argc, char *argsv[]) {
                 it++;
 
             }
+            coordinates_velocity[k] = std::stod(s);
             i++;
             //get the dimension of the cuboid
             std::string dimension = argsv[i];
@@ -161,6 +163,7 @@ int main(int argc, char *argsv[]) {
                 it++;
 
             }
+            dimensions[k] = std::stoi(s);
             i++;
             //get the distance between the particles in the cuboid
             double h = std::stod(argsv[i]);
