@@ -10,7 +10,7 @@ Members:
 * Anna Lena Müller
 
 # Code #
-* Link:     https://github.com/Kotronon/Bachelor-Praktikum/tree/main/MolSim
+* Link:     https://github.com/Kotronon/Bachelor-Praktikum
 * Branch:   master
 * Revision: 36ff4bf
 * Compiler: gcc 11.4.0
@@ -27,8 +27,10 @@ Members:
   * -f <path_to_file> (To dd particles manually without cuboids)
   * -c <numbers_of_cuboids> (for each cuboid) <coordinates_of_left_corner_cuboid_i> <velocity_of_cuboid_i> <dimension_of_cuboid_i> <h_of_cuboid_i> <mass_of_cuboid_i> 
   * for arrays please use the form x,y,z
+  * for example: ./MolSim 1000 0.014 -c 2 0,0,0 0,0,0 40,8,1 1.1225 1 15,15,0 0,-10,0 8,8,1 1.1225 1
 * for the tests:
   * ctest
+  
 
 # Report #
 ## Task 1 ##
@@ -39,6 +41,7 @@ Members:
 
 ## Task 2 ##
 * CI integration in GitHub
+* creating yml file
 
 ## Task 3 ##
 * logging
@@ -50,4 +53,14 @@ Members:
 
 ## Task 4 ##
 * Collision of two bodies
-* 
+* Calculation of force according to Lennard-Jones-Potential
+* Normal calculation with iteration through all particles
+* faster calculation with pairwise iteration
+* time difference:
+* calculation method:
+* video:
+
+## MISK ##
+* FetchContent is not enough to avoid installing libraries -> for next time better integration is needed
+* changing the folder structure was quite difficult
+* doxygen was refactored. Now it only starts with make doc_doxygen and will immediately open the documentation in firefox

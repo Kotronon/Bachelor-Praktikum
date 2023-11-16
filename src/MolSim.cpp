@@ -178,14 +178,7 @@ int main(int argc, char *argsv[]) {
     }
 
 /*
-    std::array<double, 3> x_1 = {0, 0, 0};
-    std::array<double, 3> v_1 = {0, 0, 0};
-    std::array<int, 3> N_1 = {40, 8, 1};
-    std::array<double, 3> x_2 = {15, 15, 0};
-    std::array<double, 3> v_2 = {0, -10, 0};
-    std::array<int, 3> N_2 = {8, 8, 1};
-    double h = 1.1225;
-    double m = 1;
+
     ParticleContainer cuboid_1 = ParticleGenerator::createCuboid(x_1,v_1,N_1,h,m);
     ParticleContainer cuboid_2 = ParticleGenerator::createCuboid(x_2,v_2,N_2,h,m);
     container.addParticleContainer(cuboid_1);

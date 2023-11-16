@@ -2,9 +2,7 @@
 // Created by maraconda on 12.11.23.
 //
 
-#ifndef PSEMOLDYN_GROUPH_FORCECALCULATOR_H
-#define PSEMOLDYN_GROUPH_FORCECALCULATOR_H
-
+#pragma once
 
 #include "../ParticleContainer.h"
 
@@ -20,4 +18,3 @@ public:
 };
 
 
-#endif //PSEMOLDYN_GROUPH_FORCECALCULATOR_H

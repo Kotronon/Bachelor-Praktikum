@@ -17,6 +17,12 @@ FileReader::FileReader() = default;
 
 FileReader::~FileReader() = default;
 
+/**
+ * reads file and stores particles in given ParticleContainer
+ * @param container
+ * @param filename
+ */
+
 void FileReader::readFile(ParticleContainer &container, char *filename) {
   std::array<double, 3> x{};
   std::array<double, 3> v{};
