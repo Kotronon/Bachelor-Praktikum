@@ -16,8 +16,6 @@ jobs:
     steps :
       - name: Check out code
         uses: actions/checkout@main
-      - name : install spdlog
-        run : install libspdlog-dev
       - name : configure cmake
         run : cmake -B .github/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
       - name : build cmake
