@@ -18,4 +18,3 @@ public:
 };
 
 
-#endif //PSEMOLDYN_GROUPH_FORCECALCULATOR_H

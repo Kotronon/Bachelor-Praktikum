@@ -40,4 +40,3 @@ public:
 };
 
 
-#endif //PSEMOLDYN_GROUPH_PARTICLECONTAINER_H

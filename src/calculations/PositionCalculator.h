@@ -14,4 +14,3 @@ public:
 };
 
 
-#endif //PSEMOLDYN_GROUPH_POSITIONCALCULATOR_H

@@ -15,4 +15,3 @@ public:
 };
 
 
-#endif //PSEMOLDYN_GROUPH_VELOCITYCALCULATOR_H
