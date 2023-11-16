@@ -17,9 +17,9 @@ jobs:
       - name: Check out code
         uses: actions/checkout@main
       - name : you need a cache
-        run : make ${{ github.workspace }}/src
+        run : make ${{ github.workspace }}/cmake
       - name : build cmake now at least
-        run : cmake --build src --config ${{env.BUILD_TYPE}}
+        run : cmake --build . --config ${{env.BUILD_TYPE}}
       - name : compile gtest and they youre doneee
         run : g++ -out -I . -I ./tests *.cpp -lgtest -lpthread -fsanitize=address
 
