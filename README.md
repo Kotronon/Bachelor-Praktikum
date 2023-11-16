@@ -45,7 +45,23 @@ Members:
 * Learning YML syntax and adjusting it to our repository structure
 * adjust the yml file to trigger a workflow on push and pull requests
 * build cmake and run tests via the yml file
-* 
+### Unfinished part of the assignment : 
+* github actions did not run due to following errors :
+  * Could NOT find Doxygen (missing: DOXYGEN_EXECUTABLE)
+  * CMake Error at CMakeLists.txt:113 (find_package):
+  * Could not find a package configuration file provided by "spdlog" with any of the following names: spdlogConfig.cmake spdlog-config.cmake
+* the following command : cmake -B .github/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} was supposed to :
+  *  configure cmake in a seperate build file that does not interrupt the project structure
+* Earlier versions of the github-actions.yml file gave error messages such as :
+  * "Error : cannot load cache"
+  * "make: *** No rule to make target"
+* every attempt to fix the yml file resulted in the above-mentioned error messages
+* Solution attempts : 
+  * make github install doxygen and spdlog into the .github/build directory 
+  * circumvent the errors by ignoring them
+  * attempt to only build src/tests/MolSim directory
+  * make github find the CMakeLists and run cmake .. in the cmake directory
+* None the of the above-mentioned solution attempts ran, so we are stuck at this point.
 
 ## Task 3 ##
 * logging
