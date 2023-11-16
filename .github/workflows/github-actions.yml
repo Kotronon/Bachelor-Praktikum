@@ -1,5 +1,5 @@
 name: github-actions
-run-name: Hi, my name is ${{ github.actor }}. You're probably wondering how I got here.
+run-name: ${{ github.actor }} just pushed
 on:
   push:
     branches: main
@@ -16,14 +16,14 @@ jobs:
     steps :
       - name: Check out code
         uses: actions/checkout@main
-      - name : go into cmake folder
+      - name : configure cmake
         run : cmake -B .github/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
       - name : build cmake
         run : cmake --build .github/build --config ${{env.BUILD_TYPE}}
-      - name : compile gtest and then youre done
+      - name : compile gtest
+        working-directory: ${{github.workspace}}/tests
         run : g++ -out -I . -I ./tests *.cpp -lgtest -lpthread -fsanitize=address
       - name : run tests
-        working-directory: ${{github.workspace}}/tests
         run : ctest -C ${{env.BUILD_TYPE}}
 
 
