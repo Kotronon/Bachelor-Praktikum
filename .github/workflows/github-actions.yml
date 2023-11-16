@@ -16,8 +16,8 @@ jobs:
     steps :
       - name: Check out code
         uses: actions/checkout@main
-      - name : you need a cache
-        run : make ${{ github.workspace }}
+      - name : you need a cache so configure the project
+        run : cmake .
       - name : build cmake now at least
         run : cmake --build ./
       - name : compile gtest and they youre doneee
