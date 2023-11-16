@@ -16,8 +16,6 @@ jobs:
     steps :
       - name: Check out code
         uses: actions/checkout@main
-      - name :
-        run :
       - name : go into cmake folder
         run : cmake --build tests
       - name : compile gtest and then youre done
