@@ -289,6 +289,7 @@ if(NOT DEFINED DOXYGEN_FILE_PATTERNS)
                          *.cxxm 
                          *.cpp 
                          *.cppm 
+                         *.ccm 
                          *.c++ 
                          *.c++m 
                          *.java 
@@ -379,12 +380,6 @@ endif()
 if(NOT DEFINED DOXYGEN_VERBATIM_HEADERS)
     set(DOXYGEN_VERBATIM_HEADERS YES)
 endif()
-if(NOT DEFINED DOXYGEN_CLANG_ASSISTED_PARSING)
-    set(DOXYGEN_CLANG_ASSISTED_PARSING NO)
-endif()
-if(NOT DEFINED DOXYGEN_CLANG_ADD_INC_PATHS)
-    set(DOXYGEN_CLANG_ADD_INC_PATHS YES)
-endif()
 if(NOT DEFINED DOXYGEN_ALPHABETICAL_INDEX)
     set(DOXYGEN_ALPHABETICAL_INDEX YES)
 endif()
@@ -417,6 +412,9 @@ if(NOT DEFINED DOXYGEN_HTML_DYNAMIC_SECTIONS)
 endif()
 if(NOT DEFINED DOXYGEN_HTML_CODE_FOLDING)
     set(DOXYGEN_HTML_CODE_FOLDING YES)
+endif()
+if(NOT DEFINED DOXYGEN_HTML_COPY_CLIPBOARD)
+    set(DOXYGEN_HTML_COPY_CLIPBOARD YES)
 endif()
 if(NOT DEFINED DOXYGEN_HTML_INDEX_NUM_ENTRIES)
     set(DOXYGEN_HTML_INDEX_NUM_ENTRIES 100)
