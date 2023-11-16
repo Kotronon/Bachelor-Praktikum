@@ -37,6 +37,10 @@ void ParticleContainer::addParticle(const Particle &particle) {
     spdlog::info("Added copy of particle to container!");
 }
 
+/**
+ * add a new empty particle to the container
+ * @param type_arg
+ */
 void ParticleContainer::addParticle(int type_arg) {
     Particle new_particle(type_arg);
     containedParticles.emplace_back(new_particle);
@@ -58,6 +62,10 @@ void ParticleContainer::addParticle(std::array<double, 3> x_arg, std::array<doub
     containedParticles.begin();
 }
 
+/**
+ * add anther ParticleContainer to the current container
+ * @param container
+ */
 void ParticleContainer::addParticleContainer(ParticleContainer &container) {
     for (auto &p: container) {
         containedParticles.emplace_back(p);
@@ -65,6 +73,10 @@ void ParticleContainer::addParticleContainer(ParticleContainer &container) {
     spdlog::info("Added particles contained in other container to this container!");
 }
 
+/**
+ * iterate through the Particles pairwise to clculate the force of each particle
+ * @param forceCalculation
+ */
 void ParticleContainer::applyForcePairwise(const std::function<void(Particle*, Particle*)>& forceCalculation){
     auto first = begin();
     auto last = end();

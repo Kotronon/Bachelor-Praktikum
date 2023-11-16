@@ -62,10 +62,10 @@ int main(int argc, char *argsv[]) {
 
     //Getting parameters end_time and delta_t
     double end_time = std::stod(argsv[1]);
-    spdlog::info("end_time: ", end_time);
+    spdlog::info("end_time: {}", end_time);
 
     double delta_t = std::stod(argsv[2]);
-    spdlog::info("delta_time: ", delta_t);
+    spdlog::info("delta_time: {}", delta_t);
 
     //Check for optional file input
     if(cmdOptionExists(argsv, argsv+argc, "-f"))
@@ -75,105 +75,106 @@ int main(int argc, char *argsv[]) {
         spdlog::info("Read given file");
     }
 
-    /*
+    if(cmdOptionExists(argsv, argsv+argc, "-level")){
+        std::string level = getCmdOption(argsv, argsv + argc, "-level");
+        if(level == "off") spdlog::set_level(spdlog::level::off);
+        else if(level == "info") spdlog::set_level(spdlog::level::info);
+        else if(level == "warn") spdlog::set_level(spdlog::level::warn);
+        else if(level == "trace") spdlog::set_level(spdlog::level::trace);
+        else if(level == "n_levels") spdlog::set_level(spdlog::level::n_levels);
+        else if(level == "err") spdlog::set_level(spdlog::level::err);
+        else if(level == "critical") spdlog::set_level(spdlog::level::critical);
+        else if(level == "debug") spdlog::set_level(spdlog::level::debug);
+        else spdlog::error("Level does not exist");
+    }
+    spdlog::info("log level: {}", spdlog::get_level());
+
+
     //Check for additional cuboids to be created
-    if(cmdOptionExists(argsv + 3, argsv+argc, "-c"))
+    if(cmdOptionExists(argsv, argsv+argc, "-c"))
     {
         int i = 3;
-        while(argsv[i] != "-c"){
+        std::string check = argsv[i];
+        while(check != "-c"){
             i++;
+            check = argsv[i];
         }
         i++;
-        int numbers_cuboid = std::stod(argsv[i]);
-        std::list<std::string> cuboids_left_corner;
-        std::list<std::string> cuboids_velocity;
-        std::list<std::string> cuboids_dimension;
-        std::list<std::string> cuboids_h;
-        std::list<std::string> cuboids_mass;
+        int numbers_cuboid = std::stoi(argsv[i]);
+        spdlog::info("value: {}", numbers_cuboid);
+        i++;
+        //iterating through each cuboid thet needs to be generated
         for(int j = 0; j < numbers_cuboid; j++){
-            cuboids_left_corner.push_back(argsv[i]);
-            i++;
-            cuboids_velocity.push_back(argsv[i]);
-            i++;
-            cuboids_dimension.push_back(argsv[i]);
-            i++;
-            cuboids_h.push_back(argsv[i]);
-            i++;
-            cuboids_mass.push_back(argsv[i]);
-
-        }
-        //ParticleContainer cuboid = ParticleGenerator::createCuboid();
-        for(int j = 0; j < numbers_cuboid; j++){
-            std::string first_particle = cuboids_left_corner.front();
-            cuboids_left_corner.pop_front();
-            first_particle.erase(0,1);
-            first_particle.pop_back();
+            std::string first_particle = argsv[i];
             std::string s;
-            std::array<double, 3> coordinates_left_corner;
+            //get x coordinates of the particle in the left corner of the cuboid
+            std::array<double, 3> coordinates_left_corner = {0,0,0};
             int k = 0;
-            i = 0;
-            while (first_particle[i] != '\0') {
-                if (first_particle[i] != ',') {
+            int it = 0;
+            while (first_particle[it] != '\0') {
+                if (first_particle[it] != ',') {
                     // Append the char to the temp string.
-                    s += first_particle[i];
+                    s += first_particle[it];
                 } else {
                     coordinates_left_corner[k] = std::stod(s);
                     k++;
                     s.clear();
                 }
-                i++;
+                it++;
 
             }
-            std::string velocity_particle = cuboids_velocity.front();
-            cuboids_velocity.pop_front();
-            velocity_particle.erase(0,1);
-            velocity_particle.pop_back();
-            std::array<double, 3> coordinates_velocity;
+            i++;
+            //get velocity of the cuboid
+            std::string velocity_particle = argsv[i];
+            std::array<double, 3> coordinates_velocity = {0,0,0};
             k = 0;
-            i = 0;
-            while (velocity_particle[i] != '\0') {
-                if (velocity_particle[i] != ',') {
+            it = 0;
+            while (velocity_particle[it] != '\0') {
+                if (velocity_particle[it] != ',') {
                     // Append the char to the temp string.
-                    s += velocity_particle[i];
+                    s += velocity_particle[it];
                 } else {
                     coordinates_velocity[k] = std::stod(s);
                     k++;
                     s.clear();
                 }
-                i++;
+                it++;
 
             }
-            std::string dimension = cuboids_dimension.front();
-            cuboids_dimension.pop_front();
-            dimension.erase(0,1);
-            dimension.pop_back();
-            std::array<int, 3> dimensions;
+            i++;
+            //get the dimension of the cuboid
+            std::string dimension = argsv[i];
+            //dimension.erase(0,1);
+            //dimension.pop_back();
+            std::array<int, 3> dimensions = {0,0,0};
             k = 0;
-            i = 0;
-            while (dimension[i] != '\0') {
-                if (dimension[i] != ',') {
+            it = 0;
+            while (dimension[it] != '\0') {
+                if (dimension[it] != ',') {
                     // Append the char to the temp string.
-                    s += dimension[i];
+                    s += dimension[it];
                 } else {
-                    dimensions[k] = std::stod(s);
+                    dimensions[k] = std::stoi(s);
                     k++;
                     s.clear();
                 }
-                i++;
+                it++;
 
             }
-            double h = std::stod(cuboids_h.front());
-            cuboids_h.pop_front();
-
-            double m = std::stod(cuboids_mass.front());
-            cuboids_mass.pop_front();
-
+            i++;
+            //get the distance between the particles in the cuboid
+            double h = std::stod(argsv[i]);
+            i++;
+            //get the mass of the particles in the cuboid
+            double m = std::stod(argsv[i]);
+            i++;
+            //generate the cuboid and add it to the ParticleContainer
             ParticleContainer new_cuboid = ParticleGenerator::createCuboid(coordinates_left_corner, coordinates_velocity, dimensions, h, m);
             container.addParticleContainer(new_cuboid);
         }
     }
-    */
 
+/*
     std::array<double, 3> x_1 = {0, 0, 0};
     std::array<double, 3> v_1 = {0, 0, 0};
     std::array<int, 3> N_1 = {40, 8, 1};
@@ -186,7 +187,7 @@ int main(int argc, char *argsv[]) {
     ParticleContainer cuboid_2 = ParticleGenerator::createCuboid(x_2,v_2,N_2,h,m);
     container.addParticleContainer(cuboid_1);
     container.addParticleContainer(cuboid_2);
-
+*/
     double current_time = start_time;
     int iteration = 0;
 
@@ -213,6 +214,7 @@ int main(int argc, char *argsv[]) {
 
         current_time += delta_t;
     }
+
 
 
     spdlog::info("Output written. Terminating..." );
