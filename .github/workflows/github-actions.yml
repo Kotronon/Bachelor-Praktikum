@@ -18,10 +18,8 @@ jobs:
         uses: actions/checkout@main
       - name : you need a cache
         run : make ${{ github.workspace }}/src
-      - name : go into MolSim cuz thats where u need to be
-        run : cd .. | cd MolSim
       - name : build cmake now at least
-        run : cmake --build . --config ${{env.BUILD_TYPE}}
+        run : cmake --build src --config ${{env.BUILD_TYPE}}
       - name : compile gtest and they youre doneee
         run : g++ -out -I . -I ./tests *.cpp -lgtest -lpthread -fsanitize=address
 
