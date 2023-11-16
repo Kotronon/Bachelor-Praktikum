@@ -16,8 +16,10 @@ jobs:
     steps :
       - name: Check out code
         uses: actions/checkout@main
-      - name : build cmake now at least
-        run : cmake --build MolSim
+      - name : go into cmake folder
+        run : cd cmake
+      - name : run cmake
+        run : cmake --build ./
       - name : compile gtest and they youre doneee
         run : g++ -out -I . -I ./tests *.cpp -lgtest -lpthread -fsanitize=address
 
