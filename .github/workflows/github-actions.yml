@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@main
       - name : install doxygen and spdlog
         run : |
-            apt-get doxygen
+            install libdoxygen-dev
             install libspdlog-dev
       - name : configure cmake
         run : cmake -B .github/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
