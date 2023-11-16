@@ -1,4 +1,0 @@
-/home/maraconda/CLionProjects/Bachelor-Praktikum/MolSim/cmake/CMakeFiles/rebuild_cache.dir
-/home/maraconda/CLionProjects/Bachelor-Praktikum/MolSim/cmake/CMakeFiles/edit_cache.dir
-/home/maraconda/CLionProjects/Bachelor-Praktikum/MolSim/cmake/CMakeFiles/doc_doxygen.dir
-/home/maraconda/CLionProjects/Bachelor-Praktikum/MolSim/cmake/CMakeFiles/MolSim.dir
