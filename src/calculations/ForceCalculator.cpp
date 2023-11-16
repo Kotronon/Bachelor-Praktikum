@@ -52,6 +52,12 @@ void ForceCalculator::LennardJonesForce(ParticleContainer &container, double eps
     }
 }
 
+/**
+ * Faster calculation of the the Lennord Jones force of all Particles in given ParticleContainer
+ * @param container
+ * @param eps
+ * @param sig
+ */
 void ForceCalculator::LennardJonesForceFaster(ParticleContainer &container, double eps, double sig) {
     ForceCalculator::epsilon = eps;
     ForceCalculator::sigma = sig;
@@ -63,6 +69,11 @@ void ForceCalculator::LennardJonesForceFaster(ParticleContainer &container, doub
     container.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise);
 }
 
+/**
+ * pairwise calculation of the Lennord Jones force of all Particles in given ParticleContainer
+ * @param p1
+ * @param p2
+ */
 void ForceCalculator::LennardJonesForcePairwise(Particle *p1, Particle *p2) {
     std::array<double, 3> force = {0,0,0};
     double L2Norm_p1_p2 = ArrayUtils::L2Norm(p1->getX() - p2->getX());

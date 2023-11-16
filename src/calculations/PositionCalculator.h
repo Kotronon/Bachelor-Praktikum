@@ -2,8 +2,7 @@
 // Created by maraconda on 12.11.23.
 //
 
-#ifndef PSEMOLDYN_GROUPH_POSITIONCALCULATOR_H
-#define PSEMOLDYN_GROUPH_POSITIONCALCULATOR_H
+#pragma once
 
 
 #include "../ParticleContainer.h"

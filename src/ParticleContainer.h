@@ -2,8 +2,7 @@
 // Created by maraconda on 02.11.23.
 //
 
-#ifndef PSEMOLDYN_GROUPH_PARTICLECONTAINER_H
-#define PSEMOLDYN_GROUPH_PARTICLECONTAINER_H
+#pragma once
 
 #include <vector>
 #include <functional>
