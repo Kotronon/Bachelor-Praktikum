@@ -5,6 +5,16 @@
 #include "ParticleGenerator.h"
 #include "ParticleContainer.h"
 
+
+/**
+ * creates a cuboid and stores it in a ParticleContainer
+ * @param x
+ * @param v
+ * @param N
+ * @param h
+ * @param m
+ * @return
+ */
 ParticleContainer ParticleGenerator::createCuboid(std::array<double, 3> x, std::array<double, 3> v,
                                                   std::array<int, 3> N, double h, double m) {
     ParticleContainer cuboid = ParticleContainer();

@@ -37,7 +37,7 @@ public:
 
     void addParticleContainer(ParticleContainer &container);
 
-    void applyForcePairwise(const std::function<void(Particle, Particle)> &forceCalculation);
+    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation);
 };
 
 

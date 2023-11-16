@@ -6,6 +6,8 @@
 #include "../ParticleContainer.h"
 #include "../utils/ArrayUtils.h"
 
+double ForceCalculator::epsilon = 5;
+double ForceCalculator::sigma = 1;
 
 /**
  * Calculates the gravity force of all Particles in given ParticleContainer
@@ -32,6 +34,9 @@ void ForceCalculator::SimpleForceCalculation(ParticleContainer &container) {
  * @param sig
  */
 void ForceCalculator::LennardJonesForce(ParticleContainer &container, double eps, double sig) {
+    ForceCalculator::epsilon = eps;
+    ForceCalculator::sigma = sig;
+
     std::array<double, 3> force{};
     double L2Norm_p1_p2;
     for (auto &p1: container) {
@@ -45,4 +50,23 @@ void ForceCalculator::LennardJonesForce(ParticleContainer &container, double eps
         p1.setOldF(p1.getF());
         p1.setF(force);
     }
+}
+
+void ForceCalculator::LennardJonesForceFaster(ParticleContainer &container, double eps, double sig) {
+    ForceCalculator::epsilon = eps;
+    ForceCalculator::sigma = sig;
+    std::array<double, 3> zero = {0,0,0};
+    for (auto &p: container) {
+        p.setOldF(p.getF());
+        p.setF(zero);
+    }
+    container.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise);
+}
+
+void ForceCalculator::LennardJonesForcePairwise(Particle *p1, Particle *p2) {
+    std::array<double, 3> force = {0,0,0};
+    double L2Norm_p1_p2 = ArrayUtils::L2Norm(p1->getX() - p2->getX());
+    force = force + ((-24*epsilon / pow(L2Norm_p1_p2,2)) * (pow(sigma/L2Norm_p1_p2,6) - (2 * pow(sigma/L2Norm_p1_p2,12))) * (p1->getX() - p2->getX()));
+    p1->setF(p1->getF() + force);
+    p2->setF(p2->getF() - force);
 }

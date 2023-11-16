@@ -4,6 +4,7 @@
 #include "../src/calculations/PositionCalculator.h"
 #include "../src/calculations/VelocityCalculator.h"
 #include "../src/calculations/ForceCalculator.h"
+#include "../src/ParticleGenerator.h"
 #include <math.h>
 
 
@@ -22,6 +23,13 @@ TEST(ParticleContainerTest, ParticleContainer){
     ASSERT_FALSE(particles.end().base()->operator==(particle));
     //test size
     EXPECT_EQ(1, particles.size());
+}
+
+TEST(ParticleGeneratorTest, ParticleGenerator){
+    //Test of adding the right numbers of particles when generating a cuboid
+    ParticleContainer particles = ParticleGenerator::createCuboid({0,0,0}, {0,0,0}, {40,8,1}, 2, 3);
+    //test size
+    EXPECT_EQ(320, particles.size());
 }
 
 TEST(PositionTest, stroemerVelvet){
