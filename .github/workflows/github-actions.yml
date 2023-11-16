@@ -17,7 +17,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@main
       - name : build cmake now at least
-        run : cmake --build ./
+        run : cmake --build MolSim
       - name : compile gtest and they youre doneee
         run : g++ -out -I . -I ./tests *.cpp -lgtest -lpthread -fsanitize=address
 
