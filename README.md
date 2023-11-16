@@ -41,7 +41,11 @@ Members:
 
 ## Task 2 ##
 * CI integration in GitHub
-* creating yml file
+* creating yml file and learning about github actions
+* Learning YML syntax and adjusting it to our repository structure
+* adjust the yml file to trigger a workflow on push and pull requests
+* build cmake and run tests via the yml file
+* 
 
 ## Task 3 ##
 * logging
