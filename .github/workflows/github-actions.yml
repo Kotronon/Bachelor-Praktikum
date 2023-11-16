@@ -17,7 +17,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@main
       - name : go into cmake folder
-        run : cmake --build {{github.workspace}}/cmake
+        run : cmake --build ${{ github.workspace }}/cmake
       - name : compile gtest and then youre doneee
         run : g++ -out -I . -I ./tests *.cpp -lgtest -lpthread -fsanitize=address
 
