@@ -30,14 +30,14 @@ bool cmdOptionExists(char** begin, char** end, const std::string& option);
 constexpr double start_time = 0;
 double avg_v = 0.1;
 int dim = 3;
-int eps = 5;
-int sig = 1;
+double eps = 5;
+double sig = 1;
 //Creation of particle container to be filled with all relevant particles
 ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
     spdlog::info("Hello from MolSim for PSE!");
-    if (argc <= 3 || ((argc - 3)%6 != 0 && (argc - 4)%6 != 0)) {
+    if (argc <= 3) {
         spdlog::info("Erroneous programme call! ");
         spdlog::info("./MolSim end_time delta_time [options]");
 
@@ -75,7 +75,7 @@ int main(int argc, char *argsv[]) {
         spdlog::info("Read given file");
     }
 
-
+    /*
     //Check for additional cuboids to be created
     if(cmdOptionExists(argsv + 3, argsv+argc, "-c"))
     {
@@ -172,14 +172,26 @@ int main(int argc, char *argsv[]) {
             container.addParticleContainer(new_cuboid);
         }
     }
+    */
 
-
+    std::array<double, 3> x_1 = {0, 0, 0};
+    std::array<double, 3> v_1 = {0, 0, 0};
+    std::array<int, 3> N_1 = {40, 8, 1};
+    std::array<double, 3> x_2 = {15, 15, 0};
+    std::array<double, 3> v_2 = {0, -10, 0};
+    std::array<int, 3> N_2 = {8, 8, 1};
+    double h = 1.1225;
+    double m = 1;
+    ParticleContainer cuboid_1 = ParticleGenerator::createCuboid(x_1,v_1,N_1,h,m);
+    ParticleContainer cuboid_2 = ParticleGenerator::createCuboid(x_2,v_2,N_2,h,m);
+    container.addParticleContainer(cuboid_1);
+    container.addParticleContainer(cuboid_2);
 
     double current_time = start_time;
     int iteration = 0;
 
     //Pre-calculation of f
-    ForceCalculator::LennardJonesForce(container, eps, sig);
+    ForceCalculator::LennardJonesForceFaster(container, eps, sig);
     //Initialization with Brownian Motion
     VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
     //For this loop, we assume: current x, current f and current v are known
@@ -187,7 +199,7 @@ int main(int argc, char *argsv[]) {
         // calculate new x
         PositionCalculator::PositionStoermerVerlet(container, delta_t);
         // calculate new f
-        ForceCalculator::LennardJonesForce(container, eps, sig);
+        ForceCalculator::LennardJonesForceFaster(container, eps, sig);
         // calculate new v
         VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
 
@@ -195,7 +207,9 @@ int main(int argc, char *argsv[]) {
         if (iteration % 10 == 0) {
             plotParticles(iteration);
         }
-        spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
+        if (iteration % 100 == 0) {
+            spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
+        }
 
         current_time += delta_t;
     }
