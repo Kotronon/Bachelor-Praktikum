@@ -12,23 +12,23 @@ Members:
 # Code #
 * Link:     https://github.com/Kotronon/Bachelor-Praktikum
 * Branch:   master
-* Revision: 36ff4bf
+* Revision: bc2d47b
 * Compiler: gcc 11.4.0
 
 # Run Code #
 * packages to install:
   * sudo apt install libspdlog-dev
   * sudo apt-get install libgtest-dev
-  * unfortunatly only using fetchContent doesn't prevent from installing them
-* for the program:
+  * unfortunately only using fetchContent doesn't prevent from installing them
+* to run the program:
   * ./MolSim <end_time> <delta_t> 
   * options:
   * -level <level> (To choose log level)
-  * -f <path_to_file> (To dd particles manually without cuboids)
+  * -f <path_to_file> (To add particles manually)
   * -c <numbers_of_cuboids> (for each cuboid) <coordinates_of_left_corner_cuboid_i> <velocity_of_cuboid_i> <dimension_of_cuboid_i> <h_of_cuboid_i> <mass_of_cuboid_i> 
   * for arrays please use the form x,y,z
-  * for example: ./MolSim 1000 0.014 -c 2 0,0,0 0,0,0 40,8,1 1.1225 1 15,15,0 0,-10,0 8,8,1 1.1225 1
-* for the tests:
+  * for example: ./MolSim 5 0.0002 -c 2 0,0,0 0,0,0 40,8,1 1.1225 1 15,15,0 0,-10,0 8,8,1 1.1225 1
+* to run the tests:
   * ctest
   
 
@@ -74,13 +74,26 @@ Members:
 ## Task 4 ##
 * Collision of two bodies
 * Calculation of force according to Lennard-Jones-Potential
-* Normal calculation with iteration through all particles
-* faster calculation with pairwise iteration
-* time difference:
-* calculation method:
-* video:
+* Calculation with simple double iteration through all particles
+* New input options needed to allow for both file input and multiple cuboids
+* Faster calculation with new pairwise iteration method in particle container using Newtons third law to avoid double calculations
+* specs: 
+  * System:
+    Kernel: 5.15.0-88-generic x86_64
+    Desktop: Gnome 3.38.4
+    Distro: Zorin OS 16.3
+    base: Ubuntu 20.04 LTS Focal 
+  * CPU:
+    Topology: 8-Core model: AMD Ryzen 7 5825U with Radeon Graphics
+* conditions: measuring of time with functions in ctime library, setting loglevel to off and disabling/not including time for I/O operations,
+  Simulation used is the collision of two bodies as described in the worksheet
+* time difference: 18 min 36s (1116s) with simple calculation, 12 min 33 s (753s) with faster calculation
+* => very noticeable speed up, faster loop is nearly 1.5 times faster
+* video: https://youtu.be/bzQOXPaK2VI
 
-## MISK ##
+## MISC ##
 * FetchContent is not enough to avoid installing libraries -> for next time better integration is needed
-* changing the folder structure was quite difficult
+* changing the folder structure (root directory in git) was quite difficult
 * doxygen was refactored. Now it only starts with make doc_doxygen and will immediately open the documentation in firefox
+* Refactored most code from worksheet 1 and implemented feedback
+* Added more missing documentation
