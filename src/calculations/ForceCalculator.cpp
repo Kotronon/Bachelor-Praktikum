@@ -81,3 +81,25 @@ void ForceCalculator::LennardJonesForcePairwise(Particle *p1, Particle *p2) {
     p1->setF(p1->getF() + force);
     p2->setF(p2->getF() - force);
 }
+
+void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &grid, double eps, double sig){
+    ForceCalculator::epsilon = eps;
+    ForceCalculator::sigma = sig;
+    grid.setZero();
+    for(int i = 0; i < grid.cells.size(); i++){
+        std::vector<int> neighbours = grid.get_Particles_from_next_cells(i);
+        for(int j = 0; i < grid.cells[j].size(); i++){
+            //for all particles in current cell
+            for(int k = j; k < grid.cells[j].size() -1; k++){
+                //calculate force with particles in current cell
+                LennardJonesForcePairwise(&(grid.cells[i][j]), &(grid.cells[i][k]));
+            }
+            for(int k = 0; k < neighbours.size(); k++){
+                //with neighbour cells
+                for(int l = 0; l < grid.cells[neighbours[k]].size(); l++){
+                    LennardJonesForcePairwise(&(grid.cells[i][j]), &(grid.cells[neighbours[k]][l]));
+                }
+            }
+        }
+    }
+}

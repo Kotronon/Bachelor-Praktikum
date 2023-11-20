@@ -17,3 +17,12 @@ void PositionCalculator::PositionStoermerVerlet(ParticleContainer &container, do
         p.setX(p.getX() + (delta_t * p.getV()) + ((delta_t*delta_t)/(2*p.getM())) * p.getF());
     }
 }
+
+void PositionCalculator::PositionStoermerVerletCell(LinkedCellContainer &grid, double delta_t) {
+    for (int i = 0; i < grid.cell_numbers(); i++) {
+        for(int j = 0; j < grid.Particles_in_cell(i); j++) {
+            grid.cells[i][j].setX(grid.cells[i][j].getX() + (delta_t * grid.cells[i][j].getV()) +
+                                  ((delta_t * delta_t) / (2 * grid.cells[i][j].getM())) * grid.cells[i][j].getF());
+        }
+    }
+}

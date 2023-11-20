@@ -5,6 +5,7 @@
 #pragma once
 
 #include "../ParticleContainer.h"
+#include "../LinkedCellContainer.h"
 
 class ForceCalculator {
 private:
@@ -15,6 +16,7 @@ public:
     static void LennardJonesForce(ParticleContainer &container, double eps, double sig);
     static void LennardJonesForceFaster(ParticleContainer &container, double eps, double sig);
     static void LennardJonesForcePairwise(Particle *p1, Particle *p2);
+    static void LennardJonesForceCell(LinkedCellContainer &cells, double eps, double sig);
 };
 
 
