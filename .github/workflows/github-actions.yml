@@ -1,8 +1,6 @@
 name: github-actions
 run-name: ${{ github.actor }} just pushed
 on:
-  push:
-    branches: main
   pull_request:
     branches: main
 
