@@ -6,6 +6,9 @@
 #include "LinkedCellContainer.h"
 #include <math.h>
 #include "calculations/ForceCalculator.h"
+#include <spdlog/spdlog.h>
+#include <cmath>
+#include "utils/ArrayUtils.h"
 
 /**
  * create a cell grid with the given numbers o of cells
@@ -17,6 +20,7 @@ LinkedCellContainer::LinkedCellContainer(std::array<int, 3> N, double cutoff) {
     y_cells = ceil(N[1] / cutoff) + 1;
     z_cells = ceil(N[2] / cutoff) + 1;
     cells = std::vector<std::vector<Particle>>(x_cells*y_cells*z_cells);
+    c = cutoff;
 }
 
 LinkedCellContainer::~LinkedCellContainer(){}
@@ -128,3 +132,9 @@ void LinkedCellContainer::setZero() {
         }
     }
 }
+
+int LinkedCellContainer::getXMax() {return x_cells;}
+
+int LinkedCellContainer::getYMax() {return y_cells;}
+
+int LinkedCellContainer::getZMax() {return z_cells;}

@@ -6,11 +6,13 @@
 
 #include "Particle.h"
 #include <vector>
+#include <functional>
 
 
 class LinkedCellContainer {
 public:
-    std::vector<std::vector<Particle>> cells{};
+
+    std::vector<std::vector<Particle>> cells;
 
     LinkedCellContainer(std::array<int, 3> N, double cutoff);
 
@@ -34,10 +36,16 @@ public:
 
     void setZero();
 
+    int getXMax();
+
+    int getYMax();
+
+    int getZMax();
 
 private:
     int x_cells;
     int y_cells;
     int z_cells;
+    double c;
 };
 
