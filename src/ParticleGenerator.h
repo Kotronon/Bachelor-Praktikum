@@ -14,7 +14,7 @@ private:
 public:
     static ParticleContainer
     createCuboid(std::array<double, 3> x, std::array<double, 3> v, std::array<int, 3> N, double h, double m);
-    void createCuboidInCells(std::array<double, 3> x, std::array<double, 3> v,
+    static void createCuboidInCells(std::array<double, 3> x, std::array<double, 3> v,
                                                 std::array<int, 3> N, double h, double m,
                                                 LinkedCellContainer &cells, double  cutoff);
 };

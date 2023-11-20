@@ -13,13 +13,10 @@
  */
 LinkedCellContainer::LinkedCellContainer(std::array<int, 3> N, double cutoff) {
     //creating list with length = number of cells
-    x_cells = ceil(N[0] / cutoff);
-    if(x_cells == 0) x_cells = 1;
-    y_cells = ceil(N[1] / cutoff);
-    if(y_cells == 0) y_cells = 1;
-    z_cells = ceil(N[2] / cutoff);
-    if(z_cells == 0) z_cells = 1;
-    cells.reserve(x_cells * y_cells * z_cells);
+    x_cells = ceil(N[0] / cutoff) + 1;
+    y_cells = ceil(N[1] / cutoff) + 1;
+    z_cells = ceil(N[2] / cutoff) + 1;
+    cells = std::vector<std::vector<Particle>>(x_cells*y_cells*z_cells);
 }
 
 LinkedCellContainer::~LinkedCellContainer(){}

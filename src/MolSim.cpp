@@ -16,6 +16,8 @@
  */
 void plotParticles(int iteration);
 
+void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
+
 /**
  * get a specific command option
  */
@@ -37,7 +39,7 @@ ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
     spdlog::info("Hello from MolSim for PSE!");
-    if (argc <= 3) {
+   /* if (argc <= 3) {
         spdlog::info("Erroneous programme call! ");
         spdlog::info("./MolSim end_time delta_time [options]");
 
@@ -61,7 +63,7 @@ int main(int argc, char *argsv[]) {
     //TODO: Add input for file and/or cuboid
 
     //Getting parameters end_time and delta_t
-    double end_time = std::stod(argsv[1]);
+   /* double end_time = std::stod(argsv[1]);
     spdlog::info("end_time: {}", end_time);
 
     double delta_t = std::stod(argsv[2]);
@@ -184,25 +186,35 @@ int main(int argc, char *argsv[]) {
     container.addParticleContainer(cuboid_1);
     container.addParticleContainer(cuboid_2);
 */
+   LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0);
+   ParticleGenerator::createCuboidInCells({20,20,0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
+    ParticleGenerator::createCuboidInCells({70,60,0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
+   double end_time = 20;
+   double delta_t = 0.0005;
     double current_time = start_time;
     int iteration = 0;
-
-    //Pre-calculation of f
-    ForceCalculator::LennardJonesForceFaster(container, eps, sig);
+      //Pre-calculation of f
+    //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
+   ForceCalculator::LennardJonesForceCell(cells, eps, sig);
     //Initialization with Brownian Motion
-    VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
+    //VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
+   /* VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
     //For this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
         // calculate new x
-        PositionCalculator::PositionStoermerVerlet(container, delta_t);
+        //PositionCalculator::PositionStoermerVerlet(container, delta_t);
+        PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
         // calculate new f
-        ForceCalculator::LennardJonesForceFaster(container, eps, sig);
+        //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
+        ForceCalculator::LennardJonesForceCell(cells, eps, sig);
         // calculate new v
-        VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
+        //VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
+        VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
 
         iteration++;
         if (iteration % 10 == 0) {
-            plotParticles(iteration);
+            //plotParticles(iteration);
+            plotParticlesInCells(iteration, cells);
         }
         if (iteration % 100 == 0) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
@@ -211,10 +223,26 @@ int main(int argc, char *argsv[]) {
         current_time += delta_t;
     }
 
-
-
+*/
     spdlog::info("Output written. Terminating..." );
     return 0;
+}
+
+void plotParticlesInCells(int iteration, LinkedCellContainer &grid) {
+
+    std::string out_name("MD_vtk");
+
+    //outputWriter::XYZWriter writer;
+    //outputWriter::XYZWriter::plotParticles(container, out_name, iteration);
+
+    outputWriter::VTKWriter writer2;
+    writer2.initializeOutput(grid.cell_numbers());
+    for (int i = 0; i < grid.cell_numbers(); i++) {
+        for(int j = 0; j < grid.Particles_in_cell(i); j++){
+            writer2.plotParticle(grid.cells[i][j]);
+        }
+    }
+    writer2.writeFile(out_name, iteration);
 }
 
 void plotParticles(int iteration) {
