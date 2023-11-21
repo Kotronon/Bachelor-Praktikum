@@ -86,18 +86,28 @@ void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &grid, double ep
     ForceCalculator::epsilon = eps;
     ForceCalculator::sigma = sig;
     grid.setZero();
-    for(int i = 0; i < grid.cells.size(); i++){
+    for(int i = 0; i < grid.cell_numbers(); i++){
         std::vector<int> neighbours = grid.get_Particles_from_next_cells(i);
-        for(int j = 0; j < grid.cells[i].size(); j++){
+        for(int j = 0; j < grid.Particles_in_cell(i); j++){
             //for all particles in current cell
-            for(int k = j+1; k < grid.cells[i].size(); k++){
+            for(int k = j+1; k < grid.Particles_in_cell(i); k++){
                 //calculate force with particles in current cell
-                LennardJonesForcePairwise(&(grid.cells[i][j]), &(grid.cells[i][k]));
+                //LennardJonesForcePairwise(&(grid.cells[i][j]), &(grid.cells[i][k]));
+                std::array<double, 3> force = {0,0,0};
+                double L2Norm_p1_p2 = ArrayUtils::L2Norm(grid.cells[i][j].getX() - grid.cells[i][k].getX());
+                force = force + ((-24*epsilon / pow(L2Norm_p1_p2,2)) * (pow(sigma/L2Norm_p1_p2,6) - (2 * pow(sigma/L2Norm_p1_p2,12))) * (grid.cells[i][j].getX() - grid.cells[i][k].getX()));
+                grid.cells[i][j].setF(grid.cells[i][j].getF() + force);
+                grid.cells[i][k].setF(grid.cells[i][k].getF() - force);
             }
-            for(int k = 0; k < neighbours.size(); k++){
+            for(int neighbour : neighbours){
                 //with neighbour cells
-                for(int l = 0; l < grid.cells[neighbours[k]].size(); l++){
-                    LennardJonesForcePairwise(&(grid.cells[i][j]), &(grid.cells[neighbours[k]][l]));
+                for(int l = 0; l < grid.Particles_in_cell(neighbour); l++){
+                   // LennardJonesForcePairwise(&(grid.cells[i][j]), &(grid.cells[neighbour][l]));
+                    std::array<double, 3> force = {0,0,0};
+                    double L2Norm_p1_p2 = ArrayUtils::L2Norm(grid.cells[i][j].getX() - grid.cells[neighbour][l].getX());
+                    force = force + ((-24*epsilon / pow(L2Norm_p1_p2,2)) * (pow(sigma/L2Norm_p1_p2,6) - (2 * pow(sigma/L2Norm_p1_p2,12))) * (grid.cells[i][j].getX() - grid.cells[neighbour][l].getX()));
+                    grid.cells[i][j].setF(grid.cells[i][j].getF() + force);
+                    grid.cells[neighbour][l].setF(grid.cells[neighbour][l].getF() - force);
                 }
             }
         }

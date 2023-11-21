@@ -19,7 +19,7 @@ LinkedCellContainer::LinkedCellContainer(std::array<int, 3> N, double cutoff) {
     x_cells = ceil(N[0] / cutoff);
     y_cells = ceil(N[1] / cutoff);
     z_cells = ceil(N[2] / cutoff);
-    cells = std::vector<std::vector<Particle>>(x_cells +x_cells* y_cells + x_cells*y_cells*z_cells);
+    cells = std::vector<std::vector<Particle>>(x_cells* y_cells + x_cells*y_cells*z_cells);
     c = cutoff;
 }
 
