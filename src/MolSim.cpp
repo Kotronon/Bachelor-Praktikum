@@ -31,7 +31,7 @@ bool cmdOptionExists(char** begin, char** end, const std::string& option);
 //Hardcoded values for now:
 constexpr double start_time = 0;
 double avg_v = 0.1;
-int dim = 3;
+int dim = 2;
 double eps = 5;
 double sig = 1;
 //Creation of particle container to be filled with all relevant particles
