@@ -85,9 +85,78 @@ void LinkedCellContainer::deleteParticle(int cell, Particle &p){
  * @param cell_new
  * @param p
  */
-void LinkedCellContainer::moveToNeighbour(int cell_current, int cell_new, Particle &p){
-    deleteParticle(cell_current, p);
-    addParticle(cell_new, p);
+void LinkedCellContainer::moveToNeighbour(){
+    for (int i = 0; i < cell_numbers(); i++) {
+        for (int j = 0; j < Particles_in_cell(i); j++) {
+            int new_cell = i;
+            int x_old = i % getXMax();
+            int y_old = i / getXMax()*getZMax();
+            int z_old = i /(getXMax()*getYMax());
+            int x_now =  floor(cells[i][j].getX()[0] / c);
+            int y_now = floor(cells[i][j].getX()[1] /c);
+            int z_now = floor(cells[i][j].getX()[2] /c);
+            if(x_now > x_old){
+                if(x_now < getXMax()-1) {
+                    if(y_now > y_old && y_now < getYMax()) new_cell+=getXMax();
+                    else if(y_now < y_old && y_now >= 0) new_cell-=getXMax();
+                    if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
+                    else if(z_now < z_old && z_now >= 0) new_cell -= getXMax()*getYMax();
+                    addParticle(new_cell+1, cells[i][j]);
+                }
+                cells[i].erase(cells[i].begin() + j);
+                //deleteParticle(i, cells[i][j]);
+                j--;
+            }
+            else if(x_now < x_old){
+                if(x_now > 0) {
+                    if(y_now > y_old && y_now < getYMax()) new_cell+=getXMax();
+                    else if(y_now < y_old && y_now >= 0) new_cell-=getXMax();
+                    if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
+                    else if(z_now < z_old && z_now  >= 0) new_cell -= getXMax()*getYMax();
+                    addParticle(new_cell-1, cells[i][j]);
+                }
+                cells[i].erase(cells[i].begin() + j);
+                //deleteParticle(i, cells[i][j]);
+                j--;
+            }
+            else if(y_now > y_old){
+                if(y_now < getYMax()-1) {
+                    if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
+                    else if(z_now < z_old && z_now  >= 0) new_cell -= getXMax()*getYMax();
+                    addParticle(new_cell+getXMax(), cells[i][j]);
+                }
+                cells[i].erase(cells[i].begin() + j);
+                //deleteParticle(i, cells[i][j]);
+                j--;
+            }
+            else if(y_now < y_old){
+                if(y_now > 0 ) {
+                    if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
+                    else if(z_now < z_old && z_now  >= 0) new_cell -= getXMax()*getYMax();
+                    addParticle(new_cell-getXMax(), cells[i][j]);
+                }
+                cells[i].erase(cells[i].begin() + j);
+                //deleteParticle(i, cells[i][j]);
+                j--;
+            }
+            else if(z_now > z_old){
+                if(z_now < getZMax()-1) {
+                    addParticle(i+getXMax()*getYMax(), cells[i][j]);
+                }
+                cells[i].erase(cells[i].begin() + j);
+                //deleteParticle(i, cells[i][j]);
+                j--;
+            }
+            else if(z_now < z_old){
+                if(z_now > 0 ) {
+                    addParticle(i-getXMax()*getYMax(), cells[i][j]);
+                }
+                cells[i].erase(cells[i].begin() + j);
+                //deleteParticle(i, cells[i][j]);
+                j--;
+            }
+        }
+    }
 }
 
 /**

@@ -30,7 +30,7 @@ public:
 
     void deleteParticle(int cell, Particle &p);
 
-    void moveToNeighbour(int cell_current, int cell_new, Particle &p);
+    void moveToNeighbour();
 
     std::vector<int> get_Particles_from_next_cells(int cell);
 
