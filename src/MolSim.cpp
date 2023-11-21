@@ -187,29 +187,29 @@ int main(int argc, char *argsv[]) {
     container.addParticleContainer(cuboid_2);
 */
    LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0);
-   ParticleGenerator::createCuboidInCells({20,20,0}, {0,0,0}, {10,3,1}, 1.1225, 1, cells, 3.0);
-    ParticleGenerator::createCuboidInCells({70,60,0}, {0,-10,0}, {2,2,1}, 1.1225, 1, cells, 3.0);
+   ParticleGenerator::createCuboidInCells({20,20,0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
+    ParticleGenerator::createCuboidInCells({70,60,0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
    double end_time = 20;
    double delta_t = 0.0005;
     double current_time = start_time;
     int iteration = 0;
       //Pre-calculation of f
     //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
-   ForceCalculator::LennardJonesForceCell(cells, eps, sig);
-    //Initialization with Brownian Motion
-    //VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
-   VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
-    //For this loop, we assume: current x, current f and current v are known
+     ForceCalculator::LennardJonesForceCell(cells, eps, sig);
+      //Initialization with Brownian Motion
+      //VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
+     VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
+      //For this loop, we assume: current x, current f and current v are known
      while (current_time < end_time) {
         // calculate new x
         //PositionCalculator::PositionStoermerVerlet(container, delta_t);
-        PositionCalculator::PositionStoermerVerletCell(cells, delta_t, 3.0);
+        PositionCalculator::PositionStoermerVerletCell(cells, delta_t, 3.0, iteration);
         // calculate new f
         //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
         ForceCalculator::LennardJonesForceCell(cells, eps, sig);
         // calculate new v
-        VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
-      //  VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
+       // VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
+        VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
 
         iteration++;
         if (iteration % 10 == 0) {
@@ -219,7 +219,9 @@ int main(int argc, char *argsv[]) {
         if (iteration % 100 == 0) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
         }
-
+        if(iteration == 1275){
+            spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
+        }
         current_time += delta_t;
     }
 
@@ -236,7 +238,11 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &grid) {
     //outputWriter::XYZWriter::plotParticles(container, out_name, iteration);
 
     outputWriter::VTKWriter writer2;
-    writer2.initializeOutput(grid.cell_numbers());
+    int num_of_particles = 0;
+    for (int i = 0; i < grid.cell_numbers(); i++) {
+        num_of_particles += grid.Particles_in_cell(i);
+    }
+    writer2.initializeOutput(num_of_particles);
     for (int i = 0; i < grid.cell_numbers(); i++) {
         for(int j = 0; j < grid.Particles_in_cell(i); j++){
             writer2.plotParticle(grid.cells[i][j]);

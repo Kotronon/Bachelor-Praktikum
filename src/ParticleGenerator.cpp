@@ -4,6 +4,7 @@
 
 #include "ParticleGenerator.h"
 #include "ParticleContainer.h"
+#include <cmath>
 
 
 /**
@@ -62,9 +63,9 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
     }
 
     std::array<double, 3> coordinate = x;
-    int x_achsis = x[0] / cutoff;
-    int y_achsis = x[1] / cutoff;
-    int z_achsis = x[2] / cutoff+1;
+    int x_achsis = floor(x[0] / cutoff);
+    int y_achsis = floor(x[1] / cutoff);
+    int z_achsis = floor(x[2] / cutoff);
     //to move to next cell
     int x_achsis_tmp = x_achsis;
     int y_achsis_tmp = y_achsis;
@@ -73,18 +74,18 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
     for (int z_i = 0; z_i < N[2]; z_i++) {
         for (int y_i = 0; y_i < N[1]; y_i++) {
             for (int x_i = 0; x_i < N[0]; x_i++) {
-                cells.addParticle((x_achsis_tmp*y_achsis_tmp*z_achsis_tmp), coordinate, v, m, 0);
+                cells.addParticle((x_achsis_tmp + (x_achsis_tmp*y_achsis_tmp) + (x_achsis_tmp*y_achsis_tmp*z_achsis_tmp)), coordinate, v, m, 0);
                 coordinate[0] += h;
-                if(x_achsis_tmp < coordinate[0] / cutoff) x_achsis_tmp ++;
+                if(x_achsis_tmp < floor(coordinate[0] / cutoff)) x_achsis_tmp ++;
             }
             coordinate[0] = x[0];
             x_achsis_tmp = x_achsis;
             coordinate[1] += h;
-            if(y_achsis_tmp < coordinate[1] / cutoff) y_achsis_tmp ++;
+            if(y_achsis_tmp < floor(coordinate[1] / cutoff)) y_achsis_tmp ++;
         }
         coordinate[1] = x[1];
         y_achsis_tmp = y_achsis;
         coordinate[2] += h;
-        if(z_achsis_tmp < coordinate[2] / cutoff) z_achsis_tmp ++;
+        if(z_achsis_tmp < ceil(coordinate[2] / cutoff)) z_achsis_tmp ++;
     }
 }
