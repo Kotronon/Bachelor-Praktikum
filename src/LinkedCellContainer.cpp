@@ -160,7 +160,7 @@ void LinkedCellContainer::moveToNeighbour(){
 std::vector<int> LinkedCellContainer::get_Particles_from_next_cells(int cell) const{
     std::vector<int> vec;
     bool left = cell%x_cells < x_cells-1;
-    bool up = cell < (x_cells*(y_cells-1));
+    bool up = cell / y_cells < y_cells-1;
     if(cell == 0){
         if(left) vec.push_back(cell + 1);
         if(up) {
