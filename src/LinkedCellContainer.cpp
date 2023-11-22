@@ -10,15 +10,15 @@
 #include "utils/ArrayUtils.h"
 
 /**
- * create a cell grid with the given numbers o of cells
+ * create a cell grid wcells[i][j]h the given numbers o of cells
  * @param number_of_cells
  */
 LinkedCellContainer::LinkedCellContainer(std::array<int, 3> N, double cutoff, std::vector<std::string> b) {
-    //creating list with length = number of cells
+    //creating list wcells[i][j]h length = number of cells
     x_cells = ceil(N[0] / cutoff);
     y_cells = ceil(N[1] / cutoff);
     z_cells = ceil(N[2] / cutoff);
-    cells = std::vector<std::vector<Particle>>((x_cells+2)*(y_cells+2)*(z_cells+2));
+    cells = std::vector<std::vector<Particle>>(x_cells*y_cells*z_cells);
     c = cutoff;
     boundary = b;
 }
@@ -87,7 +87,7 @@ void LinkedCellContainer::deleteParticle(int cell, Particle &p){
  */
 void LinkedCellContainer::moveToNeighbour(){
     for (int i = 0; i < cell_numbers(); i++) {
-        for (int j = 0; j < Particles_in_cell(i); j++) {
+        for(int j = 0; j < Particles_in_cell(i); j++) {
             int new_cell = i;
             int x_old = i % getXMax();
             int y_old = i / getXMax()*getZMax();
@@ -102,11 +102,11 @@ void LinkedCellContainer::moveToNeighbour(){
                     if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
                     else if(z_now < z_old && z_now >= 0) new_cell -= getXMax()*getYMax();
                     addParticle(new_cell+1, cells[i][j]);
-                    deleteParticle(i, cells[i][j]);
+                    cells[i].erase(cells[i].begin() + j);
                 }
                 else{
                     if(boundary[0] == "o")
-                    deleteParticle(i, cells[i][j]);
+                        cells[i].erase(cells[i].begin() + j);
                     else if(boundary[0] == "r"){
                         cells[i][j].setX({c*x_cells-1, cells[i][j].getX()[1], cells[i][j].getX()[2]});
                         cells[i][j].setV({-cells[i][j].getV()[0], cells[i][j].getV()[1], cells[i][j].getV()[2]});
@@ -120,11 +120,11 @@ void LinkedCellContainer::moveToNeighbour(){
                     if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
                     else if(z_now < z_old && z_now  >= 0) new_cell -= getXMax()*getYMax();
                     addParticle(new_cell-1, cells[i][j]);
-                    deleteParticle(i, cells[i][j]);
+                    cells[i].erase(cells[i].begin() + j);
                 }
                 else{
                     if(boundary[1] == "o")
-                    deleteParticle(i, cells[i][j]);
+                        cells[i].erase(cells[i].begin() + j);
                     else if(boundary[1] == "r"){
                         cells[i][j].setX({0, cells[i][j].getX()[1], cells[i][j].getX()[2]});
                         cells[i][j].setV({-cells[i][j].getV()[0], cells[i][j].getV()[1], cells[i][j].getV()[2]});
@@ -136,11 +136,11 @@ void LinkedCellContainer::moveToNeighbour(){
                     if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
                     else if(z_now < z_old && z_now  >= 0) new_cell -= getXMax()*getYMax();
                     addParticle(new_cell+getXMax(), cells[i][j]);
-                    deleteParticle(i, cells[i][j]);
+                    cells[i].erase(cells[i].begin() + j);
                 }
                 else{
                     if(boundary[2] == "o")
-                    deleteParticle(i, cells[i][j]);
+                        cells[i].erase(cells[i].begin() + j);
                     else if(boundary[2] == "r"){
                         cells[i][j].setX({cells[i][j].getX()[0], c*y_cells-1, cells[i][j].getX()[2]});
                         cells[i][j].setV({cells[i][j].getV()[0], -cells[i][j].getV()[1], cells[i][j].getV()[2]});
@@ -152,11 +152,11 @@ void LinkedCellContainer::moveToNeighbour(){
                     if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
                     else if(z_now < z_old && z_now  >= 0) new_cell -= getXMax()*getYMax();
                     addParticle(new_cell-getXMax(), cells[i][j]);
-                    deleteParticle(i, cells[i][j]);
+                    cells[i].erase(cells[i].begin() + j);
                 }
                 else {
                     if (boundary[3] == "o")
-                        deleteParticle(i, cells[i][j]);
+                        cells[i].erase(cells[i].begin() + j);
                     else if (boundary[3] == "r") {
                         cells[i][j].setX({cells[i][j].getX()[0], 0, cells[i][j].getX()[2]});
                         cells[i][j].setV({cells[i][j].getV()[0], -cells[i][j].getV()[1], cells[i][j].getV()[2]});
@@ -166,11 +166,11 @@ void LinkedCellContainer::moveToNeighbour(){
             else if(z_now > z_old){
                 if(z_now <= getZMax()-1) {
                     addParticle(i+getXMax()*getYMax(), cells[i][j]);
-                    deleteParticle(i, cells[i][j]);
+                    cells[i].erase(cells[i].begin() + j);
                 }
                 else{
                     if(boundary[4] == "o")
-                    deleteParticle(i, cells[i][j]);
+                        cells[i].erase(cells[i].begin() + j);
                     else if (boundary[4] == "r") {
                         cells[i][j].setX({cells[i][j].getX()[0], cells[i][j].getX()[1], c*z_cells-1});
                         cells[i][j].setV({cells[i][j].getV()[0], cells[i][j].getV()[1], -cells[i][j].getV()[2]});
@@ -180,11 +180,11 @@ void LinkedCellContainer::moveToNeighbour(){
             else if(z_now < z_old){
                 if(z_now >= 0 ) {
                     addParticle(i-getXMax()*getYMax(), cells[i][j]);
-                    deleteParticle(i, cells[i][j]);
+                    cells[i].erase(cells[i].begin() + j);
                 }
                 else{
                     if(boundary[5] == "o")
-                    deleteParticle(i, cells[i][j]);
+                        cells[i].erase(cells[i].begin() + j);
                     else if (boundary[5] == "r") {
                         cells[i][j].setX({cells[i][j].getX()[0], cells[i][j].getX()[1], 0});
                         cells[i][j].setV({cells[i][j].getV()[0], cells[i][j].getV()[1], -cells[i][j].getV()[2]});
