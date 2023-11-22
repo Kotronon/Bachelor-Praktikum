@@ -46,8 +46,8 @@ ParticleContainer ParticleGenerator::createCuboid(std::array<double, 3> x, std::
 
 /**
  * create a cuboid and stores it in the given cell grid
- * @param x
- * @param v
+ * @param x position of left front corner
+ * @param v initial velocity
  * @param N
  * @param h
  * @param m
@@ -88,4 +88,19 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
         coordinate[2] += h;
         if(z_achsis_tmp < ceil(coordinate[2] / cutoff)) z_achsis_tmp ++;
     }
+}
+
+/**
+ * creates a sphere and stores it in a ParticleContainer
+ * @param x position of center
+ * @param v initial velocity
+ * @param r radius
+ * @param h distance between molecules
+ * @return
+ */
+ParticleContainer ParticleGenerator::createSphere(std::array<double, 3> x, std::array<double, 3> v,
+                                                  double r, double h) {
+    ParticleContainer sphere = ParticleContainer();
+
+    return sphere;
 }
