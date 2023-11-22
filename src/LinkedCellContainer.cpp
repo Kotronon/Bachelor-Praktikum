@@ -4,7 +4,6 @@
 
 
 #include "LinkedCellContainer.h"
-#include <math.h>
 #include "calculations/ForceCalculator.h"
 #include <spdlog/spdlog.h>
 #include <cmath>
@@ -29,7 +28,7 @@ LinkedCellContainer::~LinkedCellContainer(){}
  * returns the number of cells in the grid
  * @return
  */
-int LinkedCellContainer::cell_numbers() {
+int LinkedCellContainer::cell_numbers() const {
     return cells.size();
 }
 
@@ -51,7 +50,7 @@ int LinkedCellContainer::Particles_in_cell(int cell) {
  * @param type_arg
  */
 void LinkedCellContainer::addParticle(int cell, std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg){
-    cells[cell].push_back(Particle(x_arg, v_arg, m_arg, type_arg));
+    cells[cell].emplace_back((x_arg, v_arg, m_arg, type_arg));
 }
 
 /**
@@ -103,8 +102,7 @@ void LinkedCellContainer::moveToNeighbour(){
                     else if(z_now < z_old && z_now >= 0) new_cell -= getXMax()*getYMax();
                     addParticle(new_cell+1, cells[i][j]);
                 }
-                cells[i].erase(cells[i].begin() + j);
-                //deleteParticle(i, cells[i][j]);
+                deleteParticle(i, cells[i][j]);
                 j--;
             }
             else if(x_now < x_old){
@@ -115,8 +113,7 @@ void LinkedCellContainer::moveToNeighbour(){
                     else if(z_now < z_old && z_now  >= 0) new_cell -= getXMax()*getYMax();
                     addParticle(new_cell-1, cells[i][j]);
                 }
-                cells[i].erase(cells[i].begin() + j);
-                //deleteParticle(i, cells[i][j]);
+                deleteParticle(i, cells[i][j]);
                 j--;
             }
             else if(y_now > y_old){
@@ -125,8 +122,7 @@ void LinkedCellContainer::moveToNeighbour(){
                     else if(z_now < z_old && z_now  >= 0) new_cell -= getXMax()*getYMax();
                     addParticle(new_cell+getXMax(), cells[i][j]);
                 }
-                cells[i].erase(cells[i].begin() + j);
-                //deleteParticle(i, cells[i][j]);
+                deleteParticle(i, cells[i][j]);
                 j--;
             }
             else if(y_now < y_old){
@@ -135,24 +131,21 @@ void LinkedCellContainer::moveToNeighbour(){
                     else if(z_now < z_old && z_now  >= 0) new_cell -= getXMax()*getYMax();
                     addParticle(new_cell-getXMax(), cells[i][j]);
                 }
-                cells[i].erase(cells[i].begin() + j);
-                //deleteParticle(i, cells[i][j]);
+                deleteParticle(i, cells[i][j]);
                 j--;
             }
             else if(z_now > z_old){
                 if(z_now < getZMax()-1) {
                     addParticle(i+getXMax()*getYMax(), cells[i][j]);
                 }
-                cells[i].erase(cells[i].begin() + j);
-                //deleteParticle(i, cells[i][j]);
+                deleteParticle(i, cells[i][j]);
                 j--;
             }
             else if(z_now < z_old){
                 if(z_now > 0 ) {
                     addParticle(i-getXMax()*getYMax(), cells[i][j]);
                 }
-                cells[i].erase(cells[i].begin() + j);
-                //deleteParticle(i, cells[i][j]);
+                deleteParticle(i, cells[i][j]);
                 j--;
             }
         }
@@ -164,7 +157,7 @@ void LinkedCellContainer::moveToNeighbour(){
  * @param cell
  * @return
  */
-std::vector<int> LinkedCellContainer::get_Particles_from_next_cells(int cell){
+std::vector<int> LinkedCellContainer::get_Particles_from_next_cells(int cell) const{
     std::vector<int> vec;
     bool left = cell%x_cells < x_cells-1;
     bool up = cell < (x_cells*(y_cells-1));
@@ -194,16 +187,16 @@ std::vector<int> LinkedCellContainer::get_Particles_from_next_cells(int cell){
 }
 
 void LinkedCellContainer::setZero() {
-    for(int i = 0; i < cells.size(); i++){
-        for(int j = 0; j < cells[i].size(); j++){
-            cells[i][j].setOldF(cells[i][j].getF());
-            cells[i][j].setF({0,0,0});
+    for(auto & cell : cells){
+        for(auto & p : cell){
+            p.setOldF(p.getF());
+            p.setF({0,0,0});
         }
     }
 }
 
-int LinkedCellContainer::getXMax() {return x_cells;}
+int LinkedCellContainer::getXMax() const {return x_cells;}
 
-int LinkedCellContainer::getYMax() {return y_cells;}
+int LinkedCellContainer::getYMax() const {return y_cells;}
 
-int LinkedCellContainer::getZMax() {return z_cells;}
+int LinkedCellContainer::getZMax() const {return z_cells;}
