@@ -96,7 +96,7 @@ void LinkedCellContainer::moveToNeighbour(){
             int y_now = floor(cells[i][j].getX()[1] /c);
             int z_now = floor(cells[i][j].getX()[2] /c);
             if(x_now > x_old){
-                if(x_now < getXMax()-1) {
+                if(x_now <= getXMax()-1) {
                     if(y_now > y_old && y_now < getYMax()) new_cell+=getXMax();
                     else if(y_now < y_old && y_now >= 0) new_cell-=getXMax();
                     if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
@@ -112,11 +112,9 @@ void LinkedCellContainer::moveToNeighbour(){
                         cells[i][j].setV({-cells[i][j].getV()[0], cells[i][j].getV()[1], cells[i][j].getV()[2]});
                     }
                 }
-
-                j--;
             }
             else if(x_now < x_old){
-                if(x_now > 0) {
+                if(x_now >= 0) {
                     if(y_now > y_old && y_now < getYMax()) new_cell+=getXMax();
                     else if(y_now < y_old && y_now >= 0) new_cell-=getXMax();
                     if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
@@ -132,10 +130,9 @@ void LinkedCellContainer::moveToNeighbour(){
                         cells[i][j].setV({-cells[i][j].getV()[0], cells[i][j].getV()[1], cells[i][j].getV()[2]});
                     }
                 }
-                j--;
             }
             else if(y_now > y_old){
-                if(y_now < getYMax()-1) {
+                if(y_now <= getYMax()-1) {
                     if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
                     else if(z_now < z_old && z_now  >= 0) new_cell -= getXMax()*getYMax();
                     addParticle(new_cell+getXMax(), cells[i][j]);
@@ -149,10 +146,9 @@ void LinkedCellContainer::moveToNeighbour(){
                         cells[i][j].setV({cells[i][j].getV()[0], -cells[i][j].getV()[1], cells[i][j].getV()[2]});
                     }
                 }
-                j--;
             }
             else if(y_now < y_old){
-                if(y_now > 0 ) {
+                if(y_now >= 0 ) {
                     if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
                     else if(z_now < z_old && z_now  >= 0) new_cell -= getXMax()*getYMax();
                     addParticle(new_cell-getXMax(), cells[i][j]);
@@ -166,10 +162,9 @@ void LinkedCellContainer::moveToNeighbour(){
                         cells[i][j].setV({cells[i][j].getV()[0], -cells[i][j].getV()[1], cells[i][j].getV()[2]});
                     }
                 }
-                j--;
             }
             else if(z_now > z_old){
-                if(z_now < getZMax()-1) {
+                if(z_now <= getZMax()-1) {
                     addParticle(i+getXMax()*getYMax(), cells[i][j]);
                     deleteParticle(i, cells[i][j]);
                 }
@@ -181,10 +176,9 @@ void LinkedCellContainer::moveToNeighbour(){
                         cells[i][j].setV({cells[i][j].getV()[0], cells[i][j].getV()[1], -cells[i][j].getV()[2]});
                     }
                 }
-                j--;
             }
             else if(z_now < z_old){
-                if(z_now > 0 ) {
+                if(z_now >= 0 ) {
                     addParticle(i-getXMax()*getYMax(), cells[i][j]);
                     deleteParticle(i, cells[i][j]);
                 }
@@ -196,7 +190,6 @@ void LinkedCellContainer::moveToNeighbour(){
                         cells[i][j].setV({cells[i][j].getV()[0], cells[i][j].getV()[1], -cells[i][j].getV()[2]});
                     }
                 }
-                j--;
             }
         }
     }
@@ -250,5 +243,3 @@ int LinkedCellContainer::getXMax() const {return x_cells;}
 int LinkedCellContainer::getYMax() const {return y_cells;}
 
 int LinkedCellContainer::getZMax() const {return z_cells;}
-
-double LinkedCellContainer::getC() const {return c;}

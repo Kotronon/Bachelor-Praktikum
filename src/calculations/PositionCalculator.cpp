@@ -21,7 +21,8 @@ void PositionCalculator::PositionStoermerVerlet(ParticleContainer &container, do
 
 void PositionCalculator::PositionStoermerVerletCell(LinkedCellContainer &grid, double delta_t, double cutoff) {
     for (int i = 0; i < grid.cell_numbers(); i++) {
-        for (int j = 0; j < grid.Particles_in_cell(i); j++) {
+
+            for (int j = 0; j < grid.Particles_in_cell(i); j++) {
             std::array<double, 3> x_new = grid.cells[i][j].getX() + (delta_t * grid.cells[i][j].getV()) +
                                           (((delta_t * delta_t) / (2 * grid.cells[i][j].getM())) *
                                            grid.cells[i][j].getF());
