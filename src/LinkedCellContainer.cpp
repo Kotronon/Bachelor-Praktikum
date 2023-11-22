@@ -107,6 +107,10 @@ void LinkedCellContainer::moveToNeighbour(){
                 else{
                     if(boundary[0] == "o")
                     deleteParticle(i, cells[i][j]);
+                    else if(boundary[0] == "r"){
+                        cells[i][j].setX({c*x_cells-1, cells[i][j].getX()[1], cells[i][j].getX()[2]});
+                        cells[i][j].setV({-cells[i][j].getV()[0], cells[i][j].getV()[1], cells[i][j].getV()[2]});
+                    }
                 }
 
                 j--;
@@ -123,6 +127,10 @@ void LinkedCellContainer::moveToNeighbour(){
                 else{
                     if(boundary[1] == "o")
                     deleteParticle(i, cells[i][j]);
+                    else if(boundary[1] == "r"){
+                        cells[i][j].setX({0, cells[i][j].getX()[1], cells[i][j].getX()[2]});
+                        cells[i][j].setV({-cells[i][j].getV()[0], cells[i][j].getV()[1], cells[i][j].getV()[2]});
+                    }
                 }
                 j--;
             }
@@ -136,6 +144,10 @@ void LinkedCellContainer::moveToNeighbour(){
                 else{
                     if(boundary[2] == "o")
                     deleteParticle(i, cells[i][j]);
+                    else if(boundary[2] == "r"){
+                        cells[i][j].setX({cells[i][j].getX()[0], c*y_cells-1, cells[i][j].getX()[2]});
+                        cells[i][j].setV({cells[i][j].getV()[0], -cells[i][j].getV()[1], cells[i][j].getV()[2]});
+                    }
                 }
                 j--;
             }
@@ -146,9 +158,13 @@ void LinkedCellContainer::moveToNeighbour(){
                     addParticle(new_cell-getXMax(), cells[i][j]);
                     deleteParticle(i, cells[i][j]);
                 }
-                else{
-                    if(boundary[3] == "o")
-                    deleteParticle(i, cells[i][j]);
+                else {
+                    if (boundary[3] == "o")
+                        deleteParticle(i, cells[i][j]);
+                    else if (boundary[3] == "r") {
+                        cells[i][j].setX({cells[i][j].getX()[0], 0, cells[i][j].getX()[2]});
+                        cells[i][j].setV({cells[i][j].getV()[0], -cells[i][j].getV()[1], cells[i][j].getV()[2]});
+                    }
                 }
                 j--;
             }
@@ -160,6 +176,10 @@ void LinkedCellContainer::moveToNeighbour(){
                 else{
                     if(boundary[4] == "o")
                     deleteParticle(i, cells[i][j]);
+                    else if (boundary[4] == "r") {
+                        cells[i][j].setX({cells[i][j].getX()[0], cells[i][j].getX()[1], c*z_cells-1});
+                        cells[i][j].setV({cells[i][j].getV()[0], cells[i][j].getV()[1], -cells[i][j].getV()[2]});
+                    }
                 }
                 j--;
             }
@@ -171,6 +191,10 @@ void LinkedCellContainer::moveToNeighbour(){
                 else{
                     if(boundary[5] == "o")
                     deleteParticle(i, cells[i][j]);
+                    else if (boundary[5] == "r") {
+                        cells[i][j].setX({cells[i][j].getX()[0], cells[i][j].getX()[1], 0});
+                        cells[i][j].setV({cells[i][j].getV()[0], cells[i][j].getV()[1], -cells[i][j].getV()[2]});
+                    }
                 }
                 j--;
             }
@@ -226,3 +250,5 @@ int LinkedCellContainer::getXMax() const {return x_cells;}
 int LinkedCellContainer::getYMax() const {return y_cells;}
 
 int LinkedCellContainer::getZMax() const {return z_cells;}
+
+double LinkedCellContainer::getC() const {return c;}

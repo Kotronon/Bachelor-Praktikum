@@ -42,6 +42,8 @@ public:
 
     int getZMax() const;
 
+    double getC() const;
+
 private:
     int x_cells;
     int y_cells;
