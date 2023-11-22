@@ -13,13 +13,14 @@
  * create a cell grid with the given numbers o of cells
  * @param number_of_cells
  */
-LinkedCellContainer::LinkedCellContainer(std::array<int, 3> N, double cutoff) {
+LinkedCellContainer::LinkedCellContainer(std::array<int, 3> N, double cutoff, std::vector<std::string> b) {
     //creating list with length = number of cells
     x_cells = ceil(N[0] / cutoff);
     y_cells = ceil(N[1] / cutoff);
     z_cells = ceil(N[2] / cutoff);
-    cells = std::vector<std::vector<Particle>>(x_cells* y_cells + x_cells*y_cells*z_cells);
+    cells = std::vector<std::vector<Particle>>((x_cells+2)*(y_cells+2)*(z_cells+2));
     c = cutoff;
+    boundary = b;
 }
 
 LinkedCellContainer::~LinkedCellContainer(){}
@@ -101,8 +102,13 @@ void LinkedCellContainer::moveToNeighbour(){
                     if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
                     else if(z_now < z_old && z_now >= 0) new_cell -= getXMax()*getYMax();
                     addParticle(new_cell+1, cells[i][j]);
+                    deleteParticle(i, cells[i][j]);
                 }
-                deleteParticle(i, cells[i][j]);
+                else{
+                    if(boundary[0] == "o")
+                    deleteParticle(i, cells[i][j]);
+                }
+
                 j--;
             }
             else if(x_now < x_old){
@@ -112,8 +118,12 @@ void LinkedCellContainer::moveToNeighbour(){
                     if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
                     else if(z_now < z_old && z_now  >= 0) new_cell -= getXMax()*getYMax();
                     addParticle(new_cell-1, cells[i][j]);
+                    deleteParticle(i, cells[i][j]);
                 }
-                deleteParticle(i, cells[i][j]);
+                else{
+                    if(boundary[1] == "o")
+                    deleteParticle(i, cells[i][j]);
+                }
                 j--;
             }
             else if(y_now > y_old){
@@ -121,8 +131,12 @@ void LinkedCellContainer::moveToNeighbour(){
                     if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
                     else if(z_now < z_old && z_now  >= 0) new_cell -= getXMax()*getYMax();
                     addParticle(new_cell+getXMax(), cells[i][j]);
+                    deleteParticle(i, cells[i][j]);
                 }
-                deleteParticle(i, cells[i][j]);
+                else{
+                    if(boundary[2] == "o")
+                    deleteParticle(i, cells[i][j]);
+                }
                 j--;
             }
             else if(y_now < y_old){
@@ -130,22 +144,34 @@ void LinkedCellContainer::moveToNeighbour(){
                     if(z_now > z_old && z_now < getZMax()) new_cell += getXMax()*getYMax();
                     else if(z_now < z_old && z_now  >= 0) new_cell -= getXMax()*getYMax();
                     addParticle(new_cell-getXMax(), cells[i][j]);
+                    deleteParticle(i, cells[i][j]);
                 }
-                deleteParticle(i, cells[i][j]);
+                else{
+                    if(boundary[3] == "o")
+                    deleteParticle(i, cells[i][j]);
+                }
                 j--;
             }
             else if(z_now > z_old){
                 if(z_now < getZMax()-1) {
                     addParticle(i+getXMax()*getYMax(), cells[i][j]);
+                    deleteParticle(i, cells[i][j]);
                 }
-                deleteParticle(i, cells[i][j]);
+                else{
+                    if(boundary[4] == "o")
+                    deleteParticle(i, cells[i][j]);
+                }
                 j--;
             }
             else if(z_now < z_old){
                 if(z_now > 0 ) {
                     addParticle(i-getXMax()*getYMax(), cells[i][j]);
+                    deleteParticle(i, cells[i][j]);
                 }
-                deleteParticle(i, cells[i][j]);
+                else{
+                    if(boundary[5] == "o")
+                    deleteParticle(i, cells[i][j]);
+                }
                 j--;
             }
         }
@@ -160,7 +186,7 @@ void LinkedCellContainer::moveToNeighbour(){
 std::vector<int> LinkedCellContainer::get_Particles_from_next_cells(int cell) const{
     std::vector<int> vec;
     bool left = cell%x_cells < x_cells-1;
-    bool up = cell / y_cells < y_cells-1;
+    bool up = cell / x_cells < y_cells-1;
     if(cell == 0){
         if(left) vec.push_back(cell + 1);
         if(up) {

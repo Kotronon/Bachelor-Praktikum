@@ -14,7 +14,7 @@ public:
 
     std::vector<std::vector<Particle>> cells;
 
-    LinkedCellContainer(std::array<int, 3> N, double cutoff);
+    LinkedCellContainer(std::array<int, 3> N, double cutoff,  std::vector<std::string> b);
 
     virtual ~LinkedCellContainer();
 
@@ -47,5 +47,6 @@ private:
     int y_cells;
     int z_cells;
     double c;
+    std::vector<std::string> boundary;
 };
 
