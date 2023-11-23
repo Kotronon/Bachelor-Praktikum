@@ -50,6 +50,7 @@ public:
 
     void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation);
 
+
 private:
     int x_cells;
     int y_cells;

@@ -29,4 +29,5 @@ void PositionCalculator::PositionStoermerVerletCell(LinkedCellContainer &grid, d
         }
     }
     grid.moveToNeighbour();
+
 }

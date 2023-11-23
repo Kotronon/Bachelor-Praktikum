@@ -100,60 +100,11 @@ void LinkedCellContainer::moveToNeighbour() {
                 if (new_cell < cell_numbers() && new_cell >= 0) {
                     addParticle(new_cell, cells[i][j]);
                     cells[i].erase(cells[i].begin() + j);
+                    //check boundary conditions -> create ghostcells
+
                 } else {
-                    //make boundary condition
+                    //is outflow boundary
                     cells[i].erase(cells[i].begin() + j);
-                   /* bool deleted = false;
-                    if (x_now > x_cells) {
-                        if (boundary[0] == "o") {
-                            cells[i].erase(cells[i].begin() + j);
-                            deleted = true;
-                        } else if (boundary[0] == "r") {
-                            cells[i][j].setX({c * x_cells - 1, cells[i][j].getX()[1], cells[i][j].getX()[2]});
-                            cells[i][j].setV({-cells[i][j].getV()[0], cells[i][j].getV()[1], cells[i][j].getV()[2]});
-                        }
-                    } else if (x_now < 0) {
-                        if (boundary[1] == "o") {
-                            cells[i].erase(cells[i].begin() + j);
-                            deleted = true;
-                        } else if (boundary[1] == "r") {
-                            cells[i][j].setX({0, cells[i][j].getX()[1], cells[i][j].getX()[2]});
-                            cells[i][j].setV({-cells[i][j].getV()[0], cells[i][j].getV()[1], cells[i][j].getV()[2]});
-                        }
-                    }
-                    if (y_now > y_cells) {
-                        if (boundary[2] == "o" && !deleted) {
-                            cells[i].erase(cells[i].begin() + j);
-                            deleted = true;
-                        } else if (boundary[2] == "r" && !deleted) {
-                            cells[i][j].setX({cells[i][j].getX()[0], c * y_cells - 1, cells[i][j].getX()[2]});
-                            cells[i][j].setV({cells[i][j].getV()[0], -cells[i][j].getV()[1], cells[i][j].getV()[2]});
-                        }
-                    } else if (y_now < 0) {
-                        if (boundary[3] == "o" && !deleted) {
-                            cells[i].erase(cells[i].begin() + j);
-                            deleted = true;
-                        } else if (boundary[3] == "r") {
-                            cells[i][j].setX({cells[i][j].getX()[0], 0, cells[i][j].getX()[2]});
-                            cells[i][j].setV({cells[i][j].getV()[0], -cells[i][j].getV()[1], cells[i][j].getV()[2]});
-                        }
-                    }
-                    if (z_now > z_cells) {
-                        if (boundary[4] == "o" && !deleted)
-                            cells[i].erase(cells[i].begin() + j);
-                        else if (boundary[4] == "r" && !deleted) {
-                            cells[i][j].setX({cells[i][j].getX()[0], cells[i][j].getX()[1], c * z_cells - 1});
-                            cells[i][j].setV({cells[i][j].getV()[0], cells[i][j].getV()[1], -cells[i][j].getV()[2]});
-                        }
-                    } else if (z_now < 0) {
-                        if (boundary[5] == "o" && !deleted) {
-                            cells[i].erase(cells[i].begin() + j);
-                            deleted = true;
-                        } else if (boundary[5] == "r" && !deleted) {
-                            cells[i][j].setX({cells[i][j].getX()[0], cells[i][j].getX()[1], 0});
-                            cells[i][j].setV({cells[i][j].getV()[0], cells[i][j].getV()[1], -cells[i][j].getV()[2]});
-                        }
-                    }*/
                 }
             }
         }
@@ -166,11 +117,11 @@ void LinkedCellContainer::moveToNeighbour() {
  * @return
  */
 std::vector<int> LinkedCellContainer::get_next_cells(int cell) const {
-    std::vector<int> vec= {};
+    std::vector<int> vec = {};
     bool right = (cell % x_cells) < (x_cells - 1);
     bool up = (cell / x_cells) < (y_cells - 1);
     bool left = (cell % x_cells) > 0;
-    bool before = (cell / (x_cells * y_cells)) < (z_cells -1);
+    bool before = (cell / (x_cells * y_cells)) < (z_cells - 1);
     //2D
     if (right) vec.push_back(cell + 1);
     if (up) vec.push_back(cell + x_cells);
@@ -232,3 +183,5 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
         }
     }
 }
+
+
