@@ -12,7 +12,7 @@
 class LinkedCellContainer {
 public:
 
-    std::vector<std::vector<Particle>> cells;
+
 
     LinkedCellContainer(std::array<int, 3> N, double cutoff,  std::vector<std::string> b);
 
@@ -44,6 +44,11 @@ public:
 
     int getZMax() const;
 
+    std::vector<std::vector<Particle>>::iterator begin();
+
+    std::vector<std::vector<Particle>>::iterator end();
+
+    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation);
 
 private:
     int x_cells;
@@ -51,5 +56,6 @@ private:
     int z_cells;
     double c;
     std::vector<std::string> boundary;
+    std::vector<std::vector<Particle>> cells;
 };
 

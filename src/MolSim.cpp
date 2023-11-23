@@ -240,9 +240,9 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &grid) {
         num_of_particles += grid.Particles_in_cell(i);
     }
     writer2.initializeOutput(num_of_particles);
-    for (int i = 0; i < grid.cell_numbers(); i++) {
-        for(int j = 0; j < grid.Particles_in_cell(i); j++){
-            writer2.plotParticle(grid.cells[i][j]);
+    for (auto &c: grid) {
+        for(auto &p: c){
+            writer2.plotParticle(p);
         }
     }
     writer2.writeFile(out_name, iteration);

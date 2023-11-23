@@ -210,3 +210,34 @@ int LinkedCellContainer::getXMax() const {return x_cells;}
 int LinkedCellContainer::getYMax() const {return y_cells;}
 
 int LinkedCellContainer::getZMax() const {return z_cells;}
+
+std::vector<std::vector<Particle>>::iterator LinkedCellContainer::begin() {
+    return cells.begin();
+}
+
+/**
+ * returns the vector of all PArticles in the ParticleContainer with Pointer at last element
+ * @return
+ */
+std::vector<std::vector<Particle>>::iterator LinkedCellContainer::end() {
+    return cells.end();
+}
+
+void LinkedCellContainer::applyForcePairwise(const std::function<void (Particle *, Particle *)> &forceCalculation) {
+    for(int i = 0; i < cell_numbers(); i++){
+        std::vector<int> neighbours = get_next_cells(i);
+        for(int j = 0; j < Particles_in_cell(i); j++){
+            //for all particles in current cell
+            for(int k = j+1; k < Particles_in_cell(i); k++){
+                //calculate force with particles in current cell
+                forceCalculation(&(cells[i][j]), &(cells[i][k]));
+            }
+            for(int neighbour : neighbours){
+                //with neighbour cells
+                for(int l = 0; l < Particles_in_cell(neighbour); l++){
+                    forceCalculation(&(cells[i][j]), &(cells[neighbour][l]));
+                }
+            }
+        }
+    }
+}
