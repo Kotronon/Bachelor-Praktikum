@@ -92,17 +92,18 @@ void LinkedCellContainer::deleteParticle(int cell, Particle &p) {
 void LinkedCellContainer::moveToNeighbour() {
     for (int i = 0; i < cell_numbers(); i++) {
         for (int j = 0; j < Particles_in_cell(i); j++) {
-            int x_now = ceil(cells[i][j].getX()[0] / c);
+            int x_now = floor(cells[i][j].getX()[0] / c);
             int y_now = ceil(cells[i][j].getX()[1] / c);
             int z_now = ceil(cells[i][j].getX()[2] / c);
-            int new_cell = x_now * y_now * z_now - 1;
+            int new_cell = x_now * y_now * z_now;
             if (new_cell != i) {
                 if (new_cell < cell_numbers() && new_cell >= 0) {
                     addParticle(new_cell, cells[i][j]);
                     cells[i].erase(cells[i].begin() + j);
                 } else {
                     //make boundary condition
-                    bool deleted = false;
+                    cells[i].erase(cells[i].begin() + j);
+                   /* bool deleted = false;
                     if (x_now > x_cells) {
                         if (boundary[0] == "o") {
                             cells[i].erase(cells[i].begin() + j);
@@ -152,7 +153,7 @@ void LinkedCellContainer::moveToNeighbour() {
                             cells[i][j].setX({cells[i][j].getX()[0], cells[i][j].getX()[1], 0});
                             cells[i][j].setV({cells[i][j].getV()[0], cells[i][j].getV()[1], -cells[i][j].getV()[2]});
                         }
-                    }
+                    }*/
                 }
             }
         }
@@ -166,10 +167,10 @@ void LinkedCellContainer::moveToNeighbour() {
  */
 std::vector<int> LinkedCellContainer::get_next_cells(int cell) const {
     std::vector<int> vec= {};
-    bool right = cell / y_cells < x_cells - 1;
-    bool up = cell / x_cells < y_cells - 1;
-    bool left = cell / y_cells > 0;
-    bool before = cell / (x_cells * y_cells) > 0;
+    bool right = (cell % x_cells) < (x_cells - 1);
+    bool up = (cell / x_cells) < (y_cells - 1);
+    bool left = (cell % x_cells) > 0;
+    bool before = (cell / (x_cells * y_cells)) < (z_cells -1);
     //2D
     if (right) vec.push_back(cell + 1);
     if (up) vec.push_back(cell + x_cells);

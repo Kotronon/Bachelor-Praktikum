@@ -201,7 +201,7 @@ int main(int argc, char *argsv[]) {
      VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
       //For this loop, we assume: current x, current f and current v are known
      while (current_time < end_time) {
-        // calculate new x
+          // calculate new x
         //PositionCalculator::PositionStoermerVerlet(container, delta_t);
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
         //Calculate new f
