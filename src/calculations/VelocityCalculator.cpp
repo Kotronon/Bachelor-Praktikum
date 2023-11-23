@@ -56,8 +56,10 @@ void VelocityCalculator::BrownianMotionInitializationCell(LinkedCellContainer &g
 void VelocityCalculator::VelocityStoermerVerletCell(LinkedCellContainer &grid, double delta_t) {
     for (auto &c: grid) {
         for (auto &p: c) {
-            //vi (tn+1) = vi(tn) + ∆t * Fi(tn) + Fi(tn+1) / 2mi
-            p.setV(p.getV() + ((delta_t / (2 * p.getM())) * (p.getOldF() + p.getF())));
+            if(p.getType() != 0) {
+                //vi (tn+1) = vi(tn) + ∆t * Fi(tn) + Fi(tn+1) / 2mi
+                p.setV(p.getV() + ((delta_t / (2 * p.getM())) * (p.getOldF() + p.getF())));
+            }
         }
     }
 }

@@ -50,6 +50,10 @@ public:
 
     void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation);
 
+    void applyMirrorBoundary(int cell, int particle, double x, double y, double z);
+
+    void generateGhostCell(int cell, int index, double x, double y, double z);
+
 
 private:
     int x_cells;

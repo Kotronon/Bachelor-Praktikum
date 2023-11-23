@@ -92,24 +92,34 @@ void LinkedCellContainer::deleteParticle(int cell, Particle &p) {
 void LinkedCellContainer::moveToNeighbour() {
     for (int i = 0; i < cell_numbers(); i++) {
         for (int j = 0; j < Particles_in_cell(i); j++) {
-            int x_now = floor(cells[i][j].getX()[0] / c);
-            int y_now = ceil(cells[i][j].getX()[1] / c);
-            int z_now = ceil(cells[i][j].getX()[2] / c);
-            int new_cell = x_now * y_now * z_now;
-            if (new_cell != i) {
-                if (new_cell < cell_numbers() && new_cell >= 0) {
-                    addParticle(new_cell, cells[i][j]);
-                    cells[i].erase(cells[i].begin() + j);
-                    //check boundary conditions -> create ghostcells
-
+            if (cells[i][j].getType() == 1) {
+                cells[i].erase(cells[i].begin() + j);
+            } else {
+                int x_now = floor(cells[i][j].getX()[0] / c);
+                int y_now = ceil(cells[i][j].getX()[1] / c);
+                int z_now = ceil(cells[i][j].getX()[2] / c);
+                int new_cell = x_now * y_now * z_now;
+                if (new_cell >= cell_numbers() && new_cell < 0) {
+                    applyMirrorBoundary(i, j, x_now, y_now, z_now);
+                    if (floor(cells[i][j].getX()[0] / c) * ceil(cells[i][j].getX()[1] / c) *
+                        ceil(cells[i][j].getX()[2] / c) == new_cell)
+                        cells[i].erase(cells[i].begin() + j);
                 } else {
-                    //is outflow boundary
-                    cells[i].erase(cells[i].begin() + j);
+                    if (new_cell != i) {
+                        if (new_cell < cell_numbers() && new_cell >= 0) {
+                            addParticle(new_cell, cells[i][j]);
+                            cells[i].erase(cells[i].begin() + j);
+                            //check boundary conditions -> create ghostcells
+
+                        }
+                        //is outflow boundary
+                    }
                 }
             }
         }
     }
 }
+
 
 /**
  * returns the Particles from the next neighbours of the current cell
@@ -169,15 +179,24 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
     for (int i = 0; i < cell_numbers(); i++) {
         std::vector<int> neighbours = get_next_cells(i);
         for (int j = 0; j < Particles_in_cell(i); j++) {
-            //for all particles in current cell
-            for (int k = j + 1; k < Particles_in_cell(i); k++) {
-                //calculate force with particles in current cell
-                forceCalculation(&(cells[i][j]), &(cells[i][k]));
-            }
-            for (int neighbour: neighbours) {
-                //with neighbour cells
-                for (int l = 0; l < Particles_in_cell(neighbour); l++) {
-                    forceCalculation(&(cells[i][j]), &(cells[neighbour][l]));
+            if (cells[i][j].getType() != 1) {
+                //for all particles in current cell
+                for (int k = j + 1; k < Particles_in_cell(i); k++) {
+                    //calculate force with particles in current cell
+                    if(cells[i][k].getType() != 0){
+                        if(cells[i][k].getType() == j) {
+                            forceCalculation(&(cells[i][j]), &(cells[i][k]));
+                            cells[i].erase(cells[i].begin() + k);
+                        }
+
+                    }
+                    else forceCalculation(&(cells[i][j]), &(cells[i][k]));
+                }
+                for (int neighbour: neighbours) {
+                    //with neighbour cells
+                    for (int l = 0; l < Particles_in_cell(neighbour); l++) {
+                        forceCalculation(&(cells[i][j]), &(cells[neighbour][l]));
+                    }
                 }
             }
         }
@@ -185,3 +204,69 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
 }
 
 
+void LinkedCellContainer::applyMirrorBoundary(int cell, int p, double x, double y, double z) {
+    if (x > x_cells - 1 && boundary[0] == "r") {
+        cells[cell][p].setX({0.0 + c * x_cells - 1, cells[cell][p].getX()[1], cells[cell][p].getX()[2]});
+        cells[cell][p].setV({-cells[cell][p].getV()[0], cells[cell][p].getV()[1], cells[cell][p].getV()[2]});
+    } else if (x == 0 && boundary[1] == "r") {
+        cells[cell][p].setX({0, cells[cell][p].getX()[1], cells[cell][p].getX()[2]});
+        cells[cell][p].setV({-cells[cell][p].getV()[0], cells[cell][p].getV()[1], cells[cell][p].getV()[2]});
+    }
+    if (y > y_cells - 1 && boundary[2] == "r") {
+        cells[cell][p].setX({cells[cell][p].getX()[0], 0.0 + c * y_cells - 1, cells[cell][p].getX()[2]});
+        cells[cell][p].setV({cells[cell][p].getV()[0], -cells[cell][p].getV()[1], cells[cell][p].getV()[2]});
+    } else if (y == 0 && boundary[3] == "r") {
+        cells[cell][p].setX({cells[cell][p].getX()[0], 0, cells[cell][p].getX()[2]});
+        cells[cell][p].setV({cells[cell][p].getV()[0], -cells[cell][p].getV()[1], cells[cell][p].getV()[2]});
+    }
+    if (z > z_cells && boundary[4] == "r") {
+        cells[cell][p].setX({cells[cell][p].getX()[0], cells[cell][p].getX()[1], 0.0 + c * z_cells - 1});
+        cells[cell][p].setV({cells[cell][p].getV()[0], cells[cell][p].getV()[1], -cells[cell][p].getV()[2]});
+    } else if (z < 0 && boundary[5] == "r") {
+        cells[cell][p].setX({cells[cell][p].getX()[0], cells[cell][p].getX()[1], 0});
+        cells[cell][p].setV({cells[cell][p].getV()[0], cells[cell][p].getV()[1], -cells[cell][p].getV()[2]});
+    }
+}
+
+void LinkedCellContainer::generateGhostCell(int cell, int index, double x, double y, double z) {
+    if (x == 0 && boundary[0] == "r") {
+        std::array<double, 3> ghost_x = {-cells[cell][index].getX()[0], cells[cell][index].getX()[1],
+                                         cells[cell][index].getX()[2]};
+        std::array<double, 3> ghost_v = {-cells[cell][index].getV()[0], cells[cell][index].getV()[1],
+                                         cells[cell][index].getV()[2]};
+        addParticle(cell, ghost_x, ghost_v, cells[cell][index].getM(), index);
+    } else if (x == x_cells - 1 && boundary[1] == "r") {
+        std::array<double, 3> ghost_x = {x_cells * c - 1 + fmod((cells[cell][index].getX()[0]), c),
+                                         cells[cell][index].getX()[1], cells[cell][index].getX()[2]};
+        std::array<double, 3> ghost_v = {-cells[cell][index].getV()[0], cells[cell][index].getV()[1],
+                                         cells[cell][index].getV()[2]};
+        addParticle(cell, ghost_x, ghost_v, cells[cell][index].getM(), index);
+    }
+    if (y == 0 && boundary[2] == "r") {
+        std::array<double, 3> ghost_x = {cells[cell][index].getX()[0], -cells[cell][index].getX()[1],
+                                         cells[cell][index].getX()[2]};
+        std::array<double, 3> ghost_v = {cells[cell][index].getV()[0], -cells[cell][index].getV()[1],
+                                         cells[cell][index].getV()[2]};
+        addParticle(cell, ghost_x, ghost_v, cells[cell][index].getM(), index);
+    } else if (y == y_cells - 1 && boundary[3] == "r") {
+        std::array<double, 3> ghost_x = {cells[cell][index].getX()[0],
+                                         y_cells * c - 1 + fmod(cells[cell][index].getX()[0], c),
+                                         cells[cell][index].getX()[2]};
+        std::array<double, 3> ghost_v = {cells[cell][index].getV()[0], -cells[cell][index].getV()[1],
+                                         cells[cell][index].getV()[2]};
+        addParticle(cell, ghost_x, ghost_v, cells[cell][index].getM(), index);
+    }
+    if (z_cells > 1 && z == 0 && boundary[4] == "r") {
+        std::array<double, 3> ghost_x = {cells[cell][index].getX()[0], cells[cell][index].getX()[1],
+                                         -cells[cell][index].getX()[2]};
+        std::array<double, 3> ghost_v = {cells[cell][index].getV()[0], cells[cell][index].getV()[1],
+                                         -cells[cell][index].getV()[2]};
+        addParticle(cell, ghost_x, ghost_v, cells[cell][index].getM(), index);
+    } else if (z_cells > 1 && z == z_cells - 1 && boundary[5] == "r") {
+        std::array<double, 3> ghost_x = {cells[cell][index].getX()[0], cells[cell][index].getX()[1],
+                                         z_cells * c - 1 + fmod(cells[cell][index].getX()[0], c)};
+        std::array<double, 3> ghost_v = {cells[cell][index].getV()[0], cells[cell][index].getV()[1],
+                                         -cells[cell][index].getV()[2]};
+        addParticle(cell, ghost_x, ghost_v, cells[cell][index].getM(), index);
+    }
+}
