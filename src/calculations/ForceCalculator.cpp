@@ -87,7 +87,7 @@ void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &grid, double ep
     ForceCalculator::sigma = sig;
     grid.setZero();
     for(int i = 0; i < grid.cell_numbers(); i++){
-        std::vector<int> neighbours = grid.get_Particles_from_next_cells(i);
+        std::vector<int> neighbours = grid.get_next_cells(i);
         for(int j = 0; j < grid.Particles_in_cell(i); j++){
             //for all particles in current cell
             for(int k = j+1; k < grid.Particles_in_cell(i); k++){

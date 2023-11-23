@@ -26,13 +26,15 @@ public:
 
     void addParticle(int cell, std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
 
+    void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
+
     void addParticle(int cell, Particle &p);
 
     void deleteParticle(int cell, Particle &p);
 
     void moveToNeighbour();
 
-    [[nodiscard]] std::vector<int> get_Particles_from_next_cells(int cell) const;
+    [[nodiscard]] std::vector<int> get_next_cells(int cell) const;
 
     void setZero();
 
