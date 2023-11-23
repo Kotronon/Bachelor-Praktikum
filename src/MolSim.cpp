@@ -31,7 +31,7 @@ bool cmdOptionExists(char** begin, char** end, const std::string& option);
 //Hardcoded values for now:
 constexpr double start_time = 0;
 double avg_v = 0.1;
-int dim = 3;
+int dim = 2;
 double eps = 5;
 double sig = 1;
 //Creation of particle container to be filled with all relevant particles
@@ -203,7 +203,7 @@ int main(int argc, char *argsv[]) {
      while (current_time < end_time) {
         // calculate new x
         //PositionCalculator::PositionStoermerVerlet(container, delta_t);
-        PositionCalculator::PositionStoermerVerletCell(cells, delta_t, 3.0, iteration);
+        PositionCalculator::PositionStoermerVerletCell(cells, delta_t, 3.0);
         // calculate new f
         //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
         ForceCalculator::LennardJonesForceCell(cells, eps, sig);
@@ -217,9 +217,6 @@ int main(int argc, char *argsv[]) {
             plotParticlesInCells(iteration, cells);
         }
         if (iteration % 100 == 0) {
-            spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
-        }
-        if(iteration == 1275){
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
         }
         current_time += delta_t;

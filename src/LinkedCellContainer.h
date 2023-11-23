@@ -19,7 +19,7 @@ public:
     virtual ~LinkedCellContainer();
 
 
-    int cell_numbers();
+    int cell_numbers() const;
 
     int Particles_in_cell(int cell);
 
@@ -30,17 +30,17 @@ public:
 
     void deleteParticle(int cell, Particle &p);
 
-    void moveToNeighbour(int cell_current, int cell_new, Particle &p);
+    void moveToNeighbour();
 
-    std::vector<int> get_Particles_from_next_cells(int cell);
+    [[nodiscard]] std::vector<int> get_Particles_from_next_cells(int cell) const;
 
     void setZero();
 
-    int getXMax();
+    int getXMax() const;
 
-    int getYMax();
+    int getYMax() const;
 
-    int getZMax();
+    int getZMax() const;
 
 private:
     int x_cells;
