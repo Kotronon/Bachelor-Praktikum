@@ -39,6 +39,7 @@ ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
     spdlog::info("Hello from MolSim for PSE!");
+
    /* if (argc <= 3) {
         spdlog::info("Erroneous programme call! ");
         spdlog::info("./MolSim end_time delta_time [options]");
