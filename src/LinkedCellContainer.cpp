@@ -112,7 +112,7 @@ void LinkedCellContainer::moveToNeighbour() {
                             //check boundary conditions -> create ghostcells
 
                         }
-                        //is outflow boundary
+                        //generateGhostCell(i, j, x_now, y_now, z_now);
                     }
                 }
             }
