@@ -34,7 +34,7 @@ LinkedCellContainer::LinkedCellContainer(std::array<int, 3> N, double cutoff, st
     boundary = b;
 }
 
-LinkedCellContainer::~LinkedCellContainer() {}
+LinkedCellContainer::~LinkedCellContainer() = default;
 
 /**
  * returns the number of cells in the grid
@@ -102,7 +102,7 @@ void LinkedCellContainer::moveToNeighbour() {
     for (int x = 0; x < x_cells; x++) {
         for (int y = 0; y < y_cells; y++) {
             for (int z = 0; z < z_cells; z++) {
-                for (int p = 0; p < cells[x][y][z].size(); p++) {
+                for (int p = 0; p < (int) cells[x][y][z].size(); p++) {
                     int x_now = floor(cells[x][y][z][p].getX()[0] / c);
                     int y_now = floor(cells[x][y][z][p].getX()[1] / c);
                     int z_now = floor(cells[x][y][z][p].getX()[2] / c);
@@ -134,6 +134,7 @@ std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y
     bool up = y < y_cells - 1;
     bool left = x > 0;
     bool before = z < z_cells - 1;
+    bool after = z > 0;
     //2D
     if (right) vec.push_back({x+1, y, z});
     if (up) vec.push_back({x, y+1, z});
@@ -146,6 +147,12 @@ std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y
         if (up && before) vec.push_back({x, y+1, z+1});
         if (right && up && before) vec.push_back({x+1, y+1, z+1});
         if (left && up && before) vec.push_back({x-1, y+1, z+1});
+
+        if (after) vec.push_back({x, y, z-1});
+        if (right && after) vec.push_back({x+1, y, z-1});
+        if (up && after) vec.push_back({x, y+1, z-1});
+        if (right && up && after) vec.push_back({x+1, y+1, z-1});
+        if (left && up && after) vec.push_back({x-1, y+1, z-1});
     }
     return vec;
 }
@@ -154,9 +161,9 @@ void LinkedCellContainer::setZero() {
     for (int x = 0; x < x_cells; x++) {
         for (int y = 0; y < y_cells; y++) {
             for(int z = 0; z < z_cells; z++){
-                for(int p = 0; p < cells[x][y][z].size(); p++){
-                    cells[x][y][z][p].setOldF(cells[x][y][z][p].getF());
-                    cells[x][y][z][p].setF({0,0,0});
+                for(auto & p : cells[x][y][z]){
+                    p.setOldF(p.getF());
+                    p.setF({0,0,0});
                 }
             }
         }
@@ -192,10 +199,10 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                         //calculate force with particles in current cell
                         forceCalculation(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
                     }
-                    for (int n = 0; n < neighbours.size(); n++) {
+                    for (auto & neighbour : neighbours) {
                         //with neighbour cells
-                        for (int l = 0; l < cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]].size(); l++) {
-                            forceCalculation(&(cells[x][y][z][j]), &(cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l]));
+                        for (int l = 0; l < cells[neighbour[0]][neighbour[1]][neighbour[2]].size(); l++) {
+                            forceCalculation(&(cells[x][y][z][j]), &(cells[neighbour[0]][neighbour[1]][neighbour[2]][l]));
                         }
                     }
                 }
