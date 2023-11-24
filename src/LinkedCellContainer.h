@@ -60,6 +60,7 @@ private:
     int y_cells;
     int z_cells;
     double c;
+    bool three_dim;
     std::vector<std::string> boundary;
     std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
 };

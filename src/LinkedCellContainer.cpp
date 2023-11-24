@@ -30,6 +30,7 @@ LinkedCellContainer::LinkedCellContainer(std::array<int, 3> N, double cutoff, st
     cells = x;
     c = cutoff;
     boundary = b;
+    three_dim = N[2] > 1;
 }
 
 LinkedCellContainer::~LinkedCellContainer() {}
@@ -107,14 +108,17 @@ void LinkedCellContainer::moveToNeighbour() {
                     int y_now = floor(cells[x][y][z][p].getX()[1] / c);
                     int z_now = floor(cells[x][y][z][p].getX()[2] / c);
                         if ((x_now < x_cells && x_now >= 0) && (y_now < y_cells && y_now >= 0) && (z_now < z_cells && z_now >= 0)) {
+                            if(x_now + 1 != x || y_now + 1 != y || z_now + 1 != z){
                             addParticle(x_now, y_now, z_now, cells[x][y][z][p]);
                             cells[x][y][z].erase(cells[x][y][z].begin() + p);
+                            }
+                            generateGhostCell(p, x, y, z);
                             //check boundary conditions -> create ghostcell
                         } else {
                             //is outflow boundary
-                            if(applyMirrorBoundary(p, x, y, z)) {
+                            //if(applyMirrorBoundary(p, x, y, z) == true) {
                                  cells[x][y][z].erase(cells[x][y][z].begin() + p);
-                            }
+                            //}
                         }
                     }
                         }
@@ -136,7 +140,7 @@ std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y
     bool right = x < x_cells;
     bool up = y < y_cells;
     bool left = x > 1;
-    bool before = z < z_cells;
+    bool before = z < z_cells && three_dim;
 
     if (right) vec.push_back({x+1, y, z});
     if (up) vec.push_back({x, y+1, z});
@@ -158,9 +162,9 @@ std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y
     //below halo cell
     if(y == 1) vec.push_back({x, y-1, z});
     //before halo cell
-    if(z == z_cells) vec.push_back({x, y, z+1});
+    if(z == z_cells && three_dim) vec.push_back({x, y, z+1});
     //behind halo cell
-    if(z == 1) vec.push_back({x, y, z-1});
+    if(z == 1 && three_dim) vec.push_back({x, y, z-1});
 
     return vec;
 }
@@ -288,13 +292,13 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
                                          cells[x][y][z][index].getV()[2]};
         addParticle(x, y + 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
     }
-    if (z == 1 && boundary[4] == "r") {
+    if (z == 1 && boundary[4] == "r"  && three_dim) {
         std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
                                          -cells[x][y][z][index].getX()[2]};
         std::array<double, 3> ghost_v = {cells[x][y][z][index].getV()[0], cells[x][y][z][index].getV()[1],
                                          -cells[x][y][z][index].getV()[2]};
         addParticle(x, y, z - 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
-    } else if (z == z_cells && boundary[5] == "r") {
+    } else if (z == z_cells && boundary[5] == "r" && three_dim) {
         std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
                                          z_cells * c - 1 + fmod(cells[x][y][z][index].getX()[0], c)};
         std::array<double, 3> ghost_v = {cells[x][y][z][index].getV()[0], cells[x][y][z][index].getV()[1],

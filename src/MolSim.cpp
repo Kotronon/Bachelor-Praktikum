@@ -69,7 +69,7 @@ int main(int argc, char *argsv[]) {
             //plotParticles(iteration);
             plotParticlesInCells(iteration, cells);
         }
-        if (iteration % 10 == 0) {
+        if (iteration % 100 == 0) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
         }
 
