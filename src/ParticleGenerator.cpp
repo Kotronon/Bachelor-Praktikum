@@ -63,9 +63,9 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
     }
 
     std::array<double, 3> coordinate = x;
-    int x_achsis = floor(x[0] / cutoff);
-    int y_achsis = floor(x[1] / cutoff);
-    int z_achsis = floor(x[2] / cutoff);
+    int x_achsis = floor(x[0] / cutoff) + 1;
+    int y_achsis = floor(x[1] / cutoff) + 1;
+    int z_achsis = floor(x[2] / cutoff) + 1;
     //to move to next cell
     int x_achsis_tmp = x_achsis;
     int y_achsis_tmp = y_achsis;
