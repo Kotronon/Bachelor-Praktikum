@@ -18,6 +18,6 @@ public:
                                                 std::array<int, 3> N, double h, double m,
                                                 LinkedCellContainer &cells, double  cutoff);
 
-    ParticleContainer createSphere(std::array<double, 3> x, std::array<double, 3> v, double r, double h);
+    static ParticleContainer createSphere(std::array<double, 3> x, std::array<double, 3> v, double m, double r, double h);
 };
 

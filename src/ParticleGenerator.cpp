@@ -2,6 +2,7 @@
 // Created by maraconda on 12.11.23.
 //
 
+#define _USE_MATH_DEFINES
 #include "ParticleGenerator.h"
 #include "ParticleContainer.h"
 #include <cmath>
@@ -94,13 +95,22 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
  * creates a sphere and stores it in a ParticleContainer
  * @param x position of center
  * @param v initial velocity
- * @param r radius
+ * @param m mass of each particle
+ * @param r number of molecules along the radius
  * @param h distance between molecules
  * @return
  */
-ParticleContainer ParticleGenerator::createSphere(std::array<double, 3> x, std::array<double, 3> v,
+ParticleContainer ParticleGenerator::createSphere(std::array<double, 3> x, std::array<double, 3> v, double m,
                                                   double r, double h) {
+
     ParticleContainer sphere = ParticleContainer();
+    //Add center
+    sphere.addParticle(x, v, m, 0);
+    //Iterate over each layer pair
+    for (double z_dif; z_dif < r; z_dif += h) {
+
+    }
+    //Create circle for each layer
 
     return sphere;
 }
