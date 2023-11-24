@@ -10,8 +10,10 @@
 #include "utils/ArrayUtils.h"
 
 /**
- * create a cell grid wcells[i][j]h the given numbers o of cells
- * @param number_of_cells
+ * create a new linked cell container based on the dimensions and boundary
+ * @param N dimensions of the container
+ * @param cutoff radius of cutoff
+ * @param b boundary types of each side of the container
  */
 LinkedCellContainer::LinkedCellContainer(std::array<int, 3> N, double cutoff, std::vector<std::string> b) {
     //creating list wcells[i][j]h length = number of cells
@@ -36,16 +38,16 @@ LinkedCellContainer::~LinkedCellContainer() {}
 
 /**
  * returns the number of cells in the grid
- * @return
+ * @return number of cells in entire grid
  */
 int LinkedCellContainer::cell_numbers() const {
     return x_cells * y_cells * z_cells;
 }
 
 /**
- * returns the number od molecules of the given cell
+ * returns the number of particles in the given cell
  * @param cell
- * @return
+ * @return number of molecules in cell
  */
 int LinkedCellContainer::Particles_in_cell(int x, int y, int z) {
     return cells[x][y][z].size();
@@ -53,30 +55,28 @@ int LinkedCellContainer::Particles_in_cell(int x, int y, int z) {
 
 /**
  * adds new Particle to specific cell
- * @param cell
- * @param x_arg
- * @param v_arg
- * @param m_arg
- * @param type_arg
+ * @param x index of cell on x axis
+ * @param y index of cell on y axis
+ * @param z index of cell on z axis
+ * @param x_arg coordinates of new particle
+ * @param v_arg velocity of new particle
+ * @param m_arg mass of new particle
+ * @param type_arg type of new particle
  */
 void LinkedCellContainer::addParticle(int x, int y, int z, std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg,
                                       int type_arg) {
-    cells[x][y][z].push_back(Particle(x_arg, v_arg, m_arg, type_arg));
-}
-
-void
-LinkedCellContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg) {
-    cells[floor(x_arg[0] / c)][floor(x_arg[1] / c)][floor(x_arg[2] / c)].push_back(
-            Particle(x_arg, v_arg, m_arg, type_arg));
+    cells[x][y][z].emplace_back(x_arg, v_arg, m_arg, type_arg);
 }
 
 /**
  * adds existing particle to specific cell
- * @param cell
- * @param p
+ * @param x index of cell on x axis
+ * @param y index of cell on y axis
+ * @param z index of cell on z axis
+ * @param p existing particle to add
  */
 void LinkedCellContainer::addParticle(int x, int y, int z, Particle &p) {
-    cells[x][y][z].push_back(p);
+    cells[x][y][z].emplace_back(p);
 }
 
 /**
@@ -96,7 +96,7 @@ void LinkedCellContainer::deleteParticle(int x, int y, int z, Particle &p) {
 }
 
 /**
- * checks if particle needs to be moved to another cell
+ * checks if particle needs to be moved to another cell and moves them accordingly
  */
 void LinkedCellContainer::moveToNeighbour() {
     for (int x = 0; x < x_cells; x++) {
@@ -174,7 +174,7 @@ std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator LinkedCel
 }
 
 /**
- * returns the vector of all PArticles in the ParticleContainer with Pointer at last element
+ * returns the vector of all particles in the ParticleContainer with Pointer at last element
  * @return
  */
 std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator LinkedCellContainer::end() {
