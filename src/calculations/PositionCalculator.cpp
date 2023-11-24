@@ -20,12 +20,15 @@ void PositionCalculator::PositionStoermerVerlet(ParticleContainer &container, do
 }
 
 void PositionCalculator::PositionStoermerVerletCell(LinkedCellContainer &grid, double delta_t) {
-    for (auto &c: grid) {
-        for (auto &p: c) {
-            if (p.getType() != 0) {
-                p.setX(p.getX() + (delta_t * p.getV()) +
-                                              (((delta_t * delta_t) / (2 * p.getM())) *
-                                               p.getF()));
+    for (auto &x: grid) {
+        for (auto &y: x) {
+            for (auto &z: y) {
+                for (auto &p: z) {
+                    std::array<double, 3> x_new = p.getX() + (delta_t * p.getV()) +
+                                                  (((delta_t * delta_t) / (2 * p.getM())) *
+                                                   p.getF());
+                    p.setX(x_new);
+                }
             }
         }
     }

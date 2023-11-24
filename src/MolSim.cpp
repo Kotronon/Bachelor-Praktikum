@@ -89,13 +89,21 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &grid) {
 
     outputWriter::VTKWriter writer2;
     int num_of_particles = 0;
-    for (int i = 0; i < grid.cell_numbers(); i++) {
-        num_of_particles += grid.Particles_in_cell(i);
+    for (auto &x: grid) {
+        for (auto &y: x) {
+            for (auto &z: y) {
+                num_of_particles += z.size();
+            }
+        }
     }
     writer2.initializeOutput(num_of_particles);
-    for (auto &c: grid) {
-        for(auto &p: c){
-            writer2.plotParticle(p);
+    for (auto &x: grid) {
+        for (auto &y: x) {
+            for (auto &z: y) {
+                for (auto &p: z) {
+                    writer2.plotParticle(p);
+                }
+            }
         }
     }
     writer2.writeFile(out_name, iteration);
