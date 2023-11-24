@@ -21,20 +21,20 @@ public:
 
     int cell_numbers() const;
 
-    int Particles_in_cell(int cell);
+    int Particles_in_cell(int x, int y, int z);
 
 
-    void addParticle(int cell, std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
+    void addParticle(int x, int y, int z, std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
 
     void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
 
-    void addParticle(int cell, Particle &p);
+    void addParticle(int x, int y, int z, Particle &p);
 
-    void deleteParticle(int cell, Particle &p);
+    void deleteParticle(int x, int y, int z, Particle &p);
 
     void moveToNeighbour();
 
-    [[nodiscard]] std::vector<int> get_next_cells(int cell) const;
+    [[nodiscard]] std::vector<std::array<int, 3>> get_next_cells(int x, int y, int z) const;
 
     void setZero();
 
@@ -44,9 +44,9 @@ public:
 
     int getZMax() const;
 
-    std::vector<std::vector<Particle>>::iterator begin();
+    std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator begin();
 
-    std::vector<std::vector<Particle>>::iterator end();
+    std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator end();
 
     void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation);
 
@@ -57,6 +57,6 @@ private:
     int z_cells;
     double c;
     std::vector<std::string> boundary;
-    std::vector<std::vector<Particle>> cells;
+    std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
 };
 

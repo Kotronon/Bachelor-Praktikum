@@ -74,7 +74,7 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
     for (int z_i = 0; z_i < N[2]; z_i++) {
         for (int y_i = 0; y_i < N[1]; y_i++) {
             for (int x_i = 0; x_i < N[0]; x_i++) {
-                cells.addParticle((x_achsis_tmp + (x_achsis_tmp*y_achsis_tmp) + (x_achsis_tmp*y_achsis_tmp*z_achsis_tmp)), coordinate, v, m, 0);
+                cells.addParticle(x_achsis_tmp, y_achsis_tmp, z_achsis_tmp, coordinate, v, m, 0);
                 coordinate[0] += h;
                 if(x_achsis_tmp < floor(coordinate[0] / cutoff)) x_achsis_tmp ++;
             }
