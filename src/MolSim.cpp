@@ -46,22 +46,22 @@ int main(int argc, char *argsv[]) {
    double delta_t = 0.0005;
     double current_time = start_time;
     int iteration = 0;
-      //Pre-calculation of f
+    //Pre-calculation of f
     //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
-     ForceCalculator::LennardJonesForceCell(cells, eps, sig);
-      //Initialization with Brownian Motion
-      //VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
-     VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
-      //For this loop, we assume: current x, current f and current v are known
-     while (current_time < end_time) {
-          // calculate new x
+    ForceCalculator::LennardJonesForceCell(cells, eps, sig);
+    //Initialization with Brownian Motion
+    //VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
+    VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
+    //For this loop, we assume: current x, current f and current v are known
+    while (current_time < end_time) {
+        //Calculate new x
         //PositionCalculator::PositionStoermerVerlet(container, delta_t);
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
         //Calculate new f
         //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
         ForceCalculator::LennardJonesForceCell(cells, eps, sig);
         //Calculate new v
-       // VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
+       //VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
         VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
 
         iteration++;
@@ -73,11 +73,11 @@ int main(int argc, char *argsv[]) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
         }
 
-    current_time += delta_t;
-    }
+     current_time += delta_t;
+     }
 
-    spdlog::info("Output written. Terminating..." );
-    return 0;
+     spdlog::info("Output written. Terminating..." );
+     return 0;
 }
 
 void plotParticlesInCells(int iteration, LinkedCellContainer &grid) {

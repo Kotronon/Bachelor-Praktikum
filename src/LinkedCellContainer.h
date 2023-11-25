@@ -19,14 +19,12 @@ public:
     virtual ~LinkedCellContainer();
 
 
-    int cell_numbers() const;
+    [[nodiscard]] int cell_numbers() const;
 
     int Particles_in_cell(int x, int y, int z);
 
 
     void addParticle(int x, int y, int z, std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
-
-    void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
 
     void addParticle(int x, int y, int z, Particle &p);
 
@@ -38,11 +36,11 @@ public:
 
     void setZero();
 
-    int getXMax() const;
+    [[nodiscard]] int getXMax() const;
 
-    int getYMax() const;
+    [[nodiscard]] int getYMax() const;
 
-    int getZMax() const;
+    [[nodiscard]] int getZMax() const;
 
     std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator begin();
 
@@ -63,5 +61,6 @@ private:
     bool three_dim;
     std::vector<std::string> boundary;
     std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
+
 };
 
