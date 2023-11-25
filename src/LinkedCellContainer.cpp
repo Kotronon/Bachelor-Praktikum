@@ -122,7 +122,7 @@ void LinkedCellContainer::moveToNeighbour() {
                             //check boundary conditions -> create ghostcell
                         } else {
                             //is outflow boundary
-                            //if(applyMirrorBoundary(p, x, y, z) == true) {
+                            //if(applyMirrorBoundary(p, x, y, z)) {
                                  cells[x][y][z].erase(cells[x][y][z].begin() + p);
                             //}
                         }
@@ -246,7 +246,7 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
 bool LinkedCellContainer::applyMirrorBoundary(int p, int x, int y, int z) {
     bool needs_to_be_deleted = true;
     if (floor(cells[x][y][z][p].getX()[0]/c) > x_cells - 1 && boundary[0] == "r") {
-        cells[x][y][z][p].setX({0.0 + c * x_cells - 1, cells[x][y][z][p].getX()[1], cells[x][y][z][p].getX()[2]});
+        cells[x][y][z][p].setX({0.0 + c * x_cells - 0.0000001, cells[x][y][z][p].getX()[1], cells[x][y][z][p].getX()[2]});
         cells[x][y][z][p].setV({-cells[x][y][z][p].getV()[0], cells[x][y][z][p].getV()[1], cells[x][y][z][p].getV()[2]});
         needs_to_be_deleted = false;
     } else if (floor(cells[x][y][z][p].getX()[0]/c) < 0 && boundary[1] == "r") {
@@ -254,7 +254,7 @@ bool LinkedCellContainer::applyMirrorBoundary(int p, int x, int y, int z) {
         cells[x][y][z][p].setV({-cells[x][y][z][p].getV()[0], cells[x][y][z][p].getV()[1], cells[x][y][z][p].getV()[2]});
         needs_to_be_deleted = false;
     }
-    if (floor(cells[x][y][z][p].getX()[1]/c) > y_cells - 1 && boundary[2] == "r") {
+    if (floor(cells[x][y][z][p].getX()[1]/c) > y_cells - 0.0000001 && boundary[2] == "r") {
         cells[x][y][z][p].setX({cells[x][y][z][p].getX()[0], 0.0 + c * y_cells - 1, cells[x][y][z][p].getX()[2]});
         cells[x][y][z][p].setV({cells[x][y][z][p].getV()[0], -cells[x][y][z][p].getV()[1], cells[x][y][z][p].getV()[2]});
         needs_to_be_deleted = false;
@@ -263,11 +263,11 @@ bool LinkedCellContainer::applyMirrorBoundary(int p, int x, int y, int z) {
         cells[x][y][z][p].setV({cells[x][y][z][p].getV()[0], -cells[x][y][z][p].getV()[1], cells[x][y][z][p].getV()[2]});
         needs_to_be_deleted = false;
     }
-    if (floor(cells[x][y][z][p].getX()[2]/c) > z_cells -1 && boundary[4] == "r") {
+    if (floor(cells[x][y][z][p].getX()[2]/c) > z_cells -0.0000001 && boundary[4] == "r" && three_dim) {
         cells[x][y][z][p].setX({cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1], 0.0 + c * z_cells - 1});
         cells[x][y][z][p].setV({cells[x][y][z][p].getV()[0], cells[x][y][z][p].getV()[1], -cells[x][y][z][p].getV()[2]});
         needs_to_be_deleted = false;
-    } else if (floor(cells[x][y][z][p].getX()[2]/c) < 0 && boundary[5] == "r") {
+    } else if (floor(cells[x][y][z][p].getX()[2]/c) < 0 && boundary[5] == "r" && three_dim) {
         cells[x][y][z][p].setX({cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1], 0});
         cells[x][y][z][p].setV({cells[x][y][z][p].getV()[0], cells[x][y][z][p].getV()[1], -cells[x][y][z][p].getV()[2]});
         needs_to_be_deleted = false;
