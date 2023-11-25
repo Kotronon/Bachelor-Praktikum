@@ -130,11 +130,11 @@ void LinkedCellContainer::moveToNeighbour() {
  */
 std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y, int z) const {
     std::vector<std::array<int, 3>> vec = {};
+    bool left = x > 0;
     bool right = x < x_cells -1;
     bool up = y < y_cells - 1;
-    bool left = x > 0;
+    bool down = y > 0;
     bool before = z < z_cells - 1;
-    bool after = z > 0;
     //2D
     if (right) vec.push_back({x+1, y, z});
     if (up) vec.push_back({x, y+1, z});
@@ -143,16 +143,19 @@ std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y
     //3D
     if (z_cells > 1) {
         if (before) vec.push_back({x, y, z+1});
-        if (right && before) vec.push_back({x+1, y, z+1});
+
         if (up && before) vec.push_back({x, y+1, z+1});
+
         if (right && up && before) vec.push_back({x+1, y+1, z+1});
+        if (right && before) vec.push_back({x+1, y, z+1});
+        if (right && down && before) vec.push_back({x+1, y-1, z+1});
+
+        if (down && before) vec.push_back({x, y-1, z+1});
+
+        if (left && down && before) vec.push_back({x-1, y-1, z+1});
+        if (left && before) vec.push_back({x-1, y, z+1});
         if (left && up && before) vec.push_back({x-1, y+1, z+1});
 
-        if (after) vec.push_back({x, y, z-1});
-        if (right && after) vec.push_back({x+1, y, z-1});
-        if (up && after) vec.push_back({x, y+1, z-1});
-        if (right && up && after) vec.push_back({x+1, y+1, z-1});
-        if (left && up && after) vec.push_back({x-1, y+1, z-1});
     }
     return vec;
 }
