@@ -1,78 +1,76 @@
 <?xml version="1.0"?>
-<input>
 
-    <vector_parameters>Params:
+<parameters>
+    <coordinates>
+        <name>x1
+            <x>20</x>
+            <y>20</y>
+            <z>0</z>
+        </name>
+        <name>x2
+            <x>70</x>
+            <y>60</y>
+            <z>0</z>
+        </name>
+        <name>v1
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+        </name>
+        <name>v2
+            <x>0</x>
+            <y>-10</y>
+            <z>0</z>
+        </name>
+        <name>N1
+            <x>100</x>
+            <y>20</y>
+            <z>1</z>
+        </name>
+        <name>N2
+            <x>20</x>
+            <y>20</y>
+            <z>1</z>
+        </name>
+        <name>domain_size_l
+            <x>180</x>
+            <y>90</y>
+        </name>
+        <name>x_center
+            <x>60</x>
+            <y>25</y>
+            <z>0</z>
+        </name>
+    </coordinates>
 
-        <param type="array"> x1
-            <value>20</value>
-            <value>20</value>
-            <value>0</value>
-        </param>
-
-        <param type="array"> x2
-            <value>70</value>
-            <value>60</value>
-            <value>0</value>
-        </param>
-
-        <param type="array"> v1
-            <value>0</value>
-            <value>0</value>
-            <value>0</value>
-        </param>
-
-        <param type="array"> v2
-            <value>0</value>
-            <value>-10</value>
-            <value>0</value>
-        </param>
-
-        <param type="array"> n1
-            <value>100</value>
-            <value>20</value>
-            <value>1</value>
-        </param>
-
-        <param type="array"> n2
-            <value>20</value>
-            <value>20</value>
-            <value>1</value>
-        </param>
-
-        <param type="array"> domain_size_L
-            <value>180</value>
-            <value>90</value>
-            <value>NULL</value>
-        </param>
-
-    </vector_parameters>
-
-    <value_parameters> Params :
-
-        <param type = "integer"> h
-            <value>1.1225</value>
-        </param>
-
-        <param type = "integer">e
+    <values>
+        <name>e
             <value>5</value>
-        </param>
-
-        <param type = "integer">m
-            <value>1</value>
-        </param>
-
-        <param type = "integer">delta_t
+        </name>
+        <name>m
+            <value>1.0</value>
+        </name>
+        <name>delta_t
             <value>0.0005</value>
-        </param>
-
-        <param type = "integer">t_end
+        </name>
+        <name>t_end
             <value>20</value>
-        </param>
+        </name>
+        <name>h
+            <value>1.1225</value>
+        </name>
+        <name>theta
+            <value>1</value>
+        </name>
+        <name>r_cutoff
+            <value>3.0</value>
+        </name>
+        <name>R
+            <value>15</value>
+        </name>
 
-        <param type = "integer">r_cutoff
-            <value>0.3</value>
-        </param>
+    </values>
 
-    </value_parameters>
+</parameters>
 
-</input>
+

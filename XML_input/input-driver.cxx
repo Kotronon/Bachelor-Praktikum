@@ -8,58 +8,6 @@
 #include "input-pskel.hxx"
 
 #include <iostream>
-#include <list>
-#include <algorithm>
-
-/**
-
- */
-
-class input_pimpl: public input_pskel
-{
-private:
-    std::array<int,3> x1;
-    std::array<int,3> x2;
-    std::array<int,3> v1;
-    std::array<int,3> v2;
-    std::array<int,3> n1;
-    std::array<int,3> n2;
-    std::array<int,3> domain_size_L;
-    std::int8_t h;
-    std::int8_t e;
-    std::int8_t m;
-    std::int8_t delta_t;
-    std::int8_t t_end;
-    std::int8_t r_cutoff;
-
-
-
-
-public:
-    virtual void
-    vector_parameters (const std::array<int,3>& g)
-    {
-        std::cout << "Appended following parameters:" << std::endl;
-    }
-
-    virtual void
-    value_parameters (const std::int8_t& n)
-    {
-        std::list<int> list = {h,e,m,delta_t,t_end,r_cutoff};
-        std::for_each(list.begin(), list.end(), [](const int n) {
-
-            std::cout << "Appended following parameter : " << n << std::endl;
-
-        });
-        std::cout << '\n';
-
-
-    }
-
-
-};
-
-using namespace std;
 
 int
 main (int argc, char* argv[])
@@ -74,36 +22,36 @@ main (int argc, char* argv[])
   {
     // Instantiate individual parsers.
     //
-    ::input_pskel input_p;
-    ::vector_parameters_pskel vector_parameters_p;
-    ::param_pskel param_p;
-    ::xml_schema::string_pimpl string_p;
-    ::value_parameters_pskel value_parameters_p;
-    ::param1_pskel param1_p;
+    ::parameters_pskel parameters_p;
+    ::coordinates_pskel coordinates_p;
+    ::name_pskel name_p;
+    ::xml_schema::short_pimpl short_p;
+    ::values_pskel values_p;
+    ::name1_pskel name1_p;
     ::xml_schema::float_pimpl float_p;
 
     // Connect the parsers together.
     //
-    input_p.parsers (vector_parameters_p,
-                     value_parameters_p);
+    parameters_p.parsers (coordinates_p,
+                          values_p);
 
-    vector_parameters_p.parsers (param_p);
+    coordinates_p.parsers (name_p);
 
-    param_p.parsers (string_p,
-                     string_p);
+    name_p.parsers (short_p,
+                    short_p,
+                    short_p);
 
-    value_parameters_p.parsers (param1_p);
+    values_p.parsers (name1_p);
 
-    param1_p.parsers (float_p,
-                      string_p);
+    name1_p.parsers (float_p);
 
     // Parse the XML document.
     //
-    ::xml_schema::document doc_p (input_p, "input");
+    ::xml_schema::document doc_p (parameters_p, "parameters");
 
-    input_p.pre ();
+    parameters_p.pre ();
     doc_p.parse (argv[1]);
-    input_p.post_input ();
+    parameters_p.post_parameters ();
   }
   catch (const ::xml_schema::exception& e)
   {

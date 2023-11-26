@@ -40,228 +40,228 @@
 
 #include "input-pskel.hxx"
 
-// input_pskel
+// parameters_pskel
 //
 
-void input_pskel::
-vector_parameters_parser (::vector_parameters_pskel& p)
+void parameters_pskel::
+coordinates_parser (::coordinates_pskel& p)
 {
-  this->vector_parameters_parser_ = &p;
+  this->coordinates_parser_ = &p;
 }
 
-void input_pskel::
-value_parameters_parser (::value_parameters_pskel& p)
+void parameters_pskel::
+values_parser (::values_pskel& p)
 {
-  this->value_parameters_parser_ = &p;
+  this->values_parser_ = &p;
 }
 
-void input_pskel::
-parsers (::vector_parameters_pskel& vector_parameters,
-         ::value_parameters_pskel& value_parameters)
+void parameters_pskel::
+parsers (::coordinates_pskel& coordinates,
+         ::values_pskel& values)
 {
-  this->vector_parameters_parser_ = &vector_parameters;
-  this->value_parameters_parser_ = &value_parameters;
+  this->coordinates_parser_ = &coordinates;
+  this->values_parser_ = &values;
 }
 
-input_pskel::
-input_pskel ()
-: vector_parameters_parser_ (0),
-  value_parameters_parser_ (0),
+parameters_pskel::
+parameters_pskel ()
+: coordinates_parser_ (0),
+  values_parser_ (0),
   v_state_stack_ (sizeof (v_state_), &v_state_first_)
 {
 }
 
-// vector_parameters_pskel
+// coordinates_pskel
 //
 
-void vector_parameters_pskel::
-param_parser (::param_pskel& p)
+void coordinates_pskel::
+name_parser (::name_pskel& p)
 {
-  this->param_parser_ = &p;
+  this->name_parser_ = &p;
 }
 
-void vector_parameters_pskel::
-parsers (::param_pskel& param)
+void coordinates_pskel::
+parsers (::name_pskel& name)
 {
-  this->param_parser_ = &param;
+  this->name_parser_ = &name;
 }
 
-vector_parameters_pskel::
-vector_parameters_pskel ()
-: param_parser_ (0),
+coordinates_pskel::
+coordinates_pskel ()
+: name_parser_ (0),
   v_state_stack_ (sizeof (v_state_), &v_state_first_)
 {
 }
 
-// value_parameters_pskel
+// values_pskel
 //
 
-void value_parameters_pskel::
-param_parser (::param1_pskel& p)
+void values_pskel::
+name_parser (::name1_pskel& p)
 {
-  this->param_parser_ = &p;
+  this->name_parser_ = &p;
 }
 
-void value_parameters_pskel::
-parsers (::param1_pskel& param)
+void values_pskel::
+parsers (::name1_pskel& name)
 {
-  this->param_parser_ = &param;
+  this->name_parser_ = &name;
 }
 
-value_parameters_pskel::
-value_parameters_pskel ()
-: param_parser_ (0),
+values_pskel::
+values_pskel ()
+: name_parser_ (0),
   v_state_stack_ (sizeof (v_state_), &v_state_first_)
 {
 }
 
-// param_pskel
+// name_pskel
 //
 
-void param_pskel::
-value_parser (::xml_schema::string_pskel& p)
+void name_pskel::
+x_parser (::xml_schema::short_pskel& p)
 {
-  this->value_parser_ = &p;
+  this->x_parser_ = &p;
 }
 
-void param_pskel::
-type_parser (::xml_schema::string_pskel& p)
+void name_pskel::
+y_parser (::xml_schema::short_pskel& p)
 {
-  this->type_parser_ = &p;
+  this->y_parser_ = &p;
 }
 
-void param_pskel::
-parsers (::xml_schema::string_pskel& value,
-         ::xml_schema::string_pskel& type)
+void name_pskel::
+z_parser (::xml_schema::short_pskel& p)
 {
-  this->value_parser_ = &value;
-  this->type_parser_ = &type;
+  this->z_parser_ = &p;
 }
 
-param_pskel::
-param_pskel ()
-: value_parser_ (0),
-  type_parser_ (0),
+void name_pskel::
+parsers (::xml_schema::short_pskel& x,
+         ::xml_schema::short_pskel& y,
+         ::xml_schema::short_pskel& z)
+{
+  this->x_parser_ = &x;
+  this->y_parser_ = &y;
+  this->z_parser_ = &z;
+}
+
+name_pskel::
+name_pskel ()
+: x_parser_ (0),
+  y_parser_ (0),
+  z_parser_ (0),
   v_state_stack_ (sizeof (v_state_), &v_state_first_)
 {
 }
 
-// param1_pskel
+// name1_pskel
 //
 
-void param1_pskel::
+void name1_pskel::
 value_parser (::xml_schema::float_pskel& p)
 {
   this->value_parser_ = &p;
 }
 
-void param1_pskel::
-type_parser (::xml_schema::string_pskel& p)
-{
-  this->type_parser_ = &p;
-}
-
-void param1_pskel::
-parsers (::xml_schema::float_pskel& value,
-         ::xml_schema::string_pskel& type)
+void name1_pskel::
+parsers (::xml_schema::float_pskel& value)
 {
   this->value_parser_ = &value;
-  this->type_parser_ = &type;
 }
 
-param1_pskel::
-param1_pskel ()
+name1_pskel::
+name1_pskel ()
 : value_parser_ (0),
-  type_parser_ (0),
   v_state_stack_ (sizeof (v_state_), &v_state_first_)
 {
 }
 
-// input_pskel
+// parameters_pskel
 //
 
-void input_pskel::
-vector_parameters (const std::array<int,3>&)
+void parameters_pskel::
+coordinates ()
 {
 }
 
-void input_pskel::
-value_parameters (const std::int8_t&)
+void parameters_pskel::
+values ()
 {
 }
 
-void input_pskel::
-post_input ()
+void parameters_pskel::
+post_parameters ()
 {
 }
 
-// vector_parameters_pskel
+// coordinates_pskel
 //
 
-void vector_parameters_pskel::
-param ()
+void coordinates_pskel::
+name ()
 {
 }
 
-void vector_parameters_pskel::
-post_vector_parameters ()
+void coordinates_pskel::
+post_coordinates ()
 {
 }
 
-// value_parameters_pskel
+// values_pskel
 //
 
-void value_parameters_pskel::
-param ()
+void values_pskel::
+name ()
 {
 }
 
-void value_parameters_pskel::
-post_value_parameters ()
+void values_pskel::
+post_values ()
 {
 }
 
-// param_pskel
+// name_pskel
 //
 
-void param_pskel::
-value (const ::std::string&)
+void name_pskel::
+x (short)
 {
 }
 
-void param_pskel::
-type (const ::std::string&)
+void name_pskel::
+y (short)
 {
 }
 
-void param_pskel::
-post_param ()
+void name_pskel::
+z (short)
 {
 }
 
-// param1_pskel
+void name_pskel::
+post_name ()
+{
+}
+
+// name1_pskel
 //
 
-void param1_pskel::
+void name1_pskel::
 value (float)
 {
 }
 
-void param1_pskel::
-type (const ::std::string&)
-{
-}
-
-void param1_pskel::
-post_param1 ()
+void name1_pskel::
+post_name1 ()
 {
 }
 
 #include <cassert>
 
-// Element validation and dispatch functions for input_pskel.
+// Element validation and dispatch functions for parameters_pskel.
 //
-bool input_pskel::
+bool parameters_pskel::
 _start_element_impl (const ::xml_schema::ro_string& ns,
                      const ::xml_schema::ro_string& n,
                      const ::xml_schema::ro_string* t)
@@ -297,7 +297,7 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
     {
       unsigned long s = ~0UL;
 
-      if (n == "vector_parameters" && ns.empty ())
+      if (n == "coordinates" && ns.empty ())
         s = 0UL;
 
       if (s != ~0UL)
@@ -306,7 +306,7 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
         vd->state = ~0UL;
 
         vd = vs.data + vs.size++;
-        vd->func = &input_pskel::sequence_0;
+        vd->func = &parameters_pskel::sequence_0;
         vd->state = s;
         vd->count = 0;
 
@@ -316,7 +316,7 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
       {
         if (vd->count < 1UL)
           this->_expected_element (
-            "", "vector_parameters",
+            "", "coordinates",
             ns, n);
         return false;
       }
@@ -328,7 +328,7 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
   return true;
 }
 
-bool input_pskel::
+bool parameters_pskel::
 _end_element_impl (const ::xml_schema::ro_string& ns,
                    const ::xml_schema::ro_string& n)
 {
@@ -351,7 +351,7 @@ _end_element_impl (const ::xml_schema::ro_string& ns,
   return true;
 }
 
-void input_pskel::
+void parameters_pskel::
 _pre_e_validate ()
 {
   this->v_state_stack_.push ();
@@ -365,7 +365,7 @@ _pre_e_validate ()
   vd.count = 0;
 }
 
-void input_pskel::
+void parameters_pskel::
 _post_e_validate ()
 {
   v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
@@ -381,12 +381,12 @@ _post_e_validate ()
 
   if (vd->count < 1UL)
     this->_expected_element (
-      "", "vector_parameters");
+      "", "coordinates");
 
   this->v_state_stack_.pop ();
 }
 
-void input_pskel::
+void parameters_pskel::
 sequence_0 (unsigned long& state,
             unsigned long& count,
             const ::xml_schema::ro_string& ns,
@@ -400,21 +400,21 @@ sequence_0 (unsigned long& state,
   {
     case 0UL:
     {
-      if (n == "vector_parameters" && ns.empty ())
+      if (n == "coordinates" && ns.empty ())
       {
         if (start)
         {
-          this->::xml_schema::complex_content::context_.top ().parser_ = this->vector_parameters_parser_;
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->coordinates_parser_;
 
-          if (this->vector_parameters_parser_)
-            this->vector_parameters_parser_->pre ();
+          if (this->coordinates_parser_)
+            this->coordinates_parser_->pre ();
         }
         else
         {
-          if (this->vector_parameters_parser_)
+          if (this->coordinates_parser_)
           {
-            this->vector_parameters_parser_->post_vector_parameters ();
-            this->vector_parameters (std::array<int,3>() );
+            this->coordinates_parser_->post_coordinates ();
+            this->coordinates ();
           }
 
           count = 0;
@@ -428,7 +428,7 @@ sequence_0 (unsigned long& state,
         assert (start);
         if (count < 1UL)
           this->_expected_element (
-            "", "vector_parameters",
+            "", "coordinates",
             ns, n);
         count = 0;
         state = 1UL;
@@ -437,21 +437,21 @@ sequence_0 (unsigned long& state,
     // Fall through.
     case 1UL:
     {
-      if (n == "value_parameters" && ns.empty ())
+      if (n == "values" && ns.empty ())
       {
         if (start)
         {
-          this->::xml_schema::complex_content::context_.top ().parser_ = this->value_parameters_parser_;
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->values_parser_;
 
-          if (this->value_parameters_parser_)
-            this->value_parameters_parser_->pre ();
+          if (this->values_parser_)
+            this->values_parser_->pre ();
         }
         else
         {
-          if (this->value_parameters_parser_)
+          if (this->values_parser_)
           {
-            this->value_parameters_parser_->post_value_parameters ();
-            this->value_parameters (std::int8_t());
+            this->values_parser_->post_values ();
+            this->values ();
           }
 
           count = 0;
@@ -465,7 +465,7 @@ sequence_0 (unsigned long& state,
         assert (start);
         if (count < 1UL)
           this->_expected_element (
-            "", "value_parameters",
+            "", "values",
             ns, n);
         count = 0;
         state = ~0UL;
@@ -477,9 +477,9 @@ sequence_0 (unsigned long& state,
   }
 }
 
-// Element validation and dispatch functions for vector_parameters_pskel.
+// Element validation and dispatch functions for coordinates_pskel.
 //
-bool vector_parameters_pskel::
+bool coordinates_pskel::
 _start_element_impl (const ::xml_schema::ro_string& ns,
                      const ::xml_schema::ro_string& n,
                      const ::xml_schema::ro_string* t)
@@ -515,7 +515,7 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
     {
       unsigned long s = ~0UL;
 
-      if (n == "param" && ns.empty ())
+      if (n == "name" && ns.empty ())
         s = 0UL;
 
       if (s != ~0UL)
@@ -524,7 +524,7 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
         vd->state = ~0UL;
 
         vd = vs.data + vs.size++;
-        vd->func = &vector_parameters_pskel::sequence_0;
+        vd->func = &coordinates_pskel::sequence_0;
         vd->state = s;
         vd->count = 0;
 
@@ -542,7 +542,7 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
   return true;
 }
 
-bool vector_parameters_pskel::
+bool coordinates_pskel::
 _end_element_impl (const ::xml_schema::ro_string& ns,
                    const ::xml_schema::ro_string& n)
 {
@@ -565,7 +565,7 @@ _end_element_impl (const ::xml_schema::ro_string& ns,
   return true;
 }
 
-void vector_parameters_pskel::
+void coordinates_pskel::
 _pre_e_validate ()
 {
   this->v_state_stack_.push ();
@@ -579,7 +579,7 @@ _pre_e_validate ()
   vd.count = 0;
 }
 
-void vector_parameters_pskel::
+void coordinates_pskel::
 _post_e_validate ()
 {
   v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
@@ -597,7 +597,7 @@ _post_e_validate ()
   this->v_state_stack_.pop ();
 }
 
-void vector_parameters_pskel::
+void coordinates_pskel::
 sequence_0 (unsigned long& state,
             unsigned long& count,
             const ::xml_schema::ro_string& ns,
@@ -611,21 +611,21 @@ sequence_0 (unsigned long& state,
   {
     case 0UL:
     {
-      if (n == "param" && ns.empty ())
+      if (n == "name" && ns.empty ())
       {
         if (start)
         {
-          this->::xml_schema::complex_content::context_.top ().parser_ = this->param_parser_;
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->name_parser_;
 
-          if (this->param_parser_)
-            this->param_parser_->pre ();
+          if (this->name_parser_)
+            this->name_parser_->pre ();
         }
         else
         {
-          if (this->param_parser_)
+          if (this->name_parser_)
           {
-            this->param_parser_->post_param ();
-            this->param ();
+            this->name_parser_->post_name ();
+            this->name ();
           }
 
           count++;
@@ -646,9 +646,9 @@ sequence_0 (unsigned long& state,
   }
 }
 
-// Element validation and dispatch functions for value_parameters_pskel.
+// Element validation and dispatch functions for values_pskel.
 //
-bool value_parameters_pskel::
+bool values_pskel::
 _start_element_impl (const ::xml_schema::ro_string& ns,
                      const ::xml_schema::ro_string& n,
                      const ::xml_schema::ro_string* t)
@@ -684,7 +684,7 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
     {
       unsigned long s = ~0UL;
 
-      if (n == "param" && ns.empty ())
+      if (n == "name" && ns.empty ())
         s = 0UL;
 
       if (s != ~0UL)
@@ -693,7 +693,7 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
         vd->state = ~0UL;
 
         vd = vs.data + vs.size++;
-        vd->func = &value_parameters_pskel::sequence_0;
+        vd->func = &values_pskel::sequence_0;
         vd->state = s;
         vd->count = 0;
 
@@ -711,7 +711,7 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
   return true;
 }
 
-bool value_parameters_pskel::
+bool values_pskel::
 _end_element_impl (const ::xml_schema::ro_string& ns,
                    const ::xml_schema::ro_string& n)
 {
@@ -734,7 +734,7 @@ _end_element_impl (const ::xml_schema::ro_string& ns,
   return true;
 }
 
-void value_parameters_pskel::
+void values_pskel::
 _pre_e_validate ()
 {
   this->v_state_stack_.push ();
@@ -748,7 +748,7 @@ _pre_e_validate ()
   vd.count = 0;
 }
 
-void value_parameters_pskel::
+void values_pskel::
 _post_e_validate ()
 {
   v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
@@ -766,7 +766,7 @@ _post_e_validate ()
   this->v_state_stack_.pop ();
 }
 
-void value_parameters_pskel::
+void values_pskel::
 sequence_0 (unsigned long& state,
             unsigned long& count,
             const ::xml_schema::ro_string& ns,
@@ -780,21 +780,21 @@ sequence_0 (unsigned long& state,
   {
     case 0UL:
     {
-      if (n == "param" && ns.empty ())
+      if (n == "name" && ns.empty ())
       {
         if (start)
         {
-          this->::xml_schema::complex_content::context_.top ().parser_ = this->param_parser_;
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->name_parser_;
 
-          if (this->param_parser_)
-            this->param_parser_->pre ();
+          if (this->name_parser_)
+            this->name_parser_->pre ();
         }
         else
         {
-          if (this->param_parser_)
+          if (this->name_parser_)
           {
-            this->param_parser_->post_param1 ();
-            this->param ();
+            this->name_parser_->post_name1 ();
+            this->name ();
           }
 
           count++;
@@ -815,9 +815,257 @@ sequence_0 (unsigned long& state,
   }
 }
 
-// Element validation and dispatch functions for param_pskel.
+// Element validation and dispatch functions for name_pskel.
 //
-bool param_pskel::
+bool name_pskel::
+_start_element_impl (const ::xml_schema::ro_string& ns,
+                     const ::xml_schema::ro_string& n,
+                     const ::xml_schema::ro_string* t)
+{
+  XSD_UNUSED (t);
+
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_* vd = vs.data + (vs.size - 1);
+
+  if (vd->func == 0 && vd->state == 0)
+  {
+    if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
+      return true;
+    else
+      vd->state = 1;
+  }
+
+  while (vd->func != 0)
+  {
+    (this->*vd->func) (vd->state, vd->count, ns, n, t, true);
+
+    vd = vs.data + (vs.size - 1);
+
+    if (vd->state == ~0UL)
+      vd = vs.data + (--vs.size - 1);
+    else
+      break;
+  }
+
+  if (vd->func == 0)
+  {
+    if (vd->state != ~0UL)
+    {
+      unsigned long s = ~0UL;
+
+      if (n == "x" && ns.empty ())
+        s = 0UL;
+
+      if (s != ~0UL)
+      {
+        vd->count++;
+        vd->state = ~0UL;
+
+        vd = vs.data + vs.size++;
+        vd->func = &name_pskel::sequence_0;
+        vd->state = s;
+        vd->count = 0;
+
+        this->sequence_0 (vd->state, vd->count, ns, n, t, true);
+      }
+      else
+      {
+        if (vd->count < 1UL)
+          this->_expected_element (
+            "", "x",
+            ns, n);
+        return false;
+      }
+    }
+    else
+      return false;
+  }
+
+  return true;
+}
+
+bool name_pskel::
+_end_element_impl (const ::xml_schema::ro_string& ns,
+                   const ::xml_schema::ro_string& n)
+{
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_& vd = vs.data[vs.size - 1];
+
+  if (vd.func == 0 && vd.state == 0)
+  {
+    if (!::xml_schema::complex_content::_end_element_impl (ns, n))
+      assert (false);
+    return true;
+  }
+
+  assert (vd.func != 0);
+  (this->*vd.func) (vd.state, vd.count, ns, n, 0, false);
+
+  if (vd.state == ~0UL)
+    vs.size--;
+
+  return true;
+}
+
+void name_pskel::
+_pre_e_validate ()
+{
+  this->v_state_stack_.push ();
+  static_cast< v_state_* > (this->v_state_stack_.top ())->size = 0;
+
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_& vd = vs.data[vs.size++];
+
+  vd.func = 0;
+  vd.state = 0;
+  vd.count = 0;
+}
+
+void name_pskel::
+_post_e_validate ()
+{
+  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
+  v_state_descr_* vd = vs.data + (vs.size - 1);
+
+  ::xml_schema::ro_string empty;
+  while (vd->func != 0)
+  {
+    (this->*vd->func) (vd->state, vd->count, empty, empty, 0, true);
+    assert (vd->state == ~0UL);
+    vd = vs.data + (--vs.size - 1);
+  }
+
+  if (vd->count < 1UL)
+    this->_expected_element (
+      "", "x");
+
+  this->v_state_stack_.pop ();
+}
+
+void name_pskel::
+sequence_0 (unsigned long& state,
+            unsigned long& count,
+            const ::xml_schema::ro_string& ns,
+            const ::xml_schema::ro_string& n,
+            const ::xml_schema::ro_string* t,
+            bool start)
+{
+  XSD_UNUSED (t);
+
+  switch (state)
+  {
+    case 0UL:
+    {
+      if (n == "x" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->x_parser_;
+
+          if (this->x_parser_)
+            this->x_parser_->pre ();
+        }
+        else
+        {
+          if (this->x_parser_)
+          {
+            this->x (this->x_parser_->post_short ());
+          }
+
+          count = 0;
+          state = 1UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "x",
+            ns, n);
+        count = 0;
+        state = 1UL;
+      }
+    }
+    // Fall through.
+    case 1UL:
+    {
+      if (n == "y" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->y_parser_;
+
+          if (this->y_parser_)
+            this->y_parser_->pre ();
+        }
+        else
+        {
+          if (this->y_parser_)
+          {
+            this->y (this->y_parser_->post_short ());
+          }
+
+          count = 0;
+          state = 2UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "y",
+            ns, n);
+        count = 0;
+        state = 2UL;
+      }
+    }
+    // Fall through.
+    case 2UL:
+    {
+      if (n == "z" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->z_parser_;
+
+          if (this->z_parser_)
+            this->z_parser_->pre ();
+        }
+        else
+        {
+          if (this->z_parser_)
+          {
+            this->z (this->z_parser_->post_short ());
+          }
+
+          count = 0;
+          state = ~0UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        count = 0;
+        state = ~0UL;
+      }
+    }
+    // Fall through.
+    case ~0UL:
+      break;
+  }
+}
+
+// Element validation and dispatch functions for name1_pskel.
+//
+bool name1_pskel::
 _start_element_impl (const ::xml_schema::ro_string& ns,
                      const ::xml_schema::ro_string& n,
                      const ::xml_schema::ro_string* t)
@@ -862,175 +1110,7 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
         vd->state = ~0UL;
 
         vd = vs.data + vs.size++;
-        vd->func = &param_pskel::sequence_0;
-        vd->state = s;
-        vd->count = 0;
-
-        this->sequence_0 (vd->state, vd->count, ns, n, t, true);
-      }
-      else
-      {
-        return false;
-      }
-    }
-    else
-      return false;
-  }
-
-  return true;
-}
-
-bool param_pskel::
-_end_element_impl (const ::xml_schema::ro_string& ns,
-                   const ::xml_schema::ro_string& n)
-{
-  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
-  v_state_descr_& vd = vs.data[vs.size - 1];
-
-  if (vd.func == 0 && vd.state == 0)
-  {
-    if (!::xml_schema::complex_content::_end_element_impl (ns, n))
-      assert (false);
-    return true;
-  }
-
-  assert (vd.func != 0);
-  (this->*vd.func) (vd.state, vd.count, ns, n, 0, false);
-
-  if (vd.state == ~0UL)
-    vs.size--;
-
-  return true;
-}
-
-void param_pskel::
-_pre_e_validate ()
-{
-  this->v_state_stack_.push ();
-  static_cast< v_state_* > (this->v_state_stack_.top ())->size = 0;
-
-  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
-  v_state_descr_& vd = vs.data[vs.size++];
-
-  vd.func = 0;
-  vd.state = 0;
-  vd.count = 0;
-}
-
-void param_pskel::
-_post_e_validate ()
-{
-  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
-  v_state_descr_* vd = vs.data + (vs.size - 1);
-
-  ::xml_schema::ro_string empty;
-  while (vd->func != 0)
-  {
-    (this->*vd->func) (vd->state, vd->count, empty, empty, 0, true);
-    assert (vd->state == ~0UL);
-    vd = vs.data + (--vs.size - 1);
-  }
-
-
-  this->v_state_stack_.pop ();
-}
-
-void param_pskel::
-sequence_0 (unsigned long& state,
-            unsigned long& count,
-            const ::xml_schema::ro_string& ns,
-            const ::xml_schema::ro_string& n,
-            const ::xml_schema::ro_string* t,
-            bool start)
-{
-  XSD_UNUSED (t);
-
-  switch (state)
-  {
-    case 0UL:
-    {
-      if (n == "value" && ns.empty ())
-      {
-        if (start)
-        {
-          this->::xml_schema::complex_content::context_.top ().parser_ = this->value_parser_;
-
-          if (this->value_parser_)
-            this->value_parser_->pre ();
-        }
-        else
-        {
-          if (this->value_parser_)
-          {
-            this->value (this->value_parser_->post_string ());
-          }
-
-          count++;
-        }
-
-        break;
-      }
-      else
-      {
-        assert (start);
-        count = 0;
-        state = ~0UL;
-      }
-    }
-    // Fall through.
-    case ~0UL:
-      break;
-  }
-}
-
-// Element validation and dispatch functions for param1_pskel.
-//
-bool param1_pskel::
-_start_element_impl (const ::xml_schema::ro_string& ns,
-                     const ::xml_schema::ro_string& n,
-                     const ::xml_schema::ro_string* t)
-{
-  XSD_UNUSED (t);
-
-  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
-  v_state_descr_* vd = vs.data + (vs.size - 1);
-
-  if (vd->func == 0 && vd->state == 0)
-  {
-    if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
-      return true;
-    else
-      vd->state = 1;
-  }
-
-  while (vd->func != 0)
-  {
-    (this->*vd->func) (vd->state, vd->count, ns, n, t, true);
-
-    vd = vs.data + (vs.size - 1);
-
-    if (vd->state == ~0UL)
-      vd = vs.data + (--vs.size - 1);
-    else
-      break;
-  }
-
-  if (vd->func == 0)
-  {
-    if (vd->state != ~0UL)
-    {
-      unsigned long s = ~0UL;
-
-      if (n == "value" && ns.empty ())
-        s = 0UL;
-
-      if (s != ~0UL)
-      {
-        vd->count++;
-        vd->state = ~0UL;
-
-        vd = vs.data + vs.size++;
-        vd->func = &param1_pskel::sequence_0;
+        vd->func = &name1_pskel::sequence_0;
         vd->state = s;
         vd->count = 0;
 
@@ -1052,7 +1132,7 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
   return true;
 }
 
-bool param1_pskel::
+bool name1_pskel::
 _end_element_impl (const ::xml_schema::ro_string& ns,
                    const ::xml_schema::ro_string& n)
 {
@@ -1075,7 +1155,7 @@ _end_element_impl (const ::xml_schema::ro_string& ns,
   return true;
 }
 
-void param1_pskel::
+void name1_pskel::
 _pre_e_validate ()
 {
   this->v_state_stack_.push ();
@@ -1089,7 +1169,7 @@ _pre_e_validate ()
   vd.count = 0;
 }
 
-void param1_pskel::
+void name1_pskel::
 _post_e_validate ()
 {
   v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
@@ -1110,7 +1190,7 @@ _post_e_validate ()
   this->v_state_stack_.pop ();
 }
 
-void param1_pskel::
+void name1_pskel::
 sequence_0 (unsigned long& state,
             unsigned long& count,
             const ::xml_schema::ro_string& ns,
@@ -1163,84 +1243,18 @@ sequence_0 (unsigned long& state,
   }
 }
 
-// Attribute validation and dispatch functions for param_pskel.
+// Character validation functions for name_pskel.
 //
-bool param_pskel::
-_attribute_impl_phase_one (const ::xml_schema::ro_string& ns,
-                           const ::xml_schema::ro_string& n,
-                           const ::xml_schema::ro_string& s)
-{
-  if (n == "type" && ns.empty ())
-  {
-    if (this->type_parser_)
-    {
-      this->type_parser_->pre ();
-      this->type_parser_->_pre_impl ();
-      this->type_parser_->_characters (s);
-      this->type_parser_->_post_impl ();
-      this->type (this->type_parser_->post_string ());
-    }
-
-    return true;
-  }
-
-  return false;
-}
-
-// Attribute validation and dispatch functions for param1_pskel.
-//
-bool param1_pskel::
-_attribute_impl_phase_one (const ::xml_schema::ro_string& ns,
-                           const ::xml_schema::ro_string& n,
-                           const ::xml_schema::ro_string& s)
-{
-  if (n == "type" && ns.empty ())
-  {
-    if (this->type_parser_)
-    {
-      this->type_parser_->pre ();
-      this->type_parser_->_pre_impl ();
-      this->type_parser_->_characters (s);
-      this->type_parser_->_post_impl ();
-      this->type (this->type_parser_->post_string ());
-    }
-
-    return true;
-  }
-
-  return false;
-}
-
-// Character validation functions for vector_parameters_pskel.
-//
-bool vector_parameters_pskel::
+bool name_pskel::
 _characters_impl (const ::xml_schema::ro_string& s)
 {
   this->_any_characters (s);
   return true;
 }
 
-// Character validation functions for value_parameters_pskel.
+// Character validation functions for name1_pskel.
 //
-bool value_parameters_pskel::
-_characters_impl (const ::xml_schema::ro_string& s)
-{
-  this->_any_characters (s);
-  return true;
-}
-
-// Character validation functions for param_pskel.
-//
-bool param_pskel::
-_characters_impl (const ::xml_schema::ro_string& s)
-{
-  this->_any_characters (s);
-  return true;
-}
-
-// Character validation functions for param1_pskel.
-//
-bool param1_pskel::
+bool name1_pskel::
 _characters_impl (const ::xml_schema::ro_string& s)
 {
   this->_any_characters (s);

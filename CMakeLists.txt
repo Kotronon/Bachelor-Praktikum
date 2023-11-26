@@ -37,7 +37,11 @@ add_executable(MolSim ${MY_SRC}
         src/ParticleGenerator.h
         src/LinkedCellContainer.cpp
         src/LinkedCellContainer.h
-        XML_input/input-driver.cxx XML_input/input-pskel.cxx)
+        XML_input/input-driver.cxx
+        XML_input/input-pskel.cxx
+        XML_input/input-pskel.hxx
+        XML_input/input-driver.cxx)
+
 
 # set cxx standard. You may raise this if you want.
 target_compile_features(MolSim

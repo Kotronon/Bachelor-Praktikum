@@ -45,19 +45,19 @@
 
 #include <xsd/cxx/config.hxx>
 
-//#if (LIBXSD_VERSION != 400002000000000L)
-//# XSD runtime version mismatch
+//#if //(LIBXSD_VERSION != 400002000000000L)
+//#error XSD runtime version mismatch
 //#endif
 
 #include <xsd/cxx/pre.hxx>
 
 // Forward declarations
 //
-class input_pskel;
-class vector_parameters_pskel;
-class value_parameters_pskel;
-class param_pskel;
-class param1_pskel;
+class parameters_pskel;
+class coordinates_pskel;
+class values_pskel;
+class name_pskel;
+class name1_pskel;
 
 #ifndef XSD_USE_CHAR
 #define XSD_USE_CHAR
@@ -260,7 +260,7 @@ namespace xml_schema
   typedef ::xsd::cxx::parser::expat::document< char > document;
 }
 
-class input_pskel: public ::xml_schema::complex_content
+class parameters_pskel: public ::xml_schema::complex_content
 {
   public:
   // Parser callbacks. Override them in your implementation.
@@ -269,29 +269,29 @@ class input_pskel: public ::xml_schema::complex_content
   // pre ();
 
   virtual void
-  vector_parameters (const std::array<int,3>&);
+  coordinates ();
 
   virtual void
-  value_parameters (const std::int8_t&);
+  values ();
 
   virtual void
-  post_input ();
+  post_parameters ();
 
   // Parser construction API.
   //
   void
-  vector_parameters_parser (::vector_parameters_pskel&);
+  coordinates_parser (::coordinates_pskel&);
 
   void
-  value_parameters_parser (::value_parameters_pskel&);
+  values_parser (::values_pskel&);
 
   void
-  parsers (::vector_parameters_pskel& /* vector_parameters */,
-           ::value_parameters_pskel& /* value_parameters */);
+  parsers (::coordinates_pskel& /* coordinates */,
+           ::values_pskel& /* values */);
 
   // Constructor.
   //
-  input_pskel ();
+  parameters_pskel ();
 
   // Implementation.
   //
@@ -306,13 +306,13 @@ class input_pskel: public ::xml_schema::complex_content
                      const ::xml_schema::ro_string&);
 
   protected:
-  ::vector_parameters_pskel* vector_parameters_parser_;
-  ::value_parameters_pskel* value_parameters_parser_;
+  ::coordinates_pskel* coordinates_parser_;
+  ::values_pskel* values_parser_;
 
   protected:
   struct v_state_descr_
   {
-    void (::input_pskel::*func) (
+    void (::parameters_pskel::*func) (
       unsigned long&,
       unsigned long&,
       const ::xml_schema::ro_string&,
@@ -347,7 +347,7 @@ class input_pskel: public ::xml_schema::complex_content
               bool start);
 };
 
-class vector_parameters_pskel: public ::xml_schema::complex_content
+class coordinates_pskel: public ::xml_schema::complex_content
 {
   public:
   // Parser callbacks. Override them in your implementation.
@@ -356,22 +356,194 @@ class vector_parameters_pskel: public ::xml_schema::complex_content
   // pre ();
 
   virtual void
-  param ();
+  name ();
 
   virtual void
-  post_vector_parameters ();
+  post_coordinates ();
 
   // Parser construction API.
   //
   void
-  param_parser (::param_pskel&);
+  name_parser (::name_pskel&);
 
   void
-  parsers (::param_pskel& /* param */);
+  parsers (::name_pskel& /* name */);
 
   // Constructor.
   //
-  vector_parameters_pskel ();
+  coordinates_pskel ();
+
+  // Implementation.
+  //
+  protected:
+  virtual bool
+  _start_element_impl (const ::xml_schema::ro_string&,
+                       const ::xml_schema::ro_string&,
+                       const ::xml_schema::ro_string*);
+
+  virtual bool
+  _end_element_impl (const ::xml_schema::ro_string&,
+                     const ::xml_schema::ro_string&);
+
+  protected:
+  ::name_pskel* name_parser_;
+
+  protected:
+  struct v_state_descr_
+  {
+    void (::coordinates_pskel::*func) (
+      unsigned long&,
+      unsigned long&,
+      const ::xml_schema::ro_string&,
+      const ::xml_schema::ro_string&,
+      const ::xml_schema::ro_string*,
+      bool);
+    unsigned long state;
+    unsigned long count;
+  };
+
+  struct v_state_
+  {
+    v_state_descr_ data[2UL];
+    unsigned long size;
+  };
+
+  v_state_ v_state_first_;
+  ::xsd::cxx::parser::pod_stack v_state_stack_;
+
+  virtual void
+  _pre_e_validate ();
+
+  virtual void
+  _post_e_validate ();
+
+  void
+  sequence_0 (unsigned long& state,
+              unsigned long& count,
+              const ::xml_schema::ro_string& ns,
+              const ::xml_schema::ro_string& n,
+              const ::xml_schema::ro_string* t,
+              bool start);
+};
+
+class values_pskel: public ::xml_schema::complex_content
+{
+  public:
+  // Parser callbacks. Override them in your implementation.
+  //
+  // virtual void
+  // pre ();
+
+  virtual void
+  name ();
+
+  virtual void
+  post_values ();
+
+  // Parser construction API.
+  //
+  void
+  name_parser (::name1_pskel&);
+
+  void
+  parsers (::name1_pskel& /* name */);
+
+  // Constructor.
+  //
+  values_pskel ();
+
+  // Implementation.
+  //
+  protected:
+  virtual bool
+  _start_element_impl (const ::xml_schema::ro_string&,
+                       const ::xml_schema::ro_string&,
+                       const ::xml_schema::ro_string*);
+
+  virtual bool
+  _end_element_impl (const ::xml_schema::ro_string&,
+                     const ::xml_schema::ro_string&);
+
+  protected:
+  ::name1_pskel* name_parser_;
+
+  protected:
+  struct v_state_descr_
+  {
+    void (::values_pskel::*func) (
+      unsigned long&,
+      unsigned long&,
+      const ::xml_schema::ro_string&,
+      const ::xml_schema::ro_string&,
+      const ::xml_schema::ro_string*,
+      bool);
+    unsigned long state;
+    unsigned long count;
+  };
+
+  struct v_state_
+  {
+    v_state_descr_ data[2UL];
+    unsigned long size;
+  };
+
+  v_state_ v_state_first_;
+  ::xsd::cxx::parser::pod_stack v_state_stack_;
+
+  virtual void
+  _pre_e_validate ();
+
+  virtual void
+  _post_e_validate ();
+
+  void
+  sequence_0 (unsigned long& state,
+              unsigned long& count,
+              const ::xml_schema::ro_string& ns,
+              const ::xml_schema::ro_string& n,
+              const ::xml_schema::ro_string* t,
+              bool start);
+};
+
+class name_pskel: public ::xml_schema::complex_content
+{
+  public:
+  // Parser callbacks. Override them in your implementation.
+  //
+  // virtual void
+  // pre ();
+
+  virtual void
+  x (short);
+
+  virtual void
+  y (short);
+
+  virtual void
+  z (short);
+
+  virtual void
+  post_name ();
+
+  // Parser construction API.
+  //
+  void
+  x_parser (::xml_schema::short_pskel&);
+
+  void
+  y_parser (::xml_schema::short_pskel&);
+
+  void
+  z_parser (::xml_schema::short_pskel&);
+
+  void
+  parsers (::xml_schema::short_pskel& /* x */,
+           ::xml_schema::short_pskel& /* y */,
+           ::xml_schema::short_pskel& /* z */);
+
+  // Constructor.
+  //
+  name_pskel ();
 
   // Implementation.
   //
@@ -389,12 +561,14 @@ class vector_parameters_pskel: public ::xml_schema::complex_content
   _characters_impl (const ::xml_schema::ro_string&);
 
   protected:
-  ::param_pskel* param_parser_;
+  ::xml_schema::short_pskel* x_parser_;
+  ::xml_schema::short_pskel* y_parser_;
+  ::xml_schema::short_pskel* z_parser_;
 
   protected:
   struct v_state_descr_
   {
-    void (::vector_parameters_pskel::*func) (
+    void (::name_pskel::*func) (
       unsigned long&,
       unsigned long&,
       const ::xml_schema::ro_string&,
@@ -429,185 +603,7 @@ class vector_parameters_pskel: public ::xml_schema::complex_content
               bool start);
 };
 
-class value_parameters_pskel: public ::xml_schema::complex_content
-{
-  public:
-  // Parser callbacks. Override them in your implementation.
-  //
-  // virtual void
-  // pre ();
-
-  virtual void
-  param ();
-
-  virtual void
-  post_value_parameters ();
-
-  // Parser construction API.
-  //
-  void
-  param_parser (::param1_pskel&);
-
-  void
-  parsers (::param1_pskel& /* param */);
-
-  // Constructor.
-  //
-  value_parameters_pskel ();
-
-  // Implementation.
-  //
-  protected:
-  virtual bool
-  _start_element_impl (const ::xml_schema::ro_string&,
-                       const ::xml_schema::ro_string&,
-                       const ::xml_schema::ro_string*);
-
-  virtual bool
-  _end_element_impl (const ::xml_schema::ro_string&,
-                     const ::xml_schema::ro_string&);
-
-  virtual bool
-  _characters_impl (const ::xml_schema::ro_string&);
-
-  protected:
-  ::param1_pskel* param_parser_;
-
-  protected:
-  struct v_state_descr_
-  {
-    void (::value_parameters_pskel::*func) (
-      unsigned long&,
-      unsigned long&,
-      const ::xml_schema::ro_string&,
-      const ::xml_schema::ro_string&,
-      const ::xml_schema::ro_string*,
-      bool);
-    unsigned long state;
-    unsigned long count;
-  };
-
-  struct v_state_
-  {
-    v_state_descr_ data[2UL];
-    unsigned long size;
-  };
-
-  v_state_ v_state_first_;
-  ::xsd::cxx::parser::pod_stack v_state_stack_;
-
-  virtual void
-  _pre_e_validate ();
-
-  virtual void
-  _post_e_validate ();
-
-  void
-  sequence_0 (unsigned long& state,
-              unsigned long& count,
-              const ::xml_schema::ro_string& ns,
-              const ::xml_schema::ro_string& n,
-              const ::xml_schema::ro_string* t,
-              bool start);
-};
-
-class param_pskel: public ::xml_schema::complex_content
-{
-  public:
-  // Parser callbacks. Override them in your implementation.
-  //
-  // virtual void
-  // pre ();
-
-  virtual void
-  value (const ::std::string&);
-
-  virtual void
-  type (const ::std::string&);
-
-  virtual void
-  post_param ();
-
-  // Parser construction API.
-  //
-  void
-  value_parser (::xml_schema::string_pskel&);
-
-  void
-  type_parser (::xml_schema::string_pskel&);
-
-  void
-  parsers (::xml_schema::string_pskel& /* value */,
-           ::xml_schema::string_pskel& /* type */);
-
-  // Constructor.
-  //
-  param_pskel ();
-
-  // Implementation.
-  //
-  protected:
-  virtual bool
-  _start_element_impl (const ::xml_schema::ro_string&,
-                       const ::xml_schema::ro_string&,
-                       const ::xml_schema::ro_string*);
-
-  virtual bool
-  _end_element_impl (const ::xml_schema::ro_string&,
-                     const ::xml_schema::ro_string&);
-
-  virtual bool
-  _attribute_impl_phase_one (const ::xml_schema::ro_string&,
-                             const ::xml_schema::ro_string&,
-                             const ::xml_schema::ro_string&);
-
-
-  virtual bool
-  _characters_impl (const ::xml_schema::ro_string&);
-
-  protected:
-  ::xml_schema::string_pskel* value_parser_;
-  ::xml_schema::string_pskel* type_parser_;
-
-  protected:
-  struct v_state_descr_
-  {
-    void (::param_pskel::*func) (
-      unsigned long&,
-      unsigned long&,
-      const ::xml_schema::ro_string&,
-      const ::xml_schema::ro_string&,
-      const ::xml_schema::ro_string*,
-      bool);
-    unsigned long state;
-    unsigned long count;
-  };
-
-  struct v_state_
-  {
-    v_state_descr_ data[2UL];
-    unsigned long size;
-  };
-
-  v_state_ v_state_first_;
-  ::xsd::cxx::parser::pod_stack v_state_stack_;
-
-  virtual void
-  _pre_e_validate ();
-
-  virtual void
-  _post_e_validate ();
-
-  void
-  sequence_0 (unsigned long& state,
-              unsigned long& count,
-              const ::xml_schema::ro_string& ns,
-              const ::xml_schema::ro_string& n,
-              const ::xml_schema::ro_string* t,
-              bool start);
-};
-
-class param1_pskel: public ::xml_schema::complex_content
+class name1_pskel: public ::xml_schema::complex_content
 {
   public:
   // Parser callbacks. Override them in your implementation.
@@ -619,10 +615,7 @@ class param1_pskel: public ::xml_schema::complex_content
   value (float);
 
   virtual void
-  type (const ::std::string&);
-
-  virtual void
-  post_param1 ();
+  post_name1 ();
 
   // Parser construction API.
   //
@@ -630,15 +623,11 @@ class param1_pskel: public ::xml_schema::complex_content
   value_parser (::xml_schema::float_pskel&);
 
   void
-  type_parser (::xml_schema::string_pskel&);
-
-  void
-  parsers (::xml_schema::float_pskel& /* value */,
-           ::xml_schema::string_pskel& /* type */);
+  parsers (::xml_schema::float_pskel& /* value */);
 
   // Constructor.
   //
-  param1_pskel ();
+  name1_pskel ();
 
   // Implementation.
   //
@@ -653,22 +642,15 @@ class param1_pskel: public ::xml_schema::complex_content
                      const ::xml_schema::ro_string&);
 
   virtual bool
-  _attribute_impl_phase_one (const ::xml_schema::ro_string&,
-                             const ::xml_schema::ro_string&,
-                             const ::xml_schema::ro_string&);
-
-
-  virtual bool
   _characters_impl (const ::xml_schema::ro_string&);
 
   protected:
   ::xml_schema::float_pskel* value_parser_;
-  ::xml_schema::string_pskel* type_parser_;
 
   protected:
   struct v_state_descr_
   {
-    void (::param1_pskel::*func) (
+    void (::name1_pskel::*func) (
       unsigned long&,
       unsigned long&,
       const ::xml_schema::ro_string&,
