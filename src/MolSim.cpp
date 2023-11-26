@@ -39,7 +39,7 @@ ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
     spdlog::info("Hello from MolSim for PSE!");
-   /* if (argc <= 3) {
+    /* if (argc <= 3) {
         spdlog::info("Erroneous programme call! ");
         spdlog::info("./MolSim end_time delta_time [options]");
 
@@ -63,7 +63,7 @@ int main(int argc, char *argsv[]) {
     //TODO: Add input for file and/or cuboid
 
     //Getting parameters end_time and delta_t
-   /* double end_time = std::stod(argsv[1]);
+    /* double end_time = std::stod(argsv[1]);
     spdlog::info("end_time: {}", end_time);
 
     double delta_t = std::stod(argsv[2]);
@@ -186,35 +186,41 @@ int main(int argc, char *argsv[]) {
     container.addParticleContainer(cuboid_1);
     container.addParticleContainer(cuboid_2);
 */
-   LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0);
-   ParticleGenerator::createCuboidInCells({20,20,0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
-    ParticleGenerator::createCuboidInCells({70,60,0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
-   double end_time = 20;
-   double delta_t = 0.0005;
+    //LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0);
+    //ParticleGenerator::createCuboidInCells({20,20,0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
+    //ParticleGenerator::createCuboidInCells({70,60,0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
+
+    ParticleContainer disk = ParticleGenerator::createDisk({60,25,0},{0,-10,0},1.0,15,1.1225);
+    container.addParticleContainer(disk);
+
+    double end_time = 10;
+    double delta_t = 0.00005;
     double current_time = start_time;
     int iteration = 0;
-      //Pre-calculation of f
-    //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
-     ForceCalculator::LennardJonesForceCell(cells, eps, sig);
-      //Initialization with Brownian Motion
-      //VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
-     VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
-      //For this loop, we assume: current x, current f and current v are known
-     while (current_time < end_time) {
+    //Pre-calculation of f
+    ForceCalculator::LennardJonesForceFaster(container, eps, sig);
+    //ForceCalculator::LennardJonesForceCell(cells, eps, sig);
+
+    //Initialization with Brownian Motion
+    VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
+    //VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
+
+    //For this loop, we assume: current x, current f and current v are known
+    while (current_time < end_time) {
         // calculate new x
-        //PositionCalculator::PositionStoermerVerlet(container, delta_t);
-        PositionCalculator::PositionStoermerVerletCell(cells, delta_t, 3.0);
+        PositionCalculator::PositionStoermerVerlet(container, delta_t);
+        //PositionCalculator::PositionStoermerVerletCell(cells, delta_t, 3.0);
         // calculate new f
-        //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
-        ForceCalculator::LennardJonesForceCell(cells, eps, sig);
+        ForceCalculator::LennardJonesForceFaster(container, eps, sig);
+        //ForceCalculator::LennardJonesForceCell(cells, eps, sig);
         // calculate new v
-       // VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
-        VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
+        VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
+        //VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
 
         iteration++;
         if (iteration % 10 == 0) {
-            //plotParticles(iteration);
-            plotParticlesInCells(iteration, cells);
+            plotParticles(iteration);
+            //plotParticlesInCells(iteration, cells);
         }
         if (iteration % 100 == 0) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");

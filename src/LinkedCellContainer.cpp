@@ -63,7 +63,7 @@ void LinkedCellContainer::addParticle(int cell, Particle &p){
 }
 
 /**
- * delets Particle from specific cell
+ * deletes Particle from specific cell
  * @param cell
  * @param p
  */
