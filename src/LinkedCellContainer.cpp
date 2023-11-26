@@ -80,6 +80,26 @@ void LinkedCellContainer::addParticle(int x, int y, int z, Particle &p) {
 }
 
 /**
+ * adds new Particle to a cell based on current position
+ * @param x_arg coordinates of new particle
+ * @param v_arg velocity of new particle
+ * @param m_arg mass of new particle
+ * @param type_arg type of new particle
+ */
+void LinkedCellContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg,
+                                      int type_arg) {
+    cells[floor(x_arg[0] / c)][floor(x_arg[1] / c)][floor(x_arg[2] / c)].emplace_back(x_arg, v_arg, m_arg, type_arg);
+}
+
+/**
+ * adds existing particle to a cell based on current position
+ * @param p existing particle to add
+ */
+void LinkedCellContainer::addParticle(Particle &p) {
+    cells[floor(p.getX()[0] / c)][floor(p.getX()[1] / c)][floor(p.getX()[2] / c)].emplace_back(p);
+}
+
+/**
  * delete Particle from specific cell
  * @param cell
  * @param p

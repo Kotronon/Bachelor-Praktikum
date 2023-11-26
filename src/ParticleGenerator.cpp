@@ -104,12 +104,12 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
 ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> x, std::array<double, 3> v, double m,
                                                   int r, double h) {
 
-    std::array<double, 3> x_corner = {x[0] - ((r-1) * h), x[1] - ((r-1) * h),x[3]};
-    std::array<int, 3> N = {2*(r-1)+1,2*(r-1)+1,1};
+    std::array<double, 3> x_corner = {x[0] - (r * h), x[1] - (r * h),x[3]};
+    std::array<int, 3> N = {2*r,2*r,1};
     ParticleContainer cube = ParticleGenerator::createCuboid(x_corner,v,N,h,m);
     ParticleContainer disk;
     for (auto p = cube.begin(); p <= cube.end(); p++) {
-        if (ArrayUtils::L2Norm(p->getX() - x) <= ((r-1) * h)) {
+        if (ArrayUtils::L2Norm(p->getX() - x) <= (r * h)) {
             disk.addParticle(*p);
         }
     }
@@ -126,9 +126,12 @@ ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> x, std::ar
  * @return
  */
 void ParticleGenerator::createDiskInCells(std::array<double, 3> x, std::array<double, 3> v, double m,
-                                                int r, double h, LinkedCellContainer &cells, double  cutoff) {
+                                                int r, double h, LinkedCellContainer &cells) {
 
     ParticleContainer container = ParticleGenerator::createDisk(x,v,m,r,h);
+    for (auto p = container.begin(); p < container.end(); p++) {
+        cells.addParticle(*p);
+    }
 }
 
 /**

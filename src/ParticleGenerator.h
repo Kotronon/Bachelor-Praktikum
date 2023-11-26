@@ -22,7 +22,7 @@ public:
 
     static ParticleContainer createDisk(std::array<double, 3> x, std::array<double, 3> v, double m, int r, double h);
 
-    void createDiskInCells(std::array<double, 3> x, std::array<double, 3> v, double m, int r, double h,
-                           LinkedCellContainer &cells, double cutoff);
+    static void createDiskInCells(std::array<double, 3> x, std::array<double, 3> v, double m, int r, double h,
+                           LinkedCellContainer &cells);
 };
 
