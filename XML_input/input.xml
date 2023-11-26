@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<input>
+
+    <vector_parameters>Params:
+
+        <param type="array"> x1
+            <value>20</value>
+            <value>20</value>
+            <value>0</value>
+        </param>
+
+        <param type="array"> x2
+            <value>70</value>
+            <value>60</value>
+            <value>0</value>
+        </param>
+
+        <param type="array"> v1
+            <value>0</value>
+            <value>0</value>
+            <value>0</value>
+        </param>
+
+        <param type="array"> v2
+            <value>0</value>
+            <value>-10</value>
+            <value>0</value>
+        </param>
+
+        <param type="array"> n1
+            <value>100</value>
+            <value>20</value>
+            <value>1</value>
+        </param>
+
+        <param type="array"> n2
+            <value>20</value>
+            <value>20</value>
+            <value>1</value>
+        </param>
+
+        <param type="array"> domain_size_L
+            <value>180</value>
+            <value>90</value>
+            <value>NULL</value>
+        </param>
+
+    </vector_parameters>
+
+    <value_parameters> Params :
+
+        <param type = "integer"> h
+            <value>1.1225</value>
+        </param>
+
+        <param type = "integer">e
+            <value>5</value>
+        </param>
+
+        <param type = "integer">m
+            <value>1</value>
+        </param>
+
+        <param type = "integer">delta_t
+            <value>0.0005</value>
+        </param>
+
+        <param type = "integer">t_end
+            <value>20</value>
+        </param>
+
+        <param type = "integer">r_cutoff
+            <value>0.3</value>
+        </param>
+
+    </value_parameters>
+
+</input>
