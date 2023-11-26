@@ -39,10 +39,14 @@ void VelocityCalculator::VelocityStoermerVerlet(ParticleContainer &container, do
  */
 void VelocityCalculator::BrownianMotionInitializationCell(LinkedCellContainer &grid, double avg_v, int dim) {
     std::array<double, 3> brownian_motion{};
-    for (int i = 0; i < grid.cell_numbers(); i++) {
-        for (int j = 0; j < grid.Particles_in_cell(i); j++) {
-            brownian_motion = maxwellBoltzmannDistributedVelocity(avg_v, dim);
-            grid.cells[i][j].setV(grid.cells[i][j].getV() + brownian_motion);
+    for (auto &x: grid) {
+        for (auto &y: x) {
+            for (auto &z: y) {
+                for (auto &p: z) {
+                    brownian_motion = maxwellBoltzmannDistributedVelocity(avg_v, dim);
+                    p.setV(p.getV() + brownian_motion);
+                }
+            }
         }
 
     }
@@ -54,10 +58,14 @@ void VelocityCalculator::BrownianMotionInitializationCell(LinkedCellContainer &g
  * @param delta_t
  */
 void VelocityCalculator::VelocityStoermerVerletCell(LinkedCellContainer &grid, double delta_t) {
-    for (int i = 0; i < grid.cell_numbers(); i++) {
-        for (int j = 0; j < grid.Particles_in_cell(i); j++) {
-            //vi (tn+1) = vi(tn) + ∆t * Fi(tn) + Fi(tn+1) / 2mi
-            grid.cells[i][j].setV(grid.cells[i][j].getV() + ((delta_t / (2 * grid.cells[i][j].getM())) * (grid.cells[i][j].getOldF() + grid.cells[i][j].getF())));
+    for (auto &x: grid) {
+        for (auto &y: x) {
+            for (auto &z: y) {
+                for (auto &p: z) {
+                    //vi (tn+1) = vi(tn) + ∆t * Fi(tn) + Fi(tn+1) / 2mi
+                    p.setV(p.getV() + ((delta_t / (2 * p.getM())) * (p.getOldF() + p.getF())));
+                }
+            }
         }
     }
 }
