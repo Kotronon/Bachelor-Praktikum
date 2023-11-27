@@ -120,18 +120,20 @@ void LinkedCellContainer::moveToNeighbour() {
                             addParticle(x_now+1, y_now+1, z_now+1, cells[x][y][z][p]);
                             cells[x][y][z].erase(cells[x][y][z].begin() + p);
                         }
-                       // generateGhostCell(p, x, y, z);
+                        else{
+                            generateGhostCell(p, x, y, z);
+                        }
+                       //
                         //check boundary conditions -> create ghostcell
                     } else {
                         //is outflow boundary
-                       // if(needsToBeDeleted(cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1], cells[x][y][z][p].getX()[2])) {
-                       if(applyMirrorBoundary(p, x, y, z)){
-                        cells[x][y][z].erase(cells[x][y][z].begin() + p);
+                       // if(applyMirrorBoundary(p, x, y, z)) {
+                       if(needsToBeDeleted(x_now, y_now, z_now)){
+                            cells[x][y][z].erase(cells[x][y][z].begin() + p);
                         }
                     }
                 }
             }
-            //generateGhostCell(i, j, x_now, y_now, z_now);
         }
     }
 }
