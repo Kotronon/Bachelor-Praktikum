@@ -14,7 +14,7 @@ public:
 
 
 
-    LinkedCellContainer(std::array<int, 3> N, double cutoff,  std::vector<std::string> b);
+    LinkedCellContainer(std::array<int, 3> N, double cutoff,  std::array<std::string, 6> b);
 
     virtual ~LinkedCellContainer();
 
@@ -54,6 +54,10 @@ public:
 
     void generateGhostCell(int index, int x, int y, int z);
 
+    void deleteGhostCells();
+
+    bool needsToBeDeleted(double x_coordinate, double y_coordinate, double z_coordinate);
+
 
 private:
     int x_cells;
@@ -61,7 +65,7 @@ private:
     int z_cells;
     double c;
     bool three_dim;
-    std::vector<std::string> boundary;
+    std::array<std::string, 6> boundary = {"n", "n", "n", "n", "n", "n"};
     std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
 
 };
