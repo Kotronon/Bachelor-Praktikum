@@ -127,10 +127,10 @@ ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> center, st
 
         else {
             d += 2 * (x-y) + 1;
-            y--;
+            y -= h;
         }
 
-        x++;
+        x += h;
 
     } while (x <= y);
 

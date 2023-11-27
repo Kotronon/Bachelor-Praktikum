@@ -88,7 +88,8 @@ void LinkedCellContainer::addParticle(int x, int y, int z, Particle &p) {
  */
 void LinkedCellContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg,
                                       int type_arg) {
-    cells[floor(x_arg[0] / c)][floor(x_arg[1] / c)][floor(x_arg[2] / c)].emplace_back(x_arg, v_arg, m_arg, type_arg);
+    Particle particle(x_arg, v_arg, m_arg, type_arg);
+    cells[floor(x_arg[0] / c)][floor(x_arg[1] / c)][floor(x_arg[2] / c)].emplace_back(particle);
 }
 
 /**

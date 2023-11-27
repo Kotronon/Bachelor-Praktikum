@@ -59,7 +59,6 @@ void ParticleContainer::addParticle(std::array<double, 3> x_arg, std::array<doub
     Particle new_particle(x_arg, v_arg, m_arg, type_arg);
     containedParticles.emplace_back(new_particle);
     spdlog::info("Added newly created particle to container!");
-    containedParticles.begin();
 }
 
 /**
