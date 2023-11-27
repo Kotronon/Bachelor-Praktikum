@@ -47,7 +47,9 @@ int LinkedCellContainer::cell_numbers() const {
 
 /**
  * returns the number of particles in the given cell
- * @param cell
+ * @param x index of cell on x axis
+ * @param y index of cell on y axis
+ * @param z index of cell on z axis
  * @return number of molecules in cell
  */
 int LinkedCellContainer::Particles_in_cell(int x, int y, int z) {
@@ -89,8 +91,10 @@ void LinkedCellContainer::addParticle(int x, int y, int z, Particle &p) {
 
 /**
  * delete Particle from specific cell
- * @param cell
- * @param p
+ * @param x index of cell on x axis
+ * @param y index of cell on y axis
+ * @param z index of cell on z axis
+ * @param p particle to deleted
  */
 void LinkedCellContainer::deleteParticle(int x, int y, int z, Particle &p) {
     unsigned int pos = 0;
@@ -141,7 +145,9 @@ void LinkedCellContainer::moveToNeighbour() {
 
 /**
  * returns the Particles from the next neighbours of the current cell
- * @param cell
+ * @param x index of cell on x axis
+ * @param y index of cell on y axis
+ * @param z index of cell on z axis
  * @return
  */
 std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y, int z) const {
@@ -182,7 +188,9 @@ std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y
 
     return vec;
 }
-
+/**
+ * sets old force to current force and current forrce to zero
+ */
 void LinkedCellContainer::setZero() {
     for (int x = 1; x <= x_cells; x++) {
         for (int y = 1; y <= y_cells; y++) {
@@ -202,6 +210,10 @@ int LinkedCellContainer::getYMax() const { return y_cells; }
 
 int LinkedCellContainer::getZMax() const { return z_cells; }
 
+/**
+ * returns the vector of all particles in the ParticleContainer with Pointer at first element
+ * @return
+ */
 std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator LinkedCellContainer::begin() {
     return cells.begin();
 }
@@ -214,6 +226,10 @@ std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator LinkedCel
     return cells.end();
 }
 
+/**
+ * applys the force calculation accoording to N3L
+ * @param forceCalculationforceCalculation a function to apply the  force calculations pairwise
+ */
 void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation) {
     for (int x = 1; x <= x_cells; x++) {
         for (int y = 1; y <= y_cells; y++) {
@@ -228,12 +244,8 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                     for (int n = 0; n < neighbours.size(); n++) {
                         //with neighbour cells
                         for (int l = 0; l < cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]].size(); l++) {
-                            if (cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l].getType() != 0) {
-                                if (cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l].getType() != j) {
-                                    forceCalculation(&(cells[x][y][z][j]),
-                                                     &(cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l]));
-                                }
-                            } else {
+                            if (cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l].getType() == 0 ||
+                                cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l].getType() == j) {
                                 forceCalculation(&(cells[x][y][z][j]),
                                                  &(cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l]));
                             }
@@ -246,7 +258,13 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
     deleteGhostCells();
 }
 
-
+/**
+ * aplys the mirroring if boundary is a reflection boundary
+ * @param p the  index of the given particle
+ * @param x index of cell on x axis
+ * @param y index of cell on y axis
+ * @param z index of cell on z axis
+ */
 bool LinkedCellContainer::applyMirrorBoundary(int p, int x, int y, int z) {
     bool needs_to_be_deleted = true;
     if (floor(cells[x][y][z][p].getX()[0] / c) > x_cells - 1 && boundary[1] == "r") {
@@ -286,49 +304,53 @@ bool LinkedCellContainer::applyMirrorBoundary(int p, int x, int y, int z) {
     return needs_to_be_deleted;
 }
 
+/**
+ * generats ghost cells for given particle
+ * @param index the index of the particle
+ * @param x index of cell on x axis
+ * @param y index of cell on y axis
+ * @param z index of cell on z axis
+ */
 void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
     if (x == 1 && boundary[0] == "r" && cells[x][y][z][index].getV()[0] < 0) {
         std::array<double, 3> ghost_x = {-cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
                                          cells[x][y][z][index].getX()[2]};
-        std::array<double, 3> ghost_v = {-cells[x][y][z][index].getV()[0], cells[x][y][z][index].getV()[1],
-                                         cells[x][y][z][index].getV()[2]};
+        std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x - 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
     } else if (x == x_cells && boundary[1] == "r" && cells[x][y][z][index].getV()[0] > 0) {
         std::array<double, 3> ghost_x = {x_cells * c + fmod((cells[x][y][z][index].getX()[0]), c),
                                          cells[x][y][z][index].getX()[1], cells[x][y][z][index].getX()[2]};
-        std::array<double, 3> ghost_v = {-cells[x][y][z][index].getV()[0], cells[x][y][z][index].getV()[1],
-                                         cells[x][y][z][index].getV()[2]};
+        std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x + 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
     }
     if (y == 1 && boundary[3] == "r" && cells[x][y][z][index].getV()[1] < 0) {
         std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], -cells[x][y][z][index].getX()[1],
                                          cells[x][y][z][index].getX()[2]};
-        std::array<double, 3> ghost_v = {cells[x][y][z][index].getV()[0], -cells[x][y][z][index].getV()[1],
-                                         cells[x][y][z][index].getV()[2]};
+        std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x, y - 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
     } else if (y == y_cells && boundary[2] == "r" && cells[x][y][z][index].getV()[1] > 0) {
         std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0],
                                          y_cells * c + fmod(cells[x][y][z][index].getX()[0], c),
                                          cells[x][y][z][index].getX()[2]};
-        std::array<double, 3> ghost_v = {cells[x][y][z][index].getV()[0], -cells[x][y][z][index].getV()[1],
-                                         cells[x][y][z][index].getV()[2]};
+        std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x, y + 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
     }
     if (z == 1 && boundary[4] == "r" && three_dim && cells[x][y][z][index].getV()[2] < 0) {
         std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
                                          -cells[x][y][z][index].getX()[2]};
-        std::array<double, 3> ghost_v = {cells[x][y][z][index].getV()[0], cells[x][y][z][index].getV()[1],
-                                         -cells[x][y][z][index].getV()[2]};
+        std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x, y, z - 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
     } else if (z == z_cells && boundary[5] == "r" && three_dim && cells[x][y][z][index].getV()[2] > 0) {
         std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
                                          z_cells * c + fmod(cells[x][y][z][index].getX()[0], c)};
-        std::array<double, 3> ghost_v = {cells[x][y][z][index].getV()[0], cells[x][y][z][index].getV()[1],
-                                         -cells[x][y][z][index].getV()[2]};
+        std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x, y, z + 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
     }
 }
 
+/**
+ * delets all ghost cellls
+ */
 void LinkedCellContainer::deleteGhostCells() {
     if (boundary[0] == "r") {
         for (int y = 1; y <= y_cells; y++) {
@@ -374,6 +396,13 @@ void LinkedCellContainer::deleteGhostCells() {
     }
 }
 
+/**
+ * returns true if particle needs to be deleted
+ * @param x_coordinate x_coordinate of current particle
+ * @param y_coordinate y_coordinate of current particle
+ * @param z_coordinate z_coordinate of current particle
+ * @return
+ */
 bool LinkedCellContainer::needsToBeDeleted(double x_coordinate, double y_coordinate, double z_coordinate) {
     bool needsToBeDeleted = true;
     if ((x_coordinate >= (x_cells + 1) * c && boundary[1] == "n") || (x_coordinate < 0 && boundary[0] == "n")
