@@ -133,15 +133,6 @@ ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> center, st
         x += h;
 
     } while (x <= y);
-    disk.addParticle({center[0] + x, center[1] + y},v,m,0);
-    disk.addParticle({center[0] + x, center[1] - y},v,m,0);
-    disk.addParticle({center[0] - x, center[1] + y},v,m,0);
-    disk.addParticle({center[0] - x, center[1] - y},v,m,0);
-
-    disk.addParticle({center[0] + y, center[1] + x},v,m,0);
-    disk.addParticle({center[0] + y, center[1] - x},v,m,0);
-    disk.addParticle({center[0] - y, center[1] + x},v,m,0);
-    disk.addParticle({center[0] - y, center[1] - x},v,m,0);
     return disk;
 }
 
