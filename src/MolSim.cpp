@@ -186,16 +186,13 @@ int main(int argc, char *argsv[]) {
     container.addParticleContainer(cuboid_1);
     container.addParticleContainer(cuboid_2);
 */
-    //LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0);
-    //ParticleGenerator::createCuboidInCells({20,20,0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
-    //ParticleGenerator::createCuboidInCells({70,60,0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
 
     LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"o", "o", "o", "o", "o", "o"}); //boundary left, right, up, down, behind, bevor
 
     //ParticleGenerator::createCuboidInCells({20,20,0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
     //ParticleGenerator::createCuboidInCells({70,60,0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
 
-    ParticleGenerator::createDiskInCells({50,50,0},{0,-10,0},1.0,20,1.1225,cells);
+    ParticleGenerator::createDiskInCells({50,50,0},{0,-10,0},1.0,10,1.1225,cells);
 
     double end_time = 10;
     double delta_t = 0.005;

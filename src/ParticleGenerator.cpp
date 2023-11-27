@@ -94,25 +94,46 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
 
 /**
  * creates a 2-dimensional sphere/disk and stores it in a ParticleContainer
- * @param x position of center
+ * @param center position of center
  * @param v initial velocity
  * @param m mass of each particle
  * @param r number of molecules along the radius
  * @param h distance between molecules
  * @return
  */
-ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> x, std::array<double, 3> v, double m,
+ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> center, std::array<double, 3> v, double m,
                                                   int r, double h) {
-
-    std::array<double, 3> x_corner = {x[0] - (r * h), x[1] - (r * h),x[3]};
-    std::array<int, 3> N = {2*r,2*r,1};
-    ParticleContainer cube = ParticleGenerator::createCuboid(x_corner,v,N,h,m);
+    //based on Bresenham algorithm for circles
     ParticleContainer disk;
-    for (auto p = cube.begin(); p <= cube.end(); p++) {
-        if (ArrayUtils::L2Norm(p->getX() - x) <= (r * h)) {
-            disk.addParticle(*p);
+    double radius = r*h;
+    double d = (5 - (radius * 4)) / 4;
+    double x = 0;
+    double y = radius;
+
+    do {
+        disk.addParticle({center[0] + x, center[1] + y},v,m,0);
+        disk.addParticle({center[0] + x, center[1] - y},v,m,0);
+        disk.addParticle({center[0] - x, center[1] + y},v,m,0);
+        disk.addParticle({center[0] - x, center[1] - y},v,m,0);
+
+        disk.addParticle({center[0] + y, center[1] + x},v,m,0);
+        disk.addParticle({center[0] + y, center[1] - x},v,m,0);
+        disk.addParticle({center[0] - y, center[1] + x},v,m,0);
+        disk.addParticle({center[0] - y, center[1] - x},v,m,0);
+
+        if (d < 0) {
+            d += 2 * x + 1;
         }
-    }
+
+        else {
+            d += 2 * (x-y) + 1;
+            y--;
+        }
+
+        x++;
+
+    } while (x <= y);
+
     return disk;
 }
 
@@ -129,7 +150,7 @@ void ParticleGenerator::createDiskInCells(std::array<double, 3> x, std::array<do
                                                 int r, double h, LinkedCellContainer &cells) {
 
     ParticleContainer container = ParticleGenerator::createDisk(x,v,m,r,h);
-    for (auto p = container.begin(); p < container.end(); p++) {
+    for (auto p = container.begin(); p <= container.end(); p++) {
         cells.addParticle(*p);
     }
 }
