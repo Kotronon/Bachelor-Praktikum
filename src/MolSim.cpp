@@ -41,12 +41,11 @@ int main(int argc, char *argsv[]) {
     spdlog::info("Hello from MolSim for PSE!");
 
 
-    ParticleContainer cuboid_1 = ParticleGenerator::createCuboid(x_1,v_1,N_1,h,m);
+    /*ParticleContainer cuboid_1 = ParticleGenerator::createCuboid(x_1,v_1,N_1,h,m);
     ParticleContainer cuboid_2 = ParticleGenerator::createCuboid(x_2,v_2,N_2,h,m);
     container.addParticleContainer(cuboid_1);
     container.addParticleContainer(cuboid_2);
-
-   LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0);
+*/
    LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "r", "r", "r"}); //boundary left, right, up, down, behind, bevor
    ParticleGenerator::createCuboidInCells({20,20,0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
    ParticleGenerator::createCuboidInCells({70,60,0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
