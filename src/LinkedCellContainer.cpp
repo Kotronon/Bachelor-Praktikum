@@ -33,7 +33,9 @@ LinkedCellContainer::LinkedCellContainer(std::array<int, 3> N, double cutoff, st
     cells = x;
     c = cutoff;
     boundary = std::move(b);
-    three_dim = N[2] > 1;
+    x_max = N[0];
+    y_max = N[1];
+    z_max = N[2] -1;
 }
 
 LinkedCellContainer::~LinkedCellContainer() = default;
@@ -134,6 +136,7 @@ void LinkedCellContainer::moveToNeighbour() {
                     } else {
                         //is outflow boundary
                        // if(applyMirrorBoundary(p, x, y, z)) {
+                       if(needsToBeDeleted(cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1], cells[x][y][z][p].getX()[2]))
                             cells[x][y][z].erase(cells[x][y][z].begin() + p);
                         //}
                     }
@@ -265,35 +268,35 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
  */
 bool LinkedCellContainer::applyMirrorBoundary(int p, int x, int y, int z) {
     bool needs_to_be_deleted = true;
-    if (floor(cells[x][y][z][p].getX()[0] / c) > x_cells - 1 && boundary[1] == "r") {
+    if (cells[x][y][z][p].getX()[0]  > x_max && boundary[1] == "r") {
         cells[x][y][z][p].setX(
-                {0.0 + c * x_cells - 0.0000001, cells[x][y][z][p].getX()[1], cells[x][y][z][p].getX()[2]});
+                {x_max, cells[x][y][z][p].getX()[1], cells[x][y][z][p].getX()[2]});
         cells[x][y][z][p].setV(
                 {-cells[x][y][z][p].getV()[0], cells[x][y][z][p].getV()[1], cells[x][y][z][p].getV()[2]});
         needs_to_be_deleted = false;
-    } else if (floor(cells[x][y][z][p].getX()[0] / c) < 0 && boundary[0] == "r") {
+    } else if (cells[x][y][z][p].getX()[0] < 0 && boundary[0] == "r") {
         cells[x][y][z][p].setX({0, cells[x][y][z][p].getX()[1], cells[x][y][z][p].getX()[2]});
         cells[x][y][z][p].setV(
                 {-cells[x][y][z][p].getV()[0], cells[x][y][z][p].getV()[1], cells[x][y][z][p].getV()[2]});
         needs_to_be_deleted = false;
     }
-    if (floor(cells[x][y][z][p].getX()[1] / c) > y_cells -1 && boundary[2] == "r") {
-        cells[x][y][z][p].setX({cells[x][y][z][p].getX()[0], 0.0 + c * y_cells - 0.0000001, cells[x][y][z][p].getX()[2]});
+    if (cells[x][y][z][p].getX()[1] > y_max && boundary[2] == "r") {
+        cells[x][y][z][p].setX({cells[x][y][z][p].getX()[0], y_max, cells[x][y][z][p].getX()[2]});
         cells[x][y][z][p].setV(
                 {cells[x][y][z][p].getV()[0], -cells[x][y][z][p].getV()[1], cells[x][y][z][p].getV()[2]});
         needs_to_be_deleted = false;
-    } else if (floor(cells[x][y][z][p].getX()[1] / c) < 0 && boundary[3] == "r") {
+    } else if (cells[x][y][z][p].getX()[1]  < 0 && boundary[3] == "r") {
         cells[x][y][z][p].setX({cells[x][y][z][p].getX()[0], 0, cells[x][y][z][p].getX()[2]});
         cells[x][y][z][p].setV(
                 {cells[x][y][z][p].getV()[0], -cells[x][y][z][p].getV()[1], cells[x][y][z][p].getV()[2]});
         needs_to_be_deleted = false;
     }
-    if (floor(cells[x][y][z][p].getX()[2] / c) > z_cells - 1 && boundary[5] == "r" && three_dim) {
-        cells[x][y][z][p].setX({cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1], 0.0 + c * z_cells - 0.0000001});
+    if (cells[x][y][z][p].getX()[2] > z_max && boundary[5] == "r") {
+        cells[x][y][z][p].setX({cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1], z_max});
         cells[x][y][z][p].setV(
                 {cells[x][y][z][p].getV()[0], cells[x][y][z][p].getV()[1], -cells[x][y][z][p].getV()[2]});
         needs_to_be_deleted = false;
-    } else if (floor(cells[x][y][z][p].getX()[2] / c) < 0 && boundary[4] == "r" && three_dim) {
+    } else if (cells[x][y][z][p].getX()[2] < 0 && boundary[4] == "r") {
         cells[x][y][z][p].setX({cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1], 0});
         cells[x][y][z][p].setV(
                 {cells[x][y][z][p].getV()[0], cells[x][y][z][p].getV()[1], -cells[x][y][z][p].getV()[2]});
@@ -317,7 +320,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
         addParticle(x - 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
     }
     if (x == x_cells && boundary[1] == "r" && cells[x][y][z][index].getV()[0] > 0) {
-        std::array<double, 3> ghost_x = {x_cells * c + fmod((cells[x][y][z][index].getX()[0]), c),
+        std::array<double, 3> ghost_x = {z_max + fmod((cells[x][y][z][index].getX()[0]), c),
                                          cells[x][y][z][index].getX()[1], cells[x][y][z][index].getX()[2]};
         std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x + 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
@@ -330,7 +333,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
     }
     if (y == y_cells && boundary[2] == "r" && cells[x][y][z][index].getV()[1] > 0) {
         std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0],
-                                         y_cells * c + fmod(cells[x][y][z][index].getX()[0], c),
+                                         y_max + fmod(cells[x][y][z][index].getX()[0], c),
                                          cells[x][y][z][index].getX()[2]};
         std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x, y + 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
@@ -343,7 +346,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
     }
     if (z == z_cells && boundary[5] == "r" && cells[x][y][z][index].getV()[2] > 0) {
         std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
-                                         z_cells * c + fmod(cells[x][y][z][index].getX()[0], c)};
+                                         z_max + fmod(cells[x][y][z][index].getX()[0], c)};
         std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x, y, z + 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
     }
@@ -405,10 +408,10 @@ void LinkedCellContainer::deleteGhostCells() {
  * @return
  */
 bool LinkedCellContainer::needsToBeDeleted(double x_coordinate, double y_coordinate, double z_coordinate) {
-    bool needsToBeDeleted = true;
-    if ((x_coordinate >= (x_cells + 1) * c && boundary[1] == "n") || (x_coordinate < 0 && boundary[0] == "n")
-        || (y_coordinate >= (y_cells + 1) * c && boundary[2] == "n") || (y_coordinate < 0 && boundary[3] == "n")
-        || (z_coordinate >= (z_cells + 1) * c && boundary[5] == "n") || (z_coordinate < 0 && boundary[4] == "n"))
-        needsToBeDeleted = false;
+    bool needsToBeDeleted = false;
+    if ((x_coordinate > x_max) || (x_coordinate < 0)
+        || (y_coordinate > y_max && boundary[2] == "n") || (y_coordinate < 0)
+        || (z_coordinate > z_max && boundary[5] == "n") || (z_coordinate < 0 ))
+        needsToBeDeleted = true;
     return needsToBeDeleted;
 }
