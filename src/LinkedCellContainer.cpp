@@ -7,6 +7,7 @@
 #include "calculations/ForceCalculator.h"
 #include <spdlog/spdlog.h>
 #include <cmath>
+#include <utility>
 #include "utils/ArrayUtils.h"
 
 /**
@@ -16,7 +17,7 @@
  * @param b boundary types of each side of the container
  */
 LinkedCellContainer::LinkedCellContainer(std::array<int, 3> N, double cutoff, std::array<std::string, 6> b) {
-    //creating list wcells[i][j]h length = number of cells
+    //creating list cells[i][j]h length = number of cells
     x_cells = ceil(N[0] / cutoff);
     y_cells = ceil(N[1] / cutoff);
     z_cells = ceil(N[2] / cutoff);
@@ -31,7 +32,7 @@ LinkedCellContainer::LinkedCellContainer(std::array<int, 3> N, double cutoff, st
     }
     cells = x;
     c = cutoff;
-    boundary = b;
+    boundary = std::move(b);
     three_dim = N[2] > 1;
 }
 
@@ -69,13 +70,14 @@ int LinkedCellContainer::Particles_in_cell(int x, int y, int z) {
 void LinkedCellContainer::addParticle(int x, int y, int z, std::array<double, 3> x_arg, std::array<double, 3> v_arg,
                                       double m_arg,
                                       int type_arg) {
-    cells[x][y][z].push_back(Particle(x_arg, v_arg, m_arg, type_arg));
+    Particle new_particle = Particle(x_arg, v_arg, m_arg, type_arg);
+    cells[x][y][z].emplace_back(new_particle);
 }
 
 void
 LinkedCellContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg) {
-    cells[floor(x_arg[0] / c)][floor(x_arg[1] / c)][floor(x_arg[2] / c)].push_back(
-            Particle(x_arg, v_arg, m_arg, type_arg));
+    Particle new_particle = Particle(x_arg, v_arg, m_arg, type_arg);
+    cells[floor(x_arg[0] / c)][floor(x_arg[1] / c)][floor(x_arg[2] / c)].emplace_back(new_particle);
 }
 
 /**
@@ -86,7 +88,7 @@ LinkedCellContainer::addParticle(std::array<double, 3> x_arg, std::array<double,
  * @param p existing particle to add
  */
 void LinkedCellContainer::addParticle(int x, int y, int z, Particle &p) {
-    cells[x][y][z].push_back(p);
+    cells[x][y][z].emplace_back(p);
 }
 
 /**
@@ -152,11 +154,11 @@ void LinkedCellContainer::moveToNeighbour() {
  */
 std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y, int z) const {
     std::vector<std::array<int, 3>> vec = {};
-    bool right = x < x_cells-1;
-    bool up = y < y_cells -1;
-    bool left = x > 0;
-    bool before = z < z_cells -1 && three_dim;
-    bool down = y > 0;
+    bool right = x < x_cells;
+    bool up = y < y_cells;
+    bool left = x > 1;
+    bool before = z < z_cells && three_dim;
+    bool down = y > 1;
 
     if (right) vec.push_back({x + 1, y, z});
     if (up) vec.push_back({x, y + 1, z});
@@ -175,17 +177,23 @@ std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y
     if (left && before) vec.push_back({x - 1, y, z + 1});
     //left halo cell
     if (x == 1 && boundary[0] == "r") vec.push_back({0, y, z});
+    //right halo or normal cell
+    if (x == x_cells && boundary[0] != "o") vec.push_back({x+1, y, z});
     //below halo cell
     if (y == 1 && boundary[3] == "r") vec.push_back({x, y - 1, z});
-    //before halo cell
-    if (z == z_cells && three_dim && boundary[5] == "r") vec.push_back({x, y, z + 1});
+    //before halo and normal cell
+    if (z == z_cells && three_dim && boundary[5] != "o" ) vec.push_back({x, y, z + 1});
+    //before left normal cells
+    if (z == z_cells && three_dim && boundary[5] == "n" && x > 0) vec.push_back({x-1, y, z + 1});
+    //before right normal cells
+    if (z == z_cells && three_dim && boundary[5] == "n" && x <= x_cells) vec.push_back({x+1, y, z + 1});
     //behind halo cell
     if (z == 1 && three_dim && boundary[4] == "r") vec.push_back({x, y, z - 1});
 
     return vec;
 }
 /**
- * sets old force to current force and current forrce to zero
+ * sets old force to current force and current force to zero
  */
 void LinkedCellContainer::setZero() {
     for (int x = 1; x <= x_cells; x++) {
@@ -223,7 +231,7 @@ std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator LinkedCel
 }
 
 /**
- * applys the force calculation accoording to N3L
+ * applies the force calculation according to N3L
  * @param forceCalculationforceCalculation a function to apply the  force calculations pairwise
  */
 void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation) {
@@ -258,7 +266,7 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
 }
 
 /**
- * aplys the mirroring if boundary is a reflection boundary
+ * applies the mirroring if boundary is a reflection boundary
  * @param p the  index of the given particle
  * @param x index of cell on x axis
  * @param y index of cell on y axis
@@ -304,7 +312,7 @@ bool LinkedCellContainer::applyMirrorBoundary(int p, int x, int y, int z) {
 }
 
 /**
- * generats ghost cells for given particle
+ * generates ghost cells for given particle
  * @param index the index of the particle
  * @param x index of cell on x axis
  * @param y index of cell on y axis
@@ -351,7 +359,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
 }
 
 /**
- * delets all ghost cellls
+ * deletes all ghost cells
  */
 void LinkedCellContainer::deleteGhostCells() {
     if (boundary[0] == "r") {
