@@ -152,11 +152,11 @@ void LinkedCellContainer::moveToNeighbour() {
  */
 std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y, int z) const {
     std::vector<std::array<int, 3>> vec = {};
-    bool right = x < x_cells;
-    bool up = y < y_cells;
-    bool left = x > 1;
-    bool before = z < z_cells && three_dim;
-    bool down = y > 1;
+    bool right = x < x_cells-1;
+    bool up = y < y_cells -1;
+    bool left = x > 0;
+    bool before = z < z_cells -1 && three_dim;
+    bool down = y > 0;
 
     if (right) vec.push_back({x + 1, y, z});
     if (up) vec.push_back({x, y + 1, z});
@@ -173,20 +173,7 @@ std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y
 
     if (left && down && before) vec.push_back({x - 1, y - 1, z + 1});
     if (left && before) vec.push_back({x - 1, y, z + 1});
-    //left halo cell
-    if (x == 1) vec.push_back({0, y, z});
-    //right halo cell
-    if (x == x_cells) vec.push_back({x + 1, y, z});
-    //upove halo cell
-    if (y == y_cells) vec.push_back({x, y + 1, z});
-    //below halo cell
-    if (y == 1) vec.push_back({x, y - 1, z});
-    //before halo cell
-    if (z == z_cells && three_dim) vec.push_back({x, y, z + 1});
-    //behind halo cell
-    if (z == 1 && three_dim) vec.push_back({x, y, z - 1});
-
-    return vec;
+        return vec;
 }
 /**
  * sets old force to current force and current forrce to zero
@@ -231,23 +218,26 @@ std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator LinkedCel
  * @param forceCalculationforceCalculation a function to apply the  force calculations pairwise
  */
 void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation) {
-    for (int x = 1; x <= x_cells; x++) {
-        for (int y = 1; y <= y_cells; y++) {
-            for (int z = 1; z <= z_cells; z++) {
+    for (int x = 0; x <= x_cells - 1; x++) {
+        for (int y = 0; y <= y_cells - 1; y++) {
+            for (int z = 0; z <= z_cells-1; z++) {
                 std::vector<std::array<int, 3>> neighbours = get_next_cells(x, y, z);
                 for (int j = 0; j < cells[x][y][z].size(); j++) {
                     //for all particles in current cell
-                    for (int k = j + 1; k < cells[x][y][z].size(); k++) {
-                        //calculate force with particles in current cell
-                        forceCalculation(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
-                    }
-                    for (int n = 0; n < neighbours.size(); n++) {
-                        //with neighbour cells
-                        for (int l = 0; l < cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]].size(); l++) {
-                            if (cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l].getType() == 0 ||
-                                cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l].getType() == j) {
-                                forceCalculation(&(cells[x][y][z][j]),
-                                                 &(cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l]));
+                    if(cells[x][y][z][j].getType() == 0) {
+                        for (int k = j + 1; k < cells[x][y][z].size(); k++) {
+                            //calculate force with particles in current cell
+                            forceCalculation(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
+                        }
+                        for (int n = 0; n < neighbours.size(); n++) {
+                            //with neighbour cells
+                            for (int l = 0;
+                                 l < cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]].size(); l++) {
+                                if (cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l].getType() == 0 ||
+                                    cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l].getType() == j) {
+                                    forceCalculation(&(cells[x][y][z][j]),
+                                                     &(cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l]));
+                                }
                             }
                         }
                     }
@@ -317,7 +307,8 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
                                          cells[x][y][z][index].getX()[2]};
         std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x - 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
-    } else if (x == x_cells && boundary[1] == "r" && cells[x][y][z][index].getV()[0] > 0) {
+    }
+    if (x == x_cells && boundary[1] == "r" && cells[x][y][z][index].getV()[0] > 0) {
         std::array<double, 3> ghost_x = {x_cells * c + fmod((cells[x][y][z][index].getX()[0]), c),
                                          cells[x][y][z][index].getX()[1], cells[x][y][z][index].getX()[2]};
         std::array<double, 3> ghost_v = {0,0,0};
@@ -328,7 +319,8 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
                                          cells[x][y][z][index].getX()[2]};
         std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x, y - 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
-    } else if (y == y_cells && boundary[2] == "r" && cells[x][y][z][index].getV()[1] > 0) {
+    }
+    if (y == y_cells && boundary[2] == "r" && cells[x][y][z][index].getV()[1] > 0) {
         std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0],
                                          y_cells * c + fmod(cells[x][y][z][index].getX()[0], c),
                                          cells[x][y][z][index].getX()[2]};
@@ -340,7 +332,8 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
                                          -cells[x][y][z][index].getX()[2]};
         std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x, y, z - 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
-    } else if (z == z_cells && boundary[5] == "r" && three_dim && cells[x][y][z][index].getV()[2] > 0) {
+    }
+    if (z == z_cells && boundary[5] == "r" && three_dim && cells[x][y][z][index].getV()[2] > 0) {
         std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
                                          z_cells * c + fmod(cells[x][y][z][index].getX()[0], c)};
         std::array<double, 3> ghost_v = {0,0,0};
