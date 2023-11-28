@@ -39,7 +39,7 @@ ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
     spdlog::info("Hello from MolSim for PSE!");
-   LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "r", "o", "o"}); //boundary left, right, up, down, behind, bevor
+   LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "r", "r", "r"}); //boundary left, right, up, down, behind, bevor
    ParticleGenerator::createCuboidInCells({20,20,0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
    ParticleGenerator::createCuboidInCells({70,60,0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
    double end_time = 20;

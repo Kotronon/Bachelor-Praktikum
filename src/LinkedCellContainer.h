@@ -65,7 +65,7 @@ private:
     int z_cells;
     double c;
     bool three_dim;
-    std::array<std::string, 6> boundary = {"n", "n", "n", "n", "n", "n"};
+    std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
     std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
 
 };
