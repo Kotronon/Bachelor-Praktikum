@@ -173,7 +173,16 @@ std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y
 
     if (left && down && before) vec.push_back({x - 1, y - 1, z + 1});
     if (left && before) vec.push_back({x - 1, y, z + 1});
-        return vec;
+    //left halo cell
+    if (x == 1 && boundary[0] == "r") vec.push_back({0, y, z});
+    //below halo cell
+    if (y == 1 && boundary[3] == "r") vec.push_back({x, y - 1, z});
+    //before halo cell
+    if (z == z_cells && three_dim && boundary[5] == "r") vec.push_back({x, y, z + 1});
+    //behind halo cell
+    if (z == 1 && three_dim && boundary[4] == "r") vec.push_back({x, y, z - 1});
+
+    return vec;
 }
 /**
  * sets old force to current force and current forrce to zero
@@ -182,9 +191,9 @@ void LinkedCellContainer::setZero() {
     for (int x = 1; x <= x_cells; x++) {
         for (int y = 1; y <= y_cells; y++) {
             for (int z = 1; z <= z_cells; z++) {
-                for (int p = 0; p < cells[x][y][z].size(); p++) {
-                    cells[x][y][z][p].setOldF(cells[x][y][z][p].getF());
-                    cells[x][y][z][p].setF({0, 0, 0});
+                for (auto & p : cells[x][y][z]) {
+                    p.setOldF(p.getF());
+                    p.setF({0, 0, 0});
                 }
             }
         }
@@ -229,14 +238,14 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                             //calculate force with particles in current cell
                             forceCalculation(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
                         }
-                        for (int n = 0; n < neighbours.size(); n++) {
+                        for (auto & neighbour : neighbours) {
                             //with neighbour cells
                             for (int l = 0;
-                                 l < cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]].size(); l++) {
-                                if (cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l].getType() == 0 ||
-                                    cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l].getType() == j) {
+                                 l < cells[neighbour[0]][neighbour[1]][neighbour[2]].size(); l++) {
+                                if (cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() == 0 ||
+                                    cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() == j) {
                                     forceCalculation(&(cells[x][y][z][j]),
-                                                     &(cells[neighbours[n][0]][neighbours[n][1]][neighbours[n][2]][l]));
+                                                     &(cells[neighbour[0]][neighbour[1]][neighbour[2]][l]));
                                 }
                             }
                         }
