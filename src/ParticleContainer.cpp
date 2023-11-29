@@ -102,9 +102,25 @@ std::vector<Particle>::iterator ParticleContainer::end() {
 }
 
 /**
+ * remove all duplicate particles
+ */
+void ParticleContainer::removeDuplicates() {
+    for (auto i = begin(); i < end(); i++) {
+        Particle p = *i;
+        for (auto j = i+1; j < end(); j++) {
+            if (p == *j) {
+                containedParticles.erase(j);
+            }
+        }
+    }
+
+}
+
+/**
  * returns number of Particles in ParticleContainer
  * @return
  */
 int ParticleContainer::size() {
     return containedParticles.size();
 }
+

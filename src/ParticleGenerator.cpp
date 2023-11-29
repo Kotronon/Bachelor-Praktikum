@@ -101,38 +101,17 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
  * @param h distance between molecules
  * @return
  */
-ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> center, std::array<double, 3> v, double m,
-                                                  int r, double h) {
-    //based on Bresenham algorithm for circles
+ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> center, std::array<double, 3> v, double m, int r, double h) {
+
+    std::array<double, 3> x_corner = {center[0] - (r * h), center[1] - (r * h),center[2]};
+    std::array<int, 3> N = {2*r,2*r,1};
+    ParticleContainer cube = ParticleGenerator::createCuboid(x_corner,v,N,h,m);
     ParticleContainer disk;
-    double radius = r*h;
-    double d = (5 - (radius * 4)) / 4;
-    double x = 0;
-    double y = radius;
-
-    do {
-        disk.addParticle({center[0] + x, center[1] + y, center[2]},v,m,0);
-        disk.addParticle({center[0] + x, center[1] - y, center[2]},v,m,0);
-        disk.addParticle({center[0] - x, center[1] + y, center[2]},v,m,0);
-        disk.addParticle({center[0] - x, center[1] - y, center[2]},v,m,0);
-
-        disk.addParticle({center[0] + y, center[1] + x, center[2]},v,m,0);
-        disk.addParticle({center[0] + y, center[1] - x, center[2]},v,m,0);
-        disk.addParticle({center[0] - y, center[1] + x, center[2]},v,m,0);
-        disk.addParticle({center[0] - y, center[1] - x, center[2]},v,m,0);
-
-        if (d < 0) {
-            d += 2 * x + 1;
+    for (auto p = cube.begin(); p < cube.end(); p++) {
+        if (ArrayUtils::L2Norm(p->getX() - center) <= (r * h)) {
+            disk.addParticle(*p);
         }
-
-        else {
-            d += 2 * (x-y) + 1;
-            y -= h;
-        }
-
-        x += h;
-
-    } while (x <= y);
+    }
     return disk;
 }
 
@@ -149,7 +128,7 @@ void ParticleGenerator::createDiskInCells(std::array<double, 3> x, std::array<do
                                                 int r, double h, LinkedCellContainer &cells) {
 
     ParticleContainer container = ParticleGenerator::createDisk(x,v,m,r,h);
-    for (auto p = container.begin(); p <= container.end(); p++) {
+    for (auto p = container.begin(); p < container.end(); p++) {
         cells.addParticle(*p);
     }
 }
