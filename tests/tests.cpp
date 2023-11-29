@@ -6,8 +6,6 @@
 #include "../src/calculations/ForceCalculator.h"
 #include "../src/ParticleGenerator.h"
 #include <math.h>
-
-
 //@TODO write tests with TEST()
 //To compile tests write cmake --build . in terminal and afterwarts ctest works
 
@@ -44,12 +42,6 @@ TEST(PositionTest, stroemerVelvet){
 
 }
 
-/*TEST(VelocityTest, BrownianMotionInitialization){
-    //Checking the correctness of the Brownian Motion Initialization velocity calculation
-    ParticleContainer particles;
-    particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0);
-}
-*/
 TEST(VelocityTest, stroemerVelvet) {
     //Checking the correctness of the stoemer velvet velocity calculation
     //for force = 0
