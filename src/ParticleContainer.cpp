@@ -105,11 +105,10 @@ std::vector<Particle>::iterator ParticleContainer::end() {
  * remove all duplicate particles
  */
 void ParticleContainer::removeDuplicates() {
-    for (auto i = begin(); i < end(); i++) {
-        Particle p = *i;
-        for (auto j = i+1; j < end(); j++) {
-            if (p == *j) {
-                containedParticles.erase(j);
+    for (int i = 0; i < containedParticles.size(); i++) {
+        for (int j = i + 1; j < containedParticles.size(); j++) {
+            if (containedParticles[i] == containedParticles[j]) {
+                containedParticles.erase(containedParticles.begin() + j);
             }
         }
     }

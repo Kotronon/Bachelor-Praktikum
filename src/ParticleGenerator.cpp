@@ -103,17 +103,41 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
  */
 ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> center, std::array<double, 3> v, double m, int r, double h) {
 
-    std::array<double, 3> x_corner = {center[0] - (r * h), center[1] - (r * h),center[2]};
-    std::array<int, 3> N = {2*r,2*r,1};
-    ParticleContainer cube = ParticleGenerator::createCuboid(x_corner,v,N,h,m);
-    ParticleContainer disk;
-    for (auto p = cube.begin(); p < cube.end(); p++) {
-        if (ArrayUtils::L2Norm(p->getX() - center) <= (r * h)) {
-            disk.addParticle(*p);
+    auto disk = new ParticleContainer();
+    double radius = r * h;
+    double d = 3 - (2 * radius);
+    double x = 0;
+    double y = radius;
+
+    do {
+
+        disk->addParticle({center[0] + x, center[1] + y, center[2]},v,m,0);
+        disk->addParticle({center[0] + x, center[1] - y, center[2]},v,m,0);
+        disk->addParticle({center[0] - x, center[1] + y, center[2]},v,m,0);
+        disk->addParticle({center[0] - x, center[1] - y, center[2]},v,m,0);
+        disk->addParticle({center[0] + y, center[1] + x, center[2]},v,m,0);
+        disk->addParticle({center[0] + y, center[1] - x, center[2]},v,m,0);
+        disk->addParticle({center[0] - y, center[1] + x, center[2]},v,m,0);
+        disk->addParticle({center[0] - y, center[1] - x, center[2]},v,m,0);
+
+        if (d < 0) {
+            d = d + (4 * x) + 6;
         }
-    }
-    return disk;
+        else {
+            d = d + 4 * (x - y) + 10;
+            y -= h;
+        }
+
+        x += h;
+
+    } while (x <= y + (h / 4));
+
+    disk->removeDuplicates();
+
+    return *disk;
 }
+
+
 
 /**
  * creates a 2-dimensional sphere/disk and stores it in a LinkedCellContainer
