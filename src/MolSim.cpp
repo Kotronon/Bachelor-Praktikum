@@ -46,10 +46,10 @@ int main(int argc, char *argsv[]) {
     container.addParticleContainer(cuboid_1);
     container.addParticleContainer(cuboid_2);
 */
-   LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "r", "r", "r"}); //boundary left, right, up, down, behind, bevor
-   ParticleGenerator::createCuboidInCells({20,20,0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
-   ParticleGenerator::createCuboidInCells({70,60,0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
-   double end_time = 20;
+   LinkedCellContainer cells = LinkedCellContainer({30, 30, 1}, 3.0, {"r", "r", "r", "r", "r", "r"}); //boundary left, right, up, down, behind, bevor
+   ParticleGenerator::createCuboidInCells({29.5,29,0}, {1,0,0}, {1,1,1}, 1.1225, 1, cells, 3.0);
+   ParticleGenerator::createCuboidInCells({29,29.5,0}, {0,1,0}, {1,1,1}, 1.1225, 1, cells, 3.0);
+   double end_time = 0.05;
    double delta_t = 0.0005;
     double current_time = start_time;
     int iteration = 0;
@@ -61,6 +61,8 @@ int main(int argc, char *argsv[]) {
     VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
     //For this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
+        if (iteration == 30)
+            spdlog::info("here we go");
         //Calculate new x
         //PositionCalculator::PositionStoermerVerlet(container, delta_t);
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
