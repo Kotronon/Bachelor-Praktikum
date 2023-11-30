@@ -36,12 +36,12 @@
 * How to run this baby:
 *
 * * xsd cxx-parser --generate-test-driver --xml-parser expat input.xsd
-* fix this file if there's errors
+* fix the .cxx and the driver fie file if there's errors
 ## this is how to actually fix stuff
 * go into
 
 ## and now run it
-* run : c++ -std=c++11 -I.../libxsd -c input-driver.cxx input-pskel.cxx
-* run : c++ -std=c++11 -o driver input-driver.o input-pskel.o -lexpat
-* run : ./driver inputfile.xml
+* c++ -std=c++11 -I.../libxsd -c input-driver.cxx input-pskel.cxx
+* c++ -std=c++11 -o driver input-driver.o input-pskel.o -lexpat
+* ./driver inputfile.xml
 
