@@ -124,25 +124,25 @@ ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> center, st
         }
         else {
             disk->addParticle({center[0] - x, center[1] + y, center[2]},v,m,0);
-            for (double x_temp = center[0] - x + h; x_temp < center[0] + x; x_temp += h) {
+            for (double x_temp = center[0] - x + h; x_temp < center[0] + x - (h/4); x_temp += h) {
                 disk->addParticle({x_temp, center[1] + y, center[2]},v,m,0);
             }
             disk->addParticle({center[0] + x, center[1] + y, center[2]},v,m,0);
 
             disk->addParticle({center[0] - x, center[1] - y, center[2]},v,m,0);
-            for (double x_temp = center[0] - x + h; x_temp < center[0] + x; x_temp += h) {
+            for (double x_temp = center[0] - x + h; x_temp < center[0] + x - (h/4); x_temp += h) {
                 disk->addParticle({x_temp, center[1] - y, center[2]},v,m,0);
             }
             disk->addParticle({center[0] + x, center[1] - y, center[2]},v,m,0);
 
             disk->addParticle({center[0] - y, center[1] + x, center[2]},v,m,0);
-            for (double x_temp = center[0] - y + h; x_temp < center[0] + y; x_temp += h) {
+            for (double x_temp = center[0] - y + h; x_temp < center[0] + y - (h/4); x_temp += h) {
                 disk->addParticle({x_temp, center[1] + x, center[2]},v,m,0);
             }
             disk->addParticle({center[0] + y, center[1] + x, center[2]},v,m,0);
 
             disk->addParticle({center[0] - y, center[1] - x, center[2]},v,m,0);
-            for (double x_temp = center[0] - y + h; x_temp < center[0] + y; x_temp += h) {
+            for (double x_temp = center[0] - y + h; x_temp < center[0] + y - (h/4); x_temp += h) {
                 disk->addParticle({x_temp, center[1] - x, center[2]},v,m,0);
             }
             disk->addParticle({center[0] + y, center[1] - x, center[2]},v,m,0);
