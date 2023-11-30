@@ -4,6 +4,9 @@
     <xs:element name="parameters">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="algorithm_option" type="xs:string" />
+                <xs:element name="write_frequency" type="xs:unsignedByte" />
+                <xs:element name="output_file_name" type="xs:string" />
                 <xs:element name="simulation_parameters">
                     <xs:complexType>
                         <xs:sequence>
@@ -46,7 +49,7 @@
                                     <xs:sequence>
                                         <xs:element minOccurs="0" name="value" type="xs:decimal" />
                                         <xs:element minOccurs="0" name="x" type="xs:unsignedByte" />
-                                        <xs:element minOccurs="0" name="y" type="xs:unsignedByte" />
+                                        <xs:element minOccurs="0" name="y" type="xs:byte" />
                                         <xs:element minOccurs="0" name="z" type="xs:unsignedByte" />
                                     </xs:sequence>
                                 </xs:complexType>
@@ -62,7 +65,7 @@
                                     <xs:sequence>
                                         <xs:element minOccurs="0" name="value" type="xs:decimal" />
                                         <xs:element minOccurs="0" name="x" type="xs:unsignedByte" />
-                                        <xs:element minOccurs="0" name="y" type="xs:unsignedByte" />
+                                        <xs:element minOccurs="0" name="y" type="xs:byte" />
                                         <xs:element minOccurs="0" name="z" type="xs:unsignedByte" />
                                     </xs:sequence>
                                 </xs:complexType>

@@ -1,6 +1,15 @@
 <?xml version="1.0"?>
 
 <parameters>
+    <algorithm_option>
+        LinkedCell
+    </algorithm_option>
+    <write_frequency>
+        10
+    </write_frequency>
+    <output_file_name>
+        output.abc
+    </output_file_name>
     <simulation_parameters>
         <name>dimension
             <value>2</value>
