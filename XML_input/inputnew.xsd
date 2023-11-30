@@ -6,6 +6,7 @@
             <xs:sequence>
                 <xs:element name="algorithm_option" type="xs:string" />
                 <xs:element name="write_frequency" type="xs:unsignedByte" />
+                <xs:element name="log_level" type="xs:unsignedByte" />
                 <xs:element name="output_file_name" type="xs:string" />
                 <xs:element name="simulation_parameters">
                     <xs:complexType>

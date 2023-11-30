@@ -5,56 +5,11 @@
 // programs without any restrictions.
 //
 
-#include "inputnew-pskel.hxx"
+#include "inputnew-pimpl.hxx"
 
 #include <iostream>
 
-class param_parse_pimpl : public parameters_pskel {
-    std::string algo_, output_name_;
-    unsigned char write_f{};
 
-
-    virtual void
-    algorithm_option(const ::std::string &a) {
-        std::cout<<"you are gonna use this algorithm"<<a<< std::endl;
-        algo_ = a;
-    }
-
-    virtual void
-    write_frequency(unsigned char f) {
-        std::cout<<"we are writing "<<f<<"output files per iteration" << std::endl;
-        write_f = f;
-    }
-
-    virtual void
-    output_file_name(const ::std::string &o) {
-        std::cout<<"The output file name is"<<o<< std::endl;
-        output_name_ = o;
-    }
-
-public:
-    void post_parameters() {
-
-        std::cout << "The write frewuency is "<< write_f <<", the "
-            " algorithm is the " <<algo_ <<" algorithm and your"
-                                           "output file name is" << output_name_ <<"." <<std::endl
-                                           <<"You have finished appending all the parameters. "
-                 "Good luck!" << std::endl;
-
-    }
-};
-
-class cuboid_parse_pimpl : public cuboid_parameters_pskel, xml_schema::string_pimpl {
-    virtual void
-    name() {
-
-    }
-
-    virtual void
-    post_cuboid_parameters() {
-
-    }
-};
 
 class sphere_parse_pimpl : public sphere_parameters_pskel{
 
@@ -238,16 +193,16 @@ main(int argc, char *argv[]) {
         // Instantiate individual parsers.
         //
         ::param_parse_pimpl parameters_p;
-        ::simulation_params_parse_pimpl simulation_parameters_p;
-        ::name_parse_pimpl name_p;
+        ::simulation_parameters_pimpl simulation_parameters_p;
+        ::name_pimpl name_p;
         ::xml_schema::unsigned_byte_pimpl unsigned_byte_p;
         ::xml_schema::decimal_pimpl decimal_p;
-        ::boundaries_parse_pimpl( boundaries_p);
-        ::values_parse_pimpl value_p;
+        ::boundaries_pimpl( boundaries_p);
+        ::value_pimpl value_p;
         ::xml_schema::string_pimpl string_p;
-        ::cuboid_parse_pimpl cuboid_parameters_p;
+        ::cuboid_parameters_pimpl cuboid_parameters_p;
         ::name1_parse_pimpl name1_p;
-        ::sphere_parse_pimpl sphere_parameters_p;
+        ::sphere_parameters_pimpl sphere_parameters_p;
 
         // Connect the parsers together.
         //

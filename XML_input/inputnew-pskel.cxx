@@ -336,7 +336,7 @@ x_parser (::xml_schema::unsigned_byte_pskel& p)
 }
 
 void name1_pskel::
-y_parser (::xml_schema::unsigned_byte_pskel& p)
+y_parser (::xml_schema::byte_pskel& p)
 {
   this->y_parser_ = &p;
 }
@@ -350,7 +350,7 @@ z_parser (::xml_schema::unsigned_byte_pskel& p)
 void name1_pskel::
 parsers (::xml_schema::decimal_pskel& value,
          ::xml_schema::unsigned_byte_pskel& x,
-         ::xml_schema::unsigned_byte_pskel& y,
+         ::xml_schema::byte_pskel& y,
          ::xml_schema::unsigned_byte_pskel& z)
 {
   this->value_parser_ = &value;
@@ -385,6 +385,10 @@ write_frequency (unsigned char)
 void parameters_pskel::
 output_file_name (const ::std::string&)
 {
+}
+
+void parameters_pskel::log_level(unsigned char) {
+
 }
 
 void parameters_pskel::
@@ -959,6 +963,8 @@ sequence_0 (unsigned long& state,
       break;
   }
 }
+
+
 
 // Element validation and dispatch functions for simulation_parameters_pskel.
 //
@@ -2529,7 +2535,7 @@ sequence_0 (unsigned long& state,
         {
           if (this->y_parser_)
           {
-            this->y (this->y_parser_->post_unsigned_byte());
+            this->y (this->y_parser_->post_byte ());
           }
 
           count = 0;

@@ -45,7 +45,9 @@
 
 #include <xsd/cxx/config.hxx>
 
-
+#if (LIBXSD_VERSION != 400002000000000L)
+#error XSD runtime version mismatch
+#endif
 
 #include <xsd/cxx/pre.hxx>
 
@@ -277,6 +279,9 @@ class parameters_pskel: public ::xml_schema::complex_content
 
   virtual void
   output_file_name (const ::std::string&);
+
+    virtual void
+    log_level(unsigned char);
 
   virtual void
   simulation_parameters ();
@@ -964,7 +969,7 @@ class name1_pskel: public ::xml_schema::complex_content
   x_parser (::xml_schema::unsigned_byte_pskel&);
 
   void
-  y_parser (::xml_schema::unsigned_byte_pskel&);
+  y_parser (::xml_schema::byte_pskel&);
 
   void
   z_parser (::xml_schema::unsigned_byte_pskel&);
@@ -972,7 +977,7 @@ class name1_pskel: public ::xml_schema::complex_content
   void
   parsers (::xml_schema::decimal_pskel& /* value */,
            ::xml_schema::unsigned_byte_pskel& /* x */,
-           ::xml_schema::unsigned_byte_pskel& /* y */,
+           ::xml_schema::byte_pskel& /* y */,
            ::xml_schema::unsigned_byte_pskel& /* z */);
 
   // Constructor.
@@ -997,7 +1002,7 @@ class name1_pskel: public ::xml_schema::complex_content
   protected:
   ::xml_schema::decimal_pskel* value_parser_;
   ::xml_schema::unsigned_byte_pskel* x_parser_;
-  ::xml_schema::unsigned_byte_pskel* y_parser_;
+  ::xml_schema::byte_pskel* y_parser_;
   ::xml_schema::unsigned_byte_pskel* z_parser_;
 
   protected:
