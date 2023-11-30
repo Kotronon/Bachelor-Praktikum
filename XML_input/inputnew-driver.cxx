@@ -56,6 +56,20 @@ class cuboid_parse_pimpl : public cuboid_parameters_pskel, xml_schema::string_pi
     }
 };
 
+class sphere_parse_pimpl : public sphere_parameters_pskel{
+
+    virtual void
+    name (){
+
+    }
+
+    virtual void
+    post_sphere_parameters (){
+
+    }
+
+};
+
 class simulation_params_parse_pimpl : public simulation_parameters_pskel, xml_schema::string_pimpl {
 
     virtual void
@@ -233,7 +247,7 @@ main(int argc, char *argv[]) {
         ::xml_schema::string_pimpl string_p;
         ::cuboid_parse_pimpl cuboid_parameters_p;
         ::name1_parse_pimpl name1_p;
-        ::sphere_parameters_pskel sphere_parameters_p;
+        ::sphere_parse_pimpl sphere_parameters_p;
 
         // Connect the parsers together.
         //

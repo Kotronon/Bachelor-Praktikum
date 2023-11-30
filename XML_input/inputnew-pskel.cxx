@@ -2529,7 +2529,7 @@ sequence_0 (unsigned long& state,
         {
           if (this->y_parser_)
           {
-            this->y (this->y_parser_->post_unsigned_byte ());
+            this->y (this->y_parser_->post_unsigned_byte());
           }
 
           count = 0;
