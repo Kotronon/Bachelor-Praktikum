@@ -7,6 +7,7 @@
 #include "ParticleGenerator.h"
 #include "ParticleContainer.h"
 #include <cmath>
+#include <iostream>
 
 
 /**
@@ -161,7 +162,10 @@ ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> center, st
     } while (x < y + (h/4));
 
     disk->removeDuplicates();
-
+    for (auto p : *disk) {
+        std::cout << p.getX();
+        std::cout << "\n";
+    }
     return *disk;
 }
 
