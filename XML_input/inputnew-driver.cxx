@@ -10,176 +10,6 @@
 #include <iostream>
 
 
-
-class sphere_parse_pimpl : public sphere_parameters_pskel{
-
-    virtual void
-    name (){
-
-    }
-
-    virtual void
-    post_sphere_parameters (){
-
-    }
-
-};
-
-class simulation_params_parse_pimpl : public simulation_parameters_pskel, xml_schema::string_pimpl {
-
-    virtual void
-    name() {
-
-    }
-
-    virtual void
-    post_simulation_parameters() {
-        std::string s = post_string();
-        std::cout << "parameter: " << s << std::endl;
-    }
-
-};
-
-class boundaries_parse_pimpl : public boundaries_pskel {
-
-    virtual void
-    value() {
-
-    }
-
-    void post_boundaries() {
-        std::cout << "All boundaries appended";
-    }
-
-};
-
-class values_parse_pimpl : public value_pskel {
-
-    void b1(const ::std::string &b) {
-        std::cout << b << std::endl;
-        b1_ = b;
-    }
-
-    void b2(const ::std::string &b) {
-        std::cout << b << std::endl;
-        b2_ = b;
-    }
-
-    void b3(const ::std::string &b) {
-        std::cout << b << std::endl;
-        b3_ = b;
-    }
-
-    void b4(const ::std::string &b) {
-        std::cout << b << std::endl;
-        b4_ = b;
-    }
-
-    void b5(const ::std::string &b) {
-        std::cout << b << std::endl;
-        b5_ = b;
-    }
-
-    void b6(const ::std::string &b) {
-        std::cout << b << std::endl;
-        b6_ = b;
-    }
-
-
-    void post_value() {
-        std::cout << "Appended : " << b1_ << " , " << b2_ << " , " << b3_ << " , " << b4_ << " , "
-                  << b5_ << " , " << b6_ << "." << std::endl;
-    }
-
-private:
-    std::string b1_, b2_, b3_, b4_, b5_, b6_;
-};
-
-class name_parse_pimpl : public name_pskel {
-
-    virtual void
-    x(unsigned char a) {
-        std::cout << "x: " << a;
-        x_ = a;
-    }
-
-    virtual void
-    y(unsigned char a) {
-        std::cout << "y: " << a;
-        y_ = a;
-    }
-
-    virtual void
-    z(unsigned char a) {
-        std::cout << "z: " << a;
-        z_ = a;
-    }
-
-    virtual void
-    value(double v) {
-        std::cout << "value: " << v;
-        v_ = v;
-
-    }
-
-    virtual void
-    post_name() {
-        std::cout << "value: " << v_;
-        if (x_ != 0) {
-            std::cout << "x: " << x_;
-            std::cout << "y: " << y_;
-            std::cout << "z: " << z_;
-        }
-    }
-
-private:
-    unsigned char x_{}, y_{}, z_{};
-    double v_{};
-
-};
-
-class name1_parse_pimpl : public name1_pskel {
-    virtual void
-    x(unsigned char a) {
-        std::cout << "x: " << a;
-        x_ = a;
-    }
-
-    virtual void
-    y(unsigned char a) {
-        std::cout << "y: " << a;
-        y_ = a;
-    }
-
-    virtual void
-    z(unsigned char a) {
-        std::cout << "z: " << a;
-        z_ = a;
-    }
-
-    virtual void
-    value(double v) {
-        std::cout << "value: " << v;
-        v_ = v;
-
-    }
-
-    virtual void
-    post_name1() {
-        std::cout << "value: " << v_;
-        if (x_ != 0) {
-            std::cout << "x: " << x_;
-            std::cout << "y: " << y_;
-            std::cout << "z: " << z_;
-        }
-    }
-
-private:
-    unsigned char x_{}, y_{}, z_{};
-    double v_{};
-};
-
-
 using namespace std;
 
 int
@@ -193,16 +23,16 @@ main(int argc, char *argv[]) {
         // Instantiate individual parsers.
         //
         ::param_parse_pimpl parameters_p;
-        ::simulation_parameters_pimpl simulation_parameters_p;
-        ::name_pimpl name_p;
+        ::simulation_params_parse_pimpl simulation_parameters_p;
+        ::name_parse_pimpl name_p;
         ::xml_schema::unsigned_byte_pimpl unsigned_byte_p;
         ::xml_schema::decimal_pimpl decimal_p;
-        ::boundaries_pimpl( boundaries_p);
-        ::value_pimpl value_p;
+        ::boundaries_parse_pimpl( boundaries_p);
+        ::values_parse_pimpl value_p;
         ::xml_schema::string_pimpl string_p;
-        ::cuboid_parameters_pimpl cuboid_parameters_p;
-        ::name1_parse_pimpl name1_p;
-        ::sphere_parameters_pimpl sphere_parameters_p;
+        ::cuboid_parse_pimpl cuboid_parameters_p;
+
+        ::sphere_parse_pimpl sphere_parameters_p;
 
         // Connect the parsers together.
         //
@@ -230,14 +60,9 @@ main(int argc, char *argv[]) {
                         string_p,
                         string_p);
 
-        cuboid_parameters_p.parsers(name1_p);
+        cuboid_parameters_p.parsers(name_p);
 
-        name1_p.parsers(decimal_p,
-                        unsigned_byte_p,
-                        unsigned_byte_p,
-                        unsigned_byte_p);
-
-        sphere_parameters_p.parsers(name1_p);
+        sphere_parameters_p.parsers(name_p);
 
         // Parse the XML document.
         //

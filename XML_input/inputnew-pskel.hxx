@@ -45,9 +45,7 @@
 
 #include <xsd/cxx/config.hxx>
 
-#if (LIBXSD_VERSION != 400002000000000L)
-#error XSD runtime version mismatch
-#endif
+
 
 #include <xsd/cxx/pre.hxx>
 
@@ -60,7 +58,6 @@ class cuboid_parameters_pskel;
 class sphere_parameters_pskel;
 class name_pskel;
 class value_pskel;
-class name1_pskel;
 
 #ifndef XSD_USE_CHAR
 #define XSD_USE_CHAR
@@ -571,10 +568,10 @@ class cuboid_parameters_pskel: public ::xml_schema::complex_content
   // Parser construction API.
   //
   void
-  name_parser (::name1_pskel&);
+  name_parser (::name_pskel&);
 
   void
-  parsers (::name1_pskel& /* name */);
+  parsers (::name_pskel& /* name */);
 
   // Constructor.
   //
@@ -593,7 +590,7 @@ class cuboid_parameters_pskel: public ::xml_schema::complex_content
                      const ::xml_schema::ro_string&);
 
   protected:
-  ::name1_pskel* name_parser_;
+  ::name_pskel* name_parser_;
 
   protected:
   struct v_state_descr_
@@ -650,10 +647,10 @@ class sphere_parameters_pskel: public ::xml_schema::complex_content
   // Parser construction API.
   //
   void
-  name_parser (::name1_pskel&);
+  name_parser (::name_pskel&);
 
   void
-  parsers (::name1_pskel& /* name */);
+  parsers (::name_pskel& /* name */);
 
   // Constructor.
   //
@@ -672,7 +669,7 @@ class sphere_parameters_pskel: public ::xml_schema::complex_content
                      const ::xml_schema::ro_string&);
 
   protected:
-  ::name1_pskel* name_parser_;
+  ::name_pskel* name_parser_;
 
   protected:
   struct v_state_descr_
@@ -903,112 +900,6 @@ class value_pskel: public ::xml_schema::complex_content
   struct v_state_descr_
   {
     void (::value_pskel::*func) (
-      unsigned long&,
-      unsigned long&,
-      const ::xml_schema::ro_string&,
-      const ::xml_schema::ro_string&,
-      const ::xml_schema::ro_string*,
-      bool);
-    unsigned long state;
-    unsigned long count;
-  };
-
-  struct v_state_
-  {
-    v_state_descr_ data[2UL];
-    unsigned long size;
-  };
-
-  v_state_ v_state_first_;
-  ::xsd::cxx::parser::pod_stack v_state_stack_;
-
-  virtual void
-  _pre_e_validate ();
-
-  virtual void
-  _post_e_validate ();
-
-  void
-  sequence_0 (unsigned long& state,
-              unsigned long& count,
-              const ::xml_schema::ro_string& ns,
-              const ::xml_schema::ro_string& n,
-              const ::xml_schema::ro_string* t,
-              bool start);
-};
-
-class name1_pskel: public ::xml_schema::complex_content
-{
-  public:
-  // Parser callbacks. Override them in your implementation.
-  //
-  // virtual void
-  // pre ();
-
-  virtual void
-  value (double);
-
-  virtual void
-  x (unsigned char);
-
-  virtual void
-  y (signed char);
-
-  virtual void
-  z (unsigned char);
-
-  virtual void
-  post_name1 ();
-
-  // Parser construction API.
-  //
-  void
-  value_parser (::xml_schema::decimal_pskel&);
-
-  void
-  x_parser (::xml_schema::unsigned_byte_pskel&);
-
-  void
-  y_parser (::xml_schema::byte_pskel&);
-
-  void
-  z_parser (::xml_schema::unsigned_byte_pskel&);
-
-  void
-  parsers (::xml_schema::decimal_pskel& /* value */,
-           ::xml_schema::unsigned_byte_pskel& /* x */,
-           ::xml_schema::byte_pskel& /* y */,
-           ::xml_schema::unsigned_byte_pskel& /* z */);
-
-  // Constructor.
-  //
-  name1_pskel ();
-
-  // Implementation.
-  //
-  protected:
-  virtual bool
-  _start_element_impl (const ::xml_schema::ro_string&,
-                       const ::xml_schema::ro_string&,
-                       const ::xml_schema::ro_string*);
-
-  virtual bool
-  _end_element_impl (const ::xml_schema::ro_string&,
-                     const ::xml_schema::ro_string&);
-
-  virtual bool
-  _characters_impl (const ::xml_schema::ro_string&);
-
-  protected:
-  ::xml_schema::decimal_pskel* value_parser_;
-  ::xml_schema::unsigned_byte_pskel* x_parser_;
-  ::xml_schema::byte_pskel* y_parser_;
-  ::xml_schema::unsigned_byte_pskel* z_parser_;
-
-  protected:
-  struct v_state_descr_
-  {
-    void (::name1_pskel::*func) (
       unsigned long&,
       unsigned long&,
       const ::xml_schema::ro_string&,
