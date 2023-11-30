@@ -5,7 +5,6 @@ project(PSEMolDyn_GroupH VERSION 0.0.1)
 
 
 
-
 # let ccmake and cmake-gui offer the default build type options
 set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug;Release;RelWithDebInfo;MinSizeRel")
 
@@ -130,10 +129,5 @@ endif()
 target_include_directories(MolSim ${SPDLOG_INCLUDES_LEVEL} PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
 
-option(PACKAGE_TESTS "Build the tests" off)
-
- if(PACKAGE_TESTS)
-
-   add_subdirectory(tests)
-
- endif()
+include(CTest)
+add_subdirectory(tests)

@@ -12,40 +12,63 @@
 class LinkedCellContainer {
 public:
 
-    std::vector<std::vector<Particle>> cells;
 
-    LinkedCellContainer(std::array<int, 3> N, double cutoff);
+
+    LinkedCellContainer(std::array<int, 3> N, double cutoff,  std::array<std::string, 6> b);
 
     virtual ~LinkedCellContainer();
 
 
-    int cell_numbers() const;
+    [[nodiscard]] int cell_numbers() const;
 
-    int Particles_in_cell(int cell);
+    int Particles_in_cell(int x, int y, int z);
 
 
-    void addParticle(int cell, std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
+    void addParticle(int x, int y, int z, std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
 
-    void addParticle(int cell, Particle &p);
+    void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
 
-    void deleteParticle(int cell, Particle &p);
+    void addParticle(int x, int y, int z, Particle &p);
+
+    void deleteParticle(int x, int y, int z, Particle &p);
 
     void moveToNeighbour();
 
-    [[nodiscard]] std::vector<int> get_Particles_from_next_cells(int cell) const;
+    [[nodiscard]] std::vector<std::array<int, 3>> get_next_cells(int x, int y, int z) const;
 
     void setZero();
 
-    int getXMax() const;
+    [[nodiscard]] int getXMax() const;
 
-    int getYMax() const;
+    [[nodiscard]] int getYMax() const;
 
-    int getZMax() const;
+    [[nodiscard]] int getZMax() const;
+
+    std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator begin();
+
+    std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator end();
+
+    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation);
+
+    bool applyMirrorBoundary(int particle, int x, int y, int z);
+
+    void generateGhostCell(int index, int x, int y, int z);
+
+    void deleteGhostCells();
+
+    bool needsToBeDeleted(double x_coordinate, double y_coordinate, double z_coordinate);
+
 
 private:
     int x_cells;
     int y_cells;
     int z_cells;
     double c;
+    int x_max;
+    int y_max;
+    int z_max;
+    std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
+    std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
+
 };
 

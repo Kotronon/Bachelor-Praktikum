@@ -74,7 +74,7 @@ void ParticleContainer::addParticleContainer(ParticleContainer &container) {
 }
 
 /**
- * iterate through the Particles pairwise to clculate the force of each particle
+ * iterate through the Particles pairwise to calculate the force of each particle
  * @param forceCalculation
  */
 void ParticleContainer::applyForcePairwise(const std::function<void(Particle*, Particle*)>& forceCalculation){
