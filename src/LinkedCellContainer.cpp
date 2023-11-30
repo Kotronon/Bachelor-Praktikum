@@ -412,8 +412,8 @@ void LinkedCellContainer::deleteGhostCells() {
 bool LinkedCellContainer::needsToBeDeleted(double x_coordinate, double y_coordinate, double z_coordinate) {
     bool needsToBeDeleted = false;
     if ((x_coordinate > x_max) || (x_coordinate < 0)
-        || (y_coordinate > y_max && boundary[2] == "n") || (y_coordinate < 0)
-        || (z_coordinate > z_max && boundary[5] == "n") || (z_coordinate < 0 ))
+        || (y_coordinate > y_max) || (y_coordinate < 0)
+        || (z_coordinate > z_max) || (z_coordinate < 0 ))
         needsToBeDeleted = true;
     return needsToBeDeleted;
 }
