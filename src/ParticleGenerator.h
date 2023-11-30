@@ -18,11 +18,14 @@ public:
                                                 std::array<int, 3> N, double h, double m,
                                                 LinkedCellContainer &cells, double  cutoff);
 
-    ParticleContainer createSphere(std::array<double, 3> x, std::array<double, 3> v, double m, int r, double h);
+    static ParticleContainer createSphere(std::array<double, 3> x, std::array<double, 3> v, double m, int r, double h);
 
     static ParticleContainer createDisk(std::array<double, 3> x, std::array<double, 3> v, double m, int r, double h);
 
     static void createDiskInCells(std::array<double, 3> x, std::array<double, 3> v, double m, int r, double h,
                            LinkedCellContainer &cells);
+
+    static void createSphereInCells(std::array<double, 3> center, std::array<double, 3> v, double m, int r, double h,
+                             LinkedCellContainer cells);
 };
 

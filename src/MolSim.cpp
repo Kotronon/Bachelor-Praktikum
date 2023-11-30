@@ -73,7 +73,7 @@ int main(int argc, char *argsv[]) {
 
     //auto disk = ParticleGenerator::createDisk({60,25,0},{0,-10,0},1.0,15,1.1225);
     //container.addParticleContainer(disk);
-    ParticleGenerator::createDiskInCells({20,20,0},{0,0,0},1.0,15,1.1225,cells);
+    ParticleGenerator::createDiskInCells({20,20,0},{0,0,0},1.0,2,1.1225,cells);
 
     double end_time = 10;
     double delta_t = 0.005;
