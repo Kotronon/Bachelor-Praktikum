@@ -14,10 +14,10 @@
                             <xs:element maxOccurs="unbounded" name="name">
                                 <xs:complexType mixed="true">
                                     <xs:sequence>
+                                        <xs:element minOccurs="0" name="value" type="xs:decimal" />
                                         <xs:element minOccurs="0" name="x" type="xs:unsignedByte" />
                                         <xs:element minOccurs="0" name="y" type="xs:unsignedByte" />
                                         <xs:element minOccurs="0" name="z" type="xs:unsignedByte" />
-                                        <xs:element minOccurs="0" name="value" type="xs:decimal" />
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
@@ -50,7 +50,7 @@
                                     <xs:sequence>
                                         <xs:element minOccurs="0" name="value" type="xs:decimal" />
                                         <xs:element minOccurs="0" name="x" type="xs:unsignedByte" />
-                                        <xs:element minOccurs="0" name="y" type="xs:byte" />
+                                        <xs:element minOccurs="0" name="y" type="xs:unsignedByte" />
                                         <xs:element minOccurs="0" name="z" type="xs:unsignedByte" />
                                     </xs:sequence>
                                 </xs:complexType>
@@ -66,7 +66,7 @@
                                     <xs:sequence>
                                         <xs:element minOccurs="0" name="value" type="xs:decimal" />
                                         <xs:element minOccurs="0" name="x" type="xs:unsignedByte" />
-                                        <xs:element minOccurs="0" name="y" type="xs:byte" />
+                                        <xs:element minOccurs="0" name="y" type="xs:unsignedByte" />
                                         <xs:element minOccurs="0" name="z" type="xs:unsignedByte" />
                                     </xs:sequence>
                                 </xs:complexType>
