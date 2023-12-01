@@ -194,11 +194,6 @@ ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> center, st
 
     }
 
-    //disk->removeDuplicates();
-    for (auto p : *disk) {
-        std::cout << p.getX();
-        std::cout << "\n";
-    }
     return *disk;
 }
 
