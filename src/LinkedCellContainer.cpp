@@ -76,6 +76,13 @@ void LinkedCellContainer::addParticle(int x, int y, int z, std::array<double, 3>
     cells[x][y][z].emplace_back(new_particle);
 }
 
+/**
+ * adds new Particle to a cell based on current position
+ * @param x_arg coordinates of new particle
+ * @param v_arg velocity of new particle
+ * @param m_arg mass of new particle
+ * @param type_arg type of new particle
+ */
 void
 LinkedCellContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg) {
     Particle new_particle = Particle(x_arg, v_arg, m_arg, type_arg);
@@ -93,18 +100,6 @@ void LinkedCellContainer::addParticle(int x, int y, int z, Particle &p) {
     cells[x][y][z].emplace_back(p);
 }
 
-/**
- * adds new Particle to a cell based on current position
- * @param x_arg coordinates of new particle
- * @param v_arg velocity of new particle
- * @param m_arg mass of new particle
- * @param type_arg type of new particle
- */
-void LinkedCellContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg,
-                                      int type_arg) {
-    Particle particle(x_arg, v_arg, m_arg, type_arg);
-    cells[floor(x_arg[0] / c)][floor(x_arg[1] / c)][floor(x_arg[2] / c)].emplace_back(particle);
-}
 
 /**
  * adds existing particle to a cell based on current position
@@ -139,7 +134,7 @@ void LinkedCellContainer::moveToNeighbour() {
     for (int x = 1; x < x_cells + 1; x++) {
         for (int y = 1; y < y_cells + 1; y++) {
             for (int z = 1; z < z_cells + 1; z++) {
-                for (int p = 0; p < cells[x][y][z].size(); p++) {
+                for (int p = cells[x][y][z].size() -1; p >= 0; p--) {
                     int x_now = floor(cells[x][y][z][p].getX()[0] / c);
                     int y_now = floor(cells[x][y][z][p].getX()[1] / c);
                     int z_now = floor(cells[x][y][z][p].getX()[2] / c);
