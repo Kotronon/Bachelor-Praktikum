@@ -2,9 +2,12 @@
 // Created by maraconda on 12.11.23.
 //
 
+#define _USE_MATH_DEFINES
+#include "utils/ArrayUtils.h"
 #include "ParticleGenerator.h"
 #include "ParticleContainer.h"
 #include <cmath>
+#include <iostream>
 
 
 /**
@@ -46,8 +49,8 @@ ParticleContainer ParticleGenerator::createCuboid(std::array<double, 3> x, std::
 
 /**
  * create a cuboid and stores it in the given cell grid
- * @param x
- * @param v
+ * @param x position of left front corner
+ * @param v initial velocity
  * @param N
  * @param h
  * @param m
@@ -87,5 +90,170 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
         y_axis_tmp = y_axis;
         coordinate[2] += h;
         if(z_axis_tmp < ceil(coordinate[2] / cutoff)) z_axis_tmp ++;
+    }
+}
+
+/**
+ * creates a 2-dimensional sphere/disk and stores it in a ParticleContainer
+ * @param center position of center
+ * @param v initial velocity
+ * @param m mass of each particle
+ * @param r number of molecules along the radius
+ * @param h distance between molecules
+ * @return particle container containing the newly created particles
+ */
+ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> center, std::array<double, 3> v, double m, int r, double h) {
+
+    auto disk = new ParticleContainer();
+    double radius = r * h;
+    double d = 3 - (2 * radius);
+    double x = 0;
+    double y = radius;
+    bool fill = false;
+    bool end = false;
+
+    //Add center
+    disk->addParticle({center[0], center[1] , center[2]},v,m,0);
+
+    if (r == 0) {
+        return *disk;
+    }
+
+    //Add center line
+    for (double x_minus = center[0] - h, x_plus = center[0] + h; x_plus < center[0] + radius - (h/4); x_minus -= h, x_plus += h) {
+        disk->addParticle({x_minus, center[1], center[2]},v,m,0);
+        disk->addParticle({x_plus, center[1], center[2]},v,m,0);
+    }
+
+    //Add particles for top, bottom, left and right
+    disk->addParticle({center[0] + x, center[1] + y, center[2]},v,m,0);
+    disk->addParticle({center[0] + x, center[1] - y, center[2]},v,m,0);
+    disk->addParticle({center[0] + y, center[1] + x, center[2]},v,m,0);
+    disk->addParticle({center[0] - y, center[1] - x, center[2]},v,m,0);
+
+    if (d < 0) {
+        d = d + (4 * x) + 6;
+        fill = false;
+    }
+    else {
+        d = d + 4 * (x - y) + 10;
+        y -= h;
+        fill = true;
+    }
+
+    x += h;
+
+    while (x < y + (h/4)) {
+
+        if (std::abs(x - y) < (h/4)) {
+            fill = false;
+            end = true;
+        }
+
+        if (!end) {
+            //starting from top going left and right
+            disk->addParticle({center[0] - x, center[1] + y, center[2]},v,m,0);
+            for (double x_temp = center[0] - x + h; fill && x_temp < center[0] + x - (h/4); x_temp += h) {
+                disk->addParticle({x_temp, center[1] + y, center[2]},v,m,0);
+            }
+            disk->addParticle({center[0] + x, center[1] + y, center[2]},v,m,0);
+
+            //starting from bottom going left and right
+            disk->addParticle({center[0] - x, center[1] - y, center[2]},v,m,0);
+            for (double x_temp = center[0] - x + h; fill && x_temp < center[0] + x - (h/4); x_temp += h) {
+                disk->addParticle({x_temp, center[1] - y, center[2]},v,m,0);
+            }
+            disk->addParticle({center[0] + x, center[1] - y, center[2]},v,m,0);
+        }
+
+        //starting from left and right going up
+        disk->addParticle({center[0] - y, center[1] + x, center[2]},v,m,0);
+        for (double x_temp = center[0] - y + h; x_temp < center[0] + y - (h/4); x_temp += h) {
+            disk->addParticle({x_temp, center[1] + x, center[2]},v,m,0);
+        }
+        disk->addParticle({center[0] + y, center[1] + x, center[2]},v,m,0);
+
+        //starting from left and right going down
+        disk->addParticle({center[0] - y, center[1] - x, center[2]},v,m,0);
+        for (double x_temp = center[0] - y + h; x_temp < center[0] + y - (h/4); x_temp += h) {
+            disk->addParticle({x_temp, center[1] - x, center[2]},v,m,0);
+        }
+        disk->addParticle({center[0] + y, center[1] - x, center[2]},v,m,0);
+
+        if (d < 0) {
+            d = d + (4 * x) + 6;
+            fill = false;
+        }
+        else {
+            d = d + 4 * (x - y) + 10;
+            y -= h;
+            fill = true;
+        }
+
+        x += h;
+
+    }
+
+    return *disk;
+}
+
+
+
+/**
+ * creates a 2-dimensional sphere/disk and stores it in a LinkedCellContainer
+ * @param x position of center
+ * @param v initial velocity
+ * @param m mass of each particle
+ * @param r number of molecules along the radius
+ * @param h distance between molecules
+ */
+void ParticleGenerator::createDiskInCells(std::array<double, 3> center, std::array<double, 3> v, double m,
+                                                int r, double h, LinkedCellContainer &cells) {
+
+    ParticleContainer container = ParticleGenerator::createDisk(center,v,m,r,h);
+    for (auto p = container.begin(); p < container.end(); p++) {
+        cells.addParticle(*p);
+    }
+}
+
+/**
+ * creates a 3-dimensional sphere and stores it in a ParticleContainer (not functional yet)
+ * @param x position of center
+ * @param v initial velocity
+ * @param m mass of each particle
+ * @param r number of molecules along the radius
+ * @param h distance between molecules
+ * @return particle container containing the newly created particles
+ */
+ParticleContainer ParticleGenerator::createSphere(std::array<double, 3> center, std::array<double, 3> v, double m,
+                                                  int r, double h) {
+
+    ParticleContainer sphere = ParticleContainer();
+    double radius = r * h;
+    //Create cuboid around center
+    ParticleContainer cuboid = createCuboid({center[0] - radius, center[1] - radius, center[2] - radius}, v, {2 * r + 1, 2 * r + 1, 2 * r + 1},h,m);
+    //Only add particles that are in radius of center
+    for (const Particle &p : cuboid) {
+        if (ArrayUtils::L2Norm(p.getX() - center) <= radius) {
+            sphere.addParticle(p);
+        }
+    }
+    return sphere;
+}
+
+/**
+ * creates a 3-dimensional sphere and stores it in a LinkedCellContainer (not functional yet)
+ * @param x position of center
+ * @param v initial velocity
+ * @param m mass of each particle
+ * @param r number of molecules along the radius
+ * @param h distance between molecules
+ */
+void ParticleGenerator::createSphereInCells(std::array<double, 3> center, std::array<double, 3> v, double m,
+                                                  int r, double h, LinkedCellContainer cells) {
+
+    ParticleContainer container = ParticleGenerator::createSphere(center,v,m,r,h);
+    for (auto p = container.begin(); p < container.end(); p++) {
+        cells.addParticle(*p);
     }
 }

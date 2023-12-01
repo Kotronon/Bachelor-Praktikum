@@ -30,6 +30,11 @@ public:
 
     void addParticle(int x, int y, int z, Particle &p);
 
+    void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg,
+                                      int type_arg);
+
+    void addParticle(Particle &p);
+
     void deleteParticle(int x, int y, int z, Particle &p);
 
     void moveToNeighbour();
