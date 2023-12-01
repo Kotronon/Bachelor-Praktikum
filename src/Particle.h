@@ -86,5 +86,3 @@ class Particle {
         void setOldF(std::array<double, 3> oldF);
     };
 
-    std::ostream &operator<<(std::ostream &stream, Particle &p);
-

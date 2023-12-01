@@ -109,63 +109,83 @@ ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> center, st
     double d = 3 - (2 * radius);
     double x = 0;
     double y = radius;
+    bool fill = false;
 
+    //Add center
     disk->addParticle({center[0], center[1] , center[2]},v,m,0);
+
+    if (r == 0) {
+        return *disk;
+    }
+
+    //Add center line
     for (double x_minus = center[0] - h, x_plus = center[0] + h; x_plus < center[0] + radius - (h/4); x_minus -= h, x_plus += h) {
         disk->addParticle({x_minus, center[1], center[2]},v,m,0);
         disk->addParticle({x_plus, center[1], center[2]},v,m,0);
     }
 
-    do {
-        if (x == 0) {
-            disk->addParticle({center[0] + x, center[1] + y, center[2]},v,m,0);
-            disk->addParticle({center[0] + x, center[1] - y, center[2]},v,m,0);
-            disk->addParticle({center[0] + y, center[1] + x, center[2]},v,m,0);
-            disk->addParticle({center[0] - y, center[1] - x, center[2]},v,m,0);
+    //Add particles for top, bottom, left and right
+    disk->addParticle({center[0] + x, center[1] + y, center[2]},v,m,0);
+    disk->addParticle({center[0] + x, center[1] - y, center[2]},v,m,0);
+    disk->addParticle({center[0] + y, center[1] + x, center[2]},v,m,0);
+    disk->addParticle({center[0] - y, center[1] - x, center[2]},v,m,0);
+
+    if (d < 0) {
+        d = d + (4 * x) + 6;
+        fill = false;
+    }
+    else {
+        d = d + 4 * (x - y) + 10;
+        y -= h;
+        fill = true;
+    }
+
+    x += h;
+
+    while (x < y + (h/4)) {
+
+        //starting from top going left and right
+        disk->addParticle({center[0] - x, center[1] + y, center[2]},v,m,0);
+        for (double x_temp = center[0] - x + h; fill && x_temp < center[0] + x - (h/4); x_temp += h) {
+            disk->addParticle({x_temp, center[1] + y, center[2]},v,m,0);
         }
-        else {
-            disk->addParticle({center[0] - x, center[1] + y, center[2]},v,m,0);
-            for (double x_temp = center[0] - x + h; x_temp < center[0] + x - (h/4); x_temp += h) {
-                disk->addParticle({x_temp, center[1] + y, center[2]},v,m,0);
-            }
-            disk->addParticle({center[0] + x, center[1] + y, center[2]},v,m,0);
+        disk->addParticle({center[0] + x, center[1] + y, center[2]},v,m,0);
 
-            disk->addParticle({center[0] - x, center[1] - y, center[2]},v,m,0);
-            for (double x_temp = center[0] - x + h; x_temp < center[0] + x - (h/4); x_temp += h) {
-                disk->addParticle({x_temp, center[1] - y, center[2]},v,m,0);
-            }
-            disk->addParticle({center[0] + x, center[1] - y, center[2]},v,m,0);
-
-            disk->addParticle({center[0] - y, center[1] + x, center[2]},v,m,0);
-            for (double x_temp = center[0] - y + h; x_temp < center[0] + y - (h/4); x_temp += h) {
-                disk->addParticle({x_temp, center[1] + x, center[2]},v,m,0);
-            }
-            disk->addParticle({center[0] + y, center[1] + x, center[2]},v,m,0);
-
-            disk->addParticle({center[0] - y, center[1] - x, center[2]},v,m,0);
-            for (double x_temp = center[0] - y + h; x_temp < center[0] + y - (h/4); x_temp += h) {
-                disk->addParticle({x_temp, center[1] - x, center[2]},v,m,0);
-            }
-            disk->addParticle({center[0] + y, center[1] - x, center[2]},v,m,0);
+        //starting from bottom going left and right
+        disk->addParticle({center[0] - x, center[1] - y, center[2]},v,m,0);
+        for (double x_temp = center[0] - x + h; fill && x_temp < center[0] + x - (h/4); x_temp += h) {
+            disk->addParticle({x_temp, center[1] - y, center[2]},v,m,0);
         }
+        disk->addParticle({center[0] + x, center[1] - y, center[2]},v,m,0);
+
+        //starting from left and right going up
+        disk->addParticle({center[0] - y, center[1] + x, center[2]},v,m,0);
+        for (double x_temp = center[0] - y + h; x_temp < center[0] + y - (h/4); x_temp += h) {
+            disk->addParticle({x_temp, center[1] + x, center[2]},v,m,0);
+        }
+        disk->addParticle({center[0] + y, center[1] + x, center[2]},v,m,0);
+
+        //starting from left and right going down
+        disk->addParticle({center[0] - y, center[1] - x, center[2]},v,m,0);
+        for (double x_temp = center[0] - y + h; x_temp < center[0] + y - (h/4); x_temp += h) {
+            disk->addParticle({x_temp, center[1] - x, center[2]},v,m,0);
+        }
+        disk->addParticle({center[0] + y, center[1] - x, center[2]},v,m,0);
 
         if (d < 0) {
             d = d + (4 * x) + 6;
+            fill = false;
         }
         else {
             d = d + 4 * (x - y) + 10;
             y -= h;
+            fill = true;
         }
 
         x += h;
 
-    } while (x < y + (h/4));
-
-    disk->removeDuplicates();
-    for (auto p : *disk) {
-        std::cout << p.getX();
-        std::cout << "\n";
     }
+
     return *disk;
 }
 
