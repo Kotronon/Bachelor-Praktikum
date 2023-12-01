@@ -7,7 +7,6 @@
 
 #include "inputnew-pimpl.hxx"
 
-
 #include <iostream>
 
 // parameters_pimpl
@@ -31,15 +30,15 @@ write_frequency (unsigned char write_frequency)
 }
 
 void parameters_pimpl::
-log_level (unsigned char log_level)
-{
-  std::cout << "log_level: " << static_cast<unsigned short> (log_level) << std::endl;
-}
-
-void parameters_pimpl::
 output_file_name (const ::std::string& output_file_name)
 {
   std::cout << "output_file_name: " << output_file_name << std::endl;
+}
+
+void parameters_pimpl::
+log_level (unsigned char log_level)
+{
+  std::cout << "log_level: " << static_cast<unsigned short> (log_level) << std::endl;
 }
 
 void parameters_pimpl::
@@ -102,8 +101,39 @@ pre ()
 }
 
 void boundaries_pimpl::
-value ()
+b1 (const ::std::string& b1)
 {
+  std::cout << "b1: " << b1 << std::endl;
+}
+
+void boundaries_pimpl::
+b2 (const ::std::string& b2)
+{
+  std::cout << "b2: " << b2 << std::endl;
+}
+
+void boundaries_pimpl::
+b3 (const ::std::string& b3)
+{
+  std::cout << "b3: " << b3 << std::endl;
+}
+
+void boundaries_pimpl::
+b4 (const ::std::string& b4)
+{
+  std::cout << "b4: " << b4 << std::endl;
+}
+
+void boundaries_pimpl::
+b5 (const ::std::string& b5)
+{
+  std::cout << "b5: " << b5 << std::endl;
+}
+
+void boundaries_pimpl::
+b6 (const ::std::string& b6)
+{
+  std::cout << "b6: " << b6 << std::endl;
 }
 
 void boundaries_pimpl::
@@ -168,12 +198,6 @@ pre ()
 }
 
 void name_pimpl::
-value (double value)
-{
-  std::cout << "value: " << value << std::endl;
-}
-
-void name_pimpl::
 x (unsigned char x)
 {
   std::cout << "x: " << static_cast<unsigned short> (x) << std::endl;
@@ -192,64 +216,17 @@ z (unsigned char z)
 }
 
 void name_pimpl::
+value (double value)
+{
+  std::cout << "value: " << value << std::endl;
+}
+
+void name_pimpl::
 post_name ()
 {
 }
 
 name_pimpl::~name_pimpl() {
-
-}
-
-// value_pimpl
-//
-
-void value_pimpl::
-pre ()
-{
-}
-
-void value_pimpl::
-b1 (const ::std::string& b1)
-{
-  std::cout << "b1: " << b1 << std::endl;
-}
-
-void value_pimpl::
-b2 (const ::std::string& b2)
-{
-  std::cout << "b2: " << b2 << std::endl;
-}
-
-void value_pimpl::
-b3 (const ::std::string& b3)
-{
-  std::cout << "b3: " << b3 << std::endl;
-}
-
-void value_pimpl::
-b4 (const ::std::string& b4)
-{
-  std::cout << "b4: " << b4 << std::endl;
-}
-
-void value_pimpl::
-b5 (const ::std::string& b5)
-{
-  std::cout << "b5: " << b5 << std::endl;
-}
-
-void value_pimpl::
-b6 (const ::std::string& b6)
-{
-  std::cout << "b6: " << b6 << std::endl;
-}
-
-void value_pimpl::
-post_value ()
-{
-}
-
-value_pimpl::~value_pimpl() {
 
 }
 

@@ -4,10 +4,9 @@
 // an XML Schema to C++ data binding compiler. You may use it in your
 // programs without any restrictions.
 //
+
 #include "inputnew-pimpl.hxx"
-#include "inputnew-pskel.hxx"
 #include "inputnew-pimpl.cxx"
-#include "inputnew-pimpl.hxx"
 
 #include <iostream>
 
@@ -25,14 +24,12 @@ main (int argc, char* argv[])
     // Instantiate individual parsers.
     //
     ::parameters_pimpl parameters_p;
-
     ::xml_schema::string_pimpl string_p;
     ::xml_schema::unsigned_byte_pimpl unsigned_byte_p;
     ::simulation_parameters_pimpl simulation_parameters_p;
     ::name_pimpl name_p;
     ::xml_schema::decimal_pimpl decimal_p;
     ::boundaries_pimpl boundaries_p;
-    ::value_pimpl value_p;
     ::cuboid_parameters_pimpl cuboid_parameters_p;
     ::sphere_parameters_pimpl sphere_parameters_p;
 
@@ -40,8 +37,8 @@ main (int argc, char* argv[])
     //
     parameters_p.parsers (string_p,
                           unsigned_byte_p,
-                          unsigned_byte_p,
                           string_p,
+                          unsigned_byte_p,
                           simulation_parameters_p,
                           boundaries_p,
                           cuboid_parameters_p,
@@ -49,19 +46,17 @@ main (int argc, char* argv[])
 
     simulation_parameters_p.parsers (name_p);
 
-    name_p.parsers (decimal_p,
+    name_p.parsers (unsigned_byte_p,
                     unsigned_byte_p,
                     unsigned_byte_p,
-                    unsigned_byte_p);
+                    decimal_p);
 
-    boundaries_p.parsers (value_p);
-
-    value_p.parsers (string_p,
-                     string_p,
-                     string_p,
-                     string_p,
-                     string_p,
-                     string_p);
+    boundaries_p.parsers (string_p,
+                          string_p,
+                          string_p,
+                          string_p,
+                          string_p,
+                          string_p);
 
     cuboid_parameters_p.parsers (name_p);
 
@@ -82,6 +77,7 @@ main (int argc, char* argv[])
   }
   catch (const std::ios_base::failure&)
   {
+     throw xml_schema::parsing();
     std::cerr << argv[1] << ": error: io failure" << std::endl;
     return 1;
   }

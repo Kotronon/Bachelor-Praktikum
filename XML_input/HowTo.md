@@ -35,8 +35,9 @@
 
 * How to run this baby:
 *
-* * xsd cxx-parser --generate-test-driver --xml-parser expat input.xsd
+* * xsd cxx-parser --generate-test-driver --generate-print-impl --xml-parser expat input.xsd
 * fix the .cxx and the driver fie file if there's errors
+* if you want to overwrite, add --force-overwrite
 ## this is how to actually fix stuff
 * go into
 

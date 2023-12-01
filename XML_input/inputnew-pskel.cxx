@@ -56,15 +56,15 @@ write_frequency_parser (::xml_schema::unsigned_byte_pskel& p)
 }
 
 void parameters_pskel::
-log_level_parser (::xml_schema::unsigned_byte_pskel& p)
-{
-  this->log_level_parser_ = &p;
-}
-
-void parameters_pskel::
 output_file_name_parser (::xml_schema::string_pskel& p)
 {
   this->output_file_name_parser_ = &p;
+}
+
+void parameters_pskel::
+log_level_parser (::xml_schema::unsigned_byte_pskel& p)
+{
+  this->log_level_parser_ = &p;
 }
 
 void parameters_pskel::
@@ -94,8 +94,8 @@ sphere_parameters_parser (::sphere_parameters_pskel& p)
 void parameters_pskel::
 parsers (::xml_schema::string_pskel& algorithm_option,
          ::xml_schema::unsigned_byte_pskel& write_frequency,
-         ::xml_schema::unsigned_byte_pskel& log_level,
          ::xml_schema::string_pskel& output_file_name,
+         ::xml_schema::unsigned_byte_pskel& log_level,
          ::simulation_parameters_pskel& simulation_parameters,
          ::boundaries_pskel& boundaries,
          ::cuboid_parameters_pskel& cuboid_parameters,
@@ -103,8 +103,8 @@ parsers (::xml_schema::string_pskel& algorithm_option,
 {
   this->algorithm_option_parser_ = &algorithm_option;
   this->write_frequency_parser_ = &write_frequency;
-  this->log_level_parser_ = &log_level;
   this->output_file_name_parser_ = &output_file_name;
+  this->log_level_parser_ = &log_level;
   this->simulation_parameters_parser_ = &simulation_parameters;
   this->boundaries_parser_ = &boundaries;
   this->cuboid_parameters_parser_ = &cuboid_parameters;
@@ -115,8 +115,8 @@ parameters_pskel::
 parameters_pskel ()
 : algorithm_option_parser_ (0),
   write_frequency_parser_ (0),
-  log_level_parser_ (0),
   output_file_name_parser_ (0),
+  log_level_parser_ (0),
   simulation_parameters_parser_ (0),
   boundaries_parser_ (0),
   cuboid_parameters_parser_ (0),
@@ -151,20 +151,65 @@ simulation_parameters_pskel ()
 //
 
 void boundaries_pskel::
-value_parser (::value_pskel& p)
+b1_parser (::xml_schema::string_pskel& p)
 {
-  this->value_parser_ = &p;
+  this->b1_parser_ = &p;
 }
 
 void boundaries_pskel::
-parsers (::value_pskel& value)
+b2_parser (::xml_schema::string_pskel& p)
 {
-  this->value_parser_ = &value;
+  this->b2_parser_ = &p;
+}
+
+void boundaries_pskel::
+b3_parser (::xml_schema::string_pskel& p)
+{
+  this->b3_parser_ = &p;
+}
+
+void boundaries_pskel::
+b4_parser (::xml_schema::string_pskel& p)
+{
+  this->b4_parser_ = &p;
+}
+
+void boundaries_pskel::
+b5_parser (::xml_schema::string_pskel& p)
+{
+  this->b5_parser_ = &p;
+}
+
+void boundaries_pskel::
+b6_parser (::xml_schema::string_pskel& p)
+{
+  this->b6_parser_ = &p;
+}
+
+void boundaries_pskel::
+parsers (::xml_schema::string_pskel& b1,
+         ::xml_schema::string_pskel& b2,
+         ::xml_schema::string_pskel& b3,
+         ::xml_schema::string_pskel& b4,
+         ::xml_schema::string_pskel& b5,
+         ::xml_schema::string_pskel& b6)
+{
+  this->b1_parser_ = &b1;
+  this->b2_parser_ = &b2;
+  this->b3_parser_ = &b3;
+  this->b4_parser_ = &b4;
+  this->b5_parser_ = &b5;
+  this->b6_parser_ = &b6;
 }
 
 boundaries_pskel::
 boundaries_pskel ()
-: value_parser_ (0),
+: b1_parser_ (0),
+  b2_parser_ (0),
+  b3_parser_ (0),
+  b4_parser_ (0),
+  b5_parser_ (0),
+  b6_parser_ (0),
   v_state_stack_ (sizeof (v_state_), &v_state_first_)
 {
 }
@@ -217,12 +262,6 @@ sphere_parameters_pskel ()
 //
 
 void name_pskel::
-value_parser (::xml_schema::decimal_pskel& p)
-{
-  this->value_parser_ = &p;
-}
-
-void name_pskel::
 x_parser (::xml_schema::unsigned_byte_pskel& p)
 {
   this->x_parser_ = &p;
@@ -241,90 +280,29 @@ z_parser (::xml_schema::unsigned_byte_pskel& p)
 }
 
 void name_pskel::
-parsers (::xml_schema::decimal_pskel& value,
-         ::xml_schema::unsigned_byte_pskel& x,
-         ::xml_schema::unsigned_byte_pskel& y,
-         ::xml_schema::unsigned_byte_pskel& z)
+value_parser (::xml_schema::decimal_pskel& p)
 {
-  this->value_parser_ = &value;
+  this->value_parser_ = &p;
+}
+
+void name_pskel::
+parsers (::xml_schema::unsigned_byte_pskel& x,
+         ::xml_schema::unsigned_byte_pskel& y,
+         ::xml_schema::unsigned_byte_pskel& z,
+         ::xml_schema::decimal_pskel& value)
+{
   this->x_parser_ = &x;
   this->y_parser_ = &y;
   this->z_parser_ = &z;
+  this->value_parser_ = &value;
 }
 
 name_pskel::
 name_pskel ()
-: value_parser_ (0),
-  x_parser_ (0),
+: x_parser_ (0),
   y_parser_ (0),
   z_parser_ (0),
-  v_state_stack_ (sizeof (v_state_), &v_state_first_)
-{
-}
-
-// value_pskel
-//
-
-void value_pskel::
-b1_parser (::xml_schema::string_pskel& p)
-{
-  this->b1_parser_ = &p;
-}
-
-void value_pskel::
-b2_parser (::xml_schema::string_pskel& p)
-{
-  this->b2_parser_ = &p;
-}
-
-void value_pskel::
-b3_parser (::xml_schema::string_pskel& p)
-{
-  this->b3_parser_ = &p;
-}
-
-void value_pskel::
-b4_parser (::xml_schema::string_pskel& p)
-{
-  this->b4_parser_ = &p;
-}
-
-void value_pskel::
-b5_parser (::xml_schema::string_pskel& p)
-{
-  this->b5_parser_ = &p;
-}
-
-void value_pskel::
-b6_parser (::xml_schema::string_pskel& p)
-{
-  this->b6_parser_ = &p;
-}
-
-void value_pskel::
-parsers (::xml_schema::string_pskel& b1,
-         ::xml_schema::string_pskel& b2,
-         ::xml_schema::string_pskel& b3,
-         ::xml_schema::string_pskel& b4,
-         ::xml_schema::string_pskel& b5,
-         ::xml_schema::string_pskel& b6)
-{
-  this->b1_parser_ = &b1;
-  this->b2_parser_ = &b2;
-  this->b3_parser_ = &b3;
-  this->b4_parser_ = &b4;
-  this->b5_parser_ = &b5;
-  this->b6_parser_ = &b6;
-}
-
-value_pskel::
-value_pskel ()
-: b1_parser_ (0),
-  b2_parser_ (0),
-  b3_parser_ (0),
-  b4_parser_ (0),
-  b5_parser_ (0),
-  b6_parser_ (0),
+  value_parser_ (0),
   v_state_stack_ (sizeof (v_state_), &v_state_first_)
 {
 }
@@ -343,12 +321,12 @@ write_frequency (unsigned char)
 }
 
 void parameters_pskel::
-log_level (unsigned char)
+output_file_name (const ::std::string&)
 {
 }
 
 void parameters_pskel::
-output_file_name (const ::std::string&)
+log_level (unsigned char)
 {
 }
 
@@ -394,7 +372,32 @@ post_simulation_parameters ()
 //
 
 void boundaries_pskel::
-value ()
+b1 (const ::std::string&)
+{
+}
+
+void boundaries_pskel::
+b2 (const ::std::string&)
+{
+}
+
+void boundaries_pskel::
+b3 (const ::std::string&)
+{
+}
+
+void boundaries_pskel::
+b4 (const ::std::string&)
+{
+}
+
+void boundaries_pskel::
+b5 (const ::std::string&)
+{
+}
+
+void boundaries_pskel::
+b6 (const ::std::string&)
 {
 }
 
@@ -433,11 +436,6 @@ post_sphere_parameters ()
 //
 
 void name_pskel::
-value (double)
-{
-}
-
-void name_pskel::
 x (unsigned char)
 {
 }
@@ -453,45 +451,12 @@ z (unsigned char)
 }
 
 void name_pskel::
+value (double)
+{
+}
+
+void name_pskel::
 post_name ()
-{
-}
-
-// value_pskel
-//
-
-void value_pskel::
-b1 (const ::std::string&)
-{
-}
-
-void value_pskel::
-b2 (const ::std::string&)
-{
-}
-
-void value_pskel::
-b3 (const ::std::string&)
-{
-}
-
-void value_pskel::
-b4 (const ::std::string&)
-{
-}
-
-void value_pskel::
-b5 (const ::std::string&)
-{
-}
-
-void value_pskel::
-b6 (const ::std::string&)
-{
-}
-
-void value_pskel::
-post_value ()
 {
 }
 
@@ -710,42 +675,6 @@ sequence_0 (unsigned long& state,
     // Fall through.
     case 2UL:
     {
-      if (n == "log_level" && ns.empty ())
-      {
-        if (start)
-        {
-          this->::xml_schema::complex_content::context_.top ().parser_ = this->log_level_parser_;
-
-          if (this->log_level_parser_)
-            this->log_level_parser_->pre ();
-        }
-        else
-        {
-          if (this->log_level_parser_)
-          {
-            this->log_level (this->log_level_parser_->post_unsigned_byte ());
-          }
-
-          count = 0;
-          state = 3UL;
-        }
-
-        break;
-      }
-      else
-      {
-        assert (start);
-        if (count < 1UL)
-          this->_expected_element (
-            "", "log_level",
-            ns, n);
-        count = 0;
-        state = 3UL;
-      }
-    }
-    // Fall through.
-    case 3UL:
-    {
       if (n == "output_file_name" && ns.empty ())
       {
         if (start)
@@ -763,7 +692,7 @@ sequence_0 (unsigned long& state,
           }
 
           count = 0;
-          state = 4UL;
+          state = 3UL;
         }
 
         break;
@@ -774,6 +703,42 @@ sequence_0 (unsigned long& state,
         if (count < 1UL)
           this->_expected_element (
             "", "output_file_name",
+            ns, n);
+        count = 0;
+        state = 3UL;
+      }
+    }
+    // Fall through.
+    case 3UL:
+    {
+      if (n == "log_level" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->log_level_parser_;
+
+          if (this->log_level_parser_)
+            this->log_level_parser_->pre ();
+        }
+        else
+        {
+          if (this->log_level_parser_)
+          {
+            this->log_level (this->log_level_parser_->post_unsigned_byte ());
+          }
+
+          count = 0;
+          state = 4UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "log_level",
             ns, n);
         count = 0;
         state = 4UL;
@@ -1151,7 +1116,7 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
     {
       unsigned long s = ~0UL;
 
-      if (n == "value" && ns.empty ())
+      if (n == "b1" && ns.empty ())
         s = 0UL;
 
       if (s != ~0UL)
@@ -1170,7 +1135,7 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
       {
         if (vd->count < 1UL)
           this->_expected_element (
-            "", "value",
+            "", "b1",
             ns, n);
         return false;
       }
@@ -1235,7 +1200,7 @@ _post_e_validate ()
 
   if (vd->count < 1UL)
     this->_expected_element (
-      "", "value");
+      "", "b1");
 
   this->v_state_stack_.pop ();
 }
@@ -1254,21 +1219,200 @@ sequence_0 (unsigned long& state,
   {
     case 0UL:
     {
-      if (n == "value" && ns.empty ())
+      if (n == "b1" && ns.empty ())
       {
         if (start)
         {
-          this->::xml_schema::complex_content::context_.top ().parser_ = this->value_parser_;
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->b1_parser_;
 
-          if (this->value_parser_)
-            this->value_parser_->pre ();
+          if (this->b1_parser_)
+            this->b1_parser_->pre ();
         }
         else
         {
-          if (this->value_parser_)
+          if (this->b1_parser_)
           {
-            this->value_parser_->post_value ();
-            this->value ();
+            this->b1 (this->b1_parser_->post_string ());
+          }
+
+          count = 0;
+          state = 1UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "b1",
+            ns, n);
+        count = 0;
+        state = 1UL;
+      }
+    }
+    // Fall through.
+    case 1UL:
+    {
+      if (n == "b2" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->b2_parser_;
+
+          if (this->b2_parser_)
+            this->b2_parser_->pre ();
+        }
+        else
+        {
+          if (this->b2_parser_)
+          {
+            this->b2 (this->b2_parser_->post_string ());
+          }
+
+          count = 0;
+          state = 2UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "b2",
+            ns, n);
+        count = 0;
+        state = 2UL;
+      }
+    }
+    // Fall through.
+    case 2UL:
+    {
+      if (n == "b3" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->b3_parser_;
+
+          if (this->b3_parser_)
+            this->b3_parser_->pre ();
+        }
+        else
+        {
+          if (this->b3_parser_)
+          {
+            this->b3 (this->b3_parser_->post_string ());
+          }
+
+          count = 0;
+          state = 3UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "b3",
+            ns, n);
+        count = 0;
+        state = 3UL;
+      }
+    }
+    // Fall through.
+    case 3UL:
+    {
+      if (n == "b4" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->b4_parser_;
+
+          if (this->b4_parser_)
+            this->b4_parser_->pre ();
+        }
+        else
+        {
+          if (this->b4_parser_)
+          {
+            this->b4 (this->b4_parser_->post_string ());
+          }
+
+          count = 0;
+          state = 4UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "b4",
+            ns, n);
+        count = 0;
+        state = 4UL;
+      }
+    }
+    // Fall through.
+    case 4UL:
+    {
+      if (n == "b5" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->b5_parser_;
+
+          if (this->b5_parser_)
+            this->b5_parser_->pre ();
+        }
+        else
+        {
+          if (this->b5_parser_)
+          {
+            this->b5 (this->b5_parser_->post_string ());
+          }
+
+          count = 0;
+          state = 5UL;
+        }
+
+        break;
+      }
+      else
+      {
+        assert (start);
+        if (count < 1UL)
+          this->_expected_element (
+            "", "b5",
+            ns, n);
+        count = 0;
+        state = 5UL;
+      }
+    }
+    // Fall through.
+    case 5UL:
+    {
+      if (n == "b6" && ns.empty ())
+      {
+        if (start)
+        {
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->b6_parser_;
+
+          if (this->b6_parser_)
+            this->b6_parser_->pre ();
+        }
+        else
+        {
+          if (this->b6_parser_)
+          {
+            this->b6 (this->b6_parser_->post_string ());
           }
 
           count = 0;
@@ -1282,7 +1426,7 @@ sequence_0 (unsigned long& state,
         assert (start);
         if (count < 1UL)
           this->_expected_element (
-            "", "value",
+            "", "b6",
             ns, n);
         count = 0;
         state = ~0UL;
@@ -1692,13 +1836,13 @@ _start_element_impl (const ::xml_schema::ro_string& ns,
     {
       unsigned long s = ~0UL;
 
-      if (n == "value" && ns.empty ())
+      if (n == "x" && ns.empty ())
         s = 0UL;
-      else if (n == "x" && ns.empty ())
-        s = 1UL;
       else if (n == "y" && ns.empty ())
-        s = 2UL;
+        s = 1UL;
       else if (n == "z" && ns.empty ())
+        s = 2UL;
+      else if (n == "value" && ns.empty ())
         s = 3UL;
 
       if (s != ~0UL)
@@ -1794,38 +1938,6 @@ sequence_0 (unsigned long& state,
   {
     case 0UL:
     {
-      if (n == "value" && ns.empty ())
-      {
-        if (start)
-        {
-          this->::xml_schema::complex_content::context_.top ().parser_ = this->value_parser_;
-
-          if (this->value_parser_)
-            this->value_parser_->pre ();
-        }
-        else
-        {
-          if (this->value_parser_)
-          {
-            this->value (this->value_parser_->post_decimal ());
-          }
-
-          count = 0;
-          state = 1UL;
-        }
-
-        break;
-      }
-      else
-      {
-        assert (start);
-        count = 0;
-        state = 1UL;
-      }
-    }
-    // Fall through.
-    case 1UL:
-    {
       if (n == "x" && ns.empty ())
       {
         if (start)
@@ -1843,7 +1955,7 @@ sequence_0 (unsigned long& state,
           }
 
           count = 0;
-          state = 2UL;
+          state = 1UL;
         }
 
         break;
@@ -1852,11 +1964,11 @@ sequence_0 (unsigned long& state,
       {
         assert (start);
         count = 0;
-        state = 2UL;
+        state = 1UL;
       }
     }
     // Fall through.
-    case 2UL:
+    case 1UL:
     {
       if (n == "y" && ns.empty ())
       {
@@ -1875,7 +1987,7 @@ sequence_0 (unsigned long& state,
           }
 
           count = 0;
-          state = 3UL;
+          state = 2UL;
         }
 
         break;
@@ -1884,11 +1996,11 @@ sequence_0 (unsigned long& state,
       {
         assert (start);
         count = 0;
-        state = 3UL;
+        state = 2UL;
       }
     }
     // Fall through.
-    case 3UL:
+    case 2UL:
     {
       if (n == "z" && ns.empty ())
       {
@@ -1907,254 +2019,6 @@ sequence_0 (unsigned long& state,
           }
 
           count = 0;
-          state = ~0UL;
-        }
-
-        break;
-      }
-      else
-      {
-        assert (start);
-        count = 0;
-        state = ~0UL;
-      }
-    }
-    // Fall through.
-    case ~0UL:
-      break;
-  }
-}
-
-// Element validation and dispatch functions for value_pskel.
-//
-bool value_pskel::
-_start_element_impl (const ::xml_schema::ro_string& ns,
-                     const ::xml_schema::ro_string& n,
-                     const ::xml_schema::ro_string* t)
-{
-  XSD_UNUSED (t);
-
-  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
-  v_state_descr_* vd = vs.data + (vs.size - 1);
-
-  if (vd->func == 0 && vd->state == 0)
-  {
-    if (this->::xml_schema::complex_content::_start_element_impl (ns, n, t))
-      return true;
-    else
-      vd->state = 1;
-  }
-
-  while (vd->func != 0)
-  {
-    (this->*vd->func) (vd->state, vd->count, ns, n, t, true);
-
-    vd = vs.data + (vs.size - 1);
-
-    if (vd->state == ~0UL)
-      vd = vs.data + (--vs.size - 1);
-    else
-      break;
-  }
-
-  if (vd->func == 0)
-  {
-    if (vd->state != ~0UL)
-    {
-      unsigned long s = ~0UL;
-
-      if (n == "b1" && ns.empty ())
-        s = 0UL;
-
-      if (s != ~0UL)
-      {
-        vd->count++;
-        vd->state = ~0UL;
-
-        vd = vs.data + vs.size++;
-        vd->func = &value_pskel::sequence_0;
-        vd->state = s;
-        vd->count = 0;
-
-        this->sequence_0 (vd->state, vd->count, ns, n, t, true);
-      }
-      else
-      {
-        if (vd->count < 1UL)
-          this->_expected_element (
-            "", "b1",
-            ns, n);
-        return false;
-      }
-    }
-    else
-      return false;
-  }
-
-  return true;
-}
-
-bool value_pskel::
-_end_element_impl (const ::xml_schema::ro_string& ns,
-                   const ::xml_schema::ro_string& n)
-{
-  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
-  v_state_descr_& vd = vs.data[vs.size - 1];
-
-  if (vd.func == 0 && vd.state == 0)
-  {
-    if (!::xml_schema::complex_content::_end_element_impl (ns, n))
-      assert (false);
-    return true;
-  }
-
-  assert (vd.func != 0);
-  (this->*vd.func) (vd.state, vd.count, ns, n, 0, false);
-
-  if (vd.state == ~0UL)
-    vs.size--;
-
-  return true;
-}
-
-void value_pskel::
-_pre_e_validate ()
-{
-  this->v_state_stack_.push ();
-  static_cast< v_state_* > (this->v_state_stack_.top ())->size = 0;
-
-  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
-  v_state_descr_& vd = vs.data[vs.size++];
-
-  vd.func = 0;
-  vd.state = 0;
-  vd.count = 0;
-}
-
-void value_pskel::
-_post_e_validate ()
-{
-  v_state_& vs = *static_cast< v_state_* > (this->v_state_stack_.top ());
-  v_state_descr_* vd = vs.data + (vs.size - 1);
-
-  ::xml_schema::ro_string empty;
-  while (vd->func != 0)
-  {
-    (this->*vd->func) (vd->state, vd->count, empty, empty, 0, true);
-    assert (vd->state == ~0UL);
-    vd = vs.data + (--vs.size - 1);
-  }
-
-  if (vd->count < 1UL)
-    this->_expected_element (
-      "", "b1");
-
-  this->v_state_stack_.pop ();
-}
-
-void value_pskel::
-sequence_0 (unsigned long& state,
-            unsigned long& count,
-            const ::xml_schema::ro_string& ns,
-            const ::xml_schema::ro_string& n,
-            const ::xml_schema::ro_string* t,
-            bool start)
-{
-  XSD_UNUSED (t);
-
-  switch (state)
-  {
-    case 0UL:
-    {
-      if (n == "b1" && ns.empty ())
-      {
-        if (start)
-        {
-          this->::xml_schema::complex_content::context_.top ().parser_ = this->b1_parser_;
-
-          if (this->b1_parser_)
-            this->b1_parser_->pre ();
-        }
-        else
-        {
-          if (this->b1_parser_)
-          {
-            this->b1 (this->b1_parser_->post_string ());
-          }
-
-          count = 0;
-          state = 1UL;
-        }
-
-        break;
-      }
-      else
-      {
-        assert (start);
-        if (count < 1UL)
-          this->_expected_element (
-            "", "b1",
-            ns, n);
-        count = 0;
-        state = 1UL;
-      }
-    }
-    // Fall through.
-    case 1UL:
-    {
-      if (n == "b2" && ns.empty ())
-      {
-        if (start)
-        {
-          this->::xml_schema::complex_content::context_.top ().parser_ = this->b2_parser_;
-
-          if (this->b2_parser_)
-            this->b2_parser_->pre ();
-        }
-        else
-        {
-          if (this->b2_parser_)
-          {
-            this->b2 (this->b2_parser_->post_string ());
-          }
-
-          count = 0;
-          state = 2UL;
-        }
-
-        break;
-      }
-      else
-      {
-        assert (start);
-        if (count < 1UL)
-          this->_expected_element (
-            "", "b2",
-            ns, n);
-        count = 0;
-        state = 2UL;
-      }
-    }
-    // Fall through.
-    case 2UL:
-    {
-      if (n == "b3" && ns.empty ())
-      {
-        if (start)
-        {
-          this->::xml_schema::complex_content::context_.top ().parser_ = this->b3_parser_;
-
-          if (this->b3_parser_)
-            this->b3_parser_->pre ();
-        }
-        else
-        {
-          if (this->b3_parser_)
-          {
-            this->b3 (this->b3_parser_->post_string ());
-          }
-
-          count = 0;
           state = 3UL;
         }
 
@@ -2163,10 +2027,6 @@ sequence_0 (unsigned long& state,
       else
       {
         assert (start);
-        if (count < 1UL)
-          this->_expected_element (
-            "", "b3",
-            ns, n);
         count = 0;
         state = 3UL;
       }
@@ -2174,92 +2034,20 @@ sequence_0 (unsigned long& state,
     // Fall through.
     case 3UL:
     {
-      if (n == "b4" && ns.empty ())
+      if (n == "value" && ns.empty ())
       {
         if (start)
         {
-          this->::xml_schema::complex_content::context_.top ().parser_ = this->b4_parser_;
+          this->::xml_schema::complex_content::context_.top ().parser_ = this->value_parser_;
 
-          if (this->b4_parser_)
-            this->b4_parser_->pre ();
+          if (this->value_parser_)
+            this->value_parser_->pre ();
         }
         else
         {
-          if (this->b4_parser_)
+          if (this->value_parser_)
           {
-            this->b4 (this->b4_parser_->post_string ());
-          }
-
-          count = 0;
-          state = 4UL;
-        }
-
-        break;
-      }
-      else
-      {
-        assert (start);
-        if (count < 1UL)
-          this->_expected_element (
-            "", "b4",
-            ns, n);
-        count = 0;
-        state = 4UL;
-      }
-    }
-    // Fall through.
-    case 4UL:
-    {
-      if (n == "b5" && ns.empty ())
-      {
-        if (start)
-        {
-          this->::xml_schema::complex_content::context_.top ().parser_ = this->b5_parser_;
-
-          if (this->b5_parser_)
-            this->b5_parser_->pre ();
-        }
-        else
-        {
-          if (this->b5_parser_)
-          {
-            this->b5 (this->b5_parser_->post_string ());
-          }
-
-          count = 0;
-          state = 5UL;
-        }
-
-        break;
-      }
-      else
-      {
-        assert (start);
-        if (count < 1UL)
-          this->_expected_element (
-            "", "b5",
-            ns, n);
-        count = 0;
-        state = 5UL;
-      }
-    }
-    // Fall through.
-    case 5UL:
-    {
-      if (n == "b6" && ns.empty ())
-      {
-        if (start)
-        {
-          this->::xml_schema::complex_content::context_.top ().parser_ = this->b6_parser_;
-
-          if (this->b6_parser_)
-            this->b6_parser_->pre ();
-        }
-        else
-        {
-          if (this->b6_parser_)
-          {
-            this->b6 (this->b6_parser_->post_string ());
+            this->value (this->value_parser_->post_decimal ());
           }
 
           count = 0;
@@ -2271,10 +2059,6 @@ sequence_0 (unsigned long& state,
       else
       {
         assert (start);
-        if (count < 1UL)
-          this->_expected_element (
-            "", "b6",
-            ns, n);
         count = 0;
         state = ~0UL;
       }

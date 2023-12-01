@@ -6,18 +6,18 @@
             <xs:sequence>
                 <xs:element name="algorithm_option" type="xs:string" />
                 <xs:element name="write_frequency" type="xs:unsignedByte" />
-                <xs:element name="log_level" type="xs:unsignedByte" />
                 <xs:element name="output_file_name" type="xs:string" />
+                <xs:element name="log_level" type="xs:unsignedByte" />
                 <xs:element name="simulation_parameters">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element maxOccurs="unbounded" name="name">
                                 <xs:complexType mixed="true">
                                     <xs:sequence>
-                                        <xs:element minOccurs="0" name="value" type="xs:decimal" />
                                         <xs:element minOccurs="0" name="x" type="xs:unsignedByte" />
                                         <xs:element minOccurs="0" name="y" type="xs:unsignedByte" />
                                         <xs:element minOccurs="0" name="z" type="xs:unsignedByte" />
+                                        <xs:element minOccurs="0" name="value" type="xs:decimal" />
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
@@ -27,18 +27,12 @@
                 <xs:element name="boundaries">
                     <xs:complexType mixed="true">
                         <xs:sequence>
-                            <xs:element name="value">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="b1" type="xs:string" />
-                                        <xs:element name="b2" type="xs:string" />
-                                        <xs:element name="b3" type="xs:string" />
-                                        <xs:element name="b4" type="xs:string" />
-                                        <xs:element name="b5" type="xs:string" />
-                                        <xs:element name="b6" type="xs:string" />
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
+                            <xs:element name="b1" type="xs:string" />
+                            <xs:element name="b2" type="xs:string" />
+                            <xs:element name="b3" type="xs:string" />
+                            <xs:element name="b4" type="xs:string" />
+                            <xs:element name="b5" type="xs:string" />
+                            <xs:element name="b6" type="xs:string" />
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -48,10 +42,10 @@
                             <xs:element maxOccurs="unbounded" name="name">
                                 <xs:complexType mixed="true">
                                     <xs:sequence>
-                                        <xs:element minOccurs="0" name="value" type="xs:decimal" />
                                         <xs:element minOccurs="0" name="x" type="xs:unsignedByte" />
                                         <xs:element minOccurs="0" name="y" type="xs:unsignedByte" />
                                         <xs:element minOccurs="0" name="z" type="xs:unsignedByte" />
+                                        <xs:element minOccurs="0" name="value" type="xs:decimal" />
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
@@ -64,10 +58,10 @@
                             <xs:element maxOccurs="unbounded" name="name">
                                 <xs:complexType mixed="true">
                                     <xs:sequence>
-                                        <xs:element minOccurs="0" name="value" type="xs:decimal" />
                                         <xs:element minOccurs="0" name="x" type="xs:unsignedByte" />
                                         <xs:element minOccurs="0" name="y" type="xs:unsignedByte" />
                                         <xs:element minOccurs="0" name="z" type="xs:unsignedByte" />
+                                        <xs:element minOccurs="0" name="value" type="xs:decimal" />
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>

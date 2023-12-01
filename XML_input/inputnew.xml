@@ -12,6 +12,7 @@
     </output_file_name>
     <log_level> 1
     </log_level>
+
     <simulation_parameters>
         <name>dimension
             <value>2</value>
@@ -19,43 +20,46 @@
         <name>avg_velocity
             <value>0.1</value>
         </name>
-        <name>domain_size_l
-            <x>180</x>
-            <y>90</y>
-            <z>1</z>
-        </name>
+
         <name>epsilon
             <value>5</value>
         </name>
-
         <name>delta_t
             <value>0.0005</value>
         </name>
         <name>t_end
             <value>20</value>
         </name>
-
         <name>sigma
             <value>1</value>
         </name>
         <name>r_cutoff
             <value>3.0</value>
         </name>
+        <name>domain_size_l
+            <x>180</x>
+            <y>90</y>
+            <z>1</z>
+        </name>
 
     </simulation_parameters>
 
     <boundaries>boundaries
-        <value>
-            <b1>o</b1>
+        <b1>o</b1>
             <b2>o</b2>
             <b3>o</b3>
             <b4>o</b4>
             <b5>o</b5>
             <b6>o</b6>
-        </value>
     </boundaries>
 
     <cuboid_parameters>
+        <name>h
+            <value>1.1225</value>
+        </name>
+        <name>m
+            <value>1.0</value>
+        </name>
         <name>x1
             <x>20</x>
             <y>20</y>
@@ -71,7 +75,9 @@
             <y>0</y>
             <z>0</z>
         </name>
+
         <name>v2
+
             <x>0</x>
             <y>-10</y>
             <z>0</z>
@@ -86,15 +92,19 @@
             <y>20</y>
             <z>1</z>
         </name>
+
+    </cuboid_parameters>
+
+    <sphere_parameters>
         <name>h
             <value>1.1225</value>
+        </name>
+        <name>R
+            <value>15</value>
         </name>
         <name>m
             <value>1.0</value>
         </name>
-    </cuboid_parameters>
-
-    <sphere_parameters>
         <name>x_center
             <x>60</x>
             <y>25</y>
@@ -104,15 +114,6 @@
             <x>0</x>
             <y>-10</y>
             <z>0</z>
-        </name>
-        <name>h
-            <value>1.1225</value>
-        </name>
-        <name>R
-            <value>15</value>
-        </name>
-        <name>m
-            <value>1.0</value>
         </name>
 
 
