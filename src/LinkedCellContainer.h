@@ -64,9 +64,9 @@ private:
     int y_cells;
     int z_cells;
     double c;
-    int x_max;
-    int y_max;
-    int z_max;
+    double x_max;
+    double y_max;
+    double z_max;
     std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
     std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
 
