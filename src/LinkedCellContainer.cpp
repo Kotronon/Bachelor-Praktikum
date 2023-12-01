@@ -107,7 +107,7 @@ void LinkedCellContainer::addParticle(int x, int y, int z, Particle &p) {
  * @param p existing particle to add
  */
 void LinkedCellContainer::addParticle(Particle &p) {
-    cells[floor(p.getX()[0] / c)][floor(p.getX()[1] / c)][floor(p.getX()[2] / c)].emplace_back(p);
+    cells[floor(p.getX()[0] / c) +1][floor(p.getX()[1] / c)+1][floor(p.getX()[2] / c)+1].emplace_back(p);
 }
 
 
@@ -136,7 +136,7 @@ void LinkedCellContainer::moveToNeighbour() {
                         //check boundary conditions -> create ghostcell
                     } else {
                         //is outflow boundary
-                       // if(applyMirrorBoundary(p, x, y, z)) {
+                        //if(applyMirrorBoundary(p, x, y, z))
                        if(needsToBeDeleted(cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1], cells[x][y][z][p].getX()[2]))
                             cells[x][y][z].erase(cells[x][y][z].begin() + p);
                         //}
