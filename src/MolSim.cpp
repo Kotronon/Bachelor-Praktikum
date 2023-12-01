@@ -42,7 +42,7 @@ int main(int argc, char *argsv[]) {
    LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "r", "r", "r"}); //boundary left, right, up, down, behind, bevor
    ParticleGenerator::createCuboidInCells({20,20,0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
    ParticleGenerator::createCuboidInCells({70,60,0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
-   double end_time = 20;
+   double end_time = 5;
    double delta_t = 0.0005;
     double current_time = start_time;
     int iteration = 0;
