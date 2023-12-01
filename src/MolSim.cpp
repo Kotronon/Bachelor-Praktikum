@@ -53,6 +53,7 @@ int main(int argc, char *argsv[]) {
    double delta_t = 0.0005;
     double current_time = start_time;
     int iteration = 0;
+
     //Pre-calculation of f
     //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
     ForceCalculator::LennardJonesForceCell(cells, eps, sig);
