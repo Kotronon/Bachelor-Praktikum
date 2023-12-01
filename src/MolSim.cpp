@@ -39,13 +39,15 @@ ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
     spdlog::info("Hello from MolSim for PSE!");
-   LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "r", "r", "r"}); //boundary left, right, up, down, behind, bevor
-   ParticleGenerator::createCuboidInCells({20,20,0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
-   ParticleGenerator::createCuboidInCells({70,60,0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
-   double end_time = 5;
-   double delta_t = 0.0005;
+   LinkedCellContainer cells = LinkedCellContainer({120, 50, 1}, 3.0, {"o", "o", "o", "r", "r", "r"}); //boundary left, right, up, down, behind, bevor
+   //ParticleGenerator::createCuboidInCells({20,20,0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
+   //ParticleGenerator::createCuboidInCells({70,60,0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
+   ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15,  1.225, cells);
+   double end_time = 0.0005;
+   double delta_t = 0.00005;
     double current_time = start_time;
     int iteration = 0;
+     plotParticlesInCells(iteration, cells);
     //Pre-calculation of f
     //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
     ForceCalculator::LennardJonesForceCell(cells, eps, sig);
@@ -65,10 +67,10 @@ int main(int argc, char *argsv[]) {
         VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
 
         iteration++;
-        if (iteration % 10 == 0) {
+       // if (iteration % 10 == 0) {
             //plotParticles(iteration);
             plotParticlesInCells(iteration, cells);
-        }
+       // }
         if (iteration % 100 == 0) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
         }
