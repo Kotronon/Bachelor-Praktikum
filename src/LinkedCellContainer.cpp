@@ -75,7 +75,13 @@ void LinkedCellContainer::addParticle(int x, int y, int z, std::array<double, 3>
     Particle new_particle = Particle(x_arg, v_arg, m_arg, type_arg);
     cells[x][y][z].emplace_back(new_particle);
 }
-
+/**
+ * adds new Particle to a cell based on current position
+ * @param x_arg coordinates of new particle
+ * @param v_arg velocity of new particle
+ * @param m_arg mass of new particle
+ * @param type_arg type of new particle
+ */
 void
 LinkedCellContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg) {
     Particle new_particle = Particle(x_arg, v_arg, m_arg, type_arg);
@@ -93,18 +99,8 @@ void LinkedCellContainer::addParticle(int x, int y, int z, Particle &p) {
     cells[x][y][z].emplace_back(p);
 }
 
-/**
- * adds new Particle to a cell based on current position
- * @param x_arg coordinates of new particle
- * @param v_arg velocity of new particle
- * @param m_arg mass of new particle
- * @param type_arg type of new particle
- */
-void LinkedCellContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg,
-                                      int type_arg) {
-    Particle particle(x_arg, v_arg, m_arg, type_arg);
-    cells[floor(x_arg[0] / c)][floor(x_arg[1] / c)][floor(x_arg[2] / c)].emplace_back(particle);
-}
+
+
 
 /**
  * adds existing particle to a cell based on current position
@@ -114,23 +110,7 @@ void LinkedCellContainer::addParticle(Particle &p) {
     cells[floor(p.getX()[0] / c)][floor(p.getX()[1] / c)][floor(p.getX()[2] / c)].emplace_back(p);
 }
 
-/**
- * delete Particle from specific cell
- * @param x index of cell on x axis
- * @param y index of cell on y axis
- * @param z index of cell on z axis
- * @param p particle to deleted
- */
-void LinkedCellContainer::deleteParticle(int x, int y, int z, Particle &p) {
-    unsigned int pos = 0;
-    while (pos < cells[x][y][z].size()) {
-        if (cells[x][y][z][pos].operator==(p)) {
-            cells[x][y][z].erase(cells[x][y][z].begin() + pos);
-            return;
-        }
-        pos++;
-    }
-}
+
 
 /**
  * checks if particle needs to be moved to another cell and moves them accordingly
