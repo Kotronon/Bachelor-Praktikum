@@ -7,6 +7,7 @@
 
 #include "inputnew-pimpl.hxx"
 
+
 #include <iostream>
 
 // parameters_pimpl
@@ -66,6 +67,10 @@ post_parameters ()
 {
 }
 
+parameters_pimpl::~parameters_pimpl() {
+
+}
+
 // simulation_parameters_pimpl
 //
 
@@ -82,6 +87,10 @@ name ()
 void simulation_parameters_pimpl::
 post_simulation_parameters ()
 {
+}
+
+simulation_parameters_pimpl::~simulation_parameters_pimpl() {
+
 }
 
 // boundaries_pimpl
@@ -102,6 +111,10 @@ post_boundaries ()
 {
 }
 
+boundaries_pimpl::~boundaries_pimpl() {
+
+}
+
 // cuboid_parameters_pimpl
 //
 
@@ -120,6 +133,10 @@ post_cuboid_parameters ()
 {
 }
 
+cuboid_parameters_pimpl::~cuboid_parameters_pimpl() {
+
+}
+
 // sphere_parameters_pimpl
 //
 
@@ -136,6 +153,10 @@ name ()
 void sphere_parameters_pimpl::
 post_sphere_parameters ()
 {
+}
+
+sphere_parameters_pimpl::~sphere_parameters_pimpl() {
+
 }
 
 // name_pimpl
@@ -173,6 +194,10 @@ z (unsigned char z)
 void name_pimpl::
 post_name ()
 {
+}
+
+name_pimpl::~name_pimpl() {
+
 }
 
 // value_pimpl
@@ -222,5 +247,9 @@ b6 (const ::std::string& b6)
 void value_pimpl::
 post_value ()
 {
+}
+
+value_pimpl::~value_pimpl() {
+
 }
 

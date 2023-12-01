@@ -13,6 +13,8 @@
 class parameters_pimpl: public virtual parameters_pskel
 {
   public:
+
+    ~parameters_pimpl();
   virtual void
   pre ();
 
@@ -47,6 +49,7 @@ class parameters_pimpl: public virtual parameters_pskel
 class simulation_parameters_pimpl: public virtual simulation_parameters_pskel
 {
   public:
+    ~simulation_parameters_pimpl();
   virtual void
   pre ();
 
@@ -60,6 +63,7 @@ class simulation_parameters_pimpl: public virtual simulation_parameters_pskel
 class boundaries_pimpl: public virtual boundaries_pskel
 {
   public:
+    ~boundaries_pimpl();
   virtual void
   pre ();
 
@@ -73,6 +77,7 @@ class boundaries_pimpl: public virtual boundaries_pskel
 class cuboid_parameters_pimpl: public virtual cuboid_parameters_pskel
 {
   public:
+    ~cuboid_parameters_pimpl();
   virtual void
   pre ();
 
@@ -86,6 +91,7 @@ class cuboid_parameters_pimpl: public virtual cuboid_parameters_pskel
 class sphere_parameters_pimpl: public virtual sphere_parameters_pskel
 {
   public:
+    ~sphere_parameters_pimpl ();
   virtual void
   pre ();
 
@@ -99,6 +105,7 @@ class sphere_parameters_pimpl: public virtual sphere_parameters_pskel
 class name_pimpl: public virtual name_pskel
 {
   public:
+    ~name_pimpl();
   virtual void
   pre ();
 
@@ -121,6 +128,7 @@ class name_pimpl: public virtual name_pskel
 class value_pimpl: public virtual value_pskel
 {
   public:
+    ~value_pimpl();
   virtual void
   pre ();
 

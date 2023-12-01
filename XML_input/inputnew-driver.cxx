@@ -4,7 +4,9 @@
 // an XML Schema to C++ data binding compiler. You may use it in your
 // programs without any restrictions.
 //
-
+#include "inputnew-pimpl.hxx"
+#include "inputnew-pskel.hxx"
+#include "inputnew-pimpl.cxx"
 #include "inputnew-pimpl.hxx"
 
 #include <iostream>
