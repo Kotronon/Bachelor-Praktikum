@@ -128,13 +128,13 @@ void LinkedCellContainer::moveToNeighbour() {
                             addParticle(x_now+1, y_now+1, z_now+1, cells[x][y][z][p]);
                             cells[x][y][z].erase(cells[x][y][z].begin() + p);
                         }
-                            generateGhostCell(p, x, y, z);
+                           // generateGhostCell(p, x, y, z);
                        //
                         //check boundary conditions -> create ghostcell
                     } else {
                         //is outflow boundary
-                        // if(applyMirrorBoundary(p, x, y, z))
-                       if(needsToBeDeleted(cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1], cells[x][y][z][p].getX()[2]))
+                         if(applyMirrorBoundary(p, x, y, z))
+                       //if(needsToBeDeleted(cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1], cells[x][y][z][p].getX()[2]))
                             cells[x][y][z].erase(cells[x][y][z].begin() + p);
                         //}
                     }
