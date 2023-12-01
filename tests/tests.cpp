@@ -48,7 +48,7 @@ TEST(cellTest, LinkedCellContainer){
     cells.addParticle({1, 0, 0}, {-1, 3, 0}, 50, 0);
     ASSERT_EQ(1, cells.Particles_in_cell(1,1,1));
     cells.generateGhostCell(0, 1, 1, 1);
-    Particle ghost ({-1, 0, 0}, {0, 0, 0}, 50, 0);
+    Particle ghost ({-1.00000, 0, 0}, {0, 0, 0}, 50, 0);
     ASSERT_TRUE(std::next(std::next(cells.begin()->begin())->begin())->begin().base()->operator==(ghost));
 }
 

@@ -334,39 +334,39 @@ bool LinkedCellContainer::applyMirrorBoundary(int p, int x, int y, int z) {
  */
 void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
     if (x == 1 && boundary[0] == "r" && cells[x][y][z][index].getV()[0] < 0) {
-        std::array<double, 3> ghost_x = {-cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
+        std::array<double, 3> ghost_x = {-cells[x][y][z][index].getX()[0] - 0.00000001, cells[x][y][z][index].getX()[1],
                                          cells[x][y][z][index].getX()[2]};
         std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x - 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
     }
     if (x == x_cells && boundary[1] == "r" && cells[x][y][z][index].getV()[0] > 0) {
-        std::array<double, 3> ghost_x = {x_max + c-fmod(cells[x][y][z][index].getX()[0], c),
+        std::array<double, 3> ghost_x = {x_max + c-fmod(cells[x][y][z][index].getX()[0], c) + 0.00000001,
                                          cells[x][y][z][index].getX()[1], cells[x][y][z][index].getX()[2]};
         std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x + 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
     }
     if (y == 1 && boundary[3] == "r" && cells[x][y][z][index].getV()[1] < 0) {
-        std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], -cells[x][y][z][index].getX()[1],
+        std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], -cells[x][y][z][index].getX()[1] - 0.00000001,
                                          cells[x][y][z][index].getX()[2]};
         std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x, y - 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
     }
     if (y == y_cells && boundary[2] == "r" && cells[x][y][z][index].getV()[1] > 0) {
         std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0],
-                                         y_max + c-fmod(cells[x][y][z][index].getX()[1], c),
+                                         y_max + c-fmod(cells[x][y][z][index].getX()[1], c) + 0.00000001,
                                          cells[x][y][z][index].getX()[2]};
         std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x, y + 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
     }
     if (z == 1 && boundary[4] == "r" && cells[x][y][z][index].getV()[2] < 0) {
         std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
-                                         -cells[x][y][z][index].getX()[2]};
+                                         -cells[x][y][z][index].getX()[2] - 0.00000001};
         std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x, y, z - 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
     }
     if (z == z_cells && boundary[5] == "r" && cells[x][y][z][index].getV()[2] > 0) {
         std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
-                                         z_max + c-fmod(cells[x][y][z][index].getX()[2], c)};
+                                         z_max + c-fmod(cells[x][y][z][index].getX()[2], c) + 0.00000001};
         std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x, y, z + 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), index);
     }
