@@ -12,8 +12,7 @@
 
 #include "inputnew-pimpl.hxx"
 #include "inputnew-pimpl.cxx"
-#include "inputnew-pskel.hxx"
-#include "inputnew-pskel.cxx"
+
 
 
 #include <iostream>

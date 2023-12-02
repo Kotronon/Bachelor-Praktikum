@@ -44,5 +44,5 @@
 ## and now run it
 * c++ -std=c++11 -I.../libxsd -c inputnew-driver.cxx inputnew-pskel.cxx
 * c++ -std=c++11 -o driver inputnew-driver.o inputnew-pskel.o -lexpat
-* ./driver inputfile.xml
+* ./driver inputnew.xml
 
