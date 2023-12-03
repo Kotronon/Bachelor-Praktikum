@@ -49,11 +49,10 @@ int main(int argc, char *argsv[]) {
   // ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
    //ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-1,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
    ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells);
-   double end_time = 10.;
+   double end_time = 10;
    double delta_t = 0.00005;
     double current_time = start_time;
     int iteration = 0;
-
     //Pre-calculation of f
     //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
     ForceCalculator::LennardJonesForceCell(cells, eps, sig);

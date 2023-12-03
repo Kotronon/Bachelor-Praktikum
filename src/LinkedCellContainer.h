@@ -14,7 +14,7 @@ public:
 
 
 
-    LinkedCellContainer(std::array<int, 3> N, double cutoff,  std::array<std::string, 6> b);
+    LinkedCellContainer(std::array<double, 3> N, double cutoff,  std::array<std::string, 6> b);
 
     virtual ~LinkedCellContainer();
 

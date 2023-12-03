@@ -27,10 +27,10 @@ TEST(ParticleContainerTest, ParticleContainer){
 }
 
 /**
- * Test for linked cell container for addParticle, begin(), end() and size() functions as well as to calculate position and move particle to next cell and generating ghostcell
+ * Test for linked cell container for addParticle, begin(), end() and size() functions as well as to calculate position and move particle to next cell and generating ghostcell and outflow boundary
  */
 TEST(cellTest, LinkedCellContainer){
-    LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "r", "r", "r"});
+    LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "o", "r", "r"});
     //test cells size
     EXPECT_EQ(1800, cells.cell_numbers()) << "wrong size";
     //test addParticle
@@ -48,8 +48,13 @@ TEST(cellTest, LinkedCellContainer){
     cells.addParticle({1, 0, 0}, {-1, 3, 0}, 50, 0);
     ASSERT_EQ(1, cells.Particles_in_cell(1,1,1));
     cells.generateGhostCell(0, 1, 1, 1);
-    Particle ghost ({-1.0000000001, 0, 0}, {0, 0, 0}, 50, 0);
+    Particle ghost ({-1.0000000001, 0, 0}, {0, 0, 0}, 50, 1);
     ASSERT_TRUE(std::next(std::next(cells.begin()->begin())->begin())->begin().base()->operator==(ghost));
+    //test outflow
+    cells.addParticle({0, 0, 0}, {0, -1, 0}, 50, 0);
+    EXPECT_EQ(2, cells.Particles_in_cell(1,1,1));
+    PositionCalculator::PositionStoermerVerletCell(cells, 1);
+    EXPECT_EQ(0, cells.Particles_in_cell(1,1,1));
 }
 
 /**
