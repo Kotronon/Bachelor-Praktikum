@@ -9,6 +9,9 @@
 
 #include <iostream>
 
+std::string  b1_,b2_,b3_,b4_,b5_,b6_;
+
+
 // parameters_pimpl
 //
 
@@ -204,9 +207,9 @@ x (unsigned char x)
 }
 
 void name_pimpl::
-y (unsigned char y)
+y (char y)
 {
-  std::cout << "y: " << static_cast<unsigned short> (y) << std::endl;
+  std::cout << "y: " << static_cast<short> (y) << std::endl;
 }
 
 void name_pimpl::

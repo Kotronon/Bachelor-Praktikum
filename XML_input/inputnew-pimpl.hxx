@@ -130,7 +130,7 @@ public:
     x (unsigned char);
 
     virtual void
-    y (unsigned char);
+    y (char);
 
     virtual void
     z (unsigned char);

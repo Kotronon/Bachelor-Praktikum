@@ -33,6 +33,7 @@ main (int argc, char* argv[])
     ::parameters_pimpl parameters_p;
     ::xml_schema::string_pimpl string_p;
     ::xml_schema::unsigned_byte_pimpl unsigned_byte_p;
+      ::xml_schema::byte_pimpl byte_p;
     ::simulation_parameters_pimpl simulation_parameters_p;
     ::name_pimpl name_p;
     ::xml_schema::decimal_pimpl decimal_p;
@@ -54,7 +55,7 @@ main (int argc, char* argv[])
     simulation_parameters_p.parsers (name_p);
 
     name_p.parsers (unsigned_byte_p,
-                    unsigned_byte_p,
+                    byte_p,
                     unsigned_byte_p,
                     decimal_p);
 

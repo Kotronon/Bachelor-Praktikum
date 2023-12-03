@@ -268,7 +268,7 @@ x_parser (::xml_schema::unsigned_byte_pskel& p)
 }
 
 void name_pskel::
-y_parser (::xml_schema::unsigned_byte_pskel& p)
+y_parser (::xml_schema::byte_pskel& p)
 {
   this->y_parser_ = &p;
 }
@@ -287,7 +287,7 @@ value_parser (::xml_schema::decimal_pskel& p)
 
 void name_pskel::
 parsers (::xml_schema::unsigned_byte_pskel& x,
-         ::xml_schema::unsigned_byte_pskel& y,
+         ::xml_schema::byte_pskel& y,
          ::xml_schema::unsigned_byte_pskel& z,
          ::xml_schema::decimal_pskel& value)
 {
@@ -441,7 +441,7 @@ x (unsigned char)
 }
 
 void name_pskel::
-y (unsigned char)
+y (char)
 {
 }
 
@@ -1983,7 +1983,7 @@ sequence_0 (unsigned long& state,
         {
           if (this->y_parser_)
           {
-            this->y (this->y_parser_->post_unsigned_byte ());
+            this->y (this->y_parser_->post_byte());
           }
 
           count = 0;

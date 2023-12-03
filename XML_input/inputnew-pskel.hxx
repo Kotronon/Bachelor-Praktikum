@@ -764,7 +764,7 @@ class name_pskel: public ::xml_schema::complex_content
   x (unsigned char);
 
   virtual void
-  y (unsigned char);
+  y (char);
 
   virtual void
   z (unsigned char);
@@ -781,7 +781,7 @@ class name_pskel: public ::xml_schema::complex_content
   x_parser (::xml_schema::unsigned_byte_pskel&);
 
   void
-  y_parser (::xml_schema::unsigned_byte_pskel&);
+  y_parser (::xml_schema::byte_pskel&);
 
   void
   z_parser (::xml_schema::unsigned_byte_pskel&);
@@ -791,7 +791,7 @@ class name_pskel: public ::xml_schema::complex_content
 
   void
   parsers (::xml_schema::unsigned_byte_pskel& /* x */,
-           ::xml_schema::unsigned_byte_pskel& /* y */,
+           ::xml_schema::byte_pskel& /* y */,
            ::xml_schema::unsigned_byte_pskel& /* z */,
            ::xml_schema::decimal_pskel& /* value */);
 
@@ -816,7 +816,7 @@ class name_pskel: public ::xml_schema::complex_content
 
   protected:
   ::xml_schema::unsigned_byte_pskel* x_parser_;
-  ::xml_schema::unsigned_byte_pskel* y_parser_;
+  ::xml_schema::byte_pskel* y_parser_;
   ::xml_schema::unsigned_byte_pskel* z_parser_;
   ::xml_schema::decimal_pskel* value_parser_;
 
