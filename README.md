@@ -35,12 +35,17 @@ Members:
 # Report #
 ## Task 1 ##
 * XML file
+* Using CodeSynthesis XSD tool, generated files that parse a XML file with the help of a XSD file
+* generated using this command : 
+* xsd cxx-parser --generate-test-driver --generate-print-impl --force-overwrite --xml-parser expat <xsd input file>.xsd
+* Original plan looked like this : ![img.png](img.png)
+* After lots of trial and error, plan looked like this : 
 
 ## Task 2 ##
 * Linked-cell algorithm
 * Cell wide in each direction is the cutoff value
 * Structure as image below:
-* We still provide the possability to use simple sum implementation
+* We still provide the possibility to use simple sum implementation
 * Between the two implementations is a big time difference:
 ![Screenshot](input/both_rpunded_and_scaled.png)
 

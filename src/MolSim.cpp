@@ -11,6 +11,15 @@
 #include <string>
 
 
+// here we go
+#include "our_input/newinput-pimpl.cxx"
+
+
+/**
+ * get over all the inputs from
+ * */
+void collectInput();
+
 /**
  * plot the particles to a xyz-file
  */
@@ -89,6 +98,24 @@ int main(int argc, char *argsv[]) {
      return 0;
 }
 
+double end_time;
+double delta_t5;
+double current_time;
+
+
+
+
+
+ void collectInput(){
+    //LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {b1_, b2_, b3_, b4_, b5_, b6_}); //boundary left, right, up, down, behind, bevor
+    //ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
+    // ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-1,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
+
+
+
+
+
+}
 void plotParticlesInCells(int iteration, LinkedCellContainer &grid) {
 
     std::string out_name("MD_vtk");
