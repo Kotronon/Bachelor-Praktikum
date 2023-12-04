@@ -232,7 +232,7 @@ std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator LinkedCel
 
 /**
  * applies the force calculation according to N3L
- * @param forceCalculationforceCalculation a function to apply the  force calculations pairwise
+ * @param forceCalculationforceCalculation a function to apply the force calculations pairwise
  */
 void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation) {
     for (int x = 1; x <= x_cells ; x++) {

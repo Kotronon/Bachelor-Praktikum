@@ -12,7 +12,7 @@ private:
     static double epsilon;
     static double sigma;
 public:
-    static void SimpleForceCalculation(ParticleContainer &container);
+    static void GravityForceCalculation(ParticleContainer &container);
     static void LennardJonesForce(ParticleContainer &container, double eps, double sig);
     static void LennardJonesForceFaster(ParticleContainer &container, double eps, double sig);
     static void LennardJonesForcePairwise(Particle *p1, Particle *p2);

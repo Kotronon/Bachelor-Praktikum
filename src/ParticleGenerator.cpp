@@ -94,7 +94,7 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
 }
 
 /**
- * creates a 2-dimensional sphere/disk and stores it in a ParticleContainer
+ * creates a 2-dimensional sphere/disk and stores it in a ParticleContainer based on Bresenham
  * @param center position of center
  * @param v initial velocity
  * @param m mass of each particle

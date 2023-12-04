@@ -13,7 +13,7 @@ double ForceCalculator::sigma = 1;
  * Calculates the gravity force of all Particles in given ParticleContainer
  * @param container
  */
-void ForceCalculator::SimpleForceCalculation(ParticleContainer &container) {
+void ForceCalculator::GravityForceCalculation(ParticleContainer &container) {
     std::array<double, 3> force{};
     for (auto &p1: container) {
         force = {0., 0., 0.};
@@ -53,7 +53,7 @@ void ForceCalculator::LennardJonesForce(ParticleContainer &container, double eps
 }
 
 /**
- * Faster calculation of the the Lennord Jones force of all Particles in given ParticleContainer
+ * Faster calculation of the the Lennard Jones force of all Particles in given ParticleContainer
  * @param container
  * @param eps
  * @param sig
