@@ -10,787 +10,526 @@
 
 #include "newinput-pskel.hxx"
 
-
 class input_parameters_pimpl: public virtual input_parameters_pskel
 {
-private:
-     std::string algorithm_option_, output_file_name_;
 public:
-    virtual const std::string & getAlgorithmOption();
+    virtual void
+    pre ();
 
-    virtual const std::string & getOutputFileName();
+    virtual void
+    algorithm_option (const ::std::string&);
 
-    virtual float getWriteFrequency();
+    virtual void
+    write_frequency (float);
 
-    virtual float getLogLevel();
+    virtual void
+    output_file_param (const ::std::string&);
 
-private:
-   static float write_frequency_,log_level_;
+    virtual void
+    log_level (float);
 
-  public:
+    virtual void
+    simulation_input_parameters ();
 
-  virtual void
-  pre ();
+    virtual void
+    input_boundary_options ();
 
-  virtual void
-  algorithm_option (const ::std::string&);
+    virtual void
+    cuboid_input_parameters ();
 
-  virtual void
-  write_frequency (float);
+    virtual void
+    sphere_input_parameters ();
 
-  virtual void
-  output_file_param (const ::std::string&);
+    virtual void
+    post_input_parameters ();
 
-  virtual void
-  log_level (float);
-
-  virtual void
-  simulation_input_parameters ();
-
-  virtual void
-  input_boundary_options ();
-
-  virtual void
-  cuboid_input_parameters ();
-
-  virtual void
-  sphere_input_parameters ();
-
-  virtual void
-  post_input_parameters ();
-
-  ~input_parameters_pimpl();
+    ~input_parameters_pimpl();
 };
 
 class simulation_input_parameters_pimpl: public virtual simulation_input_parameters_pskel
 {
-private:
-     static float dimension_,avg_velocity_,epsilon_,delta_t_,t_end_,sigma_,r_cutoff_;
-     static short domain_size_l_x_;
-     static signed char domain_size_l_y_,domain_size_l_z_;
-
 public:
-
-    static float getDimension();
-
-    static float getAvgVelocity();
-
-    static float getEpsilon();
-
-    static float getDeltaT();
-
-    static float getTEnd();
-
-    static float getSigma();
-
-    static float getRCutoff();
-
-    static short getDomainSizeLX();
-
-    static signed char getDomainSizeLY();
-
-    static signed char getDomainSizeLZ();
-
-
-  public:
     ~simulation_input_parameters_pimpl();
-  virtual void
-  pre ();
+    virtual void
+    pre ();
 
-  virtual void
-  dimension ();
+    virtual void
+    dimension ();
 
-  virtual void
-  avg_velocity ();
+    virtual void
+    avg_velocity ();
 
-  virtual void
-  epsilon ();
+    virtual void
+    epsilon ();
 
-  virtual void
-  delta_t ();
+    virtual void
+    delta_t ();
 
-  virtual void
-  t_end ();
+    virtual void
+    t_end ();
 
-  virtual void
-  sigma ();
+    virtual void
+    sigma ();
 
-  virtual void
-  r_cutoff ();
+    virtual void
+    r_cutoff ();
 
-  virtual void
-  domain_size_l ();
+    virtual void
+    domain_size_l ();
 
-  virtual void
-  post_simulation_input_parameters ();
+    virtual void
+    post_simulation_input_parameters ();
 };
 
 class input_boundary_options_pimpl: public virtual input_boundary_options_pskel
 {
-private:
-   static std::string b1_,b2_,b3_,b4_,b5_,b6_;
-public:
-    const std::string &getB1();
-
-    const std::string &getB2() ;
-
-    const std::string &getB3() ;
-
-    const std::string &getB4() ;
-
-    const std::string &getB5() ;
-
-    const std::string &getB6() ;
 
 public:
     ~input_boundary_options_pimpl();
-  virtual void
-  pre ();
+    virtual void
+    pre ();
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    name (const ::std::string&);
 
-  virtual void
-  b1 (const ::std::string&);
+    virtual void
+    b1 (const ::std::string&);
 
-  virtual void
-  b2 (const ::std::string&);
+    virtual void
+    b2 (const ::std::string&);
 
-  virtual void
-  b3 (const ::std::string&);
+    virtual void
+    b3 (const ::std::string&);
 
-  virtual void
-  b4 (const ::std::string&);
+    virtual void
+    b4 (const ::std::string&);
 
-  virtual void
-  b5 (const ::std::string&);
+    virtual void
+    b5 (const ::std::string&);
 
-  virtual void
-  b6 (const ::std::string&);
+    virtual void
+    b6 (const ::std::string&);
 
-  virtual void
-  post_input_boundary_options ();
+    virtual void
+    post_input_boundary_options ();
 };
 
 class cuboid_input_parameters_pimpl: public virtual cuboid_input_parameters_pskel
 {
-private:
-    static float h_,m_;
-    static signed char  x1_x_,x1_y_,x1_z_,
-            x2_x_,x2_y_,x2_z_,
-            v1_x_,v1_y_,v1_z_,
-            v2_x_,v2_y_,v2_z_,
-            N1_x_,N1_y_,N1_z_,
-            N2_x_,N2_y_,N2_z_;
-public:
-    static float getH();
-
-    static float getM();
-
-    static signed char getX1X();
-
-    static signed char getX1Y();
-
-    static signed char getX1Z();
-
-    static signed char getX2X();
-
-    static signed char getX2Y();
-
-    static signed char getX2Z();
-
-    static signed char getV1X();
-
-    static signed char getV1Y();
-
-    static signed char getV1Z();
-
-    static signed char getV2X();
-
-    static signed char getV2Y();
-
-    static signed char getV2Z();
-
-    static signed char getN1X();
-
-    static signed char getN1Y();
-
-    static signed char getN1Z();
-
-    static signed char getN2X();
-
-    static signed char getN2Y();
-
-    static signed char getN2Z();
-
 public:
     ~cuboid_input_parameters_pimpl();
-  virtual void
-  pre ();
+    virtual void
+    pre ();
 
-  virtual void
-  h ();
+    virtual void
+    h ();
 
-  virtual void
-  m ();
+    virtual void
+    m ();
 
-  virtual void
-  x1 ();
+    virtual void
+    x1 ();
 
-  virtual void
-  x2 ();
+    virtual void
+    x2 ();
 
-  virtual void
-  v1 ();
+    virtual void
+    v1 ();
 
-  virtual void
-  v2 ();
+    virtual void
+    v2 ();
 
-  virtual void
-  N1 ();
+    virtual void
+    N1 ();
 
-  virtual void
-  N2 ();
+    virtual void
+    N2 ();
 
-  virtual void
-  post_cuboid_input_parameters ();
+    virtual void
+    post_cuboid_input_parameters ();
 };
 
 class sphere_input_parameters_pimpl: public virtual sphere_input_parameters_pskel
 {
-private:
-   static signed char x_center_x_,x_center_y_,x_center_z_, v_x_,v_y_,v_z_;
-   static float h_,m_,dimension_;
-public:
-    static float getDimension();
-
-public:
-    static float getH();
-
-    static float getM();
-
-public:
-     signed char getXCenterX();
-
-     signed char getXCenterY();
-
-     signed char getXCenterZ();
-
-     signed char getVX();
-
-     signed char getVY();
-
-     signed char getVZ();
-
 public:
     ~sphere_input_parameters_pimpl();
-  virtual void
-  pre ();
+    virtual void
+    pre ();
 
-  virtual void
-  h ();
+    virtual void
+    h ();
 
-  virtual void
-  dimension ();
+    virtual void
+    dimension ();
 
-  virtual void
-  m ();
+    virtual void
+    m ();
 
-  virtual void
-  x_center ();
+    virtual void
+    x_center ();
 
-  virtual void
-  v ();
+    virtual void
+    v ();
 
-  virtual void
-  post_sphere_input_parameters ();
+    virtual void
+    post_sphere_input_parameters ();
 };
 
 class dimension_pimpl: public virtual dimension_pskel
 {
-private :
-    static float dimension;
-public:
-    static float getDimension();
-
 public:
     ~dimension_pimpl();
-  virtual void
-  pre ();
+    virtual void
+    pre ();
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    name (const ::std::string&);
 
-  virtual void
-  value (float);
+    virtual void
+    value (float);
 
-  virtual void
-  post_dimension ();
+    virtual void
+    post_dimension ();
 };
 
 class avg_velocity_pimpl: public virtual avg_velocity_pskel
 {
-private:
-    static float avg_v;
-public:
-    static float getAvgV();
-
 public:
     ~avg_velocity_pimpl();
-  virtual void
-  pre ();
+    virtual void
+    pre ();
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    name (const ::std::string&);
 
-  virtual void
-  value (float);
+    virtual void
+    value (float);
 
-  virtual void
-  post_avg_velocity ();
+    virtual void
+    post_avg_velocity ();
 };
 
 class epsilon_pimpl: public virtual epsilon_pskel
 {
-private:
-    static float epsilon;
-public:
-    static float getEpsilon();
-
 public:
     ~epsilon_pimpl();
-  virtual void
-  pre ();
+    virtual void
+    pre ();
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    name (const ::std::string&);
 
-  virtual void
-  value (float);
+    virtual void
+    value (float);
 
-  virtual void
-  post_epsilon ();
+    virtual void
+    post_epsilon ();
 };
 
 class delta_t_pimpl: public virtual delta_t_pskel
 {
-private:
-    static float delta_t;
-public:
-    static float getDeltaT();
-
 public:
     ~delta_t_pimpl();
-  virtual void
-  pre ();
+    virtual void
+    pre ();
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    name (const ::std::string&);
 
-  virtual void
-  value (float);
+    virtual void
+    value (float);
 
-  virtual void
-  post_delta_t ();
+    virtual void
+    post_delta_t ();
 };
 
 class t_end_pimpl: public virtual t_end_pskel
 {
-private:
-    static float t_end;
-public:
-    static float getTEnd();
-
 public:
     ~t_end_pimpl();
-  virtual void
-  pre ();
+    virtual void
+    pre ();
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    name (const ::std::string&);
 
-  virtual void
-  value (float);
+    virtual void
+    value (float);
 
-  virtual void
-  post_t_end ();
+    virtual void
+    post_t_end ();
 };
 
 class sigma_pimpl: public virtual sigma_pskel
 {
-private:
-    static float sigma;
-public:
-    static float getSigma();
-
 public:
     ~sigma_pimpl();
-  virtual void
-  pre ();
+    virtual void
+    pre ();
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    name (const ::std::string&);
 
-  virtual void
-  value (float);
+    virtual void
+    value (float);
 
-  virtual void
-  post_sigma ();
+    virtual void
+    post_sigma ();
 };
 
 class r_cutoff_pimpl: public virtual r_cutoff_pskel
 {
-private :
-    static float r_cutoff;
-public:
-    static float getRCutoff();
-
 public:
     ~r_cutoff_pimpl();
-  virtual void
-  pre ();
+    virtual void
+    pre ();
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    name (const ::std::string&);
 
-  virtual void
-  value (float);
+    virtual void
+    value (float);
 
-  virtual void
-  post_r_cutoff ();
+    virtual void
+    post_r_cutoff ();
 };
 
 class domain_size_l_pimpl: public virtual domain_size_l_pskel
 {
-private:
-    static short x_;
-    static unsigned char y_, z_;
-public:
-    static short getX();
-
-    static signed char getY();
-
-    static signed char getZ();
-
 public:
     ~domain_size_l_pimpl();
-  virtual void
-  pre ();
+    virtual void
+    pre ();
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    name (const ::std::string&);
 
-  virtual void
-  x (short);
+    virtual void
+    x (short);
 
-  virtual void
-  y (signed char);
+    virtual void
+    y (signed char);
 
-  virtual void
-  z (signed char);
+    virtual void
+    z (signed char);
 
-  virtual void
-  post_domain_size_l ();
+    virtual void
+    post_domain_size_l ();
 };
 
 class h_pimpl: public virtual h_pskel
 {
-private :
-    static float h;
-public:
-    static float getH();
-
 public:
     ~h_pimpl();
-  virtual void
-  pre ();
+    virtual void
+    pre ();
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    name (const ::std::string&);
 
-  virtual void
-  value (float);
+    virtual void
+    value (float);
 
-  virtual void
-  post_h ();
+    virtual void
+    post_h ();
 };
 
 class m_pimpl: public virtual m_pskel
 {
-private :
-    static float m_;
-public:
-    static float getM();
-
 public:
     ~m_pimpl();
 
 
     virtual void
-  pre ();
+    pre ();
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    name (const ::std::string&);
 
-  virtual void
-  value (float);
+    virtual void
+    value (float);
 
-  virtual void
-  post_m ();
+    virtual void
+    post_m ();
 };
 
 class x1_pimpl: public virtual x1_pskel
 {
-private:
-    static signed char x1_x,x1_y,x1_z;
-public:
-    static signed char getX1X();
-
-    static signed char getX1Y();
-
-    static signed char getX1Z();
-
 public:
     ~x1_pimpl();
 
 
     virtual void
-  pre ();
+    pre ();
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    name (const ::std::string&);
 
-  virtual void
-  x (signed char);
+    virtual void
+    x (signed char);
 
-  virtual void
-  y (signed char);
+    virtual void
+    y (signed char);
 
-  virtual void
-  z (signed char);
+    virtual void
+    z (signed char);
 
-  virtual void
-  post_x1 ();
+    virtual void
+    post_x1 ();
 };
 
 class x2_pimpl: public virtual x2_pskel
 {
-private:
-    static signed char x2_x,x2_y,x2_z;
 public:
-    static signed char getX2X();
+    virtual void
+    pre ();
 
-    static signed char getX2Y();
+    virtual void
+    name (const ::std::string&);
 
-    static signed char getX2Z();
+    virtual void
+    x (signed char);
 
-public:
+    virtual void
+    y (signed char);
 
+    virtual void
+    z (signed char);
 
-
-public:
-  virtual void
-  pre ();
-
-  virtual void
-  name (const ::std::string&);
-
-  virtual void
-  x (signed char);
-
-  virtual void
-  y (signed char);
-
-  virtual void
-  z (signed char);
-
-  virtual void
-  post_x2 ();
+    virtual void
+    post_x2 ();
 };
 
 class v1_pimpl: public virtual v1_pskel
 {
-private:
-    static signed char v1_x,v1_y,v1_z;
 public:
-    static signed char getV1X();
+    virtual void
+    pre ();
 
-    static signed char getV1Y();
+    virtual void
+    name (const ::std::string&);
 
-    static signed char getV1Z();
+    virtual void
+    x (signed char);
 
-public:
-  virtual void
-  pre ();
+    virtual void
+    y (signed char);
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    z (signed char);
 
-  virtual void
-  x (signed char);
-
-  virtual void
-  y (signed char);
-
-  virtual void
-  z (signed char);
-
-  virtual void
-  post_v1 ();
+    virtual void
+    post_v1 ();
 };
 
 class v2_pimpl: public virtual v2_pskel
 {
-private:
-    static signed char v2_x,v2_y,v2_z;
 public:
-    static signed char getV2X();
+    virtual void
+    pre ();
 
-    static signed char getV2Y();
+    virtual void
+    name (const ::std::string&);
 
-    static signed char getV2Z();
+    virtual void
+    x (signed char);
 
-public:
-  virtual void
-  pre ();
+    virtual void
+    y (signed char);
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    z (signed char);
 
-  virtual void
-  x (signed char);
-
-  virtual void
-  y (signed char);
-
-  virtual void
-  z (signed char);
-
-  virtual void
-  post_v2 ();
+    virtual void
+    post_v2 ();
 };
 
 class N1_pimpl: public virtual N1_pskel
 {
-private:
-    static signed char n1_x,n1_y,n1_z;
 public:
-    static signed char getN1X();
+    virtual void
+    pre ();
 
-    static signed char getN1Y();
+    virtual void
+    name (const ::std::string&);
 
-    static signed char getN1Z();
+    virtual void
+    x (signed char);
 
-public:
-  virtual void
-  pre ();
+    virtual void
+    y (signed char);
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    z (signed char);
 
-  virtual void
-  x (signed char);
-
-  virtual void
-  y (signed char);
-
-  virtual void
-  z (signed char);
-
-  virtual void
-  post_N1 ();
+    virtual void
+    post_N1 ();
 };
 
 class N2_pimpl: public virtual N2_pskel
 {
-private:
-    static signed char n2_x,n2_y,n2_z;
 public:
-    static signed char getN2X();
+    virtual void
+    pre ();
 
-    static signed char getN2Y();
+    virtual void
+    name (const ::std::string&);
 
-    static signed char getN2Z();
+    virtual void
+    x (signed char);
 
-public:
-  virtual void
-  pre ();
+    virtual void
+    y (signed char);
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    z (signed char);
 
-  virtual void
-  x (signed char);
-
-  virtual void
-  y (signed char);
-
-  virtual void
-  z (signed char);
-
-  virtual void
-  post_N2 ();
+    virtual void
+    post_N2 ();
 };
 
 class x_center_pimpl: public virtual x_center_pskel
 {
-    static signed char x_,y_,z_;
 public:
-    static signed char getX();
+    virtual void
+    pre ();
 
-    static signed char getY();
+    virtual void
+    name (const ::std::string&);
 
-    static signed char getZ();
+    virtual void
+    x (signed char);
 
-public:
-  virtual void
-  pre ();
+    virtual void
+    y (signed char);
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    z (signed char);
 
-  virtual void
-  x (signed char);
-
-  virtual void
-  y (signed char);
-
-  virtual void
-  z (signed char);
-
-  virtual void
-  post_x_center ();
+    virtual void
+    post_x_center ();
 };
 
 class v_pimpl: public virtual v_pskel
 {
-private:
-    static signed char v_x_,v_y_,v_z_;
 public:
-    static signed char getVX();
+    virtual void
+    pre ();
 
-    static signed char getVY();
+    virtual void
+    name (const ::std::string&);
 
-    static signed char getVZ();
+    virtual void
+    x (signed char);
 
-public:
-  virtual void
-  pre ();
+    virtual void
+    y (signed char);
 
-  virtual void
-  name (const ::std::string&);
+    virtual void
+    z (signed char);
 
-  virtual void
-  x (signed char);
-
-  virtual void
-  y (signed char);
-
-  virtual void
-  z (signed char);
-
-  virtual void
-  post_v ();
+    virtual void
+    post_v ();
 };
 
 #endif // NEWINPUT_PIMPL_HXX

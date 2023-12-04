@@ -20,29 +20,25 @@ pre ()
 void input_parameters_pimpl::
 algorithm_option (const ::std::string& algorithm_option)
 {
-  std::cout << "algorithm_option: " << algorithm_option << std::endl;
-    algorithm_option_ = algorithm_option;
+    std::cout << "algorithm_option: " << algorithm_option << std::endl;
 }
 
 void input_parameters_pimpl::
 write_frequency (float write_frequency)
 {
-  std::cout << "write_frequency: " << write_frequency << std::endl;
-  write_frequency_ = write_frequency;
+    std::cout << "write_frequency: " << write_frequency << std::endl;
 }
 
 void input_parameters_pimpl::
 output_file_param (const ::std::string& output_file_param)
 {
-  std::cout << "output_file_param: " << output_file_param << std::endl;
-  output_file_name_ = output_file_param;
+    std::cout << "output_file_param: " << output_file_param << std::endl;
 }
 
 void input_parameters_pimpl::
 log_level (float log_level)
 {
-  std::cout << "log_level: " << log_level << std::endl;
-  log_level_ = log_level;
+    std::cout << "log_level: " << log_level << std::endl;
 }
 
 void input_parameters_pimpl::
@@ -72,22 +68,6 @@ post_input_parameters ()
 
 input_parameters_pimpl::~input_parameters_pimpl() {
 
-}
-
-const std::string & input_parameters_pimpl::getAlgorithmOption() {
-    return algorithm_option_;
-}
-
-const std::string & input_parameters_pimpl::getOutputFileName() {
-    return output_file_name_;
-}
-
-float  input_parameters_pimpl::getWriteFrequency() {
-    return write_frequency_;
-}
-
-float  input_parameters_pimpl::getLogLevel() {
-    return log_level_;
 }
 
 // simulation_input_parameters_pimpl
@@ -147,54 +127,6 @@ simulation_input_parameters_pimpl::~simulation_input_parameters_pimpl() {
 
 }
 
-float simulation_input_parameters_pimpl::getDimension() {
-    dimension_ = dimension_pimpl::getDimension();
-    return dimension_;
-}
-
-float simulation_input_parameters_pimpl::getAvgVelocity() {
-    return avg_velocity_;
-}
-
-float simulation_input_parameters_pimpl::getEpsilon() {
-    return epsilon_;
-}
-
-float simulation_input_parameters_pimpl::getDeltaT() {
-    delta_t_ = delta_t_pimpl::getDeltaT();
-    return delta_t_;
-}
-
-float simulation_input_parameters_pimpl::getTEnd() {
-    t_end_ = t_end_pimpl::getTEnd();
-    return t_end_;
-}
-
-float simulation_input_parameters_pimpl::getSigma() {
-    sigma_ = sigma_pimpl::getSigma();
-    return sigma_;
-}
-
-float simulation_input_parameters_pimpl::getRCutoff() {
-    r_cutoff_ = r_cutoff_pimpl::getRCutoff();
-    return r_cutoff_;
-}
-
-short simulation_input_parameters_pimpl::getDomainSizeLX() {
-    domain_size_l_x_ = domain_size_l_pimpl::getX();
-    return domain_size_l_x_;
-}
-
-signed char simulation_input_parameters_pimpl::getDomainSizeLY() {
-    domain_size_l_y_ = domain_size_l_pimpl::getY();
-    return domain_size_l_y_;
-}
-
-signed char simulation_input_parameters_pimpl::getDomainSizeLZ() {
-    domain_size_l_z_ = domain_size_l_pimpl::getZ();
-    return domain_size_l_z_;
-}
-
 // input_boundary_options_pimpl
 //
 
@@ -206,49 +138,43 @@ pre ()
 void input_boundary_options_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void input_boundary_options_pimpl::
 b1 (const ::std::string& b1)
 {
-  std::cout << "b1: " << b1 << std::endl;
-  b1_ = b1;
+    std::cout << "b1: " << b1 << std::endl;
 }
 
 void input_boundary_options_pimpl::
 b2 (const ::std::string& b2)
 {
-  std::cout << "b2: " << b2 << std::endl;
-  b2_ = b2;
+    std::cout << "b2: " << b2 << std::endl;
 }
 
 void input_boundary_options_pimpl::
 b3 (const ::std::string& b3)
 {
-  std::cout << "b3: " << b3 << std::endl;
-  b3_ = b3;
+    std::cout << "b3: " << b3 << std::endl;
 }
 
 void input_boundary_options_pimpl::
 b4 (const ::std::string& b4)
 {
-  std::cout << "b4: " << b4 << std::endl;
-  b4_ = b4;
+    std::cout << "b4: " << b4 << std::endl;
 }
 
 void input_boundary_options_pimpl::
 b5 (const ::std::string& b5)
 {
-  std::cout << "b5: " << b5 << std::endl;
-  b5_ = b5;
+    std::cout << "b5: " << b5 << std::endl;
 }
 
 void input_boundary_options_pimpl::
 b6 (const ::std::string& b6)
 {
-  std::cout << "b6: " << b6 << std::endl;
-  b6_ = b6;
+    std::cout << "b6: " << b6 << std::endl;
 }
 
 void input_boundary_options_pimpl::
@@ -258,30 +184,6 @@ post_input_boundary_options ()
 
 input_boundary_options_pimpl::~input_boundary_options_pimpl() {
 
-}
-
-const std::string &input_boundary_options_pimpl::getB1()  {
-    return b1_;
-}
-
-const std::string &input_boundary_options_pimpl::getB2()  {
-    return b2_;
-}
-
-const std::string &input_boundary_options_pimpl::getB3()  {
-    return b3_;
-}
-
-const std::string &input_boundary_options_pimpl::getB4()  {
-    return b4_;
-}
-
-const std::string &input_boundary_options_pimpl::getB5()  {
-    return b5_;
-}
-
-const std::string &input_boundary_options_pimpl::getB6()  {
-    return b6_;
 }
 
 // cuboid_input_parameters_pimpl
@@ -341,106 +243,6 @@ cuboid_input_parameters_pimpl::~cuboid_input_parameters_pimpl() {
 
 }
 
-float cuboid_input_parameters_pimpl::getH() {
-    h_ = h_pimpl::getH();
-    return h_;
-}
-
-float cuboid_input_parameters_pimpl::getM() {
-    m_ = m_pimpl::getM();
-    return m_;
-}
-
-signed char cuboid_input_parameters_pimpl::getX1X() {
-    x1_x_ = x1_pimpl::getX1X();
-    return x1_x_;
-}
-
-signed char cuboid_input_parameters_pimpl::getX1Y() {
-    x1_y_ = x1_pimpl::getX1Y();
-    return x1_y_;
-}
-
-signed char cuboid_input_parameters_pimpl::getX1Z() {
-    x1_z_ = x1_pimpl::getX1Z();
-    return x1_z_;
-}
-
-signed char cuboid_input_parameters_pimpl::getX2X() {
-    x2_x_ = x2_pimpl::getX2X();
-    return x2_x_;
-}
-
-signed char cuboid_input_parameters_pimpl::getX2Y() {
-    x2_y_ = x2_pimpl::getX2Y();
-    return x2_y_;
-}
-
-signed char cuboid_input_parameters_pimpl::getX2Z() {
-    x2_z_ = x2_pimpl::getX2Z();
-    return x2_z_;
-}
-
-signed char cuboid_input_parameters_pimpl::getV1X() {
-    v1_x_ = v1_pimpl::getV1X();
-    return v1_x_;
-}
-
-signed char cuboid_input_parameters_pimpl::getV1Y() {
-    v1_y_ = v1_pimpl::getV1Y();
-    return v1_y_;
-}
-
-signed char cuboid_input_parameters_pimpl::getV1Z() {
-    v1_z_ = v1_pimpl::getV1Z();
-    return v1_z_;
-}
-
-signed char cuboid_input_parameters_pimpl::getV2X() {
-    v2_x_ = v2_pimpl::getV2X();
-    return v2_x_;
-}
-
-signed char cuboid_input_parameters_pimpl::getV2Y() {
-    v2_y_ = v2_pimpl::getV2Y();
-    return v2_y_;
-}
-
-signed char cuboid_input_parameters_pimpl::getV2Z() {
-    v2_z_ = v2_pimpl::getV2Z();
-    return v2_z_;
-}
-
-signed char cuboid_input_parameters_pimpl::getN1X() {
-    N1_x_ = N1_pimpl::getN1Y();
-    return N1_x_;
-}
-
-signed char cuboid_input_parameters_pimpl::getN1Y() {
-    N1_y_ = N1_pimpl::getN1Y();
-    return N1_y_;
-}
-
-signed char cuboid_input_parameters_pimpl::getN1Z() {
-    N1_z_ = N1_pimpl::getN1Z();
-    return N1_z_;
-}
-
-signed char cuboid_input_parameters_pimpl::getN2X() {
-    N2_x_ = N2_pimpl::getN2X();
-    return N2_x_;
-}
-
-signed char cuboid_input_parameters_pimpl::getN2Y() {
-    N2_y_ = N2_pimpl::getN2Y();
-    return N2_y_;
-}
-
-signed char cuboid_input_parameters_pimpl::getN2Z() {
-    N2_z_ = N2_pimpl::getN2Z();
-    return N2_z_;
-}
-
 // sphere_input_parameters_pimpl
 //
 
@@ -483,54 +285,6 @@ sphere_input_parameters_pimpl::~sphere_input_parameters_pimpl() {
 
 }
 
-float sphere_input_parameters_pimpl::getH() {
-    h_ = h_pimpl::getH();
-    return h_;
-}
-
-float sphere_input_parameters_pimpl::getM() {
-
-    return m_;
-}
-
-signed char sphere_input_parameters_pimpl::getXCenterX() {
-    x_center_x_ = x_center_pimpl::getX();
-    return x_center_x_;
-}
-
-signed char sphere_input_parameters_pimpl::getXCenterY() {
-    x_center_y_ = x_center_pimpl::getY();
-    return x_center_y_;
-}
-
-signed char sphere_input_parameters_pimpl::getXCenterZ() {
-        x_center_z_ = x_center_pimpl::getZ();
-    return x_center_z_;
-}
-
-signed char sphere_input_parameters_pimpl::getVX() {
-    v_x_ = v_pimpl::getVX();
-   return v_x_;
-}
-
-signed char sphere_input_parameters_pimpl::getVY() {
-    v_y_ = v_pimpl::getVY();
-    return v_y_;
-}
-
-signed char sphere_input_parameters_pimpl::getVZ() {
-    v_z_ = v_pimpl::getVZ();
-    return v_z_;
-}
-
-float sphere_input_parameters_pimpl::getDimension() {
-    dimension_ = dimension_pimpl::getDimension();
-    return dimension_;
-}
-
-
-
-
 // dimension_pimpl
 //
 
@@ -542,15 +296,13 @@ pre ()
 void dimension_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void dimension_pimpl::
 value (float value)
 {
-  std::cout << "value: " << value << std::endl;
-  dimension = value;
-
+    std::cout << "value: " << value << std::endl;
 }
 
 void dimension_pimpl::
@@ -560,10 +312,6 @@ post_dimension ()
 
 dimension_pimpl::~dimension_pimpl() {
 
-}
-
-float dimension_pimpl::getDimension() {
-    return dimension;
 }
 
 // avg_velocity_pimpl
@@ -577,14 +325,13 @@ pre ()
 void avg_velocity_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void avg_velocity_pimpl::
 value (float value)
 {
-    avg_v = value;
-  std::cout << "value: " << value << std::endl;
+    std::cout << "value: " << value << std::endl;
 }
 
 void avg_velocity_pimpl::
@@ -594,10 +341,6 @@ post_avg_velocity ()
 
 avg_velocity_pimpl::~avg_velocity_pimpl() {
 
-}
-
-float avg_velocity_pimpl::getAvgV() {
-    return avg_v;
 }
 
 // epsilon_pimpl
@@ -611,14 +354,13 @@ pre ()
 void epsilon_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void epsilon_pimpl::
 value (float value)
 {
-    epsilon = value;
-  std::cout << "value: " << value << std::endl;
+    std::cout << "value: " << value << std::endl;
 }
 
 void epsilon_pimpl::
@@ -628,10 +370,6 @@ post_epsilon ()
 
 epsilon_pimpl::~epsilon_pimpl() {
 
-}
-
-float epsilon_pimpl::getEpsilon() {
-    return epsilon;
 }
 
 // delta_t_pimpl
@@ -645,14 +383,13 @@ pre ()
 void delta_t_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void delta_t_pimpl::
 value (float value)
 {
-    delta_t = value;
-  std::cout << "value: " << value << std::endl;
+    std::cout << "value: " << value << std::endl;
 }
 
 void delta_t_pimpl::
@@ -662,10 +399,6 @@ post_delta_t ()
 
 delta_t_pimpl::~delta_t_pimpl() {
 
-}
-
-float delta_t_pimpl::getDeltaT() {
-    return delta_t;
 }
 
 // t_end_pimpl
@@ -679,14 +412,13 @@ pre ()
 void t_end_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void t_end_pimpl::
 value (float value)
 {
-    t_end = value;
-  std::cout << "value: " << value << std::endl;
+    std::cout << "value: " << value << std::endl;
 }
 
 void t_end_pimpl::
@@ -696,10 +428,6 @@ post_t_end ()
 
 t_end_pimpl::~t_end_pimpl() {
 
-}
-
-float t_end_pimpl::getTEnd() {
-    return t_end;
 }
 
 // sigma_pimpl
@@ -713,14 +441,13 @@ pre ()
 void sigma_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void sigma_pimpl::
 value (float value)
 {
-    sigma = value;
-  std::cout << "value: " << value << std::endl;
+    std::cout << "value: " << value << std::endl;
 }
 
 void sigma_pimpl::
@@ -730,10 +457,6 @@ post_sigma ()
 
 sigma_pimpl::~sigma_pimpl() {
 
-}
-
-float sigma_pimpl::getSigma() {
-    return sigma;
 }
 
 // r_cutoff_pimpl
@@ -747,15 +470,13 @@ pre ()
 void r_cutoff_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void r_cutoff_pimpl::
 value (float value)
 {
-    r_cutoff = value;
-  std::cout << "value: " << value << std::endl;
-
+    std::cout << "value: " << value << std::endl;
 }
 
 void r_cutoff_pimpl::
@@ -765,10 +486,6 @@ post_r_cutoff ()
 
 r_cutoff_pimpl::~r_cutoff_pimpl() {
 
-}
-
-float r_cutoff_pimpl::getRCutoff() {
-    return r_cutoff;
 }
 
 // domain_size_l_pimpl
@@ -782,30 +499,25 @@ pre ()
 void domain_size_l_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void domain_size_l_pimpl::
 x (short x)
 {
-  std::cout << "x: " << static_cast<short> (x) << std::endl;
-  x_ = x;
+    std::cout << "x: " << static_cast<short> (x) << std::endl;
 }
 
 void domain_size_l_pimpl::
 y (signed char y)
 {
-  std::cout << "y: " << static_cast<short> (y) << std::endl;
-  y_ = y;
+    std::cout << "y: " << static_cast<short> (y) << std::endl;
 }
 
 void domain_size_l_pimpl::
 z (signed char z)
 {
-  std::cout << "z: " << static_cast<short> (z) << std::endl;
-  z_ = z;
-
-
+    std::cout << "z: " << static_cast<short> (z) << std::endl;
 }
 
 void domain_size_l_pimpl::
@@ -815,18 +527,6 @@ post_domain_size_l ()
 
 domain_size_l_pimpl::~domain_size_l_pimpl() {
 
-}
-
-short domain_size_l_pimpl::getX() {
-    return x_;
-}
-
-signed char domain_size_l_pimpl::getY() {
-    return y_;
-}
-
-signed char domain_size_l_pimpl::getZ() {
-    return z_;
 }
 
 // h_pimpl
@@ -840,14 +540,13 @@ pre ()
 void h_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void h_pimpl::
 value (float value)
 {
-  std::cout << "value: " << value << std::endl;
-  h = value;
+    std::cout << "value: " << value << std::endl;
 }
 
 void h_pimpl::
@@ -857,10 +556,6 @@ post_h ()
 
 h_pimpl::~h_pimpl() {
 
-}
-
-float h_pimpl::getH() {
-    return h;
 }
 
 // m_pimpl
@@ -874,14 +569,13 @@ pre ()
 void m_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void m_pimpl::
 value (float value)
 {
-  std::cout << "value: " << value << std::endl;
-  m_ = value;
+    std::cout << "value: " << value << std::endl;
 }
 
 void m_pimpl::
@@ -891,10 +585,6 @@ post_m ()
 
 m_pimpl::~m_pimpl() {
 
-}
-
-float m_pimpl::getM() {
-    return m_;
 }
 
 // x1_pimpl
@@ -908,28 +598,25 @@ pre ()
 void x1_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void x1_pimpl::
 x (signed char x)
 {
-    x1_x = x;
-  std::cout << "x: " << static_cast<short> (x) << std::endl;
+    std::cout << "x: " << static_cast<short> (x) << std::endl;
 }
 
 void x1_pimpl::
 y (signed char y)
 {
-    x1_y = y;
-  std::cout << "y: " << static_cast<short> (y) << std::endl;
+    std::cout << "y: " << static_cast<short> (y) << std::endl;
 }
 
 void x1_pimpl::
 z (signed char z)
 {
-    x1_z = z;
-  std::cout << "z: " << static_cast<short> (z) << std::endl;
+    std::cout << "z: " << static_cast<short> (z) << std::endl;
 }
 
 void x1_pimpl::
@@ -939,18 +626,6 @@ post_x1 ()
 
 x1_pimpl::~x1_pimpl() {
 
-}
-
-signed char x1_pimpl::getX1X() {
-    return x1_x;
-}
-
-signed char x1_pimpl::getX1Y() {
-    return x1_y;
-}
-
-signed char x1_pimpl::getX1Z() {
-    return x1_z;
 }
 
 // x2_pimpl
@@ -964,50 +639,31 @@ pre ()
 void x2_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void x2_pimpl::
 x (signed char x)
 {
-    x2_x = x;
-  std::cout << "x: " << static_cast<short> (x) << std::endl;
+    std::cout << "x: " << static_cast<short> (x) << std::endl;
 }
 
 void x2_pimpl::
 y (signed char y)
 {
-    x2_y = y;
-  std::cout << "y: " << static_cast<short> (y) << std::endl;
+    std::cout << "y: " << static_cast<short> (y) << std::endl;
 }
 
 void x2_pimpl::
 z (signed char z)
 {
-    x2_z = z;
-  std::cout << "z: " << static_cast<short> (z) << std::endl;
+    std::cout << "z: " << static_cast<short> (z) << std::endl;
 }
 
 void x2_pimpl::
 post_x2 ()
 {
 }
-
-signed char x2_pimpl::getX2X() {
-    return x2_x;
-}
-
-signed char x2_pimpl::getX2Y() {
-    return x2_y;
-}
-
-signed char x2_pimpl::getX2Z() {
-    return x2_z;
-}
-
-
-
-
 
 // v1_pimpl
 //
@@ -1020,45 +676,30 @@ pre ()
 void v1_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void v1_pimpl::
 x (signed char x)
 {
-    v1_x = x;
-  std::cout << "x: " << static_cast<short> (x) << std::endl;
+    std::cout << "x: " << static_cast<short> (x) << std::endl;
 }
 
 void v1_pimpl::
 y (signed char y)
 {
-    v1_y = y;
-  std::cout << "y: " << static_cast<short> (y) << std::endl;
+    std::cout << "y: " << static_cast<short> (y) << std::endl;
 }
 
 void v1_pimpl::
 z (signed char z)
 {
-    v1_z = z;
-  std::cout << "z: " << static_cast<short> (z) << std::endl;
+    std::cout << "z: " << static_cast<short> (z) << std::endl;
 }
 
 void v1_pimpl::
 post_v1 ()
 {
-}
-
-signed char v1_pimpl::getV1X() {
-    return v1_x;
-}
-
-signed char v1_pimpl::getV1Y() {
-    return v1_y;
-}
-
-signed char v1_pimpl::getV1Z() {
-    return v1_z;
 }
 
 // v2_pimpl
@@ -1072,45 +713,30 @@ pre ()
 void v2_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void v2_pimpl::
 x (signed char x)
 {
-    v2_x = x;
-  std::cout << "x: " << static_cast<short> (x) << std::endl;
+    std::cout << "x: " << static_cast<short> (x) << std::endl;
 }
 
 void v2_pimpl::
 y (signed char y)
 {
-    v2_y = y;
-  std::cout << "y: " << static_cast<short> (y) << std::endl;
+    std::cout << "y: " << static_cast<short> (y) << std::endl;
 }
 
 void v2_pimpl::
 z (signed char z)
 {
-    v2_z = z;
-  std::cout << "z: " << static_cast<short> (z) << std::endl;
+    std::cout << "z: " << static_cast<short> (z) << std::endl;
 }
 
 void v2_pimpl::
 post_v2 ()
 {
-}
-
-signed char v2_pimpl::getV2X() {
-    return v2_x;
-}
-
-signed char v2_pimpl::getV2Y() {
-    return v2_y;
-}
-
-signed char v2_pimpl::getV2Z() {
-    return v2_z;
 }
 
 // N1_pimpl
@@ -1124,45 +750,30 @@ pre ()
 void N1_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void N1_pimpl::
 x (signed char x)
 {
-    n1_x = x;
-  std::cout << "x: " << static_cast<short> (x) << std::endl;
+    std::cout << "x: " << static_cast<short> (x) << std::endl;
 }
 
 void N1_pimpl::
 y (signed char y)
 {
-    n1_y = y;
-  std::cout << "y: " << static_cast<short> (y) << std::endl;
+    std::cout << "y: " << static_cast<short> (y) << std::endl;
 }
 
 void N1_pimpl::
 z (signed char z)
 {
-    n1_z = z;
-  std::cout << "z: " << static_cast<short> (z) << std::endl;
+    std::cout << "z: " << static_cast<short> (z) << std::endl;
 }
 
 void N1_pimpl::
 post_N1 ()
 {
-}
-
-signed char N1_pimpl::getN1X() {
-    return n1_x;
-}
-
-signed char N1_pimpl::getN1Y() {
-    return n1_y;
-}
-
-signed char N1_pimpl::getN1Z() {
-    return n1_z;
 }
 
 // N2_pimpl
@@ -1176,45 +787,30 @@ pre ()
 void N2_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void N2_pimpl::
 x (signed char x)
 {
-    n2_x = x;
-  std::cout << "x: " << static_cast<short> (x) << std::endl;
+    std::cout << "x: " << static_cast<short> (x) << std::endl;
 }
 
 void N2_pimpl::
 y (signed char y)
 {
-    n2_y = y;
-  std::cout << "y: " << static_cast<short> (y) << std::endl;
+    std::cout << "y: " << static_cast<short> (y) << std::endl;
 }
 
 void N2_pimpl::
 z (signed char z)
 {
-    n2_z = z;
-  std::cout << "z: " << static_cast<short> (z) << std::endl;
+    std::cout << "z: " << static_cast<short> (z) << std::endl;
 }
 
 void N2_pimpl::
 post_N2 ()
 {
-}
-
-signed char N2_pimpl::getN2X() {
-    return n2_x;
-}
-
-signed char N2_pimpl::getN2Y() {
-    return n2_y;
-}
-
-signed char N2_pimpl::getN2Z() {
-    return n2_z;
 }
 
 // x_center_pimpl
@@ -1228,45 +824,30 @@ pre ()
 void x_center_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void x_center_pimpl::
 x (signed char x)
 {
-
-  std::cout << "x: " << static_cast<short> (x) << std::endl;
-
+    std::cout << "x: " << static_cast<short> (x) << std::endl;
 }
 
 void x_center_pimpl::
 y (signed char y)
 {
-  std::cout << "y: " << static_cast<short> (y) << std::endl;
+    std::cout << "y: " << static_cast<short> (y) << std::endl;
 }
 
 void x_center_pimpl::
 z (signed char z)
 {
-  std::cout << "z: " << static_cast<short> (z) << std::endl;
-
+    std::cout << "z: " << static_cast<short> (z) << std::endl;
 }
 
 void x_center_pimpl::
 post_x_center ()
 {
-}
-
-signed char x_center_pimpl::getX() {
-    return x_;
-}
-
-signed char x_center_pimpl::getY() {
-    return y_;
-}
-
-signed char x_center_pimpl::getZ() {
-    return z_;
 }
 
 // v_pimpl
@@ -1280,44 +861,29 @@ pre ()
 void v_pimpl::
 name (const ::std::string& name)
 {
-  std::cout << "name: " << name << std::endl;
+    std::cout << "name: " << name << std::endl;
 }
 
 void v_pimpl::
 x (signed char x)
 {
-  std::cout << "x: " << static_cast<short> (x) << std::endl;
-  v_x_ = x;
+    std::cout << "x: " << static_cast<short> (x) << std::endl;
 }
 
 void v_pimpl::
 y (signed char y)
 {
-  std::cout << "y: " << static_cast<short> (y) << std::endl;
-  v_y_ = y;
+    std::cout << "y: " << static_cast<short> (y) << std::endl;
 }
 
 void v_pimpl::
 z (signed char z)
 {
-  std::cout << "z: " << static_cast<short> (z) << std::endl;
-  v_z_ = z;
+    std::cout << "z: " << static_cast<short> (z) << std::endl;
 }
 
 void v_pimpl::
 post_v ()
 {
-}
-
-signed char v_pimpl::getVX() {
-    return v_x_;
-}
-
-signed char v_pimpl::getVY() {
-    return v_y_;
-}
-
-signed char v_pimpl::getVZ() {
-    return v_z_;
 }
 
