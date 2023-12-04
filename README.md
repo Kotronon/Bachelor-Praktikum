@@ -12,7 +12,7 @@ Members:
 # Code #
 * Link:     https://github.com/Kotronon/Bachelor-Praktikum
 * Branch:   master
-* Revision: e7321c1
+* Revision: b0246db
 * Compiler: gcc 11.4.0
 
 # Run Code #
