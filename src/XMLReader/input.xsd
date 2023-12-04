@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <!-- Cuboids -->
+    <xsd:complexType name="cuboid_t">
+        <xsd:sequence>
+            <xsd:element name="Position" type="vector_t"/>
+            <xsd:element name="Velocity" type="vector_t"/>
+            <xsd:element name="Dimension" type="vector_i"/>
+        </xsd:sequence>
+        <xsd:attribute name="distance" type="xsd:double" use="required"/>
+        <xsd:attribute name="mass" type="xsd:double" use="required"/>
+        <xsd:attribute name="type" type="xsd:nonNegativeInteger"/>
+    </xsd:complexType>
+
+    <!-- Sphere -->
+    <xsd:complexType name="sphere_t">
+        <xsd:sequence>
+            <xsd:element name="Center" type="vector_t"/>
+            <xsd:element name="Velocity" type="vector_t"/>
+        </xsd:sequence>
+        <xsd:attribute name="radius" type="xsd:nonNegativeInteger" use="required"/>
+        <xsd:attribute name="distance" type="xsd:double" use="required"/>
+        <xsd:attribute name="mass" type="xsd:double" use="required"/>
+        <xsd:attribute name="type" type="xsd:nonNegativeInteger"/>
+    </xsd:complexType>
+
+    <!-- Double vector -->
+    <xsd:complexType name="vector_t">
+        <xsd:attribute name="x" type="xsd:double" use="required"/>
+        <xsd:attribute name="y" type="xsd:double" use="required"/>
+        <xsd:attribute name="z" type="xsd:double" use="required"/>
+    </xsd:complexType>
+
+    <!-- Integer vector -->
+    <xsd:complexType name="vector_i">
+        <xsd:attribute name="x" type="xsd:int" use="required"/>
+        <xsd:attribute name="y" type="xsd:int" use="required"/>
+        <xsd:attribute name="z" type="xsd:int" use="required"/>
+    </xsd:complexType>
+
+    <!-- Boundary options -->
+    <xsd:complexType name="boundary_t">
+        <xsd:attribute name="boundary" type="xsd:string"/>
+        <xsd:attribute name="boundary-right" type="xsd:string"/>
+        <xsd:attribute name="boundary-left" type="xsd:string"/>
+        <xsd:attribute name="boundary-top" type="xsd:string"/>
+        <xsd:attribute name="boundary-bottom" type="xsd:string"/>
+        <xsd:attribute name="boundary-back" type="xsd:string"/>
+        <xsd:attribute name="boundary-front" type="xsd:string"/>
+    </xsd:complexType>
+
+    <!-- List of Shapes (Cuboids/Spheres) -->
+    <xsd:complexType name="shape_t">
+        <xsd:sequence>
+            <xsd:element name="Cuboid" type="cuboid_t"  minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="Sphere" type="sphere_t"  minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- Direct sum simulation -->
+    <xsd:complexType name="directSum_t"/>
+
+    <!-- Linked cell simulation -->
+    <xsd:complexType name="linkedCell_t">
+        <xsd:sequence>
+            <!-- Boundary: specify at which boundary of the domain which type of condition is applied -->
+            <xsd:element name="Boundary" type="boundary_t"/>
+            <!-- Domain: size of the domain -->
+            <xsd:element name="Domain" type="vector_t"/>
+            <!-- CellSize: size of the cells -->
+            <xsd:element name="cutoff" type="xsd:double"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- Strategy selection -->
+    <xsd:complexType name="strategy_t">
+        <xsd:choice>
+            <xsd:element name="LinkedCell" type="linkedCell_t"/>
+            <xsd:element name="DirectSum" type="directSum_t"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+
+    <!-- Simulation -->
+    <xsd:complexType name="simulation_t">
+        <xsd:sequence>
+            <xsd:element name="Shapes" type="shape_t" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="Strategy" type="strategy_t" />
+        </xsd:sequence>
+        <xsd:attribute name="endTime" type="xsd:double" use="required"/>
+        <xsd:attribute name="deltaT" type="xsd:double" use="required"/>
+        <xsd:attribute name="logLevel" type="xsd:string"/>
+    </xsd:complexType>
+    <xsd:element name="Simulation" type="simulation_t"/>
+</xsd:schema>

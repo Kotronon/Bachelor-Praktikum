@@ -38,6 +38,12 @@ LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoff,
     z_max = N[2] -1;
 }
 
+LinkedCellContainer::LinkedCellContainer() {
+    x_cells = 0;
+    y_cells = 0;
+    z_cells = 0;
+}
+
 LinkedCellContainer::~LinkedCellContainer() = default;
 
 /**

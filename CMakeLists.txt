@@ -36,6 +36,10 @@ add_executable(MolSim ${MY_SRC}
         src/ParticleGenerator.h
         src/LinkedCellContainer.cpp
         src/LinkedCellContainer.h
+        src/XMLReader/XMLReader.cpp
+        src/XMLReader/XMLReader.h
+        src/XMLReader/input.hxx
+        src/XMLReader/input.cxx
 )
 
 # set cxx standard. You may raise this if you want.

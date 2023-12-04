@@ -8,13 +8,14 @@
 #include "calculations/VelocityCalculator.h"
 #include "spdlog/spdlog.h"
 #include "calculations/PositionCalculator.h"
+#include "XMLReader/XMLReader.h"
 #include <string>
 
 
 /**
  * plot the particles to a xyz-file
  */
-void plotParticles(int iteration);
+void plotParticles(int iteration, ParticleContainer container);
 
 void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 
@@ -31,49 +32,57 @@ bool cmdOptionExists(char** begin, char** end, const std::string& option);
 //Hardcoded values for now:
 constexpr double start_time = 0;
 double avg_v = 0.1;
-int dim = 2;
-double eps = 5;
-double sig = 1;
+
 //Creation of particle container to be filled with all relevant particles
-ParticleContainer container = ParticleContainer();
+//ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
-
+    if(cmdOptionExists(argsv, argsv+argc, "-h") || cmdOptionExists(argsv, argsv+argc, "--help") || argc != 2){
+        spdlog::info("Help menu:");
+        spdlog::info("Arguments: xml file");
+        return 0;
+    }
 
     /*ParticleContainer cuboid_1 = ParticleGenerator::createCuboid(x_1,v_1,N_1,h,m);
     ParticleContainer cuboid_2 = ParticleGenerator::createCuboid(x_2,v_2,N_2,h,m);
     container.addParticleContainer(cuboid_1);
     container.addParticleContainer(cuboid_2);
 */
-   LinkedCellContainer cells = LinkedCellContainer({120, 50, 1}, 3.0, {"r", "r", "r", "r", "r", "r"}); //boundary left, right, up, down, behind, bevor
+   //LinkedCellContainer cells = LinkedCellContainer({120, 50, 1}, 3.0, {"r", "r", "r", "r", "r", "r"}); //boundary left, right, up, down, behind, bevor
   // ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
    //ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-1,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
-   ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells);
-   double end_time = 10;
-   double delta_t = 0.00005;
+   //ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells);
+    XMLReader::XMLInfo info = XMLReader::readFile(argsv[1]);
+   double end_time = info.t_end;
+   double delta_t = info.delta_t;
     double current_time = start_time;
+    int dim = 2;
+    double eps = info.epsilon;
+    double sig = info.sigma;
     int iteration = 0;
+    ParticleContainer container = info.container;
+    LinkedCellContainer cells = info.cells;
     //Pre-calculation of f
-    //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
+    ForceCalculator::LennardJonesForceFaster(container, eps, sig);
     ForceCalculator::LennardJonesForceCell(cells, eps, sig);
     //Initialization with Brownian Motion
-    //VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
+    VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
     VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
     //For this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
         //Calculate new x
-        //PositionCalculator::PositionStoermerVerlet(container, delta_t);
+        PositionCalculator::PositionStoermerVerlet(container, delta_t);
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
         //Calculate new f
-        //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
+        ForceCalculator::LennardJonesForceFaster(container, eps, sig);
         ForceCalculator::LennardJonesForceCell(cells, eps, sig);
         //Calculate new v
-       //VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
+        VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
         VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
 
         iteration++;
         if (iteration % 10 == 0) {
-            //plotParticles(iteration);
+            plotParticles(iteration, container);
             plotParticlesInCells(iteration, cells);
         }
         if (iteration % 100 == 0) {
@@ -88,47 +97,49 @@ int main(int argc, char *argsv[]) {
 }
 
 void plotParticlesInCells(int iteration, LinkedCellContainer &grid) {
+    if(grid.cell_numbers() > 0) {
+        std::string out_name("MD_vtk");
 
-    std::string out_name("MD_vtk");
+        //outputWriter::XYZWriter writer;
+        //outputWriter::XYZWriter::plotParticles(container, out_name, iteration);
 
-    //outputWriter::XYZWriter writer;
-    //outputWriter::XYZWriter::plotParticles(container, out_name, iteration);
-
-    outputWriter::VTKWriter writer2;
-    int num_of_particles = 0;
-    for (auto &x: grid) {
-        for (auto &y: x) {
-            for (auto &z: y) {
-                num_of_particles += z.size();
-            }
-        }
-    }
-    writer2.initializeOutput(num_of_particles);
-    for (auto &x: grid) {
-        for (auto &y: x) {
-            for (auto &z: y) {
-                for (auto &p: z) {
-                    writer2.plotParticle(p);
+        outputWriter::VTKWriter writer2;
+        int num_of_particles = 0;
+        for (auto &x: grid) {
+            for (auto &y: x) {
+                for (auto &z: y) {
+                    num_of_particles += z.size();
                 }
             }
         }
+        writer2.initializeOutput(num_of_particles);
+        for (auto &x: grid) {
+            for (auto &y: x) {
+                for (auto &z: y) {
+                    for (auto &p: z) {
+                        writer2.plotParticle(p);
+                    }
+                }
+            }
+        }
+        writer2.writeFile(out_name, iteration);
     }
-    writer2.writeFile(out_name, iteration);
 }
 
-void plotParticles(int iteration) {
+void plotParticles(int iteration, ParticleContainer container) {
+    if(container.size() > 0) {
+        std::string out_name("MD_vtk");
 
-    std::string out_name("MD_vtk");
+        //outputWriter::XYZWriter writer;
+        //outputWriter::XYZWriter::plotParticles(container, out_name, iteration);
 
-    //outputWriter::XYZWriter writer;
-    //outputWriter::XYZWriter::plotParticles(container, out_name, iteration);
-
-    outputWriter::VTKWriter writer2;
-    writer2.initializeOutput(container.size());
-    for (auto &p: container) {
-        writer2.plotParticle(p);
+        outputWriter::VTKWriter writer2;
+        writer2.initializeOutput(container.size());
+        for (auto &p: container) {
+            writer2.plotParticle(p);
+        }
+        writer2.writeFile(out_name, iteration);
     }
-    writer2.writeFile(out_name, iteration);
 }
 
 //Adapted from https://stackoverflow.com/questions/865668/parsing-command-line-arguments-in-c

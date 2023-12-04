@@ -5,7 +5,6 @@ The Molecular Dynamics teaching code.
 
 # Group H #
 Members:
-* Samhitha Girish Jois
 * Katharina Miller
 * Anna Lena Müller
 
@@ -21,13 +20,8 @@ Members:
   * sudo apt-get install libgtest-dev
   * unfortunately only using fetchContent doesn't prevent from installing them
 * to run the program:
-  * ./MolSim <end_time> <delta_t> 
-  * options:
-  * -level <level> (To choose log level)
-  * -f <path_to_file> (To add particles manually)
-  * -c <numbers_of_cuboids> (for each cuboid) <coordinates_of_left_corner_cuboid_i> <velocity_of_cuboid_i> <dimension_of_cuboid_i> <h_of_cuboid_i> <mass_of_cuboid_i> 
-  * for arrays please use the form x,y,z
-  * for example: ./MolSim 5 0.0002 -c 2 0,0,0 0,0,0 40,8,1 1.1225 1 15,15,0 0,-10,0 8,8,1 1.1225 1
+  * ./MolSim <xml_file> 
+  * example files can be found in input folder
 * to run the tests:
   * ctest
   
@@ -35,10 +29,14 @@ Members:
 # Report #
 ## Task 1 ##
 * XML file
+* Due to time pressure, we orientated on the xsd file structure of https://github.com/Dominik-Weinzierl/MolSim/tree/main/src/fileReader/XMLReader/template 
+and the XMLReader structure of https://github.com/wngTn/MolSim/tree/main/src/inputReader
+* We strore everything in an XMLInfo struct and can get access to them in the main file
 
 ## Task 2 ##
 * Linked-cell algorithm
 * Cell wide in each direction is the cutoff value
+* Each cell linked to an exact cell coordinate (vector<vector<vector<vector<Particle>>>> in order x, y, z)
 * Structure as image below:
 * We still provide the possability to use simple sum implementation
 * Between the two implementations is a big time difference:
@@ -55,6 +53,7 @@ Members:
     * depending on surface and kind of particle physically inaccurate
   * Ghost cells
     * creating an imaginary cell to create a force from the boundary
+    * is mirrored behind the boundary (both particles have same distance to boundary)
     * has an individual influence on each particle
     * physically more accurate
     * made as reflection boundary in the end version
