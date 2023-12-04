@@ -27,5 +27,8 @@ public:
 
     static void createSphereInCells(std::array<double, 3> center, std::array<double, 3> v, double m, int r, double h,
                              LinkedCellContainer cells);
+
+    static ParticleContainer
+    createDiskAlternative(std::array<double, 3> center, std::array<double, 3> v, double m, int r, double h);
 };
 

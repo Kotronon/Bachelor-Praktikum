@@ -21,13 +21,11 @@ Members:
   * sudo apt-get install libgtest-dev
   * unfortunately only using fetchContent doesn't prevent from installing them
 * to run the program:
-  * ./MolSim <end_time> <delta_t> 
-  * options:
-  * -level <level> (To choose log level)
-  * -f <path_to_file> (To add particles manually)
-  * -c <numbers_of_cuboids> (for each cuboid) <coordinates_of_left_corner_cuboid_i> <velocity_of_cuboid_i> <dimension_of_cuboid_i> <h_of_cuboid_i> <mass_of_cuboid_i> 
-  * for arrays please use the form x,y,z
-  * for example: ./MolSim 5 0.0002 -c 2 0,0,0 0,0,0 40,8,1 1.1225 1 15,15,0 0,-10,0 8,8,1 1.1225 1
+  * ./MolSim
+  * due to the xml input being incomplete it is only possible at the moment to change
+  * parameters in the main method manually as well as create cuboids/disks there
+  *
+  * 
 * to run the tests:
   * ctest
   

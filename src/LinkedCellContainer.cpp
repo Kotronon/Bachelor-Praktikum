@@ -35,7 +35,7 @@ LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoff,
     boundary = std::move(b);
     x_max = N[0];
     y_max = N[1];
-    z_max = N[2] -1;
+    z_max = N[2];
 }
 
 LinkedCellContainer::~LinkedCellContainer() = default;
@@ -55,8 +55,8 @@ int LinkedCellContainer::cell_numbers() const {
  * @param z index of cell on z axis
  * @return number of molecules in cell
  */
-int LinkedCellContainer::Particles_in_cell(int x, int y, int z) {
-    return cells[x][y][z].size();
+unsigned long LinkedCellContainer::Particles_in_cell(int x, int y, int z) {
+    return cells[x + 1][y + 1][z + 1].size();
 }
 
 /**
@@ -232,7 +232,7 @@ std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator LinkedCel
 
 /**
  * applies the force calculation according to N3L
- * @param forceCalculationforceCalculation a function to apply the force calculations pairwise
+ * @param forceCalculation a function to apply the force calculations pairwise
  */
 void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation) {
     for (int x = 1; x <= x_cells ; x++) {
@@ -249,6 +249,7 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                             //with neighbour cells
                             for (int l = 0;
                                  l < cells[neighbour[0]][neighbour[1]][neighbour[2]].size(); l++) {
+
                                 if (cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() == 0 ||
                                     cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() == j+1) {
                                     forceCalculation(&(cells[x][y][z][j]),

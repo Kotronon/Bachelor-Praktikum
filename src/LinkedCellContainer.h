@@ -21,7 +21,7 @@ public:
 
     [[nodiscard]] int cell_numbers() const;
 
-    int Particles_in_cell(int x, int y, int z);
+    unsigned long Particles_in_cell(int x, int y, int z);
 
 
     void addParticle(int x, int y, int z, std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
@@ -30,10 +30,7 @@ public:
 
     void addParticle(int x, int y, int z, Particle &p);
 
-
     void addParticle(Particle &p);
-
-    void deleteParticle(int x, int y, int z, Particle &p);
 
     void moveToNeighbour();
 

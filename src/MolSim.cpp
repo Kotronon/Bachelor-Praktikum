@@ -30,37 +30,47 @@ bool cmdOptionExists(char **begin, char **end, const std::string &option);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
+double end_time = 10;
+double delta_t = 0.00005;
+
 double avg_v = 0.1;
 int dim = 2;
+
 double eps = 5;
 double sig = 1;
+
+std::array<double, 3> domain_size = {120,50,1};
+double cutoff = 3.0;
+//boundary order (b):  left, right, up, down, behind, before
+std::array<std::basic_string<char>, 6> boundary = {"r", "r", "r", "r", "r", "r"};
+
+//Cuboids/Disks have to be created manually in main
+
 //Creation of particle container to be filled with all relevant particles
 ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
 
-
-    /*ParticleContainer cuboid_1 = ParticleGenerator::createCuboid(x_1,v_1,N_1,h,m);
+    //Creation of cuboids for simulation with simple particle container
+    /*
+    ParticleContainer cuboid_1 = ParticleGenerator::createCuboid(x_1,v_1,N_1,h,m);
     ParticleContainer cuboid_2 = ParticleGenerator::createCuboid(x_2,v_2,N_2,h,m);
     container.addParticleContainer(cuboid_1);
     container.addParticleContainer(cuboid_2);
-*/
-    LinkedCellContainer cells = LinkedCellContainer({120, 50, 1}, 3.0, {"r", "r", "r", "r", "r",
-                                                                        "r"}); //boundary left, right, up, down, behind, bevor
+    */
+
+    //Creation of linked-cell container to be filled with all relevant particles
+    LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
+
+    //Creation of cuboids/disks for simulation with linked-cell container
+    //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
+
     //ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
     //ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
-    //ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,-10,0}, {20,10,1}, 1.1225, 1, cells, 3.0);
-
     ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells);
 
-    double end_time = 10;
-    double delta_t = 0.005;
     double current_time = start_time;
     int iteration = 0;
-
-    //DEBUG
-    plotParticlesInCells(iteration, cells);
-    //DEBUG
 
     //Pre-calculation of f
     //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
