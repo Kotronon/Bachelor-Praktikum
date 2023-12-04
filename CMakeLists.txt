@@ -37,17 +37,14 @@ add_executable(MolSim ${MY_SRC}
         src/LinkedCellContainer.cpp
         src/LinkedCellContainer.h
 
-        XML_input/inputnew-pskel.hxx
-        XML_input/inputnew-pskel.cxx
-        XML_input/inputnew-driver.cxx
-        XML_input/inputnew-pimpl.cxx
-        XML_input/inputnew-pimpl.hxx
         src/MolSim.cpp
         src/our_input/newinput-driver.cxx
         src/our_input/newinput-pimpl.cxx
         src/our_input/newinput-pimpl.hxx
         src/our_input/newinput-pskel.cxx
-        src/our_input/newinput-pskel.hxx src/our_input/test_file.h src/our_input/test_file.cpp)
+        src/our_input/newinput-pskel.hxx
+        src/our_input/test_file.h
+        src/our_input/test_file.cpp)
 
 # set cxx standard. You may raise this if you want.
 target_compile_features(MolSim

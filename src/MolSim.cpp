@@ -16,7 +16,7 @@
 
 
 /**
- * get over all the inputs from
+ * get over all the inputs from pimpl
  * */
 void collectInput();
 
@@ -40,9 +40,14 @@ bool cmdOptionExists(char** begin, char** end, const std::string& option);
 //Hardcoded values for now:
 constexpr double start_time = 0;
 double avg_v = 0.1;
+
 int dim = 2;
+
 double eps = 5;
+
 double sig = 1;
+
+
 //Creation of particle container to be filled with all relevant particles
 ParticleContainer container = ParticleContainer();
 
@@ -71,7 +76,7 @@ int main(int argc, char *argsv[]) {
     //For this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
         if (iteration == 30)
-            spdlog::info("here we go");
+            spdlog::info("get in losers, we're going shopping");
         //Calculate new x
         //PositionCalculator::PositionStoermerVerlet(container, delta_t);
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
@@ -98,9 +103,6 @@ int main(int argc, char *argsv[]) {
      return 0;
 }
 
-double end_time;
-double delta_t5;
-double current_time;
 
 
 
@@ -110,7 +112,17 @@ double current_time;
     //LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {b1_, b2_, b3_, b4_, b5_, b6_}); //boundary left, right, up, down, behind, bevor
     //ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
     // ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-1,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
+    /*ParticleContainer cuboid_1 = ParticleGenerator::createCuboid(x_1,v_1,N_1,h,m);
+    ParticleContainer cuboid_2 = ParticleGenerator::createCuboid(x_2,v_2,N_2,h,m);
+    container.addParticleContainer(cuboid_1);
+    container.addParticleContainer(cuboid_2);*/
+/*constexpr double start_time = 0;
+double avg_v = 0.1;
+int dim = 2;
+double eps = 5;
+double sig = 1;*/
 
+    //TODO: hier kommt noch die implementation rein
 
 
 

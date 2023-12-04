@@ -10,9 +10,25 @@
 
 #include "newinput-pskel.hxx"
 
+
 class input_parameters_pimpl: public virtual input_parameters_pskel
 {
+private:
+     std::string algorithm_option_, output_file_name_;
+public:
+    virtual const std::string & getAlgorithmOption();
+
+    virtual const std::string & getOutputFileName();
+
+    virtual float getWriteFrequency();
+
+    virtual float getLogLevel();
+
+private:
+   static float write_frequency_,log_level_;
+
   public:
+
   virtual void
   pre ();
 
@@ -48,6 +64,34 @@ class input_parameters_pimpl: public virtual input_parameters_pskel
 
 class simulation_input_parameters_pimpl: public virtual simulation_input_parameters_pskel
 {
+private:
+     static float dimension_,avg_velocity_,epsilon_,delta_t_,t_end_,sigma_,r_cutoff_;
+     static short domain_size_l_x_;
+     static signed char domain_size_l_y_,domain_size_l_z_;
+
+public:
+
+    static float getDimension();
+
+    static float getAvgVelocity();
+
+    static float getEpsilon();
+
+    static float getDeltaT();
+
+    static float getTEnd();
+
+    static float getSigma();
+
+    static float getRCutoff();
+
+    static short getDomainSizeLX();
+
+    static signed char getDomainSizeLY();
+
+    static signed char getDomainSizeLZ();
+
+
   public:
     ~simulation_input_parameters_pimpl();
   virtual void
@@ -83,8 +127,22 @@ class simulation_input_parameters_pimpl: public virtual simulation_input_paramet
 
 class input_boundary_options_pimpl: public virtual input_boundary_options_pskel
 {
+private:
+   static std::string b1_,b2_,b3_,b4_,b5_,b6_;
+public:
+    const std::string &getB1();
 
-  public:
+    const std::string &getB2() ;
+
+    const std::string &getB3() ;
+
+    const std::string &getB4() ;
+
+    const std::string &getB5() ;
+
+    const std::string &getB6() ;
+
+public:
     ~input_boundary_options_pimpl();
   virtual void
   pre ();
@@ -116,7 +174,56 @@ class input_boundary_options_pimpl: public virtual input_boundary_options_pskel
 
 class cuboid_input_parameters_pimpl: public virtual cuboid_input_parameters_pskel
 {
-  public:
+private:
+    static float h_,m_;
+    static signed char  x1_x_,x1_y_,x1_z_,
+            x2_x_,x2_y_,x2_z_,
+            v1_x_,v1_y_,v1_z_,
+            v2_x_,v2_y_,v2_z_,
+            N1_x_,N1_y_,N1_z_,
+            N2_x_,N2_y_,N2_z_;
+public:
+    static float getH();
+
+    static float getM();
+
+    static signed char getX1X();
+
+    static signed char getX1Y();
+
+    static signed char getX1Z();
+
+    static signed char getX2X();
+
+    static signed char getX2Y();
+
+    static signed char getX2Z();
+
+    static signed char getV1X();
+
+    static signed char getV1Y();
+
+    static signed char getV1Z();
+
+    static signed char getV2X();
+
+    static signed char getV2Y();
+
+    static signed char getV2Z();
+
+    static signed char getN1X();
+
+    static signed char getN1Y();
+
+    static signed char getN1Z();
+
+    static signed char getN2X();
+
+    static signed char getN2Y();
+
+    static signed char getN2Z();
+
+public:
     ~cuboid_input_parameters_pimpl();
   virtual void
   pre ();
@@ -151,7 +258,31 @@ class cuboid_input_parameters_pimpl: public virtual cuboid_input_parameters_pske
 
 class sphere_input_parameters_pimpl: public virtual sphere_input_parameters_pskel
 {
-  public:
+private:
+   static signed char x_center_x_,x_center_y_,x_center_z_, v_x_,v_y_,v_z_;
+   static float h_,m_,dimension_;
+public:
+    static float getDimension();
+
+public:
+    static float getH();
+
+    static float getM();
+
+public:
+     signed char getXCenterX();
+
+     signed char getXCenterY();
+
+     signed char getXCenterZ();
+
+     signed char getVX();
+
+     signed char getVY();
+
+     signed char getVZ();
+
+public:
     ~sphere_input_parameters_pimpl();
   virtual void
   pre ();
@@ -177,7 +308,12 @@ class sphere_input_parameters_pimpl: public virtual sphere_input_parameters_pske
 
 class dimension_pimpl: public virtual dimension_pskel
 {
-  public:
+private :
+    static float dimension;
+public:
+    static float getDimension();
+
+public:
     ~dimension_pimpl();
   virtual void
   pre ();
@@ -194,7 +330,12 @@ class dimension_pimpl: public virtual dimension_pskel
 
 class avg_velocity_pimpl: public virtual avg_velocity_pskel
 {
-  public:
+private:
+    static float avg_v;
+public:
+    static float getAvgV();
+
+public:
     ~avg_velocity_pimpl();
   virtual void
   pre ();
@@ -211,7 +352,12 @@ class avg_velocity_pimpl: public virtual avg_velocity_pskel
 
 class epsilon_pimpl: public virtual epsilon_pskel
 {
-  public:
+private:
+    static float epsilon;
+public:
+    static float getEpsilon();
+
+public:
     ~epsilon_pimpl();
   virtual void
   pre ();
@@ -228,7 +374,12 @@ class epsilon_pimpl: public virtual epsilon_pskel
 
 class delta_t_pimpl: public virtual delta_t_pskel
 {
-  public:
+private:
+    static float delta_t;
+public:
+    static float getDeltaT();
+
+public:
     ~delta_t_pimpl();
   virtual void
   pre ();
@@ -245,7 +396,12 @@ class delta_t_pimpl: public virtual delta_t_pskel
 
 class t_end_pimpl: public virtual t_end_pskel
 {
-  public:
+private:
+    static float t_end;
+public:
+    static float getTEnd();
+
+public:
     ~t_end_pimpl();
   virtual void
   pre ();
@@ -262,7 +418,12 @@ class t_end_pimpl: public virtual t_end_pskel
 
 class sigma_pimpl: public virtual sigma_pskel
 {
-  public:
+private:
+    static float sigma;
+public:
+    static float getSigma();
+
+public:
     ~sigma_pimpl();
   virtual void
   pre ();
@@ -279,7 +440,12 @@ class sigma_pimpl: public virtual sigma_pskel
 
 class r_cutoff_pimpl: public virtual r_cutoff_pskel
 {
-  public:
+private :
+    static float r_cutoff;
+public:
+    static float getRCutoff();
+
+public:
     ~r_cutoff_pimpl();
   virtual void
   pre ();
@@ -296,7 +462,17 @@ class r_cutoff_pimpl: public virtual r_cutoff_pskel
 
 class domain_size_l_pimpl: public virtual domain_size_l_pskel
 {
-  public:
+private:
+    static short x_;
+    static unsigned char y_, z_;
+public:
+    static short getX();
+
+    static signed char getY();
+
+    static signed char getZ();
+
+public:
     ~domain_size_l_pimpl();
   virtual void
   pre ();
@@ -319,7 +495,12 @@ class domain_size_l_pimpl: public virtual domain_size_l_pskel
 
 class h_pimpl: public virtual h_pskel
 {
-  public:
+private :
+    static float h;
+public:
+    static float getH();
+
+public:
     ~h_pimpl();
   virtual void
   pre ();
@@ -336,7 +517,12 @@ class h_pimpl: public virtual h_pskel
 
 class m_pimpl: public virtual m_pskel
 {
-  public:
+private :
+    static float m_;
+public:
+    static float getM();
+
+public:
     ~m_pimpl();
 
 
@@ -355,7 +541,16 @@ class m_pimpl: public virtual m_pskel
 
 class x1_pimpl: public virtual x1_pskel
 {
-  public:
+private:
+    static signed char x1_x,x1_y,x1_z;
+public:
+    static signed char getX1X();
+
+    static signed char getX1Y();
+
+    static signed char getX1Z();
+
+public:
     ~x1_pimpl();
 
 
@@ -380,7 +575,20 @@ class x1_pimpl: public virtual x1_pskel
 
 class x2_pimpl: public virtual x2_pskel
 {
-  public:
+private:
+    static signed char x2_x,x2_y,x2_z;
+public:
+    static signed char getX2X();
+
+    static signed char getX2Y();
+
+    static signed char getX2Z();
+
+public:
+
+
+
+public:
   virtual void
   pre ();
 
@@ -402,7 +610,16 @@ class x2_pimpl: public virtual x2_pskel
 
 class v1_pimpl: public virtual v1_pskel
 {
-  public:
+private:
+    static signed char v1_x,v1_y,v1_z;
+public:
+    static signed char getV1X();
+
+    static signed char getV1Y();
+
+    static signed char getV1Z();
+
+public:
   virtual void
   pre ();
 
@@ -424,7 +641,16 @@ class v1_pimpl: public virtual v1_pskel
 
 class v2_pimpl: public virtual v2_pskel
 {
-  public:
+private:
+    static signed char v2_x,v2_y,v2_z;
+public:
+    static signed char getV2X();
+
+    static signed char getV2Y();
+
+    static signed char getV2Z();
+
+public:
   virtual void
   pre ();
 
@@ -446,7 +672,16 @@ class v2_pimpl: public virtual v2_pskel
 
 class N1_pimpl: public virtual N1_pskel
 {
-  public:
+private:
+    static signed char n1_x,n1_y,n1_z;
+public:
+    static signed char getN1X();
+
+    static signed char getN1Y();
+
+    static signed char getN1Z();
+
+public:
   virtual void
   pre ();
 
@@ -468,7 +703,16 @@ class N1_pimpl: public virtual N1_pskel
 
 class N2_pimpl: public virtual N2_pskel
 {
-  public:
+private:
+    static signed char n2_x,n2_y,n2_z;
+public:
+    static signed char getN2X();
+
+    static signed char getN2Y();
+
+    static signed char getN2Z();
+
+public:
   virtual void
   pre ();
 
@@ -490,7 +734,15 @@ class N2_pimpl: public virtual N2_pskel
 
 class x_center_pimpl: public virtual x_center_pskel
 {
-  public:
+    static signed char x_,y_,z_;
+public:
+    static signed char getX();
+
+    static signed char getY();
+
+    static signed char getZ();
+
+public:
   virtual void
   pre ();
 
@@ -512,7 +764,16 @@ class x_center_pimpl: public virtual x_center_pskel
 
 class v_pimpl: public virtual v_pskel
 {
-  public:
+private:
+    static signed char v_x_,v_y_,v_z_;
+public:
+    static signed char getVX();
+
+    static signed char getVY();
+
+    static signed char getVZ();
+
+public:
   virtual void
   pre ();
 
