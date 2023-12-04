@@ -40,6 +40,12 @@ int main(int argc, char *argsv[]) {
     if(cmdOptionExists(argsv, argsv+argc, "-h") || cmdOptionExists(argsv, argsv+argc, "--help") || argc != 2){
         spdlog::info("Help menu:");
         spdlog::info("Arguments: xml file");
+        spdlog::info("example file in input folder");
+        spdlog::info("Specifications:");
+        spdlog::info("Shape: cuboid or sphere");
+        spdlog::info("Strategy: DirectSum or LinkedCell");
+        spdlog::info("delta_t, t_end, sigma, epsilon and an optional log_level");
+        spdlog::info("Have fun");
         return 0;
     }
 
