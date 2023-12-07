@@ -14,7 +14,7 @@ public:
 
 
 
-    LinkedCellContainer(std::array<int, 3> N, double cutoff,  std::array<std::string, 6> b);
+    LinkedCellContainer(std::array<double, 3> N, double cutoff,  std::array<std::string, 6> b);
 
     virtual ~LinkedCellContainer();
 
@@ -29,6 +29,9 @@ public:
     void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
 
     void addParticle(int x, int y, int z, Particle &p);
+
+
+    void addParticle(Particle &p);
 
     void deleteParticle(int x, int y, int z, Particle &p);
 
@@ -64,9 +67,9 @@ private:
     int y_cells;
     int z_cells;
     double c;
-    int x_max;
-    int y_max;
-    int z_max;
+    double x_max;
+    double y_max;
+    double z_max;
     std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
     std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
 
