@@ -56,7 +56,7 @@ public:
 
     void deleteGhostCells();
 
-    bool needsToBeDeleted(double x_coordinate, double y_coordinate, double z_coordinate);
+    bool moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle p);
 
 
 private:
