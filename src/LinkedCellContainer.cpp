@@ -56,7 +56,7 @@ int LinkedCellContainer::cell_numbers() const {
  * @return number of molecules in cell
  */
 unsigned long LinkedCellContainer::Particles_in_cell(int x, int y, int z) {
-    return cells[x + 1][y + 1][z + 1].size();
+    return cells[x][y][z].size();
 }
 
 /**
@@ -70,9 +70,8 @@ unsigned long LinkedCellContainer::Particles_in_cell(int x, int y, int z) {
  * @param type_arg type of new particle
  */
 void LinkedCellContainer::addParticle(int x, int y, int z, std::array<double, 3> x_arg, std::array<double, 3> v_arg,
-                                      double m_arg,
-                                      int type_arg) {
-    Particle new_particle = Particle(x_arg, v_arg, m_arg, type_arg);
+                                      double m_arg, int type_arg, double sig, double eps) {
+    Particle new_particle = Particle(x_arg, v_arg, m_arg, sig, eps, type_arg);
     cells[x][y][z].emplace_back(new_particle);
 }
 
@@ -84,8 +83,8 @@ void LinkedCellContainer::addParticle(int x, int y, int z, std::array<double, 3>
  * @param type_arg type of new particle
  */
 void
-LinkedCellContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg) {
-    Particle new_particle = Particle(x_arg, v_arg, m_arg, type_arg);
+LinkedCellContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg, double sig, double eps) {
+    Particle new_particle = Particle(x_arg, v_arg, m_arg, sig, eps, type_arg);
     cells[floor(x_arg[0] / c) + 1][floor(x_arg[1] / c) + 1][floor(x_arg[2] / c) + 1].emplace_back(new_particle);
 }
 
@@ -329,7 +328,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             std::array<double, 3> ghost_x = {-cells[x][y][z][index].getX()[0] - 0.0000000001,
                                              cells[x][y][z][index].getX()[1], cells[x][y][z][index].getX()[2]};
             std::array<double, 3> ghost_v = {0, 0, 0};
-            addParticle(x - 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index + 1);
+            addParticle(x - 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps(), index + 1);
         }
         if (boundary[0] == "p") {
             x_coordinate += x_max;
@@ -341,7 +340,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             std::array<double, 3> ghost_x = {x_max + c - fmod(cells[x][y][z][index].getX()[0], c) + 0.0000000001,
                                              cells[x][y][z][index].getX()[1], cells[x][y][z][index].getX()[2]};
             std::array<double, 3> ghost_v = {0, 0, 0};
-            addParticle(x + 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index + 1);
+            addParticle(x + 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps(), index + 1);
         }
         if (boundary[1] == "p") {
             x_coordinate -= x_max;
@@ -354,7 +353,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
                                              -cells[x][y][z][index].getX()[1] - 0.0000000001,
                                              cells[x][y][z][index].getX()[2]};
             std::array<double, 3> ghost_v = {0, 0, 0};
-            addParticle(x, y - 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index + 1);
+            addParticle(x, y - 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps(), index + 1);
         }
         if (boundary[3] == "p") {
             y_coordinate += y_max;
@@ -367,7 +366,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
                                              y_max + c - fmod(cells[x][y][z][index].getX()[1], c) + 0.0000000001,
                                              cells[x][y][z][index].getX()[2]};
             std::array<double, 3> ghost_v = {0, 0, 0};
-            addParticle(x, y + 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index + 1);
+            addParticle(x, y + 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps(), index + 1);
         }
         if (boundary[2] == "p") {
             y_coordinate -= y_max;
@@ -379,7 +378,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
                                              -cells[x][y][z][index].getX()[2] - 0.0000000001};
             std::array<double, 3> ghost_v = {0, 0, 0};
-            addParticle(x, y, z - 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), index + 1);
+            addParticle(x, y, z - 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps(), index + 1);
         }
         if (boundary[4] == "p") {
             z_coordinate += z_max;
@@ -391,7 +390,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
                                              z_max + c - fmod(cells[x][y][z][index].getX()[2], c) + 0.0000000001};
             std::array<double, 3> ghost_v = {0, 0, 0};
-            addParticle(x, y, z + 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), index + 1);
+            addParticle(x, y, z + 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps(), index + 1);
         }
         if (boundary[5] == "p") {
             z_coordinate -= z_max;
@@ -400,7 +399,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
     }
     if (periodic) {
         addParticle({x_coordinate, y_coordinate, z_coordinate}, cells[x][y][z][index].getV(),
-                    cells[x][y][z][index].getM(), cells[x][y][z][index].getType());
+                    cells[x][y][z][index].getM(), cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps(), cells[x][y][z][index].getType());
     }
 }
 
@@ -486,7 +485,7 @@ bool LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
         z_coordinate += z_max;
     }
     if (periodic) {
-        addParticle({x_coordinate, y_coordinate, z_coordinate}, p.getV(), p.getM(), p.getType());
+        addParticle({x_coordinate, y_coordinate, z_coordinate}, p.getV(), p.getM(), p.getSig(), p.getEps(), p.getType());
         addParticle(p);
     }
 }

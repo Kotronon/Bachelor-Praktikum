@@ -38,6 +38,7 @@ int dim = 2;
 
 double eps = 5;
 double sig = 1;
+double Grav = 0;
 
 std::array<double, 3> domain_size = {120,50,1};
 double cutoff = 3.0;
@@ -53,8 +54,8 @@ int main(int argc, char *argsv[]) {
 
     //Creation of cuboids for simulation with simple particle container
     /*
-    ParticleContainer cuboid_1 = ParticleGenerator::createCuboid(x_1,v_1,N_1,h,m);
-    ParticleContainer cuboid_2 = ParticleGenerator::createCuboid(x_2,v_2,N_2,h,m);
+    ParticleContainer cuboid_1 = ParticleGenerator::createCuboid(x_1,v_1,N_1,h,m, sig, eps);
+    ParticleContainer cuboid_2 = ParticleGenerator::createCuboid(x_2,v_2,N_2,h,m, sig, eps);
     container.addParticleContainer(cuboid_1);
     container.addParticleContainer(cuboid_2);
     */
@@ -65,17 +66,17 @@ int main(int argc, char *argsv[]) {
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    //ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
-    //ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
-    ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells);
+    //ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0, sig, eps);
+    //ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0, sig, eps);
+    ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells, sig, eps);
 
     double current_time = start_time;
     int iteration = 0;
 
     //Pre-calculation of f
-    //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
+    //ForceCalculator::LennardJonesForceFaster(container, eps, sig, Grav);
 
-    ForceCalculator::LennardJonesForceCell(cells, eps, sig);
+    ForceCalculator::LennardJonesForceCell(cells, eps, sig, Grav);
 
     //Initialization with Brownian Motion
     //VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
@@ -90,9 +91,9 @@ int main(int argc, char *argsv[]) {
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
 
         //Calculate new f
-        //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
+        //ForceCalculator::LennardJonesForceFaster(container, eps, sig, Grav);
 
-        ForceCalculator::LennardJonesForceCell(cells, eps, sig);
+        ForceCalculator::LennardJonesForceCell(cells, eps, sig, Grav);
 
         //Calculate new v
         //VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
