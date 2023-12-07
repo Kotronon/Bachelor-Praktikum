@@ -8,6 +8,7 @@
 
 double ForceCalculator::epsilon = 5;
 double ForceCalculator::sigma = 1;
+double ForceCalculator::Grav = 0;
 
 /**
  * Calculates the gravity force of all Particles in given ParticleContainer
@@ -58,9 +59,10 @@ void ForceCalculator::LennardJonesForce(ParticleContainer &container, double eps
  * @param eps
  * @param sig
  */
-void ForceCalculator::LennardJonesForceFaster(ParticleContainer &container, double eps, double sig) {
+void ForceCalculator::LennardJonesForceFaster(ParticleContainer &container, double eps, double sig, double Grav) {
     ForceCalculator::epsilon = eps;
     ForceCalculator::sigma = sig;
+    ForceCalculator::Grav = Grav;
     std::array<double, 3> zero = {0,0,0};
     for (auto &p: container) {
         p.setOldF(p.getF());
@@ -81,13 +83,16 @@ void ForceCalculator::LennardJonesForcePairwise(Particle *p1, Particle *p2) {
     //in further calculations, attempts at fixing it by rounding if necessary however lead to even worse problems
     double L2Norm_p1_p2 = ArrayUtils::L2Norm(p1->getX() - p2->getX());
     force = force + ((-24*epsilon / pow(L2Norm_p1_p2,2)) * (pow(sigma/L2Norm_p1_p2,6) - (2 * pow(sigma/L2Norm_p1_p2,12))) * (p1->getX() - p2->getX()));
-    p1->setF(p1->getF() + force);
-    p2->setF(p2->getF() - force);
+    std::array<double, 3> gForce1 = {0, p1->getM()*Grav, 0};
+    std::array<double, 3> gForce2 = {0, p2->getM()*Grav, 0};
+    p1->setF(p1->getF() + force + gForce1);
+    p2->setF(p2->getF() - force + gForce2);
 }
 
-void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &grid, double eps, double sig){
+void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &grid, double eps, double sig, double Grav){
     ForceCalculator::epsilon = eps;
     ForceCalculator::sigma = sig;
+    ForceCalculator::Grav = Grav;
     grid.setZero();
     grid.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise);
 }

@@ -11,12 +11,13 @@ class ForceCalculator {
 private:
     static double epsilon;
     static double sigma;
+    static double Grav;
 public:
     static void GravityForceCalculation(ParticleContainer &container);
     static void LennardJonesForce(ParticleContainer &container, double eps, double sig);
-    static void LennardJonesForceFaster(ParticleContainer &container, double eps, double sig);
+    static void LennardJonesForceFaster(ParticleContainer &container, double eps, double sig, double Grav);
     static void LennardJonesForcePairwise(Particle *p1, Particle *p2);
-    static void LennardJonesForceCell(LinkedCellContainer &cells, double eps, double sig);
+    static void LennardJonesForceCell(LinkedCellContainer &cells, double eps, double sig, double Grav);
 };
 
 
