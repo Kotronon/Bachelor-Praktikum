@@ -5,6 +5,7 @@
 #include "ForceCalculator.h"
 #include "../ParticleContainer.h"
 #include "../utils/ArrayUtils.h"
+#include <spdlog/spdlog.h>
 
 double ForceCalculator::epsilon = 5;
 double ForceCalculator::sigma = 1;
@@ -59,10 +60,10 @@ void ForceCalculator::LennardJonesForce(ParticleContainer &container, double eps
  * @param eps
  * @param sig
  */
-void ForceCalculator::LennardJonesForceFaster(ParticleContainer &container, double eps, double sig, double Grav) {
+void ForceCalculator::LennardJonesForceFaster(ParticleContainer &container, double eps, double sig, double grav) {
     ForceCalculator::epsilon = eps;
     ForceCalculator::sigma = sig;
-    ForceCalculator::Grav = Grav;
+    ForceCalculator::Grav = grav;
     std::array<double, 3> zero = {0,0,0};
     for (auto &p: container) {
         p.setOldF(p.getF());
@@ -85,10 +86,11 @@ void ForceCalculator::LennardJonesForcePairwise(Particle *p1, Particle *p2) {
     double eps = sqrt(p1->getEps()*p2->getEps());
     double sig = (p1->getSig()+p2->getSig())/2;
     force = force + ((-24*eps / pow(L2Norm_p1_p2,2)) * (pow(sig/L2Norm_p1_p2,6) - (2 * pow(sig/L2Norm_p1_p2,12))) * (p1->getX() - p2->getX()));
-    std::array<double, 3> gForce1 = {0, p1->getM()*Grav, 0};
-    std::array<double, 3> gForce2 = {0, p2->getM()*Grav, 0};
-    p1->setF(p1->getF() + force + gForce1);
-    p2->setF(p2->getF() - force + gForce2);
+    std::array<double, 3> grav1 = {0, p1->getM()*Grav, 0};
+    std::array<double, 3> grav2 = {0, p2->getM()*Grav, 0};
+    //spdlog::info("force {} {} {}", force[0], force[1], force[2]);
+    p1->setF(p1->getF() + force + grav1);
+    p2->setF(p2->getF() - force + grav2);
 }
 
 void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &grid, double eps, double sig, double grav){

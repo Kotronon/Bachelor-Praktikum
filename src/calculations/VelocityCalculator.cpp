@@ -6,6 +6,7 @@
 #include "../ParticleContainer.h"
 #include "../utils/ArrayUtils.h"
 #include "../utils/MaxwellBoltzmannDistribution.h"
+#include <spdlog/spdlog.h>
 
 /**
  * Calculation of the new velocity of all molecule in the given ParticleContainer according to Brownian Motion Initialization

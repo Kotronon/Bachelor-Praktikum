@@ -30,20 +30,20 @@ bool cmdOptionExists(char **begin, char **end, const std::string &option);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 10;
-double delta_t = 0.00005;
+double end_time = 25;
+double delta_t = 0.0005;
 
 double avg_v = 0.1;
 int dim = 2;
 
 double eps = 5;
 double sig = 1;
-double Grav = 0;
+double Grav = -12.44;
 
-std::array<double, 3> domain_size = {120,50,1};
-double cutoff = 3.0;
+std::array<double, 3> domain_size = {63, 36, 1};
+double cutoff = 2.5;
 //boundary order (b):  left, right, up, down, behind, before
-std::array<std::basic_string<char>, 6> boundary = {"r", "r", "r", "r", "r", "r"};
+std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "o", "o"};
 
 //Cuboids/Disks have to be created manually in main
 
@@ -66,10 +66,10 @@ int main(int argc, char *argsv[]) {
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    //ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0, sig, eps);
-    //ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0, sig, eps);
-    ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells, sig, eps);
+    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0,0,0}, {50,14,1}, 1.2, 1, cells, cutoff, 1, 1);
+    ParticleGenerator::createCuboidInCells({0.6, 19, 0}, {0,0,0}, {50,14,1}, 1.2, 2, cells, cutoff, 1, 0.9412);
 
+    //ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells, sig, eps);
     double current_time = start_time;
     int iteration = 0;
 
@@ -77,7 +77,6 @@ int main(int argc, char *argsv[]) {
     //ForceCalculator::LennardJonesForceFaster(container, eps, sig, Grav);
 
     ForceCalculator::LennardJonesForceCell(cells, eps, sig, Grav);
-
     //Initialization with Brownian Motion
     //VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
 
@@ -87,17 +86,13 @@ int main(int argc, char *argsv[]) {
     while (current_time < end_time) {
         //Calculate new x
         //PositionCalculator::PositionStoermerVerlet(container, delta_t);
-
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
-
         //Calculate new f
         //ForceCalculator::LennardJonesForceFaster(container, eps, sig, Grav);
-
         ForceCalculator::LennardJonesForceCell(cells, eps, sig, Grav);
 
         //Calculate new v
         //VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
-
         VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
 
         iteration++;
@@ -108,7 +103,6 @@ int main(int argc, char *argsv[]) {
         if (iteration % 100 == 0) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
         }
-
         current_time += delta_t;
     }
 

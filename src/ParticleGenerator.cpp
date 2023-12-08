@@ -8,6 +8,7 @@
 #include "ParticleContainer.h"
 #include <cmath>
 #include <iostream>
+#include <spdlog/spdlog.h>
 
 
 /**
@@ -77,19 +78,20 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
     for (int z_i = 0; z_i < N[2]; z_i++) {
         for (int y_i = 0; y_i < N[1]; y_i++) {
             for (int x_i = 0; x_i < N[0]; x_i++) {
-                cells.addParticle(x_axis_tmp, y_axis_tmp, z_axis_tmp, coordinate, v, m, 0, eps, sig);
+                cells.addParticle(x_axis_tmp, y_axis_tmp, z_axis_tmp, coordinate, v, m, 0, sig, eps);
+                //spdlog::info("added x_cell {}", x_axis_tmp);
                 coordinate[0] += h;
-                if(x_axis_tmp < floor(coordinate[0] / cutoff)) x_axis_tmp ++;
+                if(x_axis_tmp <= (floor(coordinate[0] / cutoff))) x_axis_tmp ++;
             }
             coordinate[0] = x[0];
             x_axis_tmp = x_axis;
             coordinate[1] += h;
-            if(y_axis_tmp < floor(coordinate[1] / cutoff)) y_axis_tmp ++;
+            if(y_axis_tmp <= floor(coordinate[1] / cutoff)) y_axis_tmp ++;
         }
         coordinate[1] = x[1];
         y_axis_tmp = y_axis;
         coordinate[2] += h;
-        if(z_axis_tmp < ceil(coordinate[2] / cutoff)) z_axis_tmp ++;
+        if(z_axis_tmp <= ceil(coordinate[2] / cutoff)) z_axis_tmp ++;
     }
 }
 
