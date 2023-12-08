@@ -105,7 +105,16 @@ void LinkedCellContainer::addParticle(int x, int y, int z, Particle &p) {
  * @param p existing particle to add
  */
 void LinkedCellContainer::addParticle(Particle &p) {
-    cells[floor(p.getX()[0] / c) + 1][floor(p.getX()[1] / c) + 1][floor(p.getX()[2] / c) + 1].emplace_back(p);
+    int x = floor(p.getX()[0] / c) + 1;
+    int y = floor(p.getX()[1] / c) + 1;
+    int z = floor(p.getX()[2] / c) + 1;
+    if(x > x_cells +1) x = x_cells +1;
+    if(x < 0) x = 0;
+    if(y > y_cells +1) y = y_cells +1;
+    if(y < 0) y = 0;
+    if(z > z_cells +1) z = z_cells +1;
+    if(z < 0) z = 0;
+    cells[x][y][z].emplace_back(p);
 }
 
 
@@ -117,10 +126,9 @@ void LinkedCellContainer::moveToNeighbour() {
         for (int y = 1; y < y_cells + 1; y++) {
             for (int z = 1; z < z_cells + 1; z++) {
                 for (int p = cells[x][y][z].size() - 1; p >= 0; p--) {
-                    if(it == 1100 && x ==24 && y == 14 && p == 0) {
-                        spdlog::info("x {}, y {}, z {}, p {}", x, y, z, p);
-                        spdlog::info("x {}, y {}, z {}", cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1], cells[x][y][z][p].getX()[2]);
-                    }
+                    /*if(it == 7161){
+                        spdlog::info("x {} y {} z {}", cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1], cells[x][y][z][p].getX()[2]);
+                    }*/
                     int x_now = floor(cells[x][y][z][p].getX()[0] / c);
                     int y_now = floor(cells[x][y][z][p].getX()[1] / c);
                     int z_now = floor(cells[x][y][z][p].getX()[2] / c);
@@ -128,7 +136,7 @@ void LinkedCellContainer::moveToNeighbour() {
                         (z_now < z_cells && z_now >= 0)) {
                         if (x_now + 1 != x || y_now + 1 != y || z_now + 1 != z) {
                             addParticle(x_now + 1, y_now + 1, z_now + 1, cells[x][y][z][p]);
-                            generateGhostCell(cells[x_now + 1][y_now + 1][z_now + 1].size(), x_now + 1, y_now + 1, z_now + 1);
+                            generateGhostCell(cells[x_now + 1][y_now + 1][z_now + 1].size()-1, x_now + 1, y_now + 1, z_now + 1);
                             cells[x][y][z].erase(cells[x][y][z].begin() + p);
                         } else {
                             generateGhostCell(p, x, y, z);
@@ -156,11 +164,11 @@ void LinkedCellContainer::moveToNeighbour() {
  */
 std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y, int z) const {
     std::vector<std::array<int, 3>> vec = {};
-    bool right = x < x_cells;
-    bool up = y < y_cells ;
-    bool left = x > 1;
-    bool before = z < z_cells ;
-    bool down = y > 1 ;
+    bool right = x < x_cells || (x == x_cells && boundary[1] == "p");
+    bool up = y < y_cells || (y == y_cells && boundary[2] == "p");
+    bool left = x > 1 || (x == 1 && boundary[0] == "p");
+    bool before = z < z_cells || (z == z_cells && boundary[5] == "p");
+    bool down = y > 1 || (y == 1 && boundary[3] == "p");
 
     if (right) vec.push_back({x + 1, y, z});
     if (up) vec.push_back({x, y + 1, z});
@@ -177,18 +185,32 @@ std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y
     if (left && before) vec.push_back({x - 1, y, z + 1});
 
     //left halo cell
-    if (x == 1 && boundary[0] == "r") vec.push_back({0, y, z});
+    if (x == 1 && boundary[0] != "o") vec.push_back({0, y, z});
     //right halo cell
     if (x == x_cells && boundary[1] == "r") vec.push_back({x + 1, y, z});
     //below halo cell
-    if (y == 1 && boundary[3] == "r") vec.push_back({x, y - 1, z});
+    if (y == 1 && boundary[3] != "o") vec.push_back({x, y - 1, z});
+    //below right halo cell
+    if(y == 1 && x == x_cells && boundary[1] == "p" && boundary[3] == "p") vec.push_back({x+1, y - 1, z});
+    //below left halo cell
+    if(y == 1 && x == 0 && boundary[0] == "p" && boundary[3] == "p") vec.push_back({x+1, y - 1, z});
     //up halo cell
     if (y == y_cells && boundary[2] == "r") vec.push_back({x, y + 1, z});
     //before halo and normal cell
     if (z == z_cells && boundary[5] == "r") vec.push_back({x, y, z + 1});
     //behind halo cell
     if (z == 1 && boundary[4] == "r") vec.push_back({x, y, z - 1});
-
+    if (z == 1 && boundary[4] == "p"){
+        vec.push_back({x, y, z - 1});
+        vec.push_back({x-1, y, z - 1});
+        vec.push_back({x+1, y, z - 1});
+        vec.push_back({x, y-1, z - 1});
+        vec.push_back({x, y+1, z - 1});
+        vec.push_back({x-1, y-1, z - 1});
+        vec.push_back({x-1, y+1, z - 1});
+        vec.push_back({x+1, y-1, z - 1});
+        vec.push_back({x+1, y+1, z - 1});
+    }
     return vec;
 }
 
@@ -324,6 +346,9 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
     double x_coordinate = cells[x][y][z][index].getX()[0];
     double y_coordinate = cells[x][y][z][index].getX()[1];
     double z_coordinate = cells[x][y][z][index].getX()[2];
+    int x_new = x;
+    int y_new = y;
+    int z_new = z;
     if (x == 1) {
         if (boundary[0] == "r") {
             std::array<double, 3> ghost_x = {-cells[x][y][z][index].getX()[0] - 0.0000000001,
@@ -334,6 +359,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
         if (boundary[0] == "p") {
             x_coordinate += x_max;
             periodic = true;
+            x_new = x_cells +1;
         }
     }
     if (x == x_cells) {
@@ -346,6 +372,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
         if (boundary[1] == "p") {
             x_coordinate -= x_max;
             periodic = true;
+            x_new = 0;
         }
     }
     if (y == 1) {
@@ -359,6 +386,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
         if (boundary[3] == "p") {
             y_coordinate += y_max;
             periodic = true;
+            y_new = y_cells +1;
         }
     }
     if (y == y_cells) {
@@ -372,6 +400,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
         if (boundary[2] == "p") {
             y_coordinate -= y_max;
             periodic = true;
+            y_new = 0;
         }
     }
     if (z == 1) {
@@ -384,6 +413,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
         if (boundary[4] == "p") {
             z_coordinate += z_max;
             periodic = true;
+            z_new = z_cells +1;
         }
     }
     if (z == z_cells) {
@@ -396,10 +426,11 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
         if (boundary[5] == "p") {
             z_coordinate -= z_max;
             periodic = true;
+            z_new = 0;
         }
     }
     if (periodic) {
-        addParticle({x_coordinate, y_coordinate, z_coordinate}, cells[x][y][z][index].getV(),
+        addParticle(x_new, y_new, z_new, {x_coordinate, y_coordinate, z_coordinate}, cells[x][y][z][index].getV(),
                     cells[x][y][z][index].getM(), cells[x][y][z][index].getType(), cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
     }
 }
@@ -459,37 +490,39 @@ void LinkedCellContainer::deleteGhostCells() {
  * @param z_coordinate z_coordinate of current particle
  * @return
  */
-bool LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle p) {
+void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle p) {
     bool periodic = false;
-    if (x_coordinate > x_max && boundary[1] == "p" && x_coordinate <= 2*x_max) {
+    if (x_coordinate > x_max && boundary[1] == "p") {
         periodic = true;
         x_coordinate -= x_max;
     }
-    else if (x_coordinate < 0 && boundary[0] == "p" && x_coordinate >= -x_max) {
+    else if (x_coordinate < 0 && boundary[0] == "p") {
         periodic = true;
         x_coordinate += x_max;
     }
-    if (y_coordinate > y_max && boundary[2] == "p" && y_coordinate <= 2*y_max) {
+    if (y_coordinate > y_max && boundary[2] == "p") {
         periodic = true;
         y_coordinate -= y_max;
     }
-    else if (y_coordinate < 0 && boundary[3] == "p" && y_coordinate >= -y_max) {
+    else if (y_coordinate < 0 && boundary[3] == "p") {
         periodic = true;
         y_coordinate += y_max;
     }
-    if (z_coordinate > z_max && boundary[5] == "p" && z_coordinate <= 2*z_max) {
+    if (z_coordinate > z_max && boundary[5] == "p") {
         periodic = true;
         z_coordinate -= z_max;
     }
-    else if (z_coordinate < 0 && boundary[4] == "p" && z_coordinate >= -z_max) {
+    else if (z_coordinate < 0 && boundary[4] == "p") {
         periodic = true;
         z_coordinate += z_max;
     }
     if(x_coordinate > x_max || x_coordinate < 0 || y_coordinate > y_max || y_coordinate < 0 || z_coordinate > z_max || z_coordinate < 0) {
         periodic = false;
+        return;
     }
     if (periodic) {
         addParticle({x_coordinate, y_coordinate, z_coordinate}, p.getV(), p.getM(), p.getType(), p.getSig(), p.getEps());
-        //addParticle(p);
+        addParticle(p);
+        return;
     }
 }

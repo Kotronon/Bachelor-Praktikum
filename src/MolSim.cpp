@@ -83,7 +83,7 @@ int main(int argc, char *argsv[]) {
     VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
 
     //For this loop, we assume: current x, current f and current v are known
-    while (current_time < end_time) {
+    while (current_time < 3000) {
         //Calculate new x
         //PositionCalculator::PositionStoermerVerlet(container, delta_t);
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
@@ -103,6 +103,7 @@ int main(int argc, char *argsv[]) {
         if (iteration % 100 == 0) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
         }
+       // if(iteration > 7100)  spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
         current_time += delta_t;
     }
 
