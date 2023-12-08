@@ -19,6 +19,7 @@ public:
     virtual void
     algorithm_option (const ::std::string&);
 
+
     virtual void
     write_frequency (float);
 
@@ -44,6 +45,14 @@ public:
     post_input_parameters ();
 
     ~input_parameters_pimpl();
+
+    std::string get_algorithm_option();
+
+    float get_log_level();
+
+    float get_write_frequency();
+
+    std::string get_output_file_name();
 };
 
 class simulation_input_parameters_pimpl: public virtual simulation_input_parameters_pskel
@@ -95,20 +104,27 @@ public:
     virtual void
     b1 (const ::std::string&);
 
+    std::string getB1();
+
     virtual void
     b2 (const ::std::string&);
+    std::string getB2();
 
     virtual void
     b3 (const ::std::string&);
+    std::string getB3();
 
     virtual void
     b4 (const ::std::string&);
+    std::string getB4();
 
     virtual void
     b5 (const ::std::string&);
+    std::string getB5();
 
     virtual void
     b6 (const ::std::string&);
+    std::string getB6();
 
     virtual void
     post_input_boundary_options ();
@@ -188,6 +204,8 @@ public:
     virtual void
     value (float);
 
+    float get_dimension();
+
     virtual void
     post_dimension ();
 };
@@ -204,6 +222,8 @@ public:
 
     virtual void
     value (float);
+
+    float get_avg_velocity();
 
     virtual void
     post_avg_velocity ();
@@ -222,6 +242,8 @@ public:
     virtual void
     value (float);
 
+    float get_epsilon();
+
     virtual void
     post_epsilon ();
 };
@@ -238,6 +260,8 @@ public:
 
     virtual void
     value (float);
+
+    float get_delta_t();
 
     virtual void
     post_delta_t ();
@@ -256,6 +280,8 @@ public:
     virtual void
     value (float);
 
+    float get_t_end();
+
     virtual void
     post_t_end ();
 };
@@ -273,6 +299,8 @@ public:
     virtual void
     value (float);
 
+    float get_sigma();
+
     virtual void
     post_sigma ();
 };
@@ -289,6 +317,8 @@ public:
 
     virtual void
     value (float);
+
+    float get_r_cutoff();
 
     virtual void
     post_r_cutoff ();
@@ -313,6 +343,13 @@ public:
     virtual void
     z (signed char);
 
+    short get_domain_size_x();
+
+    signed char  get_domain_size_y();
+
+    signed char get_domain_size_z();
+
+
     virtual void
     post_domain_size_l ();
 };
@@ -329,6 +366,8 @@ public:
 
     virtual void
     value (float);
+
+    float get_h();
 
     virtual void
     post_h ();
@@ -348,6 +387,8 @@ public:
 
     virtual void
     value (float);
+
+    float get_m();
 
     virtual void
     post_m ();
@@ -374,6 +415,12 @@ public:
     virtual void
     z (signed char);
 
+    signed char get_x1_x();
+
+    signed char get_x1_y();
+
+    signed char get_x1_z();
+
     virtual void
     post_x1 ();
 };
@@ -395,6 +442,12 @@ public:
 
     virtual void
     z (signed char);
+
+    signed char get_x2_x();
+
+    signed char get_x2_y();
+
+    signed char get_x2_z();
 
     virtual void
     post_x2 ();
@@ -418,6 +471,12 @@ public:
     virtual void
     z (signed char);
 
+    signed char get_v1_x();
+
+    signed char get_v1_y();
+
+    signed char get_v1_z();
+
     virtual void
     post_v1 ();
 };
@@ -439,6 +498,12 @@ public:
 
     virtual void
     z (signed char);
+
+    signed char get_v2_x();
+
+    signed char get_v2_y();
+
+    signed char get_v2_z();
 
     virtual void
     post_v2 ();
@@ -462,6 +527,12 @@ public:
     virtual void
     z (signed char);
 
+    signed char get_n1_x();
+
+    signed char get_n1_y();
+
+    signed char get_n1_z();
+
     virtual void
     post_N1 ();
 };
@@ -483,6 +554,12 @@ public:
 
     virtual void
     z (signed char);
+
+    signed char get_n2_x();
+
+    signed char get_n2_y();
+
+    signed char get_n3_z();
 
     virtual void
     post_N2 ();
@@ -506,6 +583,13 @@ public:
     virtual void
     z (signed char);
 
+
+    signed char get_x_center_x();
+
+    signed char get_x_center_y();
+
+    signed char get_x_center_z();
+
     virtual void
     post_x_center ();
 };
@@ -527,6 +611,12 @@ public:
 
     virtual void
     z (signed char);
+
+    signed char get_v_x();
+
+    signed char get_v_y();
+
+    signed char get_v_z();
 
     virtual void
     post_v ();

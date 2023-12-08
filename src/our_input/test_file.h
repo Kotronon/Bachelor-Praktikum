@@ -8,8 +8,7 @@
 
 class test_file {
 
-    void setup();
-    int main();
+    int main(int argc, char *argsv[]);
 
 };
 
