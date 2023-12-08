@@ -117,7 +117,7 @@ void LinkedCellContainer::moveToNeighbour() {
         for (int y = 1; y < y_cells + 1; y++) {
             for (int z = 1; z < z_cells + 1; z++) {
                 for (int p = cells[x][y][z].size() - 1; p >= 0; p--) {
-                    if(it == 1) {
+                    if(it == 1100 && x ==24 && y == 14 && p == 0) {
                         spdlog::info("x {}, y {}, z {}, p {}", x, y, z, p);
                         spdlog::info("x {}, y {}, z {}", cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1], cells[x][y][z][p].getX()[2]);
                     }
@@ -234,7 +234,7 @@ std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator LinkedCel
  * applies the force calculation according to N3L
  * @param forceCalculation a function to apply the force calculations pairwise
  */
-void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation) {
+void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation, double Grav) {
     for (int x = 1; x <= x_cells; x++) {
         for (int y = 1; y <= y_cells; y++) {
             for (int z = 1; z <= z_cells; z++) {
@@ -257,6 +257,8 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                             }
                         }
                     }
+                    std::array<double, 3> grav = {0, cells[x][y][z][j].getM()*Grav, 0};
+                    cells[x][y][z][j].setF(cells[x][y][z][j].getF() + grav);
                 }
             }
         }
@@ -458,7 +460,6 @@ void LinkedCellContainer::deleteGhostCells() {
  * @return
  */
 bool LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle p) {
-    //spdlog::info("in move");
     bool periodic = false;
     if (x_coordinate > x_max && boundary[1] == "p" && x_coordinate <= 2*x_max) {
         periodic = true;
@@ -486,12 +487,9 @@ bool LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
     }
     if(x_coordinate > x_max || x_coordinate < 0 || y_coordinate > y_max || y_coordinate < 0 || z_coordinate > z_max || z_coordinate < 0) {
         periodic = false;
-        spdlog::info("not moved x {} y {} z {}", x_coordinate, y_coordinate, z_coordinate);
     }
     if (periodic) {
-        ///spdlog::info("wants to moved");
         addParticle({x_coordinate, y_coordinate, z_coordinate}, p.getV(), p.getM(), p.getType(), p.getSig(), p.getEps());
         //addParticle(p);
-        //spdlog::info("moved");
     }
 }

@@ -83,14 +83,11 @@ void ForceCalculator::LennardJonesForcePairwise(Particle *p1, Particle *p2) {
     //Unfixed problem: Subtracting doubles from each other sometimes leads to extremely small numbers that cause problems
     //in further calculations, attempts at fixing it by rounding if necessary however lead to even worse problems
     double L2Norm_p1_p2 = ArrayUtils::L2Norm(p1->getX() - p2->getX());
-    double eps = sqrt(p1->getEps()*p2->getEps());
-    double sig = (p1->getSig()+p2->getSig())/2;
+    double eps = sqrt(p1->getEps() * p2->getEps());
+    double sig = (p1->getSig() + p2->getSig())/2;
     force = force + ((-24*eps / pow(L2Norm_p1_p2,2)) * (pow(sig/L2Norm_p1_p2,6) - (2 * pow(sig/L2Norm_p1_p2,12))) * (p1->getX() - p2->getX()));
-    std::array<double, 3> grav1 = {0, p1->getM()*Grav, 0};
-    std::array<double, 3> grav2 = {0, p2->getM()*Grav, 0};
-    //spdlog::info("force {} {} {}", force[0], force[1], force[2]);
-    p1->setF(p1->getF() + force + grav1);
-    p2->setF(p2->getF() - force + grav2);
+    p1->setF(p1->getF() + force);
+    p2->setF(p2->getF() - force);
 }
 
 void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &grid, double eps, double sig, double grav){
@@ -98,5 +95,5 @@ void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &grid, double ep
     ForceCalculator::sigma = sig;
     ForceCalculator::Grav = grav;
     grid.setZero();
-    grid.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise);
+    grid.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, Grav);
 }
