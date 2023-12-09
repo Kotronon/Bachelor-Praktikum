@@ -46,6 +46,13 @@ public:
 
     ~input_parameters_pimpl();
 
+    input_parameters_pimpl();
+
+    input_parameters_pimpl(std::string algo,float write_f, std::string outputfilename,float loglevel,
+                           simulation_input_parameters_pskel sim,input_boundary_options_pskel
+                           boundaries,cuboid_input_parameters_pskel cuboid,
+                           sphere_input_parameters_pskel sphere);
+
     std::string get_algorithm_option();
 
     float get_log_level();
@@ -59,32 +66,54 @@ class simulation_input_parameters_pimpl: public virtual simulation_input_paramet
 {
 public:
     ~simulation_input_parameters_pimpl();
+    simulation_input_parameters_pimpl();
+
+    simulation_input_parameters_pimpl(dimension_pskel dim, avg_velocity_pskel avgV,
+                                      epsilon_pskel eps, delta_t_pskel deltaT,
+                                      t_end_pskel tEnd,sigma_pskel sigma,
+                                      r_cutoff_pskel rCut,
+                                      domain_size_l_pskel domainSizeL);
     virtual void
     pre ();
 
     virtual void
     dimension ();
 
+    float get_dimension();
+
     virtual void
     avg_velocity ();
+
 
     virtual void
     epsilon ();
 
+
+
     virtual void
     delta_t ();
+
+
 
     virtual void
     t_end ();
 
+
+
     virtual void
     sigma ();
+
+
 
     virtual void
     r_cutoff ();
 
+
+
     virtual void
     domain_size_l ();
+
+
 
     virtual void
     post_simulation_input_parameters ();
@@ -95,6 +124,11 @@ class input_boundary_options_pimpl: public virtual input_boundary_options_pskel
 
 public:
     ~input_boundary_options_pimpl();
+
+    input_boundary_options_pimpl();
+    input_boundary_options_pimpl
+    (std::string b1,std::string b2,std::string b3, std::string b4,std::string b5,std::string b6);
+
     virtual void
     pre ();
 
@@ -134,6 +168,9 @@ class cuboid_input_parameters_pimpl: public virtual cuboid_input_parameters_pske
 {
 public:
     ~cuboid_input_parameters_pimpl();
+    cuboid_input_parameters_pimpl();
+    cuboid_input_parameters_pimpl(h_pskel,m_pskel,x1_pskel,x2_pskel,
+                                  v1_pskel,v2_pskel,N1_pskel,N2_pskel);
     virtual void
     pre ();
 
@@ -169,6 +206,9 @@ class sphere_input_parameters_pimpl: public virtual sphere_input_parameters_pske
 {
 public:
     ~sphere_input_parameters_pimpl();
+    sphere_input_parameters_pimpl();
+    sphere_input_parameters_pimpl(h_pskel,dimension_pskel,m_pskel,
+                                  x_center_pskel,v_pskel);
     virtual void
     pre ();
 
@@ -195,6 +235,9 @@ class dimension_pimpl: public virtual dimension_pskel
 {
 public:
     ~dimension_pimpl();
+    dimension_pimpl();
+
+    dimension_pimpl(float value);
     virtual void
     pre ();
 
@@ -214,6 +257,8 @@ class avg_velocity_pimpl: public virtual avg_velocity_pskel
 {
 public:
     ~avg_velocity_pimpl();
+    avg_velocity_pimpl();
+    avg_velocity_pimpl(float value);
     virtual void
     pre ();
 
@@ -233,6 +278,8 @@ class epsilon_pimpl: public virtual epsilon_pskel
 {
 public:
     ~epsilon_pimpl();
+    epsilon_pimpl();
+    epsilon_pimpl(float value);
     virtual void
     pre ();
 
@@ -252,6 +299,8 @@ class delta_t_pimpl: public virtual delta_t_pskel
 {
 public:
     ~delta_t_pimpl();
+    delta_t_pimpl();
+    delta_t_pimpl(float value);
     virtual void
     pre ();
 
@@ -271,6 +320,8 @@ class t_end_pimpl: public virtual t_end_pskel
 {
 public:
     ~t_end_pimpl();
+    t_end_pimpl();
+    t_end_pimpl(float value);
     virtual void
     pre ();
 
@@ -290,6 +341,8 @@ class sigma_pimpl: public virtual sigma_pskel
 {
 public:
     ~sigma_pimpl();
+    sigma_pimpl();
+    sigma_pimpl(float value);
     virtual void
     pre ();
 
@@ -309,6 +362,8 @@ class r_cutoff_pimpl: public virtual r_cutoff_pskel
 {
 public:
     ~r_cutoff_pimpl();
+    r_cutoff_pimpl();
+    r_cutoff_pimpl(float value);
     virtual void
     pre ();
 
@@ -328,6 +383,8 @@ class domain_size_l_pimpl: public virtual domain_size_l_pskel
 {
 public:
     ~domain_size_l_pimpl();
+    domain_size_l_pimpl();
+    domain_size_l_pimpl(short x, signed char y, signed char z);
     virtual void
     pre ();
 
@@ -358,6 +415,8 @@ class h_pimpl: public virtual h_pskel
 {
 public:
     ~h_pimpl();
+    h_pimpl();
+    h_pimpl(float value);
     virtual void
     pre ();
 
@@ -377,7 +436,8 @@ class m_pimpl: public virtual m_pskel
 {
 public:
     ~m_pimpl();
-
+    m_pimpl();
+    m_pimpl(float value);
 
     virtual void
     pre ();
@@ -398,7 +458,8 @@ class x1_pimpl: public virtual x1_pskel
 {
 public:
     ~x1_pimpl();
-
+    x1_pimpl();
+    x1_pimpl(signed char x, signed char y, signed char z);
 
     virtual void
     pre ();
@@ -428,6 +489,10 @@ public:
 class x2_pimpl: public virtual x2_pskel
 {
 public:
+    ~x2_pimpl();
+    x2_pimpl();
+    x2_pimpl(signed char x, signed char y, signed char z);
+
     virtual void
     pre ();
 
@@ -456,6 +521,10 @@ public:
 class v1_pimpl: public virtual v1_pskel
 {
 public:
+    ~v1_pimpl();
+v1_pimpl();
+    v1_pimpl(signed char x, signed char y, signed char z);
+
     virtual void
     pre ();
 
@@ -484,6 +553,10 @@ public:
 class v2_pimpl: public virtual v2_pskel
 {
 public:
+    ~v2_pimpl();
+    v2_pimpl();
+    v2_pimpl(signed char x, signed char y, signed char z);
+
     virtual void
     pre ();
 
@@ -512,6 +585,9 @@ public:
 class N1_pimpl: public virtual N1_pskel
 {
 public:
+    ~N1_pimpl();
+    N1_pimpl();
+    N1_pimpl(signed char x, signed char y, signed char z);
     virtual void
     pre ();
 
@@ -540,6 +616,9 @@ public:
 class N2_pimpl: public virtual N2_pskel
 {
 public:
+    ~N2_pimpl();
+N2_pimpl();
+    N2_pimpl(signed char x, signed char y, signed char z);
     virtual void
     pre ();
 
@@ -568,6 +647,9 @@ public:
 class x_center_pimpl: public virtual x_center_pskel
 {
 public:
+    ~x_center_pimpl();
+x_center_pimpl();
+    x_center_pimpl(signed char x, signed char y, signed char z);
     virtual void
     pre ();
 
@@ -597,6 +679,10 @@ public:
 class v_pimpl: public virtual v_pskel
 {
 public:
+    ~v_pimpl();
+    v_pimpl();
+    v_pimpl(signed char x, signed char y, signed char z);
+
     virtual void
     pre ();
 

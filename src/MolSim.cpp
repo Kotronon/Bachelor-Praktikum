@@ -12,7 +12,7 @@
 
 
 // here we go
-#include "our_input/newinput-pimpl.cxx"
+#include "our_input/newinput-pimpl.hxx"
 
 
 /**
@@ -37,6 +37,15 @@ char *getCmdOption(char **begin, char **end, const std::string &option);
  */
 bool cmdOptionExists(char **begin, char **end, const std::string &option);
 
+//objects
+input_parameters_pimpl input_param;
+input_boundary_options_pimpl input_boundaries;
+simulation_input_parameters_pimpl simulation_param;
+sphere_input_parameters_pimpl sphere_param;
+cuboid_input_parameters_pimpl cuboid_param;
+
+
+
 //Hardcoded values for now:
 constexpr double start_time = 0;
 double avg_v = 0.1;
@@ -59,8 +68,8 @@ int main(int argc, char *argsv[]) {
     container.addParticleContainer(cuboid_1);
     container.addParticleContainer(cuboid_2);
 */
-    LinkedCellContainer cells = LinkedCellContainer({120, 50, 1}, 3.0, {"r", "r", "r", "r", "r",
-                                                                        "r"}); //boundary left, right, up, down, behind, bevor
+    LinkedCellContainer cells = LinkedCellContainer({120, 50, 1}, 3.0, {input_boundaries.getB1(), input_boundaries.getB2(), input_boundaries.getB3(), input_boundaries.getB4(), input_boundaries.getB5(),
+                                                                        input_boundaries.getB6()}); //boundary left, right, up, down, behind, bevor
     //ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
     //ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
     //ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,-10,0}, {20,10,1}, 1.1225, 1, cells, 3.0);
@@ -138,7 +147,13 @@ int dim = 2;
 double eps = 5;
 double sig = 1;*/
 
-    //TODO: hier kommt noch die implementation rein
+    input_param.get_algorithm_option();
+    input_param.get_log_level();
+    input_param.get_write_frequency();
+    input_param.get_output_file_name();
+
+
+
 
 
 
