@@ -76,7 +76,7 @@ int main(int argc, char *argsv[]) {
     //Pre-calculation of f
     //ForceCalculator::LennardJonesForceFaster(container, eps, sig, Grav);
 
-    ForceCalculator::LennardJonesForceCell(cells, eps, sig, Grav);
+    ForceCalculator::LennardJonesForceCell(cells, Grav);
     //Initialization with Brownian Motion
     //VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
 
@@ -89,7 +89,7 @@ int main(int argc, char *argsv[]) {
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
         //Calculate new f
         //ForceCalculator::LennardJonesForceFaster(container, eps, sig, Grav);
-        ForceCalculator::LennardJonesForceCell(cells, eps, sig, Grav);
+        ForceCalculator::LennardJonesForceCell(cells, Grav);
 
         //Calculate new v
         //VelocityCalculator::VelocityStoermerVerlet(container, delta_t);

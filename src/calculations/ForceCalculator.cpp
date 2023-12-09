@@ -6,10 +6,12 @@
 #include "../ParticleContainer.h"
 #include "../utils/ArrayUtils.h"
 #include <spdlog/spdlog.h>
+#include <cfloat>
 
 double ForceCalculator::epsilon = 5;
 double ForceCalculator::sigma = 1;
 double ForceCalculator::Grav = 0;
+double ForceCalculator::cutoff = DBL_MAX;
 
 /**
  * Calculates the gravity force of all Particles in given ParticleContainer
@@ -79,21 +81,24 @@ void ForceCalculator::LennardJonesForceFaster(ParticleContainer &container, doub
  */
 void ForceCalculator::LennardJonesForcePairwise(Particle *p1, Particle *p2) {
     std::array<double, 3> force = {0,0,0};
-
     //Unfixed problem: Subtracting doubles from each other sometimes leads to extremely small numbers that cause problems
     //in further calculations, attempts at fixing it by rounding if necessary however lead to even worse problems
     double L2Norm_p1_p2 = ArrayUtils::L2Norm(p1->getX() - p2->getX());
-    double eps = sqrt(p1->getEps() * p2->getEps());
-    double sig = (p1->getSig() + p2->getSig())/2;
-    force = force + ((-24*eps / pow(L2Norm_p1_p2,2)) * (pow(sig/L2Norm_p1_p2,6) - (2 * pow(sig/L2Norm_p1_p2,12))) * (p1->getX() - p2->getX()));
-    p1->setF(p1->getF() + force);
-    p2->setF(p2->getF() - force);
+    //make calculation if simple sum or distance between particles is smaller than the cutoff radius
+    if(L2Norm_p1_p2 <= cutoff) {
+        double eps = sqrt(p1->getEps() * p2->getEps());
+        double sig = (p1->getSig() + p2->getSig()) / 2;
+        force = force +
+                ((-24 * eps / pow(L2Norm_p1_p2, 2)) * (pow(sig / L2Norm_p1_p2, 6) - (2 * pow(sig / L2Norm_p1_p2, 12))) *
+                 (p1->getX() - p2->getX()));
+        p1->setF(p1->getF() + force);
+        p2->setF(p2->getF() - force);
+    }
 }
 
-void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &grid, double eps, double sig, double grav){
-    ForceCalculator::epsilon = eps;
-    ForceCalculator::sigma = sig;
+void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &cells, double grav){
+    ForceCalculator::cutoff = cells.getCutoff();
     ForceCalculator::Grav = grav;
-    grid.setZero();
-    grid.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, Grav);
+    cells.setZero();
+    cells.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, Grav);
 }

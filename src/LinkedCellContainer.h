@@ -44,6 +44,8 @@ public:
 
     [[nodiscard]] int getZMax() const;
 
+    [[nodiscard]] double getCutoff() const;
+
     std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator begin();
 
     std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator end();
