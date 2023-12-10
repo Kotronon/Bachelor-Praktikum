@@ -376,7 +376,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0] + x_max,
                                              cells[x][y][z][index].getX()[1], cells[x][y][z][index].getX()[2]};
             addParticle(x_cells + 1, y, z, ghost_x, cells[x][y][z][index].getV(), cells[x][y][z][index].getM(),
-                        index + 1, cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
+                        cells[x][y][z][index].getType(), cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
             x_coordinate += x_max;
             periodic++;
             x_new = x_cells + 1;
@@ -393,7 +393,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
         if (boundary[1] == "p") {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0] - x_max,
                                              cells[x][y][z][index].getX()[1], cells[x][y][z][index].getX()[2]};
-            addParticle(0, y, z, ghost_x, cells[x][y][z][index].getV(), cells[x][y][z][index].getM(), index + 1,
+            addParticle(0, y, z, ghost_x, cells[x][y][z][index].getV(), cells[x][y][z][index].getM(), cells[x][y][z][index].getType(),
                         cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
             x_coordinate -= x_max;
             periodic++;
@@ -414,7 +414,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
                                              cells[x][y][z][index].getX()[1] + y_max,
                                              cells[x][y][z][index].getX()[2]};
             addParticle(x, y_cells + 1, z, ghost_x, cells[x][y][z][index].getV(), cells[x][y][z][index].getM(),
-                        index + 1, cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
+                        cells[x][y][z][index].getType(), cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
             y_coordinate += y_max;
             periodic++;
             y_new = y_cells + 1;
@@ -433,7 +433,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0],
                                              cells[x][y][z][index].getX()[1] - y_max,
                                              cells[x][y][z][index].getX()[2]};
-            addParticle(x, 0, z, ghost_x, cells[x][y][z][index].getV(), cells[x][y][z][index].getM(), index + 1,
+            addParticle(x, 0, z, ghost_x, cells[x][y][z][index].getV(), cells[x][y][z][index].getM(), cells[x][y][z][index].getType(),
                         cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
             y_coordinate -= y_max;
             periodic++;
@@ -453,7 +453,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
                                              cells[x][y][z][index].getX()[1],
                                              cells[x][y][z][index].getX()[2] + z_max};
             addParticle(x, y, z_cells + 1, ghost_x, cells[x][y][z][index].getV(), cells[x][y][z][index].getM(),
-                        index + 1, cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
+                        cells[x][y][z][index].getType(), cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
             z_coordinate += z_max;
             periodic++;
             z_new = z_cells + 1;
@@ -471,8 +471,8 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0],
                                              cells[x][y][z][index].getX()[1],
                                              cells[x][y][z][index].getX()[2] + z_max};
-            addParticle(x, y, z_cells + 1, ghost_x, cells[x][y][z][index].getV(), cells[x][y][z][index].getM(),
-                        index + 1, cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
+            addParticle(x, y, 0, ghost_x, cells[x][y][z][index].getV(), cells[x][y][z][index].getM(),
+                        cells[x][y][z][index].getType(), cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
             z_coordinate -= z_max;
             periodic = true;
             z_new = 0;
