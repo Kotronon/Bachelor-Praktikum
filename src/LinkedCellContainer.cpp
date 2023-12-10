@@ -56,7 +56,7 @@ int LinkedCellContainer::cell_numbers() const {
  * @return number of molecules in cell
  */
 unsigned long LinkedCellContainer::Particles_in_cell(int x, int y, int z) {
-    return cells[x + 1][y + 1][z + 1].size();
+    return cells[x ][y ][z ].size();
 }
 
 /**
@@ -365,7 +365,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
     //if boundary is reflective, check if particle is nearer than 2^(1/6)*sig to boundary; one ghost particle per boundary
     //if periodic mirror particle to other sides (can be multiple ghost particles)
     if (x == 1) {
-        if (boundary[0] == "r" && x_coordinate < boundary_check) {
+        if (boundary[0] == "r" && x_coordinate <= boundary_check) {
             std::array<double, 3> ghost_x = {-cells[x][y][z][index].getX()[0] - 0.0000000001,
                                              cells[x][y][z][index].getX()[1], cells[x][y][z][index].getX()[2]};
             std::array<double, 3> ghost_v = {0, 0, 0};
@@ -383,7 +383,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
         }
     }
     if (x == x_cells) {
-        if (boundary[1] == "r" && x_coordinate > x_max - boundary_check) {
+        if (boundary[1] == "r" && x_coordinate >= x_max - boundary_check) {
             std::array<double, 3> ghost_x = {x_max + c - fmod(cells[x][y][z][index].getX()[0], c) + 0.0000000001,
                                              cells[x][y][z][index].getX()[1], cells[x][y][z][index].getX()[2]};
             std::array<double, 3> ghost_v = {0, 0, 0};
@@ -401,7 +401,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
         }
     }
     if (y == 1) {
-        if (boundary[3] == "r" && y_coordinate < boundary_check) {
+        if (boundary[3] == "r" && y_coordinate <= boundary_check) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0],
                                              -cells[x][y][z][index].getX()[1] - 0.0000000001,
                                              cells[x][y][z][index].getX()[2]};
@@ -421,7 +421,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
         }
     }
     if (y == y_cells) {
-        if (boundary[2] == "r" && y_coordinate > y_max - boundary_check) {
+        if (boundary[2] == "r" && y_coordinate >= y_max - boundary_check) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0],
                                              y_max + c - fmod(cells[x][y][z][index].getX()[1], c) + 0.0000000001,
                                              cells[x][y][z][index].getX()[2]};
@@ -441,7 +441,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
         }
     }
     if (z == 1) {
-        if (boundary[4] == "r" && z_coordinate < boundary_check) {
+        if (boundary[4] == "r" && z_coordinate <= boundary_check) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
                                              -cells[x][y][z][index].getX()[2] - 0.0000000001};
             std::array<double, 3> ghost_v = {0, 0, 0};
@@ -460,7 +460,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
         }
     }
     if (z == z_cells) {
-        if (boundary[5] == "r" && z_coordinate > z_max - boundary_check) {
+        if (boundary[5] == "r" && z_coordinate >= z_max - boundary_check) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
                                              z_max + c - fmod(cells[x][y][z][index].getX()[2], c) + 0.0000000001};
             std::array<double, 3> ghost_v = {0, 0, 0};
@@ -535,26 +535,33 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
     if (x_coordinate > x_max && boundary[1] == "p") {
         periodic = true;
         x_coordinate -= x_max;
+        //if(x_coordinate < 0 || x_coordinate > x_max) x_coordinate = 0;
     } else if (x_coordinate < 0 && boundary[0] == "p") {
         periodic = true;
         x_coordinate += x_max;
+        //if(x_coordinate < 0 || x_coordinate > x_max) x_coordinate = x_max;
     }
     if (y_coordinate > y_max && boundary[2] == "p") {
         periodic = true;
         y_coordinate -= y_max;
+        //if(y_coordinate < 0 || y_coordinate >y_max) y_coordinate = 0;
     } else if (y_coordinate < 0 && boundary[3] == "p") {
         periodic = true;
         y_coordinate += y_max;
+        //if(y_coordinate < 0 || y_coordinate >y_max) y_coordinate = y_max;
     }
     if (z_coordinate > z_max && boundary[5] == "p") {
         periodic = true;
         z_coordinate -= z_max;
+       // if(z_coordinate < 0 || z_coordinate > z_max) z_coordinate = 0;
     } else if (z_coordinate < 0 && boundary[4] == "p") {
         periodic = true;
         z_coordinate += z_max;
+        //if(z_coordinate < 0 || z_coordinate > z_max) z_coordinate = z_max;
     }
     if (x_coordinate > x_max || x_coordinate < 0 || y_coordinate > y_max || y_coordinate < 0 || z_coordinate > z_max ||
         z_coordinate < 0) {
+        spdlog::info("needs to be deleted because x  {} y {} z {}", x_coordinate, y_coordinate, z_coordinate);
         periodic = false;
         return;
     }
