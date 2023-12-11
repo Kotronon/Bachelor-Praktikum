@@ -35,56 +35,14 @@ signed char sim_p_domain_size_l_y_, sim_p_domain_size_l_z_,
         sph_p_v_x_,sph_p_v_y_,sph_p_v_z_
 ;
 
-dimension_pimpl Dimension = {sim_p_dimension_};
-avg_velocity_pimpl avgVelocity = {sim_p_epsilon_};
-r_cutoff_pimpl rCutoff = {sim_p_r_cutoff_};
-epsilon_pimpl epsilon = {sim_p_epsilon_};
-delta_t_pimpl deltaT_ = {sim_p_epsilon_};
-t_end_pimpl tEndPimpl = {sim_p_t_end_};
-sigma_pimpl sigma = {sim_p_sigma_};
-domain_size_l_pimpl domainSize = {sim_p_domain_size_l_x_,sim_p_domain_size_l_y_,sim_p_domain_size_l_z_};
-
-h_pimpl hParams = {cub_p_h_};
-m_pimpl mParams = {cub_p_m_};
-
-x1_pimpl x1Params = {cub_p_x1_x_, cub_p_x1_y_, cub_p_x1_z_};
-x2_pimpl x2Params = {cub_p_x2_x_, cub_p_x2_y_, cub_p_x2_z_};
-v1_pimpl v1Params = {cub_p_v1_x_, cub_p_v1_y_, cub_p_v1_z_};
-v2_pimpl v2Params = {cub_p_v2_x_, cub_p_v2_y_, cub_p_v2_z_};
-N1_pimpl n1Params = {cub_p_N1_x_, cub_p_N1_y_, cub_p_N1_z_};
-N2_pimpl n2Params = {cub_p_N2_x_, cub_p_N2_y_, cub_p_N2_z_};
-
-h_pimpl sphHparams =  {sph_p_h};
-m_pimpl sphMparams = {sph_p_m};
-dimension_pimpl sphDim = {sph_p_dimension};
-x_center_pimpl xCenterParams ={sph_p_x_center_x_, sph_p_x_center_y_, sph_p_x_center_z_};
-v_pimpl vParams = {sph_p_v_x_, sph_p_x_center_y_, sph_p_x_center_z_};
-
-simulation_input_parameters_pimpl simulationParams =
-        {Dimension,
-         avgVelocity,
-         epsilon,
-         deltaT_,
-         tEndPimpl,
-         sigma,
-         rCutoff,
-         domainSize};
-
-input_boundary_options_pimpl boundaryParams ={bound_p_b1_,
-                                              bound_p_b2_,bound_p_b3_,bound_p_b4_,bound_p_b5_,bound_p_b6_};
-cuboid_input_parameters_pimpl cuboidParams = {hParams,mParams,x1Params,x2Params,
-                                              v1Params,v2Params,n1Params,n2Params};
-sphere_input_parameters_pimpl sphereParams = {sphHparams,sphDim, sphMparams,xCenterParams,vParams};
-
-input_parameters_pimpl input = {inp_p_algorithm_option_,inp_p_write_frequency_,inp_p_output_file_param, inp_p_log_level_,
-                                simulationParams,boundaryParams,cuboidParams,sphereParams};
-
 
 
 void input_parameters_pimpl::
 pre ()
 {
 }
+
+
 
 
 void input_parameters_pimpl::
@@ -139,6 +97,8 @@ simulation_input_parameters ()
 {
 }
 
+
+
 void input_parameters_pimpl::
 input_boundary_options ()
 {
@@ -163,28 +123,11 @@ input_parameters_pimpl::~input_parameters_pimpl() {
 
 }
 
-input_parameters_pimpl::input_parameters_pimpl(std::string algo, float write_f, std::string outputfilename,
-                                               float loglevel, simulation_input_parameters_pskel sim,
-                                               input_boundary_options_pskel boundaries,
-                                               cuboid_input_parameters_pskel cuboid,
-                                               sphere_input_parameters_pskel sphere) {
 
-}
 
 input_parameters_pimpl::input_parameters_pimpl() {
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 // simulation_input_parameters_pimpl
 //
@@ -243,21 +186,12 @@ simulation_input_parameters_pimpl::~simulation_input_parameters_pimpl() {
 
 }
 
-float simulation_input_parameters_pimpl::get_dimension() {
-    return sim_p_dimension_;
-}
-
-simulation_input_parameters_pimpl::simulation_input_parameters_pimpl(dimension_pskel dim, avg_velocity_pskel avgV,
-                                                                     epsilon_pskel eps, delta_t_pskel deltaT,
-                                                                     t_end_pskel tEnd, sigma_pskel sigma,
-                                                                     r_cutoff_pskel rCut,
-                                                                     domain_size_l_pskel domainSizeL) {
-
-}
 
 simulation_input_parameters_pimpl::simulation_input_parameters_pimpl() {
 
 }
+
+
 
 // input_boundary_options_pimpl
 //
@@ -348,10 +282,7 @@ input_boundary_options_pimpl::~input_boundary_options_pimpl() {
 
 }
 
-input_boundary_options_pimpl::input_boundary_options_pimpl(std::string b1, std::string b2, std::string b3,
-                                                           std::string b4, std::string b5, std::string b6) {
 
-}
 
 input_boundary_options_pimpl::input_boundary_options_pimpl() {
 
@@ -416,10 +347,7 @@ cuboid_input_parameters_pimpl::~cuboid_input_parameters_pimpl() {
 
 }
 
-cuboid_input_parameters_pimpl::cuboid_input_parameters_pimpl(h_pskel, m_pskel, x1_pskel, x2_pskel, v1_pskel, v2_pskel,
-                                                             N1_pskel, N2_pskel) {
 
-}
 
 cuboid_input_parameters_pimpl::cuboid_input_parameters_pimpl() {
 
@@ -467,14 +395,11 @@ sphere_input_parameters_pimpl::~sphere_input_parameters_pimpl() {
 
 }
 
-sphere_input_parameters_pimpl::sphere_input_parameters_pimpl(h_pskel, dimension_pskel, m_pskel, x_center_pskel,
-                                                             v_pskel) {
-
-}
 
 sphere_input_parameters_pimpl::sphere_input_parameters_pimpl() {
 
 }
+
 
 // dimension_pimpl
 //
@@ -511,9 +436,7 @@ dimension_pimpl::~dimension_pimpl() {
 
 }
 
-dimension_pimpl::dimension_pimpl(float value) {
 
-}
 
 dimension_pimpl::dimension_pimpl() {
 
@@ -554,9 +477,7 @@ avg_velocity_pimpl::~avg_velocity_pimpl() {
 
 }
 
-avg_velocity_pimpl::avg_velocity_pimpl(float value) {
 
-}
 
 avg_velocity_pimpl::avg_velocity_pimpl() {
 
@@ -598,9 +519,7 @@ epsilon_pimpl::~epsilon_pimpl() {
 
 }
 
-epsilon_pimpl::epsilon_pimpl(float value) {
 
-}
 
 epsilon_pimpl::epsilon_pimpl() {
 
@@ -642,9 +561,6 @@ delta_t_pimpl::~delta_t_pimpl() {
 
 }
 
-delta_t_pimpl::delta_t_pimpl(float value) {
-
-}
 
 delta_t_pimpl::delta_t_pimpl() {
 
@@ -686,9 +602,7 @@ t_end_pimpl::~t_end_pimpl() {
 
 }
 
-t_end_pimpl::t_end_pimpl(float value) {
 
-}
 
 t_end_pimpl::t_end_pimpl() {
 
@@ -730,9 +644,7 @@ sigma_pimpl::~sigma_pimpl() {
 
 }
 
-sigma_pimpl::sigma_pimpl(float value) {
 
-}
 
 sigma_pimpl::sigma_pimpl() {
 
@@ -774,9 +686,7 @@ r_cutoff_pimpl::~r_cutoff_pimpl() {
 
 }
 
-r_cutoff_pimpl::r_cutoff_pimpl(float value) {
 
-}
 
 r_cutoff_pimpl::r_cutoff_pimpl() {
 
@@ -840,9 +750,7 @@ domain_size_l_pimpl::~domain_size_l_pimpl() {
 
 }
 
-domain_size_l_pimpl::domain_size_l_pimpl(short x, signed char y, signed char z) {
 
-}
 
 domain_size_l_pimpl::domain_size_l_pimpl() {
 
@@ -888,9 +796,6 @@ h_pimpl::~h_pimpl() {
 
 }
 
-h_pimpl::h_pimpl(float value) {
-
-}
 
 h_pimpl::h_pimpl() {
 
@@ -932,9 +837,7 @@ m_pimpl::~m_pimpl() {
 
 }
 
-m_pimpl::m_pimpl(float value) {
 
-}
 
 m_pimpl::m_pimpl() {
 
@@ -998,9 +901,7 @@ x1_pimpl::~x1_pimpl() {
 
 }
 
-x1_pimpl::x1_pimpl(signed char x, signed char y, signed char z) {
 
-}
 
 x1_pimpl::x1_pimpl() {
 
@@ -1064,9 +965,7 @@ x2_pimpl::~x2_pimpl() {
 
 }
 
-x2_pimpl::x2_pimpl(signed char x, signed char y, signed char z) {
 
-}
 
 x2_pimpl::x2_pimpl() {
 
@@ -1135,9 +1034,7 @@ v1_pimpl::v1_pimpl() {
 
 }
 
-v1_pimpl::v1_pimpl(signed char x, signed char y, signed char z) {
 
-}
 
 
 // v2_pimpl
@@ -1311,7 +1208,7 @@ z (signed char z)
     cub_p_N2_z_ = z;
 }
 
-signed char N2_pimpl::get_n3_z() {
+signed char N2_pimpl::get_n2_z() {
     return cub_p_N2_z_;
 }
 

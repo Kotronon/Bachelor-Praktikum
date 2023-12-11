@@ -13,6 +13,7 @@
 
 // here we go
 #include "our_input/newinput-pimpl.hxx"
+#include "our_input/implementation_input.cpp"
 
 
 /**
@@ -37,12 +38,7 @@ char *getCmdOption(char **begin, char **end, const std::string &option);
  */
 bool cmdOptionExists(char **begin, char **end, const std::string &option);
 
-//objects
-input_parameters_pimpl input_param;
-input_boundary_options_pimpl input_boundaries;
-simulation_input_parameters_pimpl simulation_param;
-sphere_input_parameters_pimpl sphere_param;
-cuboid_input_parameters_pimpl cuboid_param;
+
 
 
 
@@ -147,10 +143,7 @@ int dim = 2;
 double eps = 5;
 double sig = 1;*/
 
-    input_param.get_algorithm_option();
-    input_param.get_log_level();
-    input_param.get_write_frequency();
-    input_param.get_output_file_name();
+
 
 
 
