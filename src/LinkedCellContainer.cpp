@@ -118,6 +118,19 @@ void LinkedCellContainer::addParticle(Particle &p) {
     cells[x][y][z].emplace_back(p);
 }
 
+ParticleContainer LinkedCellContainer::toContainer() {
+    ParticleContainer container = ParticleContainer();
+    for(auto &x : cells){
+        for(auto &y : x) {
+            for(auto &z : y){
+                for(auto &particle : z){
+                    container.addParticle(particle);
+                }
+            }
+        }
+    }
+    return container;
+}
 
 /**
  * checks if particle needs to be moved to another cell and moves them accordingly

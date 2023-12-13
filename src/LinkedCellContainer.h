@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Particle.h"
+#include "ParticleContainer.h"
 #include <vector>
 #include <functional>
 
@@ -31,6 +32,8 @@ public:
     void addParticle(int x, int y, int z, Particle &p);
 
     void addParticle(Particle &p);
+
+    ParticleContainer toContainer();
 
     void moveToNeighbour();
 
