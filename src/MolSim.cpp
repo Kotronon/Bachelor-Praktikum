@@ -4,6 +4,7 @@
 #include "outputWriter/VTKWriter.h"
 #include "ParticleContainer.h"
 #include "ParticleGenerator.h"
+#include "Thermostat.h"
 #include "calculations/ForceCalculator.h"
 #include "calculations/VelocityCalculator.h"
 #include "spdlog/spdlog.h"
@@ -30,8 +31,8 @@ bool cmdOptionExists(char **begin, char **end, const std::string &option);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 10;
-double delta_t = 0.00005;
+double end_time = 25;
+double delta_t = 0.0005;
 
 double avg_v = 0.1;
 int dim = 2;
@@ -39,10 +40,24 @@ int dim = 2;
 double eps = 5;
 double sig = 1;
 
-std::array<double, 3> domain_size = {120,50,1};
-double cutoff = 3.0;
+std::array<double, 3> domain_size = {63,36,1};
+double cutoff = 2.5 * sig;
+
 //boundary order (b):  left, right, up, down, behind, before
 std::array<std::basic_string<char>, 6> boundary = {"r", "r", "r", "r", "r", "r"};
+
+double initTemperature = 40;
+int nThermostat = 1000;
+bool applyBrownianMotion = true;
+
+//optional:
+bool targetTemperatureExists = false;
+double targetTemperature;
+
+//optional:
+bool differenceTemperatureExists = false;
+double differenceTemperature;
+
 
 //Cuboids/Disks have to be created manually in main
 
@@ -60,49 +75,53 @@ int main(int argc, char *argsv[]) {
     */
 
     //Creation of linked-cell container to be filled with all relevant particles
-    //LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
-    LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "o", "r", "r"});
+    LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
 
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    //ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
-    //ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
-    //ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells);
-
-    cells.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0);
-    PositionCalculator::PositionStoermerVerletCell(cells, 1);
-    cells.addParticle({1, 0, 0}, {-1, 3, 0}, 50, 0);
-    std::printf("%lu",cells.Particles_in_cell(1,1,1));
+    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0,0,0}, {4,4,1}, 1.2, 1.0, cells, cutoff);
 
     double current_time = start_time;
     int iteration = 0;
 
     //Pre-calculation of f
-    //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
-
     ForceCalculator::LennardJonesForceCell(cells, eps, sig);
 
-    //Initialization with Brownian Motion
-    //VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
+    //Initialization with Brownian Motion / temperature
+    if (applyBrownianMotion) {
+        Thermostat::initializeTemperatureWithBrownianMotion(initTemperature, dim, avg_v, cells);
+    }
+    else {
+        Thermostat::initializeTemperature(initTemperature, dim, cells);
+    }
 
-    VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
+    if (!targetTemperatureExists) {
+        targetTemperature = initTemperature;
+    }
 
     //For this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
-        //Calculate new x
-        //PositionCalculator::PositionStoermerVerlet(container, delta_t);
 
+        if (iteration != 0 && iteration % nThermostat == 0) {
+            if (differenceTemperatureExists) {
+                Thermostat::setTemperatureGradually(targetTemperature, differenceTemperature, dim, cells);
+            }
+            else {
+                Thermostat::setTemperatureDirectly(targetTemperature, dim, cells);
+            }
+        }
+
+        //DEBUG
+        Thermostat::calculateCurrentTemperature(dim,cells);
+
+        //Calculate new x
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
 
         //Calculate new f
-        //ForceCalculator::LennardJonesForceFaster(container, eps, sig);
-
         ForceCalculator::LennardJonesForceCell(cells, eps, sig);
 
         //Calculate new v
-        //VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
-
         VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
 
         iteration++;

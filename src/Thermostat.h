@@ -11,18 +11,19 @@
 class Thermostat {
 public:
 
-    void setTemperatureGradually(double targetTemperature, int timeSteps, LinkedCellContainer &cells);
-
-    void setTemperatureGradually(double targetTemperature, int timeSteps, double temperatureDifference,
-                                 LinkedCellContainer &cells);
-
-    void initializeTemperature(double initialTemperature, int dimension, LinkedCellContainer &cells);
+    static void initializeTemperature(double initialTemperature, int dimension, LinkedCellContainer &cells);
 
 
-    void initializeTemperatureWithBrownianMotion(double initialTemperature, int dimension, double averageVelocity,
-                                                 LinkedCellContainer &cells);
+    static void initializeTemperatureWithBrownianMotion(double initialTemperature, int dimension, double averageVelocity,
+                                                        LinkedCellContainer &cells);
 
-    void setTemperatureDirectly(double temperature, int dimension, LinkedCellContainer &cells);
+    static void setTemperatureDirectly(double temperature, int dimension, LinkedCellContainer &cells);
+
+    static void
+    setTemperatureGradually(double targetTemperature, double temperatureDifference, int dim,
+                            LinkedCellContainer &cells);
+
+    static double calculateCurrentTemperature(int dimension, LinkedCellContainer cells);
 };
 
 
