@@ -40,7 +40,7 @@ double eps = 5;
 double sig = 1;
 double Grav = -12.44;
 
-std::array<double, 3> domain_size = {63, 36, 1};
+std::array<double, 3> domain_size = {180, 90, 1};
 double cutoff = 2.5;
 //boundary order (b):  left, right, up, down, behind, before
 std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "o", "o"};
@@ -66,8 +66,8 @@ int main(int argc, char *argsv[]) {
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0,0,0}, {50,14,1}, 1.2, 1, cells, cutoff, 1, 1);
-    ParticleGenerator::createCuboidInCells({0.6, 19, 0}, {0,0,0}, {50,14,1}, 1.2, 2, cells, cutoff, 1, 0.9412);
+    ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.2, 1, cells, cutoff, 1, 1);
+    ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-10,0}, {20,20,1}, 1.2, 2, cells, cutoff, 1, 0.9412);
 
     //ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells, sig, eps);
     double current_time = start_time;

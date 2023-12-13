@@ -65,7 +65,7 @@ private:
     int x_cells;
     int y_cells;
     int z_cells;
-    double c;
+    double cutoff;
     double x_max;
     double y_max;
     double z_max;

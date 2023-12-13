@@ -11,7 +11,7 @@ class ForceCalculator {
 private:
     static double epsilon;
     static double sigma;
-    static double Grav;
+    static double Ggrav;
     static double cutoff;
 public:
     static void GravityForceCalculation(ParticleContainer &container);
