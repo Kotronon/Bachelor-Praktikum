@@ -60,14 +60,20 @@ int main(int argc, char *argsv[]) {
     */
 
     //Creation of linked-cell container to be filled with all relevant particles
-    LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
+    //LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
+    LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "o", "r", "r"});
 
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
     //ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.1225, 1, cells, 3.0);
     //ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-10,0}, {20,20,1}, 1.1225, 1, cells, 3.0);
-    ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells);
+    //ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells);
+
+    cells.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0);
+    PositionCalculator::PositionStoermerVerletCell(cells, 1);
+    cells.addParticle({1, 0, 0}, {-1, 3, 0}, 50, 0);
+    std::printf("%lu",cells.Particles_in_cell(1,1,1));
 
     double current_time = start_time;
     int iteration = 0;

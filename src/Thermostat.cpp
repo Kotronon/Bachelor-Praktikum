@@ -4,21 +4,26 @@
 
 #include "Thermostat.h"
 #include "LinkedCellContainer.h"
-#include "cmath"
+#include <cmath>
 #include "utils/MaxwellBoltzmannDistribution.h"
 #include "utils/ArrayUtils.h"
 
+/**
+ * initialize the temperature in a LinkedCellContainer (velocities of particles should not be (0,0,0))
+ * @param initialTemperature temperature to initialize in Kelvin
+ * @param dimension dimension of the simulation (possible values: 2 or 3)
+ * @param cells LinkedCellContainer
+ */
 void Thermostat::initializeTemperature(double initialTemperature, int dimension, LinkedCellContainer &cells) {
     setTemperatureDirectly(initialTemperature, dimension,cells);
 }
 
 /**
- * initialize the Temperature in a LinkedCellContainer with Brownian Motion (velocities of particles should be (0,0,0))
+ * initialize the temperature in a LinkedCellContainer with Brownian Motion (velocities of particles should be (0,0,0))
  * @param initialTemperature temperature to initialize in Kelvin
  * @param dimension dimension of the simulation (possible values: 2 or 3)
  * @param averageVelocity average velocity of the Brownian Motion
  * @param cells LinkedCellContainer
- * @return
  */
 void Thermostat::initializeTemperatureWithBrownianMotion(double initialTemperature, int dimension, double averageVelocity, LinkedCellContainer &cells) {
     double factor;
@@ -37,6 +42,12 @@ void Thermostat::initializeTemperatureWithBrownianMotion(double initialTemperatu
     }
 }
 
+/**
+ * set the temperature in a LinkedCellContainer directly to a certain value with velocity scaling (velocities should already be initialized)
+ * @param newTemperature temperature in Kelvin
+ * @param dimension dimension of the simulation (possible values: 2 or 3)
+ * @param cells LinkedCellContainer
+ */
 void Thermostat::setTemperatureDirectly(double newTemperature, int dimension, LinkedCellContainer &cells) {
     double sum = 0;
     double factor;
@@ -58,9 +69,11 @@ void Thermostat::setTemperatureDirectly(double newTemperature, int dimension, Li
         }
     }
 
+    //Calculate current temperature and velocity scaling factor
     double currentTemperature = sum / (numberOfParticles * dimension);
     factor = std::sqrt(newTemperature/currentTemperature);
 
+    //Scale velocities of all particles
     for (auto x = cells.begin() + 1; x < cells.end() - 1; x++) {
         for (auto y = x->begin() + 1; y < x->end() - 1; y++) {
             for (auto z = y->begin() + 1; z < y->end() - 1; z++) {

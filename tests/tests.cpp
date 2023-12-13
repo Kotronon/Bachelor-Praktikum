@@ -8,7 +8,7 @@
 #include "../src/LinkedCellContainer.h"
 #include <math.h>
 //@TODO write tests with TEST()
-//To compile tests write cmake --build . in terminal and afterwarts ctest works
+//To compile tests write cmake --build . in terminal and afterwards ctest works
 
 /**
  * Test for plain Particle Container for addParticle, begin(), end() and size() functions
@@ -37,24 +37,24 @@ TEST(cellTest, LinkedCellContainer){
     Particle particle({0, 0, 0}, {0, 3, 0}, 50, 0);
     cells.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0);
     //test begin
-    ASSERT_TRUE(std::next(std::next(std::next(cells.begin())->begin())->begin())->begin().base()->operator==(particle)) << "didn't point on only element in container";
+    ASSERT_TRUE(std::next(std::next(std::next(cells.begin())->begin())->begin())->begin().base()->operator==(particle)) << "didn't point to only element in container";
     //test end
-    ASSERT_FALSE(std::next(std::next(std::next(cells.begin())->begin())->begin())->end().base()->operator==(particle)) << "didn't point on only element in container";
+    ASSERT_FALSE(std::next(std::next(std::next(cells.begin())->begin())->begin())->end().base()->operator==(particle)) << "didn't point to only element in container";
     //test calculate position and move particle to next cell
     Particle particle2({0, 3, 0}, {0, 3, 0}, 50, 0);
     PositionCalculator::PositionStoermerVerletCell(cells, 1);
     auto it = std::next(std::next(cells.begin())->begin());
     ASSERT_TRUE(std::next(std::next(it)->begin())->begin().base()->operator==(particle2)) << "particle wasn't moved to next cell";
     cells.addParticle({1, 0, 0}, {-1, 3, 0}, 50, 0);
-    ASSERT_EQ(1, cells.Particles_in_cell(1,1,1));
+    ASSERT_EQ(1, cells.Particles_in_cell(0,0,0));
     cells.generateGhostCell(0, 1, 1, 1);
     Particle ghost ({-1.0000000001, 0, 0}, {0, 0, 0}, 50, 1);
     ASSERT_TRUE(std::next(std::next(cells.begin()->begin())->begin())->begin().base()->operator==(ghost));
     //test outflow
     cells.addParticle({0, 0, 0}, {0, -1, 0}, 50, 0);
-    EXPECT_EQ(2, cells.Particles_in_cell(1,1,1));
+    EXPECT_EQ(2, cells.Particles_in_cell(0,0,0));
     PositionCalculator::PositionStoermerVerletCell(cells, 1);
-    EXPECT_EQ(0, cells.Particles_in_cell(1,1,1));
+    EXPECT_EQ(0, cells.Particles_in_cell(0,0,0));
 }
 
 /**
@@ -113,14 +113,14 @@ TEST(VelocityTest, stroemerVelvet) {
 /**
  * Test for the calculation of gravity force
  */
-TEST(ForceTest, SimpleForceCalculation){
+TEST(ForceTest, GravityForceCalculation){
     ParticleContainer particles;
     particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0);
     particles.addParticle({0, 3, 0}, {4, 3, 5}, 20, 0);
     double res = (50.0*20.0*3.0)/27.0;
     std::array<double, 3> res1 = {0, res, 0};
     std::array<double, 3> res2 = {0, -res, 0};
-    ForceCalculator::SimpleForceCalculation(particles);
+    ForceCalculator::GravityForceCalculation(particles);
     auto particleVector = particles.begin();
     EXPECT_EQ(res1, particleVector.base()->getF());
     EXPECT_EQ(res2, std::next(particleVector.base())->getF()) << "wrong force calculated";
