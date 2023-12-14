@@ -25,7 +25,7 @@ void Thermostat::initializeTemperature(double initialTemperature, int dimension,
  * @param averageVelocity average velocity of the Brownian Motion
  * @param cells LinkedCellContainer
  */
-void Thermostat::initializeTemperatureWithBrownianMotion(double initialTemperature, int dimension, double averageVelocity, LinkedCellContainer &cells) {
+void Thermostat::initializeTemperatureWithBrownianMotion(double initialTemperature, int dimension, LinkedCellContainer &cells) {
     double factor;
     std::array<double, 3> brownian_motion{};
 
@@ -35,7 +35,7 @@ void Thermostat::initializeTemperatureWithBrownianMotion(double initialTemperatu
                 for (auto p = z->begin(); p < z->end(); p++) {
 
                     factor = std::sqrt(initialTemperature / p->getM());
-                    brownian_motion = maxwellBoltzmannDistributedVelocity(factor * averageVelocity, dimension);
+                    brownian_motion = maxwellBoltzmannDistributedVelocity(factor, dimension);
                     p->setV(p->getV() + brownian_motion);
                 }
             }
@@ -119,9 +119,8 @@ void Thermostat::setTemperatureGradually(double targetTemperature, double temper
  * @return current temperature in the LinkedCellContainer in Kelvin
  */
 double Thermostat::calculateCurrentTemperature(int dimension, LinkedCellContainer cells) {
-    double sum = 0;
+    double kineticEnergy = 0;
     int numberOfParticles = 0;
-    //const double boltzmann_constant = 1.3806503e-23;
     std::array<double, 3> v_multiplication{};
 
     //Calculate current temperature with
@@ -132,7 +131,7 @@ double Thermostat::calculateCurrentTemperature(int dimension, LinkedCellContaine
             for (auto z = y->begin() + 1; z < y->end() - 1; z++) {
                 for (auto p = z->begin(); p < z->end(); p++) {
                     v_multiplication = p->getV() * p->getV();
-                    sum += (p->getM() / 2.0) * (v_multiplication[0] + v_multiplication[1] + v_multiplication[2]);
+                    kineticEnergy += p->getM() * (v_multiplication[0] + v_multiplication[1] + v_multiplication[2]);
                     numberOfParticles++;
                 }
             }
@@ -140,6 +139,6 @@ double Thermostat::calculateCurrentTemperature(int dimension, LinkedCellContaine
     }
 
     //Calculate current temperature
-    double currentTemperature = (2.0 * sum) / numberOfParticles;
+    double currentTemperature = kineticEnergy / (numberOfParticles * dimension);
     return currentTemperature;
 }

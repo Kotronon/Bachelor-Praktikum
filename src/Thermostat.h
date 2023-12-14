@@ -13,10 +13,6 @@ public:
 
     static void initializeTemperature(double initialTemperature, int dimension, LinkedCellContainer &cells);
 
-
-    static void initializeTemperatureWithBrownianMotion(double initialTemperature, int dimension, double averageVelocity,
-                                                        LinkedCellContainer &cells);
-
     static void setTemperatureDirectly(double temperature, int dimension, LinkedCellContainer &cells);
 
     static void
@@ -24,6 +20,8 @@ public:
                             LinkedCellContainer &cells);
 
     static double calculateCurrentTemperature(int dimension, LinkedCellContainer cells);
+
+    static void initializeTemperatureWithBrownianMotion(double initialTemperature, int dimension, LinkedCellContainer &cells);
 };
 
 

@@ -10,6 +10,7 @@
 #include "spdlog/spdlog.h"
 #include "calculations/PositionCalculator.h"
 #include <string>
+#include <iostream>
 
 
 /**
@@ -80,7 +81,7 @@ int main(int argc, char *argsv[]) {
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0,0,0}, {4,4,1}, 1.2, 1.0, cells, cutoff);
+    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0,0,0}, {50,14,1}, 1.2, 1.0, cells, cutoff);
 
     double current_time = start_time;
     int iteration = 0;
@@ -90,7 +91,7 @@ int main(int argc, char *argsv[]) {
 
     //Initialization with Brownian Motion / temperature
     if (applyBrownianMotion) {
-        Thermostat::initializeTemperatureWithBrownianMotion(initTemperature, dim, avg_v, cells);
+        Thermostat::initializeTemperatureWithBrownianMotion(initTemperature, dim, cells);
     }
     else {
         Thermostat::initializeTemperature(initTemperature, dim, cells);
@@ -111,9 +112,6 @@ int main(int argc, char *argsv[]) {
                 Thermostat::setTemperatureDirectly(targetTemperature, dim, cells);
             }
         }
-
-        //DEBUG
-        Thermostat::calculateCurrentTemperature(dim,cells);
 
         //Calculate new x
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
