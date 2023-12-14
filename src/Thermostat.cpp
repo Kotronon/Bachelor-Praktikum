@@ -33,6 +33,7 @@ void Thermostat::initializeTemperatureWithBrownianMotion(double initialTemperatu
         for (auto y = x->begin() + 1; y < x->end() - 1; y++) {
             for (auto z = y->begin() + 1; z < y->end() - 1; z++) {
                 for (auto p = z->begin(); p < z->end(); p++) {
+
                     factor = std::sqrt(initialTemperature / p->getM());
                     brownian_motion = maxwellBoltzmannDistributedVelocity(factor * averageVelocity, dimension);
                     p->setV(p->getV() + brownian_motion);
@@ -131,7 +132,7 @@ double Thermostat::calculateCurrentTemperature(int dimension, LinkedCellContaine
             for (auto z = y->begin() + 1; z < y->end() - 1; z++) {
                 for (auto p = z->begin(); p < z->end(); p++) {
                     v_multiplication = p->getV() * p->getV();
-                    sum += p->getM() * (v_multiplication[0] + v_multiplication[1] + v_multiplication[2]);
+                    sum += (p->getM() / 2.0) * (v_multiplication[0] + v_multiplication[1] + v_multiplication[2]);
                     numberOfParticles++;
                 }
             }
@@ -139,6 +140,6 @@ double Thermostat::calculateCurrentTemperature(int dimension, LinkedCellContaine
     }
 
     //Calculate current temperature
-    double currentTemperature = sum / (numberOfParticles * dimension);
+    double currentTemperature = (2.0 * sum) / numberOfParticles;
     return currentTemperature;
 }
