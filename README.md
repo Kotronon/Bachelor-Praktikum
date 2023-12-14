@@ -12,7 +12,7 @@ Members:
 # Code #
 * Link:     https://github.com/Kotronon/Bachelor-Praktikum
 * Branch:   master
-* Revision: bc2d47b
+* Revision: b0246db
 * Compiler: gcc 11.4.0
 
 # Run Code #
@@ -21,13 +21,10 @@ Members:
   * sudo apt-get install libgtest-dev
   * unfortunately only using fetchContent doesn't prevent from installing them
 * to run the program:
-  * ./MolSim <end_time> <delta_t> 
-  * options:
-  * -level <level> (To choose log level)
-  * -f <path_to_file> (To add particles manually)
-  * -c <numbers_of_cuboids> (for each cuboid) <coordinates_of_left_corner_cuboid_i> <velocity_of_cuboid_i> <dimension_of_cuboid_i> <h_of_cuboid_i> <mass_of_cuboid_i> 
-  * for arrays please use the form x,y,z
-  * for example: ./MolSim 5 0.0002 -c 2 0,0,0 0,0,0 40,8,1 1.1225 1 15,15,0 0,-10,0 8,8,1 1.1225 1
+  * ./MolSim
+  * due to the xml input being incomplete it is only possible at the moment to change parameters in the main method manually as well as create cuboids/disks there
+  * this should be fixed in the future, log level can not be chosen either currently as this was planned to be set up completely in the xml files
+  * 
 * to run the tests:
   * ctest
   
@@ -60,7 +57,10 @@ Members:
 ## Task 2 ##
 * Linked-cell algorithm
 * Cell wide in each direction is the cutoff value
-* Structure as image below:
+* Structured it to make it possible to easily determine the fitting cell for each particle based on position
+* specific particle can be found with cells \[x-coordinate] \[y-coordinate] \[z-coordinate] \[index in cell]
+* this structure has been changed later on for the ghost cell creation so there are extra cells around the container by moving all cells by 1 in each direction and creating more cells to use as halo cells
+* 
 * We still provide the possibility to use simple sum implementation
 * Between the two implementations is a big time difference:
 ![Screenshot](input/both_rpunded_and_scaled.png)
@@ -69,7 +69,7 @@ Members:
 * Boundaries
 * Outflow Boundary;
   * checks if particle is out of boundary
-  * delets if it is  the case
+  * deletes if it is
 * Reflection Boundary
   * Mirroring:
     * just reflecting the particles like a mirror 
@@ -78,9 +78,26 @@ Members:
     * creating an imaginary cell to create a force from the boundary
     * has an individual influence on each particle
     * physically more accurate
-    * made as reflection boundary in the end version
+    * chosen as reflection boundary in the end version
 
 ## Task 4 ##
-* sphere
+* Sphere generation
+* Two strategies for creating a 2d disk:
+  * Generation with Bresenham algorithm
+    * faster generation due to less expensive operations
+    * center is at exact coordinates given
+    * 'rounder' circles, less weird edges
+    * causes problems in our simulation for some cases even though the initial generation works fine
+    * probably an issue with unfixed precision errors that creates particles nearly on top of each other which causes them to shoot away from each other and out of the boundary
+    * not easily expanded to 3d spheres
+  * Generation with cuboid generation
+    * use of already implemented cuboid generator to create a cuboid with the diameter of the disk as height and length
+    * cuboid needs lower left corner coordinate, center might not be at exact given position due to precision errors
+    * more expensive calculations due to the need to check the distance to center for each generated particle
+    * a particle is only added to the result if the distance to the center is less or equal to the radius (with some room for precision errors)
+    * can be easily expanded to 3d spheres since cuboid generation is already 3d as well
+    * used in the final version
 
 ## MISC ##
+* In the falling drop animation we noticed that particles tend to sometimes get stuck at the upper boundary, we did not yet manage to fix this error
+* Due to some restructuring of our LinkedCellContainer we might have forgotten to change some functions accordingly

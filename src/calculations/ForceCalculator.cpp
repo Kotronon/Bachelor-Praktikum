@@ -76,6 +76,9 @@ void ForceCalculator::LennardJonesForceFaster(ParticleContainer &container, doub
  */
 void ForceCalculator::LennardJonesForcePairwise(Particle *p1, Particle *p2) {
     std::array<double, 3> force = {0,0,0};
+
+    //Unfixed problem: Subtracting doubles from each other sometimes leads to extremely small numbers that cause problems
+    //in further calculations, attempts at fixing it by rounding if necessary however lead to even worse problems
     double L2Norm_p1_p2 = ArrayUtils::L2Norm(p1->getX() - p2->getX());
     force = force + ((-24*epsilon / pow(L2Norm_p1_p2,2)) * (pow(sigma/L2Norm_p1_p2,6) - (2 * pow(sigma/L2Norm_p1_p2,12))) * (p1->getX() - p2->getX()));
     p1->setF(p1->getF() + force);
