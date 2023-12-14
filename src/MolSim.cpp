@@ -5,12 +5,14 @@
 #include "outputWriter/VTKWriter.h"
 #include "ParticleContainer.h"
 #include "ParticleGenerator.h"
+#include "Thermostat.h"
 #include "calculations/ForceCalculator.h"
 #include "calculations/VelocityCalculator.h"
 #include "spdlog/spdlog.h"
 #include "calculations/PositionCalculator.h"
 #include <string>
 #include <cfloat>
+#include <iostream>
 
 
 /**
@@ -42,9 +44,10 @@ double eps = 5;
 double sig = 1;
 double Grav = -12.44;
 //if you wanna use directSum please use DBL_MAX for each direction
-std::array<double, 3> domain_size = {DBL_MAX, DBL_MAX, 1};
+std::array<double, 3> domain_size = {63,36,1};
 //if you wanna use directSum please use DBL_MAX
-double cutoff = DBL_MAX;
+double cutoff = 2.5 * sig;
+
 //boundary order (b):  left, right, up, down, behind, before
 //if you wanna use directSum please use {"o", "o", "o", "o", "o", "o"}
 std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "o", "o"};
@@ -53,6 +56,19 @@ std::string inputFile = "";
 //checkpoints
 bool checkpointing = true;
 //int num_checkpoints = 1;
+
+double initTemperature = 40;
+int nThermostat = 1000;
+bool applyBrownianMotion = true;
+
+//optional:
+bool targetTemperatureExists = false;
+double targetTemperature;
+
+//optional:
+bool differenceTemperatureExists = false;
+double differenceTemperature;
+
 
 //Cuboids/Disks have to be created manually in main
 //Creation of particle container to be filled with all relevant particles
@@ -76,6 +92,9 @@ int main(int argc, char *argsv[]) {
     ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.2, 1, cells, cutoff, 1, 1);
     ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-10,0}, {20,20,1}, 1.2, 2, cells, cutoff, 0.9412, 1);
     //ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells, sig, eps);
+
+    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0,0,0}, {50,14,1}, 1.2, 1.0, cells, cutoff, 1, 1);
+
     double current_time = start_time;
     int iteration = 0;
 
@@ -84,9 +103,30 @@ int main(int argc, char *argsv[]) {
 
     //Initialization with Brownian Motion
     VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
+    //Initialization with Brownian Motion / temperature
+    if (applyBrownianMotion) {
+        Thermostat::initializeTemperatureWithBrownianMotion(initTemperature, dim, cells);
+    }
+    else {
+        Thermostat::initializeTemperature(initTemperature, dim, cells);
+    }
+
+    if (!targetTemperatureExists) {
+        targetTemperature = initTemperature;
+    }
 
     //For this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
+
+        if (iteration != 0 && iteration % nThermostat == 0) {
+            if (differenceTemperatureExists) {
+                Thermostat::setTemperatureGradually(targetTemperature, differenceTemperature, dim, cells);
+            }
+            else {
+                Thermostat::setTemperatureDirectly(targetTemperature, dim, cells);
+            }
+        }
+
         //Calculate new x
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
         //Calculate new f
