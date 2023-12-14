@@ -146,8 +146,9 @@ void LinkedCellContainer::moveToNeighbour() {
                     int y_now = floor(cells[x][y][z][p].getX()[1] / cutoff);
                     int z_now = floor(cells[x][y][z][p].getX()[2] / cutoff);
                     //check if particle is in range of inner and boundary cells
-                    if ((x_now < x_cells && x_now >= 0) && (y_now < y_cells && y_now >= 0) &&
-                        (z_now < z_cells && z_now >= 0)) {
+                    if ((x_now < x_cells && x_now >= 0 && cells[x][y][z][p].getX()[0] <= x_max) &&
+                        (y_now < y_cells && y_now >= 0 && cells[x][y][z][p].getX()[1] <= y_max) &&
+                        (z_now < z_cells && z_now >= 0 && cells[x][y][z][p].getX()[2] <= z_max)) {
                         //check if particle needs to be moved to other cell
                         if (x_now + 1 != x || y_now + 1 != y || z_now + 1 != z) {
                             addParticle(x_now + 1, y_now + 1, z_now + 1, cells[x][y][z][p]);
@@ -487,7 +488,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             addParticle(x, y, 0, ghost_x, cells[x][y][z][index].getV(), cells[x][y][z][index].getM(),
                         cells[x][y][z][index].getType(), cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
             z_coordinate -= z_max;
-            periodic = true;
+            periodic ++;
             z_new = 0;
         }
     }

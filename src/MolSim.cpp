@@ -34,7 +34,7 @@ bool cmdOptionExists(char **begin, char **end, const std::string &option);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 0.05;
+double end_time = 25;
 double delta_t = 0.0005;
 
 double avg_v = 0.1;
@@ -89,11 +89,10 @@ int main(int argc, char *argsv[]) {
     }*/
    //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
-    ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.2, 1, cells, cutoff, 1, 1);
-    ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-10,0}, {20,20,1}, 1.2, 2, cells, cutoff, 0.9412, 1);
+    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0,0,0}, {50,14,1}, 1.2, 1.0, cells, cutoff, 1, 1);
+    ParticleGenerator::createCuboidInCells({0.6, 19, 0}, {0,0,0}, {50,14,1}, 1.2, 2, cells, cutoff, 0.9412, 1);
     //ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells, sig, eps);
 
-    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0,0,0}, {50,14,1}, 1.2, 1.0, cells, cutoff, 1, 1);
 
     double current_time = start_time;
     int iteration = 0;
@@ -102,7 +101,7 @@ int main(int argc, char *argsv[]) {
     ForceCalculator::LennardJonesForceCell(cells, Grav);
 
     //Initialization with Brownian Motion
-    VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
+    //VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
     //Initialization with Brownian Motion / temperature
     if (applyBrownianMotion) {
         Thermostat::initializeTemperatureWithBrownianMotion(initTemperature, dim, cells);

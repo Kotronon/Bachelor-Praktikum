@@ -13,6 +13,7 @@ double ForceCalculator::sigma = 1;
 double ForceCalculator::Ggrav = 0;
 double ForceCalculator::cutoff = DBL_MAX;
 
+
 /**
  * Calculates the gravity force of all Particles in given ParticleContainer
  * @param container
