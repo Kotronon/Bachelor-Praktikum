@@ -15,7 +15,7 @@ void FileWriter::writeFile(ParticleContainer &container, const std::string &file
          + " " + std::to_string(particle.getF()[0]) + " " + std::to_string(particle.getF()[1]) + " " + std::to_string(particle.getF()[2])
          + " " + std::to_string(particle.getOldF()[0]) + " " + std::to_string(particle.getOldF()[1]) + " " + std::to_string(particle.getOldF()[2])
          + " " + std::to_string(particle.getM()) + " " + std::to_string(particle.getSig()) + " " + std::to_string(particle.getEps())
-         + " " + std::to_string(particle.getType()) + "\n";
+         + " " + std::to_string(particle.getType());
          //std::cout << input << std::endl;
          MyFile << input << std::endl;
 

@@ -18,6 +18,7 @@
  */
 LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoffRadius, std::array<std::string, 6> boundaryConditions) {
     //creating list cells[i][j]h length = number of cells
+    cutoff = cutoffRadius;
     x_cells = ceil(N[0] / cutoff);
     y_cells = ceil(N[1] / cutoff);
     z_cells = ceil(N[2] / cutoff);
@@ -31,7 +32,6 @@ LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoffR
         x.push_back(y);
     }
     cells = x;
-    cutoff = cutoffRadius;
     boundary = std::move(boundaryConditions);
     x_max = N[0];
     y_max = N[1];
@@ -297,7 +297,7 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                              l < cells[neighbour[0]][neighbour[1]][neighbour[2]].size(); l++) {
                             //calculate force if neighbour particle is a normal particle or is the specific ghost cell to current particle
                             if (cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() == 0 ||
-                                cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() == -j - 1) {
+                                cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() == j + 1) {
                                 forceCalculation(&(cells[x][y][z][j]),
                                                  &(cells[neighbour[0]][neighbour[1]][neighbour[2]][l]));
                             }
@@ -382,7 +382,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             std::array<double, 3> ghost_x = {-cells[x][y][z][index].getX()[0] - 0.0000000001,
                                              cells[x][y][z][index].getX()[1], cells[x][y][z][index].getX()[2]};
             std::array<double, 3> ghost_v = {0, 0, 0};
-            addParticle(x - 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), -index -1,
+            addParticle(x - 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index+1,
                         cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
         }
         if (boundary[0] == "p") {
@@ -400,7 +400,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             std::array<double, 3> ghost_x = {x_max + cutoff - fmod(cells[x][y][z][index].getX()[0], cutoff) + 0.0000000001,
                                              cells[x][y][z][index].getX()[1], cells[x][y][z][index].getX()[2]};
             std::array<double, 3> ghost_v = {0, 0, 0};
-            addParticle(x + 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), -index -1,
+            addParticle(x + 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index+1,
                         cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
         }
         if (boundary[1] == "p") {
@@ -419,7 +419,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
                                              -cells[x][y][z][index].getX()[1] - 0.0000000001,
                                              cells[x][y][z][index].getX()[2]};
             std::array<double, 3> ghost_v = {0, 0, 0};
-            addParticle(x, y - 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), -index -1,
+            addParticle(x, y - 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), index+1,
                         cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
         }
         if (boundary[3] == "p") {
@@ -439,7 +439,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
                                              y_max + cutoff - fmod(cells[x][y][z][index].getX()[1], cutoff) + 0.0000000001,
                                              cells[x][y][z][index].getX()[2]};
             std::array<double, 3> ghost_v = {0, 0, 0};
-            addParticle(x, y + 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), -index -1,
+            addParticle(x, y + 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(),index+1,
                         cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
         }
         if (boundary[2] == "p") {
@@ -458,7 +458,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
                                              -cells[x][y][z][index].getX()[2] - 0.0000000001};
             std::array<double, 3> ghost_v = {0, 0, 0};
-            addParticle(x, y, z - 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), -index -1,
+            addParticle(x, y, z - 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), index+1,
                         cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
         }
         if (boundary[4] == "p") {
@@ -477,7 +477,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
                                              z_max + cutoff - fmod(cells[x][y][z][index].getX()[2], cutoff) + 0.0000000001};
             std::array<double, 3> ghost_v = {0, 0, 0};
-            addParticle(x, y, z + 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), -index -1,
+            addParticle(x, y, z + 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), index+1,
                         cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
         }
         if (boundary[5] == "p") {

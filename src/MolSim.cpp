@@ -31,7 +31,7 @@ bool cmdOptionExists(char **begin, char **end, const std::string &option);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 25;
+double end_time = 0.05;
 double delta_t = 0.0005;
 
 double avg_v = 0.1;
@@ -48,10 +48,10 @@ double cutoff = 2.5;
 //if you wanna use directSum please use {"o", "o", "o", "o", "o", "o"}
 std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "o", "o"};
 //input file
-std::string inputFile;
+std::string inputFile = "";
 //checkpoints
 bool checkpointing = true;
-int num_checkpoints = 1;
+//int num_checkpoints = 1;
 
 //Cuboids/Disks have to be created manually in main
 //Creation of particle container to be filled with all relevant particles
@@ -65,16 +65,15 @@ int main(int argc, char *argsv[]) {
         FileReader::readFile(container, inputFile.data());
         cells.addContainer(container);
     }
-    int steps_between_checkpoints = 0;
+   /* int steps_between_checkpoints = 0;
     int checkpoint = 0;
     if(num_checkpoints > 1){
         steps_between_checkpoints = (end_time/delta_t) / num_checkpoints;
-    }
+    }*/
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
-
-    ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.2, 1, cells, cutoff, 1, 1);
-    ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-10,0}, {20,20,1}, 1.2, 2, cells, cutoff, 1, 0.9412);
+    //ParticleGenerator::createCuboidInCells({20, 20, 0}, {0,0,0}, {100,20,1}, 1.2, 1, cells, cutoff, 1, 1);
+    //ParticleGenerator::createCuboidInCells({70, 60, 0}, {0,-10,0}, {20,20,1}, 1.2, 2, cells, cutoff, 0.9412, 1);
 
     //ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells, sig, eps);
     double current_time = start_time;
@@ -87,7 +86,7 @@ int main(int argc, char *argsv[]) {
     VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
 
     //For this loop, we assume: current x, current f and current v are known
-    while (current_time < 3000) {
+    while (current_time < end_time) {
         //Calculate new x
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
         //Calculate new f
@@ -103,18 +102,17 @@ int main(int argc, char *argsv[]) {
         if (iteration % 100 == 0) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
         }
-        if(iteration % steps_between_checkpoints == 0 && checkpointing){
+        /*if(iteration % steps_between_checkpoints == 0 && checkpointing){
             std::string filename = "checkpoint" + std::to_string(checkpoint) + ".txt";
             checkpoint ++;
             ParticleContainer currentState = cells.toContainer();
             FileWriter::writeFile(currentState, filename);
-        }
+        }*/
         current_time += delta_t;
     }
 
    if(checkpointing){
-    std::string filename = "checkpoint" + std::to_string(checkpoint) + ".txt";
-            checkpoint ++;
+    std::string filename = "../input/checkpointNew.txt";
             ParticleContainer currentState = cells.toContainer();
             FileWriter::writeFile(currentState, filename);
             }
