@@ -35,6 +35,8 @@ public:
 
     ParticleContainer toContainer();
 
+    void addContainer(ParticleContainer &container);
+
     void moveToNeighbour();
 
     [[nodiscard]] std::vector<std::array<int, 3>> get_next_cells(int x, int y, int z) const;

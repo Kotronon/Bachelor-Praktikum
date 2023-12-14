@@ -1,5 +1,6 @@
 
 #include "FileReader.h"
+#include "outputWriter/FileWriter.h"
 #include "outputWriter/XYZWriter.h"
 #include "outputWriter/VTKWriter.h"
 #include "ParticleContainer.h"
@@ -39,30 +40,36 @@ int dim = 2;
 double eps = 5;
 double sig = 1;
 double Grav = -12.44;
-
+//if you wanna use directSum please use DBL_MAX for each direction
 std::array<double, 3> domain_size = {180, 90, 1};
+//if you wanna use directSum please use DBL_MAX
 double cutoff = 2.5;
 //boundary order (b):  left, right, up, down, behind, before
+//if you wanna use directSum please use {"o", "o", "o", "o", "o", "o"}
 std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "o", "o"};
+//input file
+std::string inputFile;
+//checkpoints
+bool checkpointing = true;
+int num_checkpoints = 1;
 
 //Cuboids/Disks have to be created manually in main
-
 //Creation of particle container to be filled with all relevant particles
 ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
-
-    //Creation of cuboids for simulation with simple particle container
-    /*
-    ParticleContainer cuboid_1 = ParticleGenerator::createCuboid(x_1,v_1,N_1,h,m, sig, eps);
-    ParticleContainer cuboid_2 = ParticleGenerator::createCuboid(x_2,v_2,N_2,h,m, sig, eps);
-    container.addParticleContainer(cuboid_1);
-    container.addParticleContainer(cuboid_2);
-    */
-
     //Creation of linked-cell container to be filled with all relevant particles
     LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
-
+    //add Particles from input file
+    if(!inputFile.empty()){
+        FileReader::readFile(container, inputFile.data());
+        cells.addContainer(container);
+    }
+    int steps_between_checkpoints = 0;
+    int checkpoint = 0;
+    if(num_checkpoints > 1){
+        steps_between_checkpoints = (end_time/delta_t) / num_checkpoints;
+    }
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
@@ -74,44 +81,48 @@ int main(int argc, char *argsv[]) {
     int iteration = 0;
 
     //Pre-calculation of f
-    //ForceCalculator::LennardJonesForceFaster(container, eps, sig, Grav);
-
     ForceCalculator::LennardJonesForceCell(cells, Grav);
-    //Initialization with Brownian Motion
-    //VelocityCalculator::BrownianMotionInitialization(container, avg_v, dim);
 
+    //Initialization with Brownian Motion
     VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
 
     //For this loop, we assume: current x, current f and current v are known
     while (current_time < 3000) {
         //Calculate new x
-        //PositionCalculator::PositionStoermerVerlet(container, delta_t);
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
         //Calculate new f
-        //ForceCalculator::LennardJonesForceFaster(container, eps, sig, Grav);
         ForceCalculator::LennardJonesForceCell(cells, Grav);
 
         //Calculate new v
-        //VelocityCalculator::VelocityStoermerVerlet(container, delta_t);
         VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
 
         iteration++;
         if (iteration % 10 == 0) {
-            //plotParticles(iteration);
             plotParticlesInCells(iteration, cells);
         }
         if (iteration % 100 == 0) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
         }
-       // if(iteration > 7100)  spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
+        if(iteration % steps_between_checkpoints == 0 && checkpointing){
+            std::string filename = "checkpoint" + std::to_string(checkpoint) + ".txt";
+            checkpoint ++;
+            ParticleContainer currentState = cells.toContainer();
+            FileWriter::writeFile(currentState, filename);
+        }
         current_time += delta_t;
     }
 
+   if(checkpointing){
+    std::string filename = "checkpoint" + std::to_string(checkpoint) + ".txt";
+            checkpoint ++;
+            ParticleContainer currentState = cells.toContainer();
+            FileWriter::writeFile(currentState, filename);
+            }
     spdlog::info("Output written. Terminating...");
     return 0;
 }
 
-void plotParticlesInCells(int iteration, LinkedCellContainer &grid) {
+void plotParticlesInCells(int iteration, LinkedCellContainer &cells) {
 
     std::string out_name("MD_vtk");
 
@@ -120,7 +131,7 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &grid) {
 
     outputWriter::VTKWriter writer2;
     int num_of_particles = 0;
-    for (auto &x: grid) {
+    for (auto &x: cells) {
         for (auto &y: x) {
             for (auto &z: y) {
                 num_of_particles += z.size();
@@ -128,7 +139,7 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &grid) {
         }
     }
     writer2.initializeOutput(num_of_particles);
-    for (auto &x: grid) {
+    for (auto &x: cells) {
         for (auto &y: x) {
             for (auto &z: y) {
                 for (auto &p: z) {
