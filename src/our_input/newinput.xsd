@@ -1,0 +1,229 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="input_parameters">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:string" name="algorithm_option"/>
+                <xs:element type="xs:float" name="write_frequency"/>
+                <xs:element type="xs:string" name="output_file_param"/>
+                <xs:element type="xs:float" name="log_level"/>
+                <xs:element name="simulation_input_parameters">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="dimension">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:float" name="value"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="avg_velocity">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:float" name="value"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="epsilon">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:float" name="value"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="delta_t">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:float" name="value"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="t_end">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:float" name="value"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="sigma">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:float" name="value"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="r_cutoff">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:float" name="value"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="domain_size_l">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:short" name="x"/>
+                                        <xs:element type="xs:byte" name="y"/>
+                                        <xs:element type="xs:byte" name="z"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="input_boundary_options">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element type="xs:string" name="name"/>
+                            <xs:element type="xs:string" name="b1"/>
+                            <xs:element type="xs:string" name="b2"/>
+                            <xs:element type="xs:string" name="b3"/>
+                            <xs:element type="xs:string" name="b4"/>
+                            <xs:element type="xs:string" name="b5"/>
+                            <xs:element type="xs:string" name="b6"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="cuboid_input_parameters">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="h">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:float" name="value"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="m">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:float" name="value"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="x1">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:byte" name="x"/>
+                                        <xs:element type="xs:byte" name="y"/>
+                                        <xs:element type="xs:byte" name="z"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="x2">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:byte" name="x"/>
+                                        <xs:element type="xs:byte" name="y"/>
+                                        <xs:element type="xs:byte" name="z"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="v1">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:byte" name="x"/>
+                                        <xs:element type="xs:byte" name="y"/>
+                                        <xs:element type="xs:byte" name="z"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="v2">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:byte" name="x"/>
+                                        <xs:element type="xs:byte" name="y"/>
+                                        <xs:element type="xs:byte" name="z"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="N1">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:byte" name="x"/>
+                                        <xs:element type="xs:byte" name="y"/>
+                                        <xs:element type="xs:byte" name="z"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="N2">
+                                <xs:complexType mixed="true">
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:byte" name="x"/>
+                                        <xs:element type="xs:byte" name="y"/>
+                                        <xs:element type="xs:byte" name="z"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="sphere_input_parameters">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="h">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:float" name="value"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="dimension">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:float" name="value"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="m">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:float" name="value"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="x_center">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:byte" name="x"/>
+                                        <xs:element type="xs:byte" name="y"/>
+                                        <xs:element type="xs:byte" name="z"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="v">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="name"/>
+                                        <xs:element type="xs:byte" name="x"/>
+                                        <xs:element type="xs:byte" name="y"/>
+                                        <xs:element type="xs:byte" name="z"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+
+<input_parameters>
+    <algorithm_option>
+        LinkedCell
+    </algorithm_option>
+    <write_frequency>
+        10
+    </write_frequency>
+    <output_file_param>
+        output.abc
+    </output_file_param>
+    <log_level> 1</log_level>
+
+    <simulation_input_parameters>
+        <dimension>
+            <name>dimension</name>
+            <value>2</value>
+        </dimension>
+        <avg_velocity>
+            <name>avg_velocity</name>
+            <value>0.1</value>
+        </avg_velocity>
+
+        <epsilon>
+            <name>epsilon</name>
+            <value>5</value>
+        </epsilon>
+        <delta_t>
+            <name>delta_t</name>
+            <value>0.0005</value>
+        </delta_t>
+        <t_end>
+            <name>t_end</name>
+            <value>20</value>
+        </t_end>
+        <sigma>
+            <name>sigma</name>
+            <value>1</value>
+        </sigma>
+        <r_cutoff>
+            <name>r_cutoff</name>
+            <value>3.0</value>
+        </r_cutoff>
+        <domain_size_l>
+            <name>domain_size_l</name>
+            <x>180</x>
+            <y>90</y>
+            <z>1</z>
+        </domain_size_l>
+
+    </simulation_input_parameters>
+
+    <input_boundary_options>
+        <name>boundaries</name>
+        <b1>o</b1>
+        <b2>o</b2>
+        <b3>o</b3>
+        <b4>o</b4>
+        <b5>o</b5>
+        <b6>o</b6>
+    </input_boundary_options>
+
+    <cuboid_input_parameters>
+        <h>
+            <name>h</name>
+            <value>1.1225</value>
+        </h>
+        <m>
+            <name>m</name>
+            <value>1.0</value>
+        </m>
+        <x1>
+            <name>x1</name>
+            <x>20</x>
+            <y>20</y>
+            <z>0</z>
+        </x1>
+        <x2>
+            <name>x2</name>
+            <x>70</x>
+            <y>60</y>
+            <z>0</z>
+        </x2>
+        <v1>
+            <name>v1</name>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+        </v1>
+
+        <v2>
+            <name>v2</name>
+
+            <x>0</x>
+            <y>-10</y>
+            <z>0</z>
+        </v2>
+        <N1>
+            <name>N1</name>
+            <x>100</x>
+            <y>20</y>
+            <z>1</z>
+        </N1>
+        <N2>
+            <name>N2</name>
+            <x>20</x>
+            <y>20</y>
+            <z>1</z>
+        </N2>
+
+    </cuboid_input_parameters>
+
+    <sphere_input_parameters>
+        <h>
+            <name>h</name>
+            <value>1.1225</value>
+        </h>
+        <dimension>
+            <name>dimension</name>
+            <value>15</value>
+        </dimension>
+        <m>
+            <name>m </name>
+            <value>1.0</value>
+        </m>
+        <x_center>
+            <name>x_center</name>
+            <x>60</x>
+            <y>25</y>
+            <z>0</z>
+        </x_center>
+        <v>
+            <name>v</name>
+            <x>0</x>
+            <y>-10</y>
+            <z>0</z>
+        </v>
+
+
+    </sphere_input_parameters>
+
+</input_parameters>
+
+
+
+
