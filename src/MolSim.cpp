@@ -70,6 +70,7 @@ int main(int argc, char *argsv[]) {
     ParticleGenerator::createDiskInCells({60, 25, 0}, {0, -10, 0}, 1, 15, 1.225, cells);
 
     double current_time = start_time;
+
     int iteration = 0;
 
     //Pre-calculation of f
