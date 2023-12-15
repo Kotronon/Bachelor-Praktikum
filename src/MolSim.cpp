@@ -40,6 +40,7 @@ int dim = 2;
 
 double eps = 5;
 double sig = 1;
+double Grav = -12.44;
 
 std::array<double, 3> domain_size = {63,36,1};
 double cutoff = 2.5 * sig;
@@ -81,13 +82,13 @@ int main(int argc, char *argsv[]) {
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0,0,0}, {50,14,1}, 1.2, 1.0, cells, cutoff);
+    //ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0,0,0}, {50,14,1}, 1.2, 1.0, cells, cutoff);
 
     double current_time = start_time;
     int iteration = 0;
 
     //Pre-calculation of f
-    ForceCalculator::LennardJonesForceCell(cells, eps, sig);
+    ForceCalculator::LennardJonesForceCell(cells, Grav);
 
     //Initialization with Brownian Motion / temperature
     if (applyBrownianMotion) {
@@ -117,7 +118,7 @@ int main(int argc, char *argsv[]) {
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
 
         //Calculate new f
-        ForceCalculator::LennardJonesForceCell(cells, eps, sig);
+        ForceCalculator::LennardJonesForceCell(cells, Grav);
 
         //Calculate new v
         VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);

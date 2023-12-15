@@ -6,6 +6,7 @@
 #include "../ParticleContainer.h"
 #include "../utils/ArrayUtils.h"
 #include "../utils/MaxwellBoltzmannDistribution.h"
+#include <spdlog/spdlog.h>
 
 /**
  * Calculation of the new velocity of all molecule in the given ParticleContainer according to Brownian Motion Initialization
@@ -37,9 +38,9 @@ void VelocityCalculator::VelocityStoermerVerlet(ParticleContainer &container, do
  * @param container
  * @param avg_v
  */
-void VelocityCalculator::BrownianMotionInitializationCell(LinkedCellContainer &grid, double avg_v, int dim) {
+void VelocityCalculator::BrownianMotionInitializationCell(LinkedCellContainer &cells, double avg_v, int dim) {
     std::array<double, 3> brownian_motion{};
-    for (auto &x: grid) {
+    for (auto &x: cells) {
         for (auto &y: x) {
             for (auto &z: y) {
                 for (auto &p: z) {
@@ -57,8 +58,8 @@ void VelocityCalculator::BrownianMotionInitializationCell(LinkedCellContainer &g
  * @param container
  * @param delta_t
  */
-void VelocityCalculator::VelocityStoermerVerletCell(LinkedCellContainer &grid, double delta_t) {
-    for (auto &x: grid) {
+void VelocityCalculator::VelocityStoermerVerletCell(LinkedCellContainer &cells, double delta_t) {
+    for (auto &x: cells) {
         for (auto &y: x) {
             for (auto &z: y) {
                 for (auto &p: z) {

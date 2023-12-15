@@ -19,8 +19,8 @@ void PositionCalculator::PositionStoermerVerlet(ParticleContainer &container, do
     }
 }
 
-void PositionCalculator::PositionStoermerVerletCell(LinkedCellContainer &grid, double delta_t) {
-    for (auto &x: grid) {
+void PositionCalculator::PositionStoermerVerletCell(LinkedCellContainer &cells, double delta_t) {
+    for (auto &x: cells) {
         for (auto &y: x) {
             for (auto &z: y) {
                 for (auto &p: z) {
@@ -32,6 +32,6 @@ void PositionCalculator::PositionStoermerVerletCell(LinkedCellContainer &grid, d
             }
         }
     }
-    grid.moveToNeighbour();
+    cells.moveToNeighbour();
 
 }

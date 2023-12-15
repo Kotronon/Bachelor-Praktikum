@@ -27,6 +27,8 @@ void FileReader::readFile(ParticleContainer &container, char *filename) {
   std::array<double, 3> x{};
   std::array<double, 3> v{};
   double m;
+  double sig;
+  double eps;
   int num_particles = 0;
 
   std::ifstream input_file(filename);
@@ -64,7 +66,9 @@ void FileReader::readFile(ParticleContainer &container, char *filename) {
         exit(-1);
       }
       datastream >> m;
-      container.addParticle(x, v, m, 0);
+      datastream >> sig;
+      datastream >> eps;
+      container.addParticle(x, v, m, 0, sig, eps);
       getline(input_file, tmp_string);
       std::cout << "Read line: " << tmp_string << std::endl;
     }

@@ -24,9 +24,9 @@ public:
     unsigned long Particles_in_cell(int x, int y, int z);
 
 
-    void addParticle(int x, int y, int z, std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
+    void addParticle(int x, int y, int z, std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg, double sig, double eps);
 
-    void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
+    void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg, double sig, double eps);
 
     void addParticle(int x, int y, int z, Particle &p);
 
@@ -44,11 +44,13 @@ public:
 
     [[nodiscard]] int getZMax() const;
 
+    [[nodiscard]] double getCutoff() const;
+
     std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator begin();
 
     std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator end();
 
-    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation);
+    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation, double Grav);
 
     bool applyMirrorBoundary(int particle, int x, int y, int z);
 
@@ -56,7 +58,7 @@ public:
 
     void deleteGhostCells();
 
-    bool needsToBeDeleted(double x_coordinate, double y_coordinate, double z_coordinate);
+    void moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle p);
 
 
 private:
@@ -67,6 +69,7 @@ private:
     double x_max;
     double y_max;
     double z_max;
+    int it = 0;
     std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
     std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
 
