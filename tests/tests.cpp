@@ -6,7 +6,8 @@
 #include "../src/calculations/ForceCalculator.h"
 #include "../src/ParticleGenerator.h"
 #include "../src/LinkedCellContainer.h"
-#include <math.h>
+#include <cmath>
+
 //@TODO write tests with TEST()
 //To compile tests write cmake --build . in terminal and afterwarts ctest works
 

@@ -38,15 +38,15 @@ double delta_t = 0.0005;
 double avg_v = 0.1;
 int dim = 2;
 
-double eps = 5;
-double sig = 1;
+//double eps = 5;
+//double sig = 1;
 double Grav = -12.44;
 
 std::array<double, 3> domain_size = {63,36,1};
-double cutoff = 2.5 * sig;
+double cutoff = 2.5;
 
 //boundary order (b):  left, right, up, down, behind, before
-std::array<std::basic_string<char>, 6> boundary = {"r", "r", "r", "r", "r", "r"};
+std::array<std::basic_string<char>, 6> boundary = {"p", "p", "p", "p", "o", "o"};
 
 double initTemperature = 40;
 int nThermostat = 1000;
@@ -68,21 +68,14 @@ ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
 
-    //Creation of cuboids for simulation with simple particle container
-    /*
-    ParticleContainer cuboid_1 = ParticleGenerator::createCuboid(x_1,v_1,N_1,h,m);
-    ParticleContainer cuboid_2 = ParticleGenerator::createCuboid(x_2,v_2,N_2,h,m);
-    container.addParticleContainer(cuboid_1);
-    container.addParticleContainer(cuboid_2);
-    */
-
     //Creation of linked-cell container to be filled with all relevant particles
     LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
 
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    //ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0,0,0}, {50,14,1}, 1.2, 1.0, cells, cutoff);
+    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0,0,0}, {50,14,1}, 1.2, 1.0, cells, cutoff, 1.0, 1.0);
+    ParticleGenerator::createCuboidInCells({0.6, 19, 0}, {0,0,0}, {50,14,1}, 1.2, 2.0, cells, cutoff, 0.9412, 1.0);
 
     double current_time = start_time;
     int iteration = 0;
@@ -112,6 +105,7 @@ int main(int argc, char *argsv[]) {
             else {
                 Thermostat::setTemperatureDirectly(targetTemperature, dim, cells);
             }
+            std::cout << "Set temperature to " + std::to_string(Thermostat::calculateCurrentTemperature(2, cells)) + " Kelvin.\n";
         }
 
         //Calculate new x
