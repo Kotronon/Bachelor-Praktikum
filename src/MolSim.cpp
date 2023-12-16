@@ -50,7 +50,7 @@ double cutoff = 2.5 * sig;
 
 //boundary order (b):  left, right, up, down, behind, before
 //if you wanna use directSum please use {"o", "o", "o", "o", "o", "o"}
-std::array<std::basic_string<char>, 6> boundary = {"r", "r", "r", "r", "o", "o"};
+std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "o", "o"};
 //input file
 std::string inputFile = "";
 //checkpoints

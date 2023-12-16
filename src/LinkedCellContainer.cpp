@@ -398,7 +398,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
     }
     if (x == x_cells) {
         if (boundary[1] == "r" && x_coordinate > (x_max - boundary_check)) {
-            std::array<double, 3> ghost_x = {x_max + cutoff - fmod(cells[x][y][z][index].getX()[0], cutoff) + 0.0000000001,
+            std::array<double, 3> ghost_x = {x_max + x_max - x_coordinate + 0.0000000001,
                                              cells[x][y][z][index].getX()[1], cells[x][y][z][index].getX()[2]};
             std::array<double, 3> ghost_v = {0, 0, 0};
             addParticle(x + 1, y, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), -index-1,
@@ -437,7 +437,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
     if (y == y_cells) {
         if (boundary[2] == "r" && y_coordinate > (y_max - boundary_check)) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0],
-                                             y_max + cutoff - fmod(cells[x][y][z][index].getX()[1], cutoff) + 0.0000000001,
+                                             y_max + y_max - y_coordinate + 0.0000000001,
                                              cells[x][y][z][index].getX()[2]};
             std::array<double, 3> ghost_v = {0, 0, 0};
             addParticle(x, y + 1, z, ghost_x, ghost_v, cells[x][y][z][index].getM(), -index-1,
@@ -476,7 +476,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
     if (z == z_cells) {
         if (boundary[5] == "r" && z_coordinate > z_max - boundary_check) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
-                                             z_max + cutoff - fmod(cells[x][y][z][index].getX()[2], cutoff) + 0.0000000001};
+                                             z_max + z_max - z_coordinate + 0.0000000001};
             std::array<double, 3> ghost_v = {0, 0, 0};
             addParticle(x, y, z + 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), -index-1,
                         cells[x][y][z][index].getSig(), cells[x][y][z][index].getEps());
