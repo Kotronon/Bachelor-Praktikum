@@ -41,6 +41,7 @@ double sig = 1;
 
 std::array<double, 3> domain_size = {120,50,1};
 double cutoff = 3.0;
+
 //boundary order (b):  left, right, up, down, behind, before
 std::array<std::basic_string<char>, 6> boundary = {"r", "r", "r", "r", "r", "r"};
 
