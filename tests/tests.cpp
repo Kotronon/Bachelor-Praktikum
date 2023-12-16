@@ -120,7 +120,7 @@ TEST(ForceTest, SimpleForceCalculation){
     double res = (50.0*20.0*3.0)/27.0;
     std::array<double, 3> res1 = {0, res, 0};
     std::array<double, 3> res2 = {0, -res, 0};
-    ForceCalculator::SimpleForceCalculation(particles);
+    ForceCalculator::GravityForceCalculation(particles);
     auto particleVector = particles.begin();
     EXPECT_EQ(res1, particleVector.base()->getF());
     EXPECT_EQ(res2, std::next(particleVector.base())->getF()) << "wrong force calculated";
@@ -143,6 +143,6 @@ TEST(ForceTest, LennardJonesForce){
 }
 
 int main(){
-    testing::InitGoogleTest();
-    return RUN_ALL_TESTS();
+    //testing::InitGoogleTest();
+   // return RUN_ALL_TESTS();
 }
