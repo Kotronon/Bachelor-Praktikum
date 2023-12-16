@@ -9,8 +9,6 @@
 #include "spdlog/spdlog.h"
 #include "calculations/PositionCalculator.h"
 #include <string>
-#include <chrono>
-#include <iostream>
 
 
 /**
@@ -43,7 +41,6 @@ double sig = 1;
 
 std::array<double, 3> domain_size = {120,50,1};
 double cutoff = 3.0;
-
 //boundary order (b):  left, right, up, down, behind, before
 std::array<std::basic_string<char>, 6> boundary = {"r", "r", "r", "r", "r", "r"};
 
@@ -54,7 +51,6 @@ ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
 
-    auto start_time_setup = std::chrono::high_resolution_clock ::now();
     //Creation of cuboids for simulation with simple particle container
     /*
     ParticleContainer cuboid_1 = ParticleGenerator::createCuboid(x_1,v_1,N_1,h,m);
@@ -86,16 +82,8 @@ int main(int argc, char *argsv[]) {
 
     VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
 
-    auto end_time_setup = std::chrono::high_resolution_clock ::now();
-    auto setup_time = end_time_setup - start_time_setup;
-
-    std::cout<<"The setup took "<< setup_time/std::chrono::nanoseconds(2)<<" nanoseconds to run"<<std::endl;
-
-    auto start_time_loop = std::chrono::high_resolution_clock ::now();
     //For this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
-        start_time_loop = std::chrono::high_resolution_clock ::now();
-
         //Calculate new x
         //PositionCalculator::PositionStoermerVerlet(container, delta_t);
 
@@ -122,11 +110,6 @@ int main(int argc, char *argsv[]) {
 
         current_time += delta_t;
     }
-    auto end_time_loop = std::chrono::high_resolution_clock ::now();
-    auto loop_time = end_time_loop - start_time_loop;
-    std::cout<<"The loop took "<< loop_time/std::chrono::nanoseconds(2)<<" nanoseconds to run"<<std::endl;
-
-
 
     spdlog::info("Output written. Terminating...");
     return 0;
