@@ -345,7 +345,8 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
         addParticle(x, y, z - 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), index+1);
     }
     if (z == z_cells && boundary[5] == "r" && cells[x][y][z][index].getV()[2] > 0) {
-        std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1], z_max + c-fmod(cells[x][y][z][index].getX()[2], c) + 0.0000000001};
+        std::array<double, 3> ghost_x = {cells[x
+        ][y][z][index].getX()[0], cells[x][y][z][index].getX()[1], z_max + c-fmod(cells[x][y][z][index].getX()[2], c) + 0.0000000001};
         std::array<double, 3> ghost_v = {0,0,0};
         addParticle(x, y, z + 1, ghost_x, ghost_v, cells[x][y][z][index].getM(), index+1);
     }
