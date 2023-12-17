@@ -494,6 +494,11 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
     }
     if (periodic > 1) {
         //multiple generated periodic ghost particles -> particle is in corner -> mirrored in corner
+        if(periodic == 3){
+            addParticle(x_new, y_new, z, {x_coordinate, y_coordinate, cells[x][y][z][index].getX()[2]}, cells[x][y][z][index].getV(),
+                    cells[x][y][z][index].getM(), cells[x][y][z][index].getType(), cells[x][y][z][index].getSig(),
+                    cells[x][y][z][index].getEps());
+        }
         addParticle(x_new, y_new, z_new, {x_coordinate, y_coordinate, z_coordinate}, cells[x][y][z][index].getV(),
                     cells[x][y][z][index].getM(), cells[x][y][z][index].getType(), cells[x][y][z][index].getSig(),
                     cells[x][y][z][index].getEps());
