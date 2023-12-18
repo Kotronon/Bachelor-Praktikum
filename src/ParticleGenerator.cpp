@@ -2,13 +2,11 @@
 // Created by maraconda on 12.11.23.
 //
 
-#define _USE_MATH_DEFINES
 #include "utils/ArrayUtils.h"
 #include "ParticleGenerator.h"
 #include "ParticleContainer.h"
 #include <cmath>
 #include <iostream>
-#include <spdlog/spdlog.h>
 
 
 /**
@@ -42,7 +40,6 @@ ParticleContainer ParticleGenerator::createCuboid(std::array<double, 3> x, std::
         coordinate[1] = x[1];
         coordinate[2] += h;
     }
-
     return cuboid;
 }
 
@@ -60,16 +57,16 @@ ParticleContainer ParticleGenerator::createCuboid(std::array<double, 3> x, std::
  */
 void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<double, 3> v,
                                             std::array<int, 3> N, double h, double m,
-                                            LinkedCellContainer &cells, double  cutoff, double sig, double eps){
+                                            LinkedCellContainer &cells, double sig, double eps){
 
     if (N[0] == 0.0 || N[1] == 0.0 || N[2] == 0.0) {
         return;
     }
 
     std::array<double, 3> coordinate = x;
-    int x_axis = floor(x[0] / cutoff) + 1;
-    int y_axis = floor(x[1] / cutoff) + 1;
-    int z_axis = floor(x[2] / cutoff) + 1;
+    int x_axis = floor(x[0] / cells.getCutoff()) + 1;
+    int y_axis = floor(x[1] / cells.getCutoff()) + 1;
+    int z_axis = floor(x[2] / cells.getCutoff()) + 1;
     //to move to next cell
     int x_axis_tmp = x_axis;
     int y_axis_tmp = y_axis;
@@ -81,17 +78,17 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
                 cells.addParticle(x_axis_tmp, y_axis_tmp, z_axis_tmp, coordinate, v, m, 0, sig, eps);
                 //spdlog::info("added x_cell {}", x_axis_tmp);
                 coordinate[0] += h;
-                if(x_axis_tmp <= (floor(coordinate[0] / cutoff))) x_axis_tmp ++;
+                if(x_axis_tmp <= (floor(coordinate[0] / cells.getCutoff()))) x_axis_tmp ++;
             }
             coordinate[0] = x[0];
             x_axis_tmp = x_axis;
             coordinate[1] += h;
-            if(y_axis_tmp <= floor(coordinate[1] / cutoff)) y_axis_tmp ++;
+            if(y_axis_tmp <= floor(coordinate[1] / cells.getCutoff())) y_axis_tmp ++;
         }
         coordinate[1] = x[1];
         y_axis_tmp = y_axis;
         coordinate[2] += h;
-        if(z_axis_tmp <= ceil(coordinate[2] / cutoff)) z_axis_tmp ++;
+        if(z_axis_tmp <= ceil(coordinate[2] / cells.getCutoff())) z_axis_tmp ++;
     }
 }
 
