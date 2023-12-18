@@ -7,7 +7,7 @@
 #include <functional>
 #include "spdlog/spdlog.h"
 #include "ParticleContainer.h"
-
+#include "utils/ArrayUtils.h"
 
 /**
  * creates a new empty ParticleContainer
@@ -76,12 +76,14 @@ void ParticleContainer::addParticleContainer(ParticleContainer &container) {
  * iterate through the Particles pairwise to calculate the force of each particle
  * @param forceCalculation
  */
-void ParticleContainer::applyForcePairwise(const std::function<void(Particle*, Particle*)>& forceCalculation){
+void ParticleContainer::applyForcePairwise(const std::function<void(Particle*, Particle*)>& forceCalculation, double Ggrav){
     auto first = begin();
     auto last = end();
     for (; first != last; ++first) {
         for(auto next = std::next(first); next != last; ++next)
             forceCalculation(&(*first), &(*next));
+        std::array<double, 3> gravity = {0, first->getM(), 0};
+        first->setF(first->getF() + gravity);
     }
 }
 

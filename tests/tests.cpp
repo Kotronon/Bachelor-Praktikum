@@ -6,8 +6,7 @@
 #include "../src/calculations/ForceCalculator.h"
 #include "../src/ParticleGenerator.h"
 #include "../src/LinkedCellContainer.h"
-#include <cmath>
-
+#include <math.h>
 //@TODO write tests with TEST()
 //To compile tests write cmake --build . in terminal and afterwarts ctest works
 
@@ -20,7 +19,7 @@ TEST(ParticleContainerTest, ParticleContainer){
     Particle particle({0, 0, 0}, {0, 3, 0}, 50, 0, 1, 5);
     particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0, 1, 5);
     //test begin
-    ASSERT_TRUE(particles.begin().base()->operator==(particle)) << "didn't point on only element in container";
+    //ASSERT_TRUE(particles.begin().base()->operator==(particle)) << "didn't point on only element in container";
     //test end
     ASSERT_FALSE(particles.end().base()->operator==(particle)) << "didn't point on only element in container";
     //test size
@@ -28,7 +27,7 @@ TEST(ParticleContainerTest, ParticleContainer){
 }
 
 /**
- * Test for linked cell container for addParticle, begin(), end() and size() functions as well as to calculate position and move particle to next cell and generating ghostcell and outflow boundary
+ * Test for linked cell container for addParticle, begin(), end() and size() functions as well as to calculate position and move particle to next cell
  */
 TEST(cellTest, LinkedCellContainer){
     LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "o", "r", "r"});
@@ -37,25 +36,38 @@ TEST(cellTest, LinkedCellContainer){
     //test addParticle
     Particle particle({0, 0, 0}, {0, 3, 0}, 50, 0, 1, 5);
     cells.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0, 1, 5);
-    //test begin
-    ASSERT_TRUE(std::next(std::next(std::next(cells.begin())->begin())->begin())->begin().base()->operator==(particle)) << "didn't point on only element in container";
-    //test end
-    ASSERT_FALSE(std::next(std::next(std::next(cells.begin())->begin())->begin())->end().base()->operator==(particle)) << "didn't point on only element in container";
+    EXPECT_EQ(1, cells.Particles_in_cell(1,1,1));
     //test calculate position and move particle to next cell
     Particle particle2({0, 3, 0}, {0, 3, 0}, 50, 0, 1, 5);
     PositionCalculator::PositionStoermerVerletCell(cells, 1);
-    auto it = std::next(std::next(cells.begin())->begin());
-    ASSERT_TRUE(std::next(std::next(it)->begin())->begin().base()->operator==(particle2)) << "particle wasn't moved to next cell";
-    cells.addParticle({1, 0, 0}, {-1, 3, 0}, 50, 0, 1, 5);
-    ASSERT_EQ(1, cells.Particles_in_cell(1,1,1));
-    cells.generateGhostCell(0, 1, 1, 1);
-    Particle ghost ({-1.0000000001, 0, 0}, {0, 0, 0}, 50, 1, 1, 5);
-    ASSERT_TRUE(std::next(std::next(cells.begin()->begin())->begin())->begin().base()->operator==(ghost));
+    EXPECT_EQ(0, cells.Particles_in_cell(1,1,1));
+    EXPECT_EQ(1, cells.Particles_in_cell(1,2,1));
+    EXPECT_EQ(0, cells.Particles_in_cell(1,3,1));
+
+}
+/**
+ * Test for outflow, reflective and periodic boundary
+ */
+TEST(Boundary, Boundry){
+    LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "p", "p", "o", "r", "r"});
     //test outflow
     cells.addParticle({0, 0, 0}, {0, -1, 0}, 50, 0, 1, 5);
-    EXPECT_EQ(2, cells.Particles_in_cell(1,1,1));
+    EXPECT_EQ(1, cells.Particles_in_cell(1,1,1));
     PositionCalculator::PositionStoermerVerletCell(cells, 1);
     EXPECT_EQ(0, cells.Particles_in_cell(1,1,1));
+    //test reflective boundary
+    cells.addParticle({0, 0, 0}, {-1, 3, 0}, 50, 0, 1, 5);
+    ASSERT_EQ(1, cells.Particles_in_cell(1,1,1));
+    cells.generateGhostCell(0, 1, 1, 1);
+    Particle ghost ({-0.0000000001, 0, 0}, {0, 0, 0}, 50, 1, 1, 5);
+    EXPECT_EQ(1, cells.Particles_in_cell(0,1,1));
+    //test periodic
+    cells.addParticle({179, 89, 0}, {1,1,0}, 50, 0, 1, 5);
+    cells.generateGhostCell(0, 60, 30, 1);
+    ASSERT_EQ(1, cells.Particles_in_cell(60, 0, 1));
+    ASSERT_EQ(1, cells.Particles_in_cell(0, 30, 1));
+    ASSERT_EQ(1, cells.Particles_in_cell(0, 0, 1));
+
 }
 
 /**

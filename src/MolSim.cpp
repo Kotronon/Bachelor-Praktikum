@@ -1,5 +1,6 @@
 
 #include "FileReader.h"
+#include "outputWriter/FileWriter.h"
 #include "outputWriter/XYZWriter.h"
 #include "outputWriter/VTKWriter.h"
 #include "ParticleContainer.h"
@@ -10,6 +11,7 @@
 #include "spdlog/spdlog.h"
 #include "calculations/PositionCalculator.h"
 #include <string>
+#include <cfloat>
 #include <iostream>
 
 
@@ -38,15 +40,23 @@ double delta_t = 0.0005;
 double avg_v = 0.1;
 int dim = 2;
 
-//double eps = 5;
-//double sig = 1;
+double eps = 5;
+double sig = 1;
 double Grav = -12.44;
 
+//if you wanna use directSum please use DBL_MAX for each direction
 std::array<double, 3> domain_size = {63,36,1};
-double cutoff = 2.5;
+//if you wanna use directSum please use DBL_MAX
+double cutoff = 2.5 * sig;
 
 //boundary order (b):  left, right, up, down, behind, before
-std::array<std::basic_string<char>, 6> boundary = {"p", "p", "p", "p", "o", "o"};
+//if you wanna use directSum please use {"o", "o", "o", "o", "o", "o"}
+std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "o", "o"};
+//input file
+std::string inputFile = "";
+//checkpoints
+bool checkpointing = true;
+//int num_checkpoints = 1;
 
 double initTemperature = 40;
 int nThermostat = 1000;
@@ -71,7 +81,17 @@ int main(int argc, char *argsv[]) {
     //Creation of linked-cell container to be filled with all relevant particles
     LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
 
-    //Creation of cuboids/disks for simulation with linked-cell container
+    //add Particles from input file
+    if(!inputFile.empty()){
+        FileReader::readFile(container, inputFile.data());
+        cells.addContainer(container);
+    }
+   /* int steps_between_checkpoints = 0;
+    int checkpoint = 0;
+    if(num_checkpoints > 1){
+        steps_between_checkpoints = (end_time/delta_t) / num_checkpoints;
+    }*/
+   //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
     ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0,0,0}, {50,14,1}, 1.2, 1.0, cells, cutoff, 1.0, 1.0);
@@ -82,6 +102,9 @@ int main(int argc, char *argsv[]) {
 
     //Pre-calculation of f
     ForceCalculator::LennardJonesForceCell(cells, Grav);
+
+    //Initialization with Brownian Motion
+    //VelocityCalculator::BrownianMotionInitializationCell(cells, avg_v, dim);
 
     //Initialization with Brownian Motion / temperature
     if (applyBrownianMotion) {
@@ -119,21 +142,30 @@ int main(int argc, char *argsv[]) {
 
         iteration++;
         if (iteration % 10 == 0) {
-            //plotParticles(iteration);
             plotParticlesInCells(iteration, cells);
         }
         if (iteration % 100 == 0) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
         }
-
+        /*if(iteration % steps_between_checkpoints == 0 && checkpointing){
+            std::string filename = "checkpoint" + std::to_string(checkpoint) + ".txt";
+            checkpoint ++;
+            ParticleContainer currentState = cells.toContainer();
+            FileWriter::writeFile(currentState, filename);
+        }*/
         current_time += delta_t;
     }
 
+   if(checkpointing){
+    std::string filename = "../input/checkpointNew.txt";
+            ParticleContainer currentState = cells.toContainer();
+            FileWriter::writeFile(currentState, filename);
+            }
     spdlog::info("Output written. Terminating...");
     return 0;
 }
 
-void plotParticlesInCells(int iteration, LinkedCellContainer &grid) {
+void plotParticlesInCells(int iteration, LinkedCellContainer &cells) {
 
     std::string out_name("MD_vtk");
 
@@ -142,7 +174,7 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &grid) {
 
     outputWriter::VTKWriter writer2;
     int num_of_particles = 0;
-    for (auto &x: grid) {
+    for (auto &x: cells) {
         for (auto &y: x) {
             for (auto &z: y) {
                 num_of_particles += z.size();
@@ -150,7 +182,7 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &grid) {
         }
     }
     writer2.initializeOutput(num_of_particles);
-    for (auto &x: grid) {
+    for (auto &x: cells) {
         for (auto &y: x) {
             for (auto &z: y) {
                 for (auto &p: z) {

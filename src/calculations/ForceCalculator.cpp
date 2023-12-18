@@ -10,8 +10,9 @@
 
 double ForceCalculator::epsilon = 5;
 double ForceCalculator::sigma = 1;
-double ForceCalculator::Grav = 0;
+double ForceCalculator::Ggrav = 0;
 double ForceCalculator::cutoff = DBL_MAX;
+
 
 /**
  * Calculates the gravity force of all Particles in given ParticleContainer
@@ -65,13 +66,13 @@ void ForceCalculator::LennardJonesForce(ParticleContainer &container, double eps
 void ForceCalculator::LennardJonesForceFaster(ParticleContainer &container, double eps, double sig, double grav) {
     ForceCalculator::epsilon = eps;
     ForceCalculator::sigma = sig;
-    ForceCalculator::Grav = grav;
+    ForceCalculator::Ggrav = grav;
     std::array<double, 3> zero = {0,0,0};
     for (auto &p: container) {
         p.setOldF(p.getF());
         p.setF(zero);
     }
-    container.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise);
+    container.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, Ggrav);
 }
 
 /**
@@ -85,7 +86,7 @@ void ForceCalculator::LennardJonesForcePairwise(Particle *p1, Particle *p2) {
     //in further calculations, attempts at fixing it by rounding if necessary however lead to even worse problems
     double L2Norm_p1_p2 = ArrayUtils::L2Norm(p1->getX() - p2->getX());
     //make calculation if simple sum or distance between particles is smaller than the cutoff radius
-    if(L2Norm_p1_p2 <= cutoff) {
+    if(L2Norm_p1_p2 < cutoff) {
         double eps = sqrt(p1->getEps() * p2->getEps());
         double sig = (p1->getSig() + p2->getSig()) / 2;
         force = force +
@@ -98,7 +99,7 @@ void ForceCalculator::LennardJonesForcePairwise(Particle *p1, Particle *p2) {
 
 void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &cells, double grav){
     ForceCalculator::cutoff = cells.getCutoff();
-    ForceCalculator::Grav = grav;
+    ForceCalculator::Ggrav = grav;
     cells.setZero();
-    cells.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, Grav);
+    cells.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, Ggrav);
 }
