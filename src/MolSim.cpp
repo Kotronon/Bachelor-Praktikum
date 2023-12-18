@@ -14,7 +14,6 @@
 #include <cfloat>
 #include <iostream>
 
-
 /**
  * plot the particles to a xyz-file
  */
@@ -22,17 +21,8 @@ void plotParticles(int iteration);
 
 void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 
-/**
- * get a specific command option
- */
-char *getCmdOption(char **begin, char **end, const std::string &option);
-
-/**
- * check if a specific command option exists
- */
-bool cmdOptionExists(char **begin, char **end, const std::string &option);
-
 //Hardcoded values for now:
+
 constexpr double start_time = 0;
 double end_time = 25;
 double delta_t = 0.0005;
@@ -44,18 +34,21 @@ double eps = 5;
 double sig = 1;
 double Grav = -12.44;
 
-//if you wanna use directSum please use DBL_MAX for each direction
-std::array<double, 3> domain_size = {63,36,1};
-//if you wanna use directSum please use DBL_MAX
+//(if you want to use directSum please use DBL_MAX for each direction)
+std::array<double, 3> domain_size = {63, 36, 1};
+
+//(if you want to use directSum please use DBL_MAX)
 double cutoff = 2.5 * sig;
 
-//boundary order (b):  left, right, up, down, behind, before
-//if you wanna use directSum please use {"o", "o", "o", "o", "o", "o"}
+//boundary order:  left, right, up, down, behind, before
+//boundary types: "o"(outflow), "r"(reflective), "p"(periodic)
+//(if you want use directSum please use {"o", "o", "o", "o", "o", "o"})
 std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "o", "o"};
+
 //input file
 std::string inputFile = "";
 //checkpoints
-bool checkpointing = true;
+bool checkpointing = false;
 //int num_checkpoints = 1;
 
 double initTemperature = 40;
@@ -70,32 +63,32 @@ double targetTemperature;
 bool differenceTemperatureExists = false;
 double differenceTemperature;
 
-
 //Cuboids/Disks have to be created manually in main
-
-//Creation of particle container to be filled with all relevant particles
-ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
 
     //Creation of linked-cell container to be filled with all relevant particles
     LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
 
-    //add Particles from input file
-    if(!inputFile.empty()){
+    //Add Particles from input file
+    if (!inputFile.empty()) {
         FileReader::readFile(container, inputFile.data());
         cells.addContainer(container);
     }
-   /* int steps_between_checkpoints = 0;
+
+    /*
+    int steps_between_checkpoints = 0;
     int checkpoint = 0;
-    if(num_checkpoints > 1){
+    if(num_checkpoints > 1) {
         steps_between_checkpoints = (end_time/delta_t) / num_checkpoints;
-    }*/
-   //Creation of cuboids/disks for simulation with linked-cell container
+    }
+    */
+
+    //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0,0,0}, {50,14,1}, 1.2, 1.0, cells, cutoff, 1.0, 1.0);
-    ParticleGenerator::createCuboidInCells({0.6, 19, 0}, {0,0,0}, {50,14,1}, 1.2, 2.0, cells, cutoff, 0.9412, 1.0);
+    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0, 0, 0}, {50, 14, 1}, 1.2, 1.0, cells, cutoff, 1.0, 1.0);
+    ParticleGenerator::createCuboidInCells({0.6, 19, 0}, {0, 0, 0}, {50, 14, 1}, 1.2, 2.0, cells, cutoff, 0.9412, 1.0);
 
     double current_time = start_time;
     int iteration = 0;
@@ -109,8 +102,7 @@ int main(int argc, char *argsv[]) {
     //Initialization with Brownian Motion / temperature
     if (applyBrownianMotion) {
         Thermostat::initializeTemperatureWithBrownianMotion(initTemperature, dim, cells);
-    }
-    else {
+    } else {
         Thermostat::initializeTemperature(initTemperature, dim, cells);
     }
 
@@ -124,11 +116,11 @@ int main(int argc, char *argsv[]) {
         if (iteration != 0 && iteration % nThermostat == 0) {
             if (differenceTemperatureExists) {
                 Thermostat::setTemperatureGradually(targetTemperature, differenceTemperature, dim, cells);
-            }
-            else {
+            } else {
                 Thermostat::setTemperatureDirectly(targetTemperature, dim, cells);
             }
-            std::cout << "Set temperature to " + std::to_string(Thermostat::calculateCurrentTemperature(2, cells)) + " Kelvin.\n";
+            std::cout << "Set temperature to " + std::to_string(Thermostat::calculateCurrentTemperature(2, cells)) +
+                         " Kelvin.\n";
         }
 
         //Calculate new x
@@ -156,11 +148,11 @@ int main(int argc, char *argsv[]) {
         current_time += delta_t;
     }
 
-   if(checkpointing){
-    std::string filename = "../input/checkpointNew.txt";
-            ParticleContainer currentState = cells.toContainer();
-            FileWriter::writeFile(currentState, filename);
-            }
+    if (checkpointing) {
+        std::string filename = "../input/checkpointNew.txt";
+        ParticleContainer currentState = cells.toContainer();
+        FileWriter::writeFile(currentState, filename);
+    }
     spdlog::info("Output written. Terminating...");
     return 0;
 }
@@ -207,18 +199,4 @@ void plotParticles(int iteration) {
         writer2.plotParticle(p);
     }
     writer2.writeFile(out_name, iteration);
-}
-
-//Adapted from https://stackoverflow.com/questions/865668/parsing-command-line-arguments-in-c
-char *getCmdOption(char **begin, char **end, const std::string &option) {
-    char **itr = std::find(begin, end, option);
-    if (itr != end && ++itr != end) {
-        return *itr;
-    }
-    return nullptr;
-}
-
-//Adapted from https://stackoverflow.com/questions/865668/parsing-command-line-arguments-in-c
-bool cmdOptionExists(char **begin, char **end, const std::string &option) {
-    return std::find(begin, end, option) != end;
 }
