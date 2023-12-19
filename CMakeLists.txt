@@ -131,4 +131,7 @@ target_include_directories(MolSim ${SPDLOG_INCLUDES_LEVEL} PUBLIC "$<BUILD_INTER
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
 
 include(CTest)
-add_subdirectory(tests)
+OPTION(TEST_found "testing" on)
+if(TEST_found)
+    add_subdirectory(tests)
+endif(TEST_found)
