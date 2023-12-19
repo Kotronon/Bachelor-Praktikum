@@ -19,6 +19,11 @@ void PositionCalculator::PositionStoermerVerlet(ParticleContainer &container, do
     }
 }
 
+/**
+ * Calculation of the new position of all molecules in the given LinkedCellContainer
+ * @param cells
+ * @param delta_t
+ */
 void PositionCalculator::PositionStoermerVerletCell(LinkedCellContainer &cells, double delta_t) {
     for (auto &x: cells) {
         for (auto &y: x) {

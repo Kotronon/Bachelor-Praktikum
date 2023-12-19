@@ -13,11 +13,14 @@
 
 /**
  * creates a cuboid and stores it in a ParticleContainer
- * @param x
- * @param v
- * @param N
- * @param h
- * @param m
+ *  @param x position of left front corner
+ * @param v initial velocity
+ * @param N dimension of the cuboid
+ * @param h distance between two particles
+ * @param m mass for each particle
+ * @param sig sigma for each particle
+ * @param eps epsilon for each particle
+ * @param type type for each particle
  * @return
  */
 ParticleContainer ParticleGenerator::createCuboid(std::array<double, 3> x, std::array<double, 3> v,
@@ -52,11 +55,14 @@ ParticleContainer ParticleGenerator::createCuboid(std::array<double, 3> x, std::
  * create a cuboid and stores it in the given cell grid
  * @param x position of left front corner
  * @param v initial velocity
- * @param N
- * @param h
- * @param m
- * @param cells
- * @param cutoff
+ * @param N dimension of the cuboid
+ * @param h distance between two particles
+ * @param m mass for each particle
+ * @param cells LinkedCellContainer
+ * @param cutoff cutoff radius
+ * @param sig sigma for each particle
+ * @param eps epsilon for each particle
+ * @param type type for each particle
  */
 void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<double, 3> v,
                                             std::array<int, 3> N, double h, double m,
@@ -102,6 +108,9 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
  * @param m mass of each particle
  * @param r number of molecules along the radius
  * @param h distance between molecules
+ * @param sig sigma of each particle
+ * @param eps epsilon of each particle
+ * @param type type of each particle
  * @return particle container containing the newly created particles
  */
 ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> center, std::array<double, 3> v, double m, int r, double h, double sig, double eps, int type) {
@@ -206,6 +215,9 @@ ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> center, st
  * @param m mass of each particle
  * @param r number of molecules along the radius
  * @param h distance between molecules
+ * @param sig sigma of each particle
+ * @param eps epsilon of each particle
+ * @param type type of each particle
  * @return particle container containing the newly created particles
  */
 ParticleContainer ParticleGenerator::createDiskAlternative(std::array<double, 3> center, std::array<double, 3> v, double m, int r, double h, double sig, double eps, int type) {
@@ -231,6 +243,10 @@ ParticleContainer ParticleGenerator::createDiskAlternative(std::array<double, 3>
  * @param m mass of each particle
  * @param r number of molecules along the radius
  * @param h distance between molecules
+ * @param cells LinkedCellContainer
+ * @param sig sigma of each particle
+ * @param eps epsilon of each particle
+ * @param type type of each particle
  */
 void ParticleGenerator::createDiskInCells(std::array<double, 3> center, std::array<double, 3> v, double m,
                                                 int r, double h, LinkedCellContainer &cells, double sig, double eps, int type) {
@@ -248,6 +264,9 @@ void ParticleGenerator::createDiskInCells(std::array<double, 3> center, std::arr
  * @param m mass of each particle
  * @param r number of molecules along the radius
  * @param h distance between molecules
+ * @param sig sigma of each particle
+ * @param eps epsilon of each particle
+ * @param type type of each particle
  * @return particle container containing the newly created particles
  */
 ParticleContainer ParticleGenerator::createSphere(std::array<double, 3> center, std::array<double, 3> v, double m,
@@ -273,6 +292,10 @@ ParticleContainer ParticleGenerator::createSphere(std::array<double, 3> center, 
  * @param m mass of each particle
  * @param r number of molecules along the radius
  * @param h distance between molecules
+ * @param cells LinkedCellContainer
+ * @param sig sigma of each particle
+ * @param eps epsilon of each particle
+ * @param type type of each particle
  */
 void ParticleGenerator::createSphereInCells(std::array<double, 3> center, std::array<double, 3> v, double m,
                                                   int r, double h, LinkedCellContainer cells, double sig, double eps, int type) {

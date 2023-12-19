@@ -13,8 +13,8 @@
 /**
  * create a new linked cell container based on the dimensions and boundary
  * @param N dimensions of the container
- * @param cutoff radius of cutoff
- * @param b boundary types of each side of the container
+ * @param cutoffRadius radius of cutoff
+ * @param boundaryConditions boundary types of each side of the container
  */
 LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoffRadius, std::array<std::string, 6> boundaryConditions) {
     //creating list cells[i][j]h length = number of cells
@@ -68,6 +68,8 @@ unsigned long LinkedCellContainer::Particles_in_cell(int x, int y, int z) {
  * @param v_arg velocity of new particle
  * @param m_arg mass of new particle
  * @param type_arg type of new particle
+ * @param sig sigma of new particle
+ * @param eps epsilon of new particle
  */
 void LinkedCellContainer::addParticle(int x, int y, int z, std::array<double, 3> x_arg, std::array<double, 3> v_arg,
                                       double m_arg, int type_arg, double sig, double eps) {
@@ -81,6 +83,8 @@ void LinkedCellContainer::addParticle(int x, int y, int z, std::array<double, 3>
  * @param v_arg velocity of new particle
  * @param m_arg mass of new particle
  * @param type_arg type of new particle
+ * @param sig sigma of new particle
+ * @param eps epsilon of new particle
  */
 void
 LinkedCellContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg,
@@ -126,6 +130,10 @@ ParticleContainer LinkedCellContainer::toContainer() {
     return container;
 }
 
+/**
+ * adds all Particles of given ParticleContainer
+ * @param container
+ */
 void LinkedCellContainer::addContainer(ParticleContainer &container) {
     for(auto &particle : container){
         addParticle(particle);
@@ -133,7 +141,7 @@ void LinkedCellContainer::addContainer(ParticleContainer &container) {
 }
 
 /**
- * checks if particle needs to be moved to another cell and moves them accordingly
+ * checks if particle needs to be moved to another cell and moves or delets  them accordingly
  */
 void LinkedCellContainer::moveToNeighbour() {
     //begin at 1 and end at x_cells to avoid moving ghost cells
@@ -175,7 +183,7 @@ void LinkedCellContainer::moveToNeighbour() {
 
 
 /**
- * returns the Particles from the next neighbours of the current cell
+ * returns the Particles from the next neighbours of the current cell according to N3L
  * @param x index of cell on x axis
  * @param y index of cell on y axis
  * @param z index of cell on z axis
@@ -250,12 +258,28 @@ void LinkedCellContainer::setZero() {
     }
 }
 
+/**
+ * return cells on x_achsis
+ * @return
+ */
 int LinkedCellContainer::getXMax() const { return x_cells; }
 
+/**
+ * return cells on y_achsis
+ * @return
+ */
 int LinkedCellContainer::getYMax() const { return y_cells; }
 
+/**
+ * return cells on z_achsis
+ * @return
+ */
 int LinkedCellContainer::getZMax() const { return z_cells; }
 
+/**
+ * returns cutoff radius
+ * @return
+ */
 double LinkedCellContainer::getCutoff() const { return cutoff; }
 
 /**
@@ -364,7 +388,7 @@ bool LinkedCellContainer::applyMirrorBoundary(int p, int x, int y, int z) {
 }
 
 /**
- * generates ghost cells for given particle
+ * generates ghost particles for given particle
  * @param index the index of the particle
  * @param x index of cell on x axis
  * @param y index of cell on y axis
@@ -509,7 +533,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
 }
 
 /**
- * deletes all ghost cells
+ * deletes all ghost particles
  */
 void LinkedCellContainer::deleteGhostCells() {
     for (int y = 0; y <= y_cells + 1; y++) {
@@ -546,11 +570,11 @@ void LinkedCellContainer::deleteGhostCells() {
 }
 
 /**
- * returns true if particle needs to be deleted
+ * moves the particle if it's behind a periodic boundary
  * @param x_coordinate x_coordinate of current particle
  * @param y_coordinate y_coordinate of current particle
  * @param z_coordinate z_coordinate of current particle
- * @return
+ * @param p Particle to be moved
  */
 void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle p) {
     bool periodic = false;

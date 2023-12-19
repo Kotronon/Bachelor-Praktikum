@@ -43,6 +43,8 @@ Particle::Particle(const Particle &other) {
  * @param x_arg
  * @param v_arg
  * @param m_arg
+ * @param sig
+ * @param eps
  * @param type_arg
  */
 Particle::Particle(std::array<double, 3> x_arg, std::array<double, 3> v_arg,
