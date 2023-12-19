@@ -1,6 +1,7 @@
 .idea/
 cmake-build-debug-*
 cmake/*
+doxys_documentation/*
 # https://www.bmc.com/blogs/gitignore/
 # Binaries for programs and plugins
 *.exe
