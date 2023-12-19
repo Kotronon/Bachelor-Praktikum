@@ -34,7 +34,7 @@ bool cmdOptionExists(char **begin, char **end, const std::string &option);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 40;
+double end_time = 0.5;
 double delta_t = 0.0005;
 
 double avg_v = 0.1;
@@ -52,10 +52,10 @@ double cutoff = 2.5 * 1.2;
 //if you wanna use directSum please use {"o", "o", "o", "o", "o", "o"}
 std::array<std::basic_string<char>, 6> boundary = {"r", "r", "r", "r", "o", "o"};
 //input file
-std::string inputFile = "../input/checkpointNew.txt";
+std::string inputFile = "";
 //checkpoints
 bool checkpointing = true;
-//int num_checkpoints = 1;
+int num_checkpoints = 2;
 
 double initTemperature = 0.5;
 int nThermostat = 1000;
@@ -82,11 +82,10 @@ int main(int argc, char *argsv[]) {
         FileReader::readFile(container, inputFile.data());
         cells.addContainer(container);
     }
-   /* int steps_between_checkpoints = 0;
-    int checkpoint = 0;
-    if(num_checkpoints > 1){
-        steps_between_checkpoints = (end_time/delta_t) / num_checkpoints;
-    }*/
+    int checkpoint = 1;
+    if(num_checkpoints < 0) checkpointing = false;
+    int steps_between_checkpoints = int(end_time/delta_t) / num_checkpoints;
+
    //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
     //ParticleGenerator::createCuboidInCells({1.5, 2, 0}, {0,0,0}, {250,50,1}, 1.2, 1.0, cells, cutoff, 1.2, 1, 0);
@@ -141,20 +140,20 @@ int main(int argc, char *argsv[]) {
         if (iteration % 100 == 0) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
         }
-        /*if(iteration % steps_between_checkpoints == 0 && checkpointing){
-            std::string filename = "checkpoint" + std::to_string(checkpoint) + ".txt";
+        if(iteration % steps_between_checkpoints == 0 && checkpointing){
+            std::string filename = "../output/checkpoint" + std::to_string(checkpoint) + ".txt";
             checkpoint ++;
             ParticleContainer currentState = cells.toContainer();
             FileWriter::writeFile(currentState, filename);
-        }*/
+        }
         current_time += delta_t;
     }
 
-   if(checkpointing){
+  /* if(checkpointing){
     std::string filename = "../input/checkpointNew.txt";
             ParticleContainer currentState = cells.toContainer();
             FileWriter::writeFile(currentState, filename);
-            }
+            }*/
     spdlog::info("Output written. Terminating...");
     return 0;
 }
