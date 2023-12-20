@@ -80,7 +80,7 @@ void Thermostat::setTemperatureGradually(double targetTemperature, double temper
     double currentTemperature = calculateCurrentTemperature(dimension, cells);
 
     //Calculate the new temperature to set based on the allowed difference
-    double newTemperature = 0;
+    double newTemperature = currentTemperature;
     if (std::abs(targetTemperature - currentTemperature) <= temperatureDifference) {
         newTemperature = targetTemperature;
     }

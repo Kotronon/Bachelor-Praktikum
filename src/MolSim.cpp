@@ -39,7 +39,7 @@ std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "o", "o"}
 std::string inputFile = "";
 //checkpoints
 bool checkpointing = false;
-int num_checkpoints = 2;
+int num_checkpoints = 1;
 
 double initTemperature = 40;
 int nThermostat = 1000;
@@ -154,7 +154,7 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells) {
     for (auto &x: cells) {
         for (auto &y: x) {
             for (auto &z: y) {
-                num_of_particles += z.size();
+                num_of_particles += (int) z.size();
             }
         }
     }
