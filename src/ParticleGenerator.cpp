@@ -2,7 +2,6 @@
 // Created by maraconda on 12.11.23.
 //
 
-#define _USE_MATH_DEFINES
 #include "utils/ArrayUtils.h"
 #include "ParticleGenerator.h"
 #include "ParticleContainer.h"
@@ -58,15 +57,13 @@ ParticleContainer ParticleGenerator::createCuboid(std::array<double, 3> x, std::
  * @param h distance between two particles
  * @param m mass for each particle
  * @param cells LinkedCellContainer
- * @param cutoff cutoff radius
  * @param sig sigma for each particle
  * @param eps epsilon for each particle
  * @param type type for each particle
  */
 void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<double, 3> v,
                                             std::array<int, 3> N, double h, double m,
-                                            LinkedCellContainer &cells, double  cutoff, double sig, double eps, int type){
-                                            LinkedCellContainer &cells, double sig, double eps){
+                                            LinkedCellContainer &cells, double sig, double eps, int type){
 
     if (N[0] == 0.0 || N[1] == 0.0 || N[2] == 0.0) {
         return;
@@ -85,7 +82,6 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
         for (int y_i = 0; y_i < N[1]; y_i++) {
             for (int x_i = 0; x_i < N[0]; x_i++) {
                 cells.addParticle(x_axis_tmp, y_axis_tmp, z_axis_tmp, coordinate, v, m, type, sig, eps);
-                //spdlog::info("added x_cell {}", x_axis_tmp);
                 coordinate[0] += h;
                 if(x_axis_tmp <= (floor(coordinate[0] / cells.getCutoff()))) x_axis_tmp ++;
             }

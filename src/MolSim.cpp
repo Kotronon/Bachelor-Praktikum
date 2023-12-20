@@ -90,8 +90,8 @@ int main(int argc, char *argsv[]) {
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0, 0, 0}, {250, 20, 1}, 1.2, 1.0, cells, 1.2, 1.0);
-    ParticleGenerator::createCuboidInCells({0.6, 27, 0}, {0, 0, 0}, {250, 20, 1}, 1.2, 2.0, cells, 1.1, 1.0);
+    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0, 0, 0}, {250, 20, 1}, 1.2, 1.0, cells, 1.2, 1.0,1);
+    ParticleGenerator::createCuboidInCells({0.6, 27, 0}, {0, 0, 0}, {250, 20, 1}, 1.2, 2.0, cells, 1.1, 1.0, 1);
 
     double current_time = start_time;
     int iteration = 0;

@@ -14,10 +14,6 @@ private:
 public:
     static ParticleContainer
     createCuboid(std::array<double, 3> x, std::array<double, 3> v, std::array<int, 3> N, double h, double m, double sig, double eps, int type);
-    static void createCuboidInCells(std::array<double, 3> x, std::array<double, 3> v,
-                                                std::array<int, 3> N, double h, double m,
-                                                LinkedCellContainer &cells, double  cutoff, double sig, double eps, int type);
-    static ParticleContainer createCuboid(std::array<double, 3> x, std::array<double, 3> v, std::array<int, 3> N, double h, double m, double sig, double eps);
 
     static ParticleContainer createSphere(std::array<double, 3> x, std::array<double, 3> v, double m, int r, double h, double sig, double eps, int type);
 
@@ -29,11 +25,10 @@ public:
     static void createSphereInCells(std::array<double, 3> center, std::array<double, 3> v, double m, int r, double h,
                              LinkedCellContainer cells, double sig, double eps, int type);
 
-    static ParticleContainer createDiskAlternative(std::array<double, 3> center, std::array<double, 3> v, double m, int r, double h, double sig, double eps);
-
-    static void createCuboidInCells(std::array<double, 3> x, std::array<double, 3> v, std::array<int, 3> N, double h, double m,
-                             LinkedCellContainer &cells, double sig, double eps);
     static ParticleContainer
     createDiskAlternative(std::array<double, 3> center, std::array<double, 3> v, double m, int r, double h, double sig, double eps, int type);
+
+    static void createCuboidInCells(std::array<double, 3> x, std::array<double, 3> v, std::array<int, 3> N, double h, double m,
+                             LinkedCellContainer &cells, double sig, double eps, int type);
 };
 
