@@ -123,6 +123,7 @@ int main(int argc, char *argsv[]) {
             else {
                 Thermostat::setTemperatureDirectly(targetTemperature, dim, cells);
             }
+            spdlog::info("Set temperature to " + std::to_string(Thermostat::calculateCurrentTemperature(2,cells)) + " Kelvin.");
         }
 
         //Calculate new x
