@@ -19,8 +19,13 @@ void PositionCalculator::PositionStoermerVerlet(ParticleContainer &container, do
     }
 }
 
-void PositionCalculator::PositionStoermerVerletCell(LinkedCellContainer &grid, double delta_t) {
-    for (auto &x: grid) {
+/**
+ * Calculation of the new position of all molecules in the given LinkedCellContainer
+ * @param cells
+ * @param delta_t
+ */
+void PositionCalculator::PositionStoermerVerletCell(LinkedCellContainer &cells, double delta_t) {
+    for (auto &x: cells) {
         for (auto &y: x) {
             for (auto &z: y) {
                 for (auto &p: z) {
@@ -32,6 +37,6 @@ void PositionCalculator::PositionStoermerVerletCell(LinkedCellContainer &grid, d
             }
         }
     }
-    grid.moveToNeighbour();
+    cells.moveToNeighbour();
 
 }

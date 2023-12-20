@@ -7,7 +7,7 @@
 #include <functional>
 #include "spdlog/spdlog.h"
 #include "ParticleContainer.h"
-
+#include "utils/ArrayUtils.h"
 
 /**
  * creates a new empty ParticleContainer
@@ -55,8 +55,8 @@ void ParticleContainer::addParticle(int type_arg) {
  * @param m_arg
  * @param type_arg
  */
-void ParticleContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg) {
-    Particle new_particle(x_arg, v_arg, m_arg, type_arg);
+void ParticleContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg, double sig, double eps) {
+    Particle new_particle(x_arg, v_arg, m_arg, sig, eps, type_arg);
     containedParticles.emplace_back(new_particle);
     spdlog::info("Added newly created particle to container!");
 }
@@ -76,12 +76,14 @@ void ParticleContainer::addParticleContainer(ParticleContainer &container) {
  * iterate through the Particles pairwise to calculate the force of each particle
  * @param forceCalculation
  */
-void ParticleContainer::applyForcePairwise(const std::function<void(Particle*, Particle*)>& forceCalculation){
+void ParticleContainer::applyForcePairwise(const std::function<void(Particle*, Particle*)>& forceCalculation, double Ggrav){
     auto first = begin();
     auto last = end();
     for (; first != last; ++first) {
         for(auto next = std::next(first); next != last; ++next)
             forceCalculation(&(*first), &(*next));
+        std::array<double, 3> gravity = {0, first->getM(), 0};
+        first->setF(first->getF() + gravity);
     }
 }
 

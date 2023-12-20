@@ -36,14 +36,9 @@ add_executable(MolSim ${MY_SRC}
         src/ParticleGenerator.h
         src/LinkedCellContainer.cpp
         src/LinkedCellContainer.h
-
-        src/MolSim.cpp
-        src/our_input/newinput-driver.cxx
-        src/our_input/newinput-pimpl.cxx
-        src/our_input/newinput-pimpl.hxx
-        src/our_input/newinput-pskel.cxx
-        src/our_input/newinput-pskel.hxx
-        src/our_input/implementation_input.h src/our_input/implementation_input.cpp)
+        src/Thermostat.cpp
+        src/Thermostat.h
+)
 
 # set cxx standard. You may raise this if you want.
 target_compile_features(MolSim
@@ -56,8 +51,6 @@ target_include_directories(MolSim
             ${CMAKE_CURRENT_SOURCE_DIR}/libs/libxsd
         PRIVATE
             ${CMAKE_CURRENT_SOURCE_DIR}/src
-        PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/XML_input
 )
 
 target_link_libraries(MolSim
