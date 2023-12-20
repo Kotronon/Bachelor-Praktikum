@@ -34,9 +34,10 @@ void VelocityCalculator::VelocityStoermerVerlet(ParticleContainer &container, do
 }
 
 /**
- * Calculation of the new velocity of all molecule in the given ParticleContainer according to Brownian Motion Initialization
- * @param container
+ * Calculation of the new velocity of all molecule in the given LinkedCellContainer according to Brownian Motion Initialization
+ * @param cells
  * @param avg_v
+ * @param dim
  */
 void VelocityCalculator::BrownianMotionInitializationCell(LinkedCellContainer &cells, double avg_v, int dim) {
     std::array<double, 3> brownian_motion{};
@@ -54,8 +55,8 @@ void VelocityCalculator::BrownianMotionInitializationCell(LinkedCellContainer &c
 }
 
 /**
- * Calculation of the new velocity of all molecule in the given ParticleContainer according to Strömer Verlet
- * @param container
+ * Calculation of the new velocity of all molecule in the given LinkedCellContainer according to Strömer Verlet
+ * @param cells
  * @param delta_t
  */
 void VelocityCalculator::VelocityStoermerVerletCell(LinkedCellContainer &cells, double delta_t) {

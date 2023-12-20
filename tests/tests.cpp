@@ -59,7 +59,7 @@ TEST(Boundary, Boundry){
     cells.addParticle({0, 0, 0}, {-1, 3, 0}, 50, 0, 1, 5);
     ASSERT_EQ(1, cells.Particles_in_cell(1,1,1));
     cells.generateGhostCell(0, 1, 1, 1);
-    Particle ghost ({-0.0000000001, 0, 0}, {0, 0, 0}, 50, 1, 1, 5);
+    Particle ghost ({-0.0000000001, 0, 0}, {0, 0, 0}, 50, 1, 5, -1);
     EXPECT_EQ(1, cells.Particles_in_cell(0,1,1));
     //test periodic
     cells.addParticle({179, 89, 0}, {1,1,0}, 50, 0, 1, 5);
@@ -77,12 +77,12 @@ TEST(Boundary, Boundry){
  */
 TEST(ParticleGeneratorTest, ParticleGenerator){
     //Test of adding the right numbers of particles when generating a cuboid to plain container
-    ParticleContainer particles = ParticleGenerator::createCuboid({0,0,0}, {0,0,0}, {40,8,1}, 2, 3, 1, 5);
+    ParticleContainer particles = ParticleGenerator::createCuboid({0,0,0}, {0,0,0}, {40,8,1}, 2, 3, 1, 5, 0);
     //test size
     EXPECT_EQ(320, particles.size()) << "wrong number of particles generated in plain container";
     //Test of adding the right numbers of particles when generating a cuboid to linked cell container
     LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "r", "r", "r"});
-    ParticleGenerator::createCuboidInCells({0,0,0}, {0,0,0}, {40,8,1}, 2, 3, cells, 3.0, 1, 5);
+    ParticleGenerator::createCuboidInCells({0,0,0}, {0,0,0}, {40,8,1}, 2, 3, cells, 3.0, 1, 5, 0);
     int particles_num = 0;
     for (auto &x: cells) {
         for (auto &y: x) {
@@ -156,7 +156,7 @@ TEST(ForceTest, LennardJonesForce){
 }
 
 int main(){
-    //testing::InitGoogleTest();
-    //return RUN_ALL_TESTS();
-    return 0;
+    testing::InitGoogleTest();
+    return RUN_ALL_TESTS();
+   // return 0;
 }

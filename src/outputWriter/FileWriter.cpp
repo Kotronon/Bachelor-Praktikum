@@ -2,6 +2,11 @@
 #include <iostream>
 #include <fstream>
 
+/**
+ * writes all Particles of the ParticleContainer in the given file
+ * @param container
+ * @param filename
+ */
 void FileWriter::writeFile(ParticleContainer &container, const std::string &filename) {
     //create and open file
      std::ofstream MyFile(filename);
