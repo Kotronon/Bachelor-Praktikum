@@ -6,6 +6,7 @@
 #include "../src/calculations/ForceCalculator.h"
 #include "../src/ParticleGenerator.h"
 #include "../src/LinkedCellContainer.h"
+#include "src/Thermostat.h"
 #include <math.h>
 //@TODO write tests with TEST()
 //To compile tests write cmake --build . in terminal and afterwarts ctest works
@@ -153,6 +154,66 @@ TEST(ForceTest, LennardJonesForce){
     auto particleVector = particles.begin();
     EXPECT_EQ(res1, particleVector.base()->getF());
     EXPECT_EQ(res2, std::next(particleVector.base())->getF()) << "wrong force calculated";
+}
+
+/**
+ * tests for the thermostat including heating up, cooling down, holding a temperature
+ */
+TEST(ThermostatTest, Thermostat){
+
+    //Setting up LinkedCellContainer and some particles
+    LinkedCellContainer cells = LinkedCellContainer({30,30,1},2.5,{"r,r,r,r,o,o"});
+    ParticleGenerator::createDiskInCells({15, 15, 1}, {0, 0, 0}, 1.0, 3, 1.2, cells, 1.0, 1.0, 1);
+
+    //Setting up parameters
+    double grav = -12.44;
+    double delta_t = 0.0005;
+    double init_T = 20;
+    double higher_T = 30;
+    double lower_T = 10;
+
+    //Setup before first iteration and initialization with Brownian Motion to a temperature of 20 Kelvin
+    ForceCalculator::LennardJonesForceCell(cells, grav);
+    Thermostat::initializeTemperatureWithBrownianMotion(init_T, 2, cells);
+
+    //Check initial setting of temperature
+    ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 20) < 5) << "wrong temperature after temperature initialization";
+
+    //Iteration 1 (Holding the temperature)
+    PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
+    ForceCalculator::LennardJonesForceCell(cells, grav);
+    VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
+    Thermostat::setTemperatureDirectly(init_T,2,cells);
+
+    //Check temperature after first iteration
+    ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 20) < 0.05) << "wrong temperature while holding temperature";
+
+    //Iteration 2 (Holding the temperature)
+    PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
+    ForceCalculator::LennardJonesForceCell(cells, grav);
+    VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
+    Thermostat::setTemperatureDirectly(init_T,2,cells);
+
+    //Check temperature after second iteration
+    ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 20) < 0.05) << "wrong temperature while holding temperature";
+
+    //Iteration 3 (heating up the simulation)
+    PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
+    ForceCalculator::LennardJonesForceCell(cells, grav);
+    VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
+    Thermostat::setTemperatureDirectly(higher_T,2,cells);
+
+    //Check temperature after third iteration
+    ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 30) < 0.05) << "wrong temperature while heating up";
+
+    //Iteration 4 (cooling down the simulation)
+    PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
+    ForceCalculator::LennardJonesForceCell(cells, grav);
+    VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
+    Thermostat::setTemperatureDirectly(lower_T,2,cells);
+
+    //Check temperature after fourth iteration
+    ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 10) < 0.05) << "wrong temperature while cooling down";
 }
 
 int main(){
