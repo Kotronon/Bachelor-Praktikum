@@ -5,6 +5,7 @@
 #include "../src/calculations/VelocityCalculator.h"
 #include "../src/calculations/ForceCalculator.h"
 #include "../src/ParticleGenerator.h"
+#include "../src/Thermostat.h"
 #include "../src/LinkedCellContainer.h"
 #include <math.h>
 //@TODO write tests with TEST()
@@ -82,7 +83,7 @@ TEST(ParticleGeneratorTest, ParticleGenerator){
     EXPECT_EQ(320, particles.size()) << "wrong number of particles generated in plain container";
     //Test of adding the right numbers of particles when generating a cuboid to linked cell container
     LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "r", "r", "r"});
-    ParticleGenerator::createCuboidInCells({0,0,0}, {0,0,0}, {40,8,1}, 2, 3, cells, 3.0, 1, 5, 0);
+    ParticleGenerator::createCuboidInCells({0,0,0}, {0,0,0}, {40,8,1}, 2, 3, cells, 1, 5, 0);
     int particles_num = 0;
     for (auto &x: cells) {
         for (auto &y: x) {
@@ -95,6 +96,38 @@ TEST(ParticleGeneratorTest, ParticleGenerator){
     }
     EXPECT_EQ(320, particles_num) << "wrong number of particles generated in linked cell container";
 }
+
+/**
+ * tests for the thermostat including heating up, cooling down, holding a temperature
+ */
+TEST(ThermostatTest, Thermostat){
+
+    //Setting up LinkedCellContainer and some particles
+    LinkedCellContainer cells = LinkedCellContainer({30,30,0},3.0,{"r,r,r,r,o,o"});
+    ParticleGenerator::createCuboidInCells({10, 10, 0}, {0, 0, 0}, {4, 4, 1}, 1.2, 1.0, cells, 1.0, 1.0, 1);
+
+    //Setting up parameters
+    double grav = -12.44;
+    double delta_t = 0.0005;
+    double init_t = 40;
+
+    //Setup before first iteration and initialization with Brownian Motion to a temperature of 40 Kelvin
+    ForceCalculator::LennardJonesForceCell(cells, grav);
+    Thermostat::initializeTemperatureWithBrownianMotion(init_t, 2, cells);
+
+    //Check for initial setting of temperature
+    ASSERT_EQ(40, Thermostat::calculateCurrentTemperature(2, cells)) << "wrong temperature after temperature initialization";
+
+    //Iteration 1
+    PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
+    ForceCalculator::LennardJonesForceCell(cells, grav);
+    VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
+
+    //Test for holding a temperature
+    //Test for heating up the simulation
+    //Test for cooling down the simulation
+}
+
 /**
  * Test for calculation the new Position of a particle
  */
@@ -158,5 +191,4 @@ TEST(ForceTest, LennardJonesForce){
 int main(){
     testing::InitGoogleTest();
     return RUN_ALL_TESTS();
-   // return 0;
 }

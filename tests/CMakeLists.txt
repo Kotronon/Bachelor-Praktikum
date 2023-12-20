@@ -44,7 +44,7 @@ target_link_libraries(GTest::GTest INTERFACE gtest_main)
 find_package(GTest REQUIRED)
 
 include(CTest)
-add_executable(tests tests.cpp ../src/ParticleContainer.cpp ../src/ParticleGenerator.cpp ../src/Particle.cpp ../src/calculations/PositionCalculator.cpp ../src/calculations/VelocityCalculator.cpp ../src/calculations/ForceCalculator.cpp ../src/LinkedCellContainer.cpp )
+add_executable(tests tests.cpp ../src/ParticleContainer.cpp ../src/ParticleGenerator.cpp ../src/Particle.cpp ../src/calculations/PositionCalculator.cpp ../src/calculations/VelocityCalculator.cpp ../src/calculations/ForceCalculator.cpp ../src/LinkedCellContainer.cpp ../src/Thermostat.cpp)
 target_link_libraries(tests PRIVATE GTest::gtest_main gtest_main spdlog::spdlog )
 gtest_add_tests(TARGET tests)
 gtest_discover_tests(tests)

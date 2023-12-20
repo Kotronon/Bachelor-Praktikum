@@ -56,7 +56,7 @@ int LinkedCellContainer::cell_numbers() const {
  * @return number of molecules in cell
  */
 unsigned long LinkedCellContainer::Particles_in_cell(int x, int y, int z) {
-    return cells[x ][y ][z ].size();
+    return cells[x][y][z].size();
 }
 
 /**
@@ -607,7 +607,6 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
     }
     if (x_coordinate > x_max || x_coordinate < 0 || y_coordinate > y_max || y_coordinate < 0 || z_coordinate > z_max ||
         z_coordinate < 0) {
-        spdlog::info("needs to be deleted because x  {} y {} z {}", x_coordinate, y_coordinate, z_coordinate);
         periodic = false;
         return;
     }

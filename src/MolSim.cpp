@@ -24,7 +24,7 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 //Hardcoded values for now:
 
 constexpr double start_time = 0;
-double end_time = 50;
+double end_time = 25;
 double delta_t = 0.0005;
 
 double avg_v = 0.1;
@@ -35,10 +35,10 @@ double sig = 1;
 double Grav = -12.44;
 
 //(if you want to use directSum please use DBL_MAX for each direction)
-std::array<double, 3> domain_size = {300, 54, 1};
+std::array<double, 3> domain_size = {63, 36, 1};
 
 //(if you want to use directSum please use DBL_MAX)
-double cutoff = 2.5 * 1.2;
+double cutoff = 2.5 * 1.0;
 
 //boundary order:  left, right, up, down, behind, before
 //boundary types: "o"(outflow), "r"(reflective), "p"(periodic)
@@ -56,8 +56,8 @@ int nThermostat = 1000;
 bool applyBrownianMotion = true;
 
 //optional:
-bool targetTemperatureExists = true;
-double targetTemperature = 50;
+bool targetTemperatureExists = false;
+double targetTemperature;
 
 //optional:
 bool differenceTemperatureExists = false;
@@ -72,6 +72,7 @@ int main(int argc, char *argsv[]) {
 
     //Creation of linked-cell container to be filled with all relevant particles
     LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
+    //LinkedCellContainer cells = LinkedCellContainer({30,30,0},3.0,{"r,r,r,r,o,o"});
 
     //Add Particles from input file
     if (!inputFile.empty()) {
@@ -90,8 +91,9 @@ int main(int argc, char *argsv[]) {
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0, 0, 0}, {250, 20, 1}, 1.2, 1.0, cells, 1.2, 1.0,1);
-    ParticleGenerator::createCuboidInCells({0.6, 27, 0}, {0, 0, 0}, {250, 20, 1}, 1.2, 2.0, cells, 1.1, 1.0, 1);
+    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0, 0, 0}, {50, 14, 1}, 1.2, 1.0, cells, 1.0, 1.0,1);
+    ParticleGenerator::createCuboidInCells({0.6, 19, 0}, {0, 0, 0}, {50, 14, 1}, 1.2, 2.0, cells, 0.9412, 1.0, 1);
+    //ParticleGenerator::createCuboidInCells({10, 10, 0}, {0, 0, 0}, {4, 4, 1}, 1.2, 1.0, cells, 1.0, 1.0, 1);
 
     double current_time = start_time;
     int iteration = 0;
@@ -113,6 +115,9 @@ int main(int argc, char *argsv[]) {
         targetTemperature = initTemperature;
     }
 
+    spdlog::info("Set temperature to " + std::to_string(Thermostat::calculateCurrentTemperature(2, cells)) +
+                         " Kelvin.");
+
     //For this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
 
@@ -122,8 +127,8 @@ int main(int argc, char *argsv[]) {
             } else {
                 Thermostat::setTemperatureDirectly(targetTemperature, dim, cells);
             }
-            std::cout << "Set temperature to " + std::to_string(Thermostat::calculateCurrentTemperature(2, cells)) +
-                         " Kelvin.\n";
+            spdlog::info("Set temperature to " + std::to_string(Thermostat::calculateCurrentTemperature(2, cells)) +
+                         " Kelvin.");
         }
 
         //Calculate new x
