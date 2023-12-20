@@ -34,7 +34,7 @@ bool cmdOptionExists(char **begin, char **end, const std::string &option);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 0.5;
+double end_time = 25;
 double delta_t = 0.0005;
 
 double avg_v = 0.1;
@@ -44,20 +44,20 @@ double eps = 5;
 double sig = 1;
 double Grav = -12.44;
 //if you wanna use directSum please use DBL_MAX for each direction
-std::array<double, 3> domain_size = {303,180,1};
+std::array<double, 3> domain_size = {63,36,1};
 //if you wanna use directSum please use DBL_MAX
-double cutoff = 2.5 * 1.2;
+double cutoff = 2.5 * 1;
 
 //boundary order (b):  left, right, up, down, behind, before
 //if you wanna use directSum please use {"o", "o", "o", "o", "o", "o"}
-std::array<std::basic_string<char>, 6> boundary = {"r", "r", "r", "r", "o", "o"};
+std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "o", "o"};
 //input file
 std::string inputFile = "";
 //checkpoints
 bool checkpointing = true;
 int num_checkpoints = 2;
 
-double initTemperature = 0.5;
+double initTemperature = 40;
 int nThermostat = 1000;
 bool applyBrownianMotion = true;
 
@@ -88,9 +88,9 @@ int main(int argc, char *argsv[]) {
 
    //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
-    //ParticleGenerator::createCuboidInCells({1.5, 2, 0}, {0,0,0}, {250,50,1}, 1.2, 1.0, cells, cutoff, 1.2, 1, 0);
-    //ParticleGenerator::createCuboidInCells({0.6, 19, 0}, {0,0,0}, {50,14,1}, 1.2, 2, cells, cutoff, 0.9412, 1, 0);
-    ParticleGenerator::createDiskInCells({150, 150, 0}, {0, 0, 0}, 1, 20, 1.2, cells, 1.2, 1, 1);
+    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0,0,0}, {50, 14,1}, 1.2, 1.0, cells, cutoff, 1, 1, 0);
+    ParticleGenerator::createCuboidInCells({0.6, 19, 0}, {0,0,0}, {50,14,1}, 1.2, 2, cells, cutoff, 0.9412, 1, 0);
+    //ParticleGenerator::createDiskInCells({150, 150, 0}, {0, 0, 0}, 1, 20, 1.2, cells, 1.2, 1, 1);
 
 
     double current_time = start_time;
