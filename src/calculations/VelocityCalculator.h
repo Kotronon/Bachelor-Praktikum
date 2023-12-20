@@ -13,8 +13,8 @@ private:
 public:
     static void VelocityStoermerVerlet(ParticleContainer &container, double delta_t);
     static void BrownianMotionInitialization(ParticleContainer &container, double avg_v, int dim);
-    static void VelocityStoermerVerletCell(LinkedCellContainer &grid, double delta_t);
-    static void BrownianMotionInitializationCell(LinkedCellContainer &grid, double avg_v, int dim);
+    static void VelocityStoermerVerletCell(LinkedCellContainer &cells, double delta_t);
+    static void BrownianMotionInitializationCell(LinkedCellContainer &cells, double avg_v, int dim);
 };
 
 

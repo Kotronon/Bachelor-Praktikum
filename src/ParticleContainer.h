@@ -28,7 +28,7 @@ public:
 
     void addParticle(int type_arg);
 
-    void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg);
+    void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg, double sig, double eps);
 
     std::vector<Particle>::iterator begin();
 
@@ -36,7 +36,7 @@ public:
 
     void addParticleContainer(ParticleContainer &container);
 
-    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation);
+    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation, double Ggrav);
 
     void removeDuplicates();
 };

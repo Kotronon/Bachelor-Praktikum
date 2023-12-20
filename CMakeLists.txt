@@ -36,6 +36,8 @@ add_executable(MolSim ${MY_SRC}
         src/ParticleGenerator.h
         src/LinkedCellContainer.cpp
         src/LinkedCellContainer.h
+        src/Thermostat.cpp
+        src/Thermostat.h
 )
 
 # set cxx standard. You may raise this if you want.
@@ -129,4 +131,7 @@ target_include_directories(MolSim ${SPDLOG_INCLUDES_LEVEL} PUBLIC "$<BUILD_INTER
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
 
 include(CTest)
-add_subdirectory(tests)
+OPTION(TEST_found "testing" on)
+if(TEST_found)
+    add_subdirectory(tests)
+endif(TEST_found)
