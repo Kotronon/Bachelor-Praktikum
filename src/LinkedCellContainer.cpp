@@ -310,16 +310,16 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
             for (int z = 1; z <= z_cells; z++) {
                 //get neighbour cells
                 std::vector<std::array<int, 3>> neighbours = get_next_cells(x, y, z);
-                for (int j = 0; j < cells[x][y][z].size(); j++) {
+                for (int j = 0; j < int(cells[x][y][z].size()); j++) {
                     //for all particles in current cell
-                    for (int k = j + 1; k < cells[x][y][z].size(); k++) {
+                    for (int k = j + 1; k < int(cells[x][y][z].size()); k++) {
                         //calculate force with particles in current cell
                         forceCalculation(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
                     }
                     for (auto &neighbour: neighbours) {
                         //with neighbour cells
                         for (int l = 0;
-                             l < cells[neighbour[0]][neighbour[1]][neighbour[2]].size(); l++) {
+                             l < int(cells[neighbour[0]][neighbour[1]][neighbour[2]].size()); l++) {
                             //calculate force if neighbour particle is a normal particle or is the specific ghost cell to current particle
                             //if type is positive, it's a normal or a periodic ghost particle
                             //if its negative, it's a reflective ghost particle and than just the one according to the current particle sjould be used
