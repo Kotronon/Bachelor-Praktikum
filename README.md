@@ -59,11 +59,15 @@ for (x : amount of cells){
 for (y : x){
  for (z : y){
  for (p : z(){
+ --- initialise particle ---
 }
 }
 }
  }
 
-* Optimisation suggestion : 
-* 
+* Optimisation suggestion (to proceed with caution due to possible integer overflows!): 
+* for (int x = 0, int y = 0, int z = 0, x = amount of cells , x++, y++, z++){
+ x = vector<vector<vector>>;  y = vector<vector>, z = <vector>;
+ initialise particle()
+ }
 
