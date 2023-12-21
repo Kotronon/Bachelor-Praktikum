@@ -1,5 +1,6 @@
 
 #include "FileReader.h"
+
 #include "outputWriter/XYZWriter.h"
 #include "outputWriter/VTKWriter.h"
 #include "ParticleContainer.h"
@@ -9,6 +10,7 @@
 #include "spdlog/spdlog.h"
 #include "calculations/PositionCalculator.h"
 #include "Thermostat.h"
+#include "outputWriter/FileWriter.h"
 #include <string>
 #include <chrono>
 #include <cfloat>
