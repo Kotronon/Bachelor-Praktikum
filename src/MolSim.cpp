@@ -158,7 +158,7 @@ int main(int argc, char *argsv[]) {
         auto end_time_loop_calc =  std::chrono::high_resolution_clock ::now();
         auto calculations = end_time_loop_calc - start_time_loop_calc;
 
-        spdlog::info(&"The current calculation took this amount of milliseconds: "[calculations/std::chrono::milliseconds (2)]);
+        spdlog::info(&"The current calculation for this iteration took this amount of milliseconds: "[calculations/std::chrono::milliseconds (2)]);
 
 
         iteration++;
@@ -194,9 +194,10 @@ int main(int argc, char *argsv[]) {
             }*/
     spdlog::info("Output written. Terminating...");
     int64_t  t = time_loop/std::chrono::seconds(2);
+    int size = container.size();
     spdlog::info(&"The loop took this amount of milliseconds:"[time_loop/std::chrono::milliseconds(2)]);
-    spdlog::info(&"The average amount of iterations per second are:"[ t / (int64_t) iteration]);
-
+    spdlog::info(&"The average amount of iterations per second were:"[ (int64_t) iteration / t]);
+    spdlog::info(&"The average amount of molecules updated per second were:"[ (int64_t) size / t]);
     return 0;
 }
 

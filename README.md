@@ -37,7 +37,7 @@ Members:
 * latest Revision : 
 ## Task 4 - Profiling ##
 * 1: Added following timestamps in MolSim.cpp's main function : setup time, loop time (entire), single iteration time, position+velocity+force calculation time
-* Added following measurements : iterations per second
+* Added following measurements : average iterations per second, 
 * 2 : Linux cluster : Unfinished due to to login problems
 * 3: Profiling : 
 * * To be done with AMD uprof (my processor is an AMD ryzen) : https://www.amd.com/en/developer/uprof.html
