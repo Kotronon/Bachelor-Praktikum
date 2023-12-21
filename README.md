@@ -67,7 +67,9 @@ for (y : x){
 
 * Optimisation suggestion (to proceed with caution due to possible integer overflows!): 
 * for (int x = 0, int y = 0, int z = 0, x = amount of cells , x++, y++, z++){
- x = vector<vector<vector>>;  y = vector<vector>, z = <vector>;
+ x = vector<vector<vector>>(initialise x);  y = vector<vector>(initialise y), z = <vector>(initialise z);
  initialise particle()
  }
+* One loop will take less space, but the repeated initialisations per iteration will take up a lot of overhead
+* Therefore : Parallel processing needed
 
