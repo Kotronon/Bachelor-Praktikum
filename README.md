@@ -47,6 +47,23 @@ Members:
 * * use command "x86_64-w64-mingw32-g++ <source file> -o <target executable name>.exe" instead of normal g++ to generate windows-executable .exe
 * * paste source path of .exe to AMD uprof main page, and run analysis
 
- 
+* Execution of this roadmap failed due to compilation problems in WSL
+
 ## Task 5 - Optimisation ##
+* Biggest potential for optimisation : 
+* Following algorithms with O(n^4) runtime :
+* --> all functions that plot the cells in the coordinate system
+* in calculator and Thermostat classes
+* Basic structure of the loops : 
+for (x : amount of cells){
+for (y : x){
+ for (z : y){
+ for (p : z(){
+}
+}
+}
+ }
+
+* Optimisation suggestion : 
+* 
 
