@@ -118,7 +118,7 @@ int main(int argc, char *argsv[]) {
     if (applyBrownianMotion) {
         Thermostat::initializeTemperatureWithBrownianMotion(initTemperature, dim, cells);
     }
-    else {
+       else {
         Thermostat::initializeTemperature(initTemperature, dim, cells);
     }
 
@@ -134,6 +134,7 @@ int main(int argc, char *argsv[]) {
     //For this loop, we assume: current x, current f and current v are known
     auto start_time_loop =  std::chrono::high_resolution_clock ::now();
     while (current_time < end_time) {
+        auto start_time_loop_inside =  std::chrono::high_resolution_clock ::now();
 
         if (iteration != 0 && iteration % nThermostat == 0) {
             if (differenceTemperatureExists) {
@@ -159,6 +160,11 @@ int main(int argc, char *argsv[]) {
         }
         if (iteration % 100 == 0) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
+            auto end_time_loop_inside =  std::chrono::high_resolution_clock ::now();
+            auto current_iteration = end_time_loop_inside - start_time_loop_inside;
+
+            spdlog::info(&"The current iteration took this amount of milliseconds:"[current_iteration/std::chrono::milliseconds (2)]);
+
         }
         if(iteration % steps_between_checkpoints == 0 && checkpointing){
             std::string filename = "../output/checkpoint" + std::to_string(checkpoint) + ".txt";
@@ -167,6 +173,11 @@ int main(int argc, char *argsv[]) {
             FileWriter::writeFile(currentState, filename);
         }
         current_time += delta_t;
+        auto end_time_loop_inside =  std::chrono::high_resolution_clock ::now();
+        auto current_iteration = end_time_loop_inside - start_time_loop_inside;
+
+        spdlog::info(&"The current iteration took this amount of milliseconds:"[current_iteration/std::chrono::milliseconds (2)]);
+
     }
     auto end_time_loop = std::chrono::high_resolution_clock::now();
     auto time_loop = end_time_loop - start_time_loop;
