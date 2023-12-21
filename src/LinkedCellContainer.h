@@ -63,8 +63,6 @@ public:
 
     void deleteGhostCells();
 
-    void moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle p);
-
 
 private:
     int x_cells;
@@ -78,5 +76,6 @@ private:
     std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
     std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
 
+    void moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle &p);
 };
 

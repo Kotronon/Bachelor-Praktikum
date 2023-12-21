@@ -90,7 +90,7 @@ void
 LinkedCellContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg,
                                  double sig, double eps) {
     Particle new_particle = Particle(x_arg, v_arg, m_arg, sig, eps, type_arg);
-    cells[floor(x_arg[0] / cutoff) + 1][floor(x_arg[1] / cutoff) + 1][floor(x_arg[2] / cutoff) + 1].emplace_back(new_particle);
+    cells[(int) floor(x_arg[0] / cutoff) + 1][(int) floor(x_arg[1] / cutoff) + 1][(int) floor(x_arg[2] / cutoff) + 1].emplace_back(new_particle);
 }
 
 /**
@@ -110,9 +110,9 @@ void LinkedCellContainer::addParticle(int x, int y, int z, Particle &p) {
  * @param p existing particle to add
  */
 void LinkedCellContainer::addParticle(Particle &p) {
-    int x = floor(p.getX()[0] / cutoff) + 1;
-    int y = floor(p.getX()[1] / cutoff) + 1;
-    int z = floor(p.getX()[2] / cutoff) + 1;
+    int x = (int) floor(p.getX()[0] / cutoff) + 1;
+    int y = (int) floor(p.getX()[1] / cutoff) + 1;
+    int z = (int) floor(p.getX()[2] / cutoff) + 1;
     cells[x][y][z].emplace_back(p);
 }
 
@@ -141,14 +141,14 @@ void LinkedCellContainer::addContainer(ParticleContainer &container) {
 }
 
 /**
- * checks if particle needs to be moved to another cell and moves or delets  them accordingly
+ * checks if particle needs to be moved to another cell and moves or deletes them accordingly
  */
 void LinkedCellContainer::moveToNeighbour() {
     //begin at 1 and end at x_cells to avoid moving ghost cells
     for (int x = 1; x < x_cells + 1; x++) {
         for (int y = 1; y < y_cells + 1; y++) {
             for (int z = 1; z < z_cells + 1; z++) {
-                for (int p = cells[x][y][z].size() - 1; p >= 0; p--) {
+                for (int p = (int) cells[x][y][z].size() - 1; p >= 0; p--) {
                     //calculate new x, y, z position on cell axis
                     int x_now = floor(cells[x][y][z][p].getX()[0] / cutoff);
                     int y_now = floor(cells[x][y][z][p].getX()[1] / cutoff);
@@ -160,7 +160,7 @@ void LinkedCellContainer::moveToNeighbour() {
                         //check if particle needs to be moved to other cell
                         if (x_now + 1 != x || y_now + 1 != y || z_now + 1 != z) {
                             addParticle(x_now + 1, y_now + 1, z_now + 1, cells[x][y][z][p]);
-                            generateGhostCell(cells[x_now + 1][y_now + 1][z_now + 1].size() - 1, x_now + 1, y_now + 1,
+                            generateGhostCell((int) cells[x_now + 1][y_now + 1][z_now + 1].size() - 1, x_now + 1, y_now + 1,
                                               z_now + 1);
                             cells[x][y][z].erase(cells[x][y][z].begin() + p);
                         } else {
@@ -259,19 +259,19 @@ void LinkedCellContainer::setZero() {
 }
 
 /**
- * return cells on x_achsis
+ * return cells on x_axis
  * @return
  */
 int LinkedCellContainer::getXMax() const { return x_cells; }
 
 /**
- * return cells on y_achsis
+ * return cells on y_axis
  * @return
  */
 int LinkedCellContainer::getYMax() const { return y_cells; }
 
 /**
- * return cells on z_achsis
+ * return cells on z_axis
  * @return
  */
 int LinkedCellContainer::getZMax() const { return z_cells; }
@@ -322,8 +322,8 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                              l < int(cells[neighbour[0]][neighbour[1]][neighbour[2]].size()); l++) {
                             //calculate force if neighbour particle is a normal particle or is the specific ghost cell to current particle
                             //if type is positive, it's a normal or a periodic ghost particle
-                            //if its negative, it's a reflective ghost particle and than just the one according to the current particle sjould be used
-                            //  -> thats the index of the current particle in the current cell negatet and subtrated with one
+                            //if its negative, it's a reflective ghost particle and then just the one according to the current particle should be used
+                            //  -> that's the index of the current particle in the current cell negated and subtracted with one
                             if (cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() >= 0 ||
                                 cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() == -j - 1) {
                                 forceCalculation(&(cells[x][y][z][j]),
@@ -576,7 +576,7 @@ void LinkedCellContainer::deleteGhostCells() {
  * @param z_coordinate z_coordinate of current particle
  * @param p Particle to be moved
  */
-void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle p) {
+void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle &p) {
     bool periodic = false;
     if (x_coordinate > x_max && boundary[1] == "p") {
         periodic = true;
@@ -614,10 +614,10 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
     if (periodic) {
         addParticle({x_coordinate, y_coordinate, z_coordinate}, p.getV(), p.getM(), p.getType(), p.getSig(),
                     p.getEps());
-        int x = floor(x_coordinate / cutoff) + 1;
-        int y = floor(y_coordinate / cutoff) + 1;
-        int z = floor(z_coordinate / cutoff) + 1;
-        generateGhostCell(cells[x][y][z].size() - 1, x, y, z);
+        int x = (int) floor(x_coordinate / cutoff) + 1;
+        int y = (int) floor(y_coordinate / cutoff) + 1;
+        int z = (int) floor(z_coordinate / cutoff) + 1;
+        generateGhostCell((int) cells[x][y][z].size() - 1, x, y, z);
         return;
     }
 }

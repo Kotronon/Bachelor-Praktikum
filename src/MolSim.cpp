@@ -20,20 +20,20 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 10;
+double end_time = 25;
 double delta_t = 0.0005;
 
 int dim = 2;
 double Grav = -12.44;
 
 //if you want to use directSum please use DBL_MAX for each direction
-std::array<double, 3> domain_size = {30, 30, 1};
+std::array<double, 3> domain_size = {63, 36, 1};
 //if you want to use directSum please use DBL_MAX
 double cutoff = 2.5 * 1.0;
 
 //boundary order (b):  left, right, up, down, behind, before
 //if you want to use directSum please use {"o", "o", "o", "o", "o", "o"}
-std::array<std::basic_string<char>, 6> boundary = {"r", "r", "r", "r", "o", "o"};
+std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "o", "o"};
 
 //input file
 std::string inputFile = "";
@@ -42,7 +42,7 @@ std::string inputFile = "";
 bool checkpointing = false;
 int num_checkpoints = 1;
 
-double initTemperature = 20;
+double initTemperature = 40;
 int nThermostat = 1000;
 bool applyBrownianMotion = true;
 
@@ -76,10 +76,8 @@ int main(int argc, char *argsv[]) {
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    //ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0, 0, 0}, {50, 14, 1}, 1.2, 1.0, cells, 1, 1, 0);
-    //ParticleGenerator::createCuboidInCells({0.6, 19, 0}, {0, 0, 0}, {50, 14, 1}, 1.2, 2, cells, 0.9412, 1, 0);
-
-    ParticleGenerator::createDiskInCells({15, 15, 0}, {0, 0, 0}, 1.0, 3, 1.2, cells, 1.0, 1.0, 1);
+    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0, 0, 0}, {50, 14, 1}, 1.2, 1.0, cells, 1.0, 1, 1);
+    ParticleGenerator::createCuboidInCells({0.6, 19, 0}, {0, 0, 0}, {50, 14, 1}, 1.2, 2.0, cells, 0.9412, 1, 2);
 
     double current_time = start_time;
     int iteration = 0;
