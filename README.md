@@ -32,28 +32,14 @@ Members:
   * ctest
   
 
-# Report #
-## Task 1 ##
-* Thermostat
+# Report for Samhitha's Branch #
+* Link : https://github.com/Kotronon/Bachelor-Praktikum/tree/Aufgabe-1_XML_input_and_XSD
+* latest Revision : 
+## Task 4 - Profiling ##
+* 1: Added following timestamps in MolSim.cpp's main function : setup time, loop time (entire), single iteration time, position+velocity+force calculation time
+* Added following measurements : iterations per second
+* 2 : Linux cluster : Unfinished due to to login problems
+* 
  
-## Task 2 ##
-* periodic boundary
-  * ghost particles generating at each other side it needed to be mirrored
-  * also ghost particles generated in corners
-* Gravity force
-  * added at the end of each force calculation per particle on the force y-achsis
-* Individual epsilon and sigma for each particle is possible
-  * they are now parameters of particle itself
+## Task 5 - Optimisation ##
 
-## Task 3 ##
-* checkpointing
-  * individual numbers of checkpoints
-  * saving all parameters of all particle in each checkpoint file
-* drop
-  * used last checkpoint file as input file
-  * let drop file on fluid
-
-
-## MISC ##
-* In the falling drop animation we noticed that particles tend to sometimes get stuck at the upper boundary, we did not yet manage to fix this error
-* Due to some restructuring of our LinkedCellContainer we might have forgotten to change some functions accordingly

@@ -193,7 +193,9 @@ int main(int argc, char *argsv[]) {
             FileWriter::writeFile(currentState, filename);
             }*/
     spdlog::info("Output written. Terminating...");
-    spdlog::info(&"The loop took this amount of seconds:"[time_loop/std::chrono::seconds(2)]);
+    int64_t  t = time_loop/std::chrono::seconds(2);
+    spdlog::info(&"The loop took this amount of milliseconds:"[time_loop/std::chrono::milliseconds(2)]);
+    spdlog::info(&"The average amount of iterations per second are:"[ t / (int64_t) iteration]);
 
     return 0;
 }
