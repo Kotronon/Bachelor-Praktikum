@@ -37,7 +37,7 @@ Members:
 * latest Revision : 
 ## Task 4 - Profiling ##
 * 1: Added following timestamps in MolSim.cpp's main function : setup time, loop time (entire), single iteration time, position+velocity+force calculation time
-* Added following measurements : average iterations per second, 
+* Added following measurements : average iterations per second, average molecule/cells update per second
 * 2 : Linux cluster : Unfinished due to to login problems
 * 3: Profiling : 
 * * To be done with AMD uprof (my processor is an AMD ryzen) : https://www.amd.com/en/developer/uprof.html
@@ -47,7 +47,7 @@ Members:
 * * use command "x86_64-w64-mingw32-g++ <source file> -o <target executable name>.exe" instead of normal g++ to generate windows-executable .exe
 * * paste source path of .exe to AMD uprof main page, and run analysis
 
-* Execution of this roadmap failed due to compilation problems in WSL
+* Execution of this roadmap plan failed due to compilation problems
 
 ## Task 5 - Optimisation ##
 * Biggest potential for optimisation : 
