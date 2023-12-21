@@ -23,7 +23,7 @@ FileReader::~FileReader() = default;
  * @param filename
  */
 
-void FileReader::readFile(ParticleContainer &container, char *filename) {
+void FileReader::readFile(ParticleContainer &container, const char *filename) {
   std::array<double, 3> x{};
   std::array<double, 3> v{};
   std::array<double, 3> f{};
