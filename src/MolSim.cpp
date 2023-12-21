@@ -146,6 +146,7 @@ int main(int argc, char *argsv[]) {
             spdlog::info("Set temperature to " + std::to_string(Thermostat::calculateCurrentTemperature(2,cells)) + " Kelvin.");
         }
 
+        auto start_time_loop_calc =  std::chrono::high_resolution_clock ::now();
         //Calculate new x
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
         //Calculate new f
@@ -154,16 +155,23 @@ int main(int argc, char *argsv[]) {
         //Calculate new v
         VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
 
+        auto end_time_loop_calc =  std::chrono::high_resolution_clock ::now();
+        auto calculations = end_time_loop_calc - start_time_loop_calc;
+
+        spdlog::info(&"The current calculation took this amount of milliseconds: "[calculations/std::chrono::milliseconds (2)]);
+
+
         iteration++;
         if (iteration % 10 == 0) {
             plotParticlesInCells(iteration, cells);
         }
         if (iteration % 100 == 0) {
-            spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
             auto end_time_loop_inside =  std::chrono::high_resolution_clock ::now();
+            spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
+
             auto current_iteration = end_time_loop_inside - start_time_loop_inside;
 
-            spdlog::info(&"The current iteration took this amount of milliseconds:"[current_iteration/std::chrono::milliseconds (2)]);
+            spdlog::info(&"The current iteration took this amount of milliseconds: "[current_iteration/std::chrono::milliseconds (2)]);
 
         }
         if(iteration % steps_between_checkpoints == 0 && checkpointing){
@@ -173,10 +181,6 @@ int main(int argc, char *argsv[]) {
             FileWriter::writeFile(currentState, filename);
         }
         current_time += delta_t;
-        auto end_time_loop_inside =  std::chrono::high_resolution_clock ::now();
-        auto current_iteration = end_time_loop_inside - start_time_loop_inside;
-
-        spdlog::info(&"The current iteration took this amount of milliseconds:"[current_iteration/std::chrono::milliseconds (2)]);
 
     }
     auto end_time_loop = std::chrono::high_resolution_clock::now();
