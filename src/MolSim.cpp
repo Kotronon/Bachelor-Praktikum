@@ -35,12 +35,14 @@ double cutoff = 2.5 * 1.0;
 //if you want to use directSum please use {"o", "o", "o", "o", "o", "o"}
 std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "o", "o"};
 
-//input file
+//input file (file will be used if valid path is given and file is not empty)
 std::string inputFile = "";
 
 //checkpoints
 bool checkpointing = false;
 int num_checkpoints = 1;
+//path to folder to be used for output of checkpoint files
+std::string outputDirectory = "../output";
 
 double initTemperature = 40;
 int nThermostat = 1000;
@@ -130,7 +132,7 @@ int main(int argc, char *argsv[]) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
         }
         if (iteration % steps_between_checkpoints == 0 && checkpointing) {
-            std::string filename = "../output/checkpoint" + std::to_string(checkpoint) + ".txt";
+            std::string filename = outputDirectory + "/checkpoint" + std::to_string(checkpoint) + ".txt";
             checkpoint++;
             ParticleContainer currentState = cells.toContainer();
             FileWriter::writeFile(currentState, filename);
