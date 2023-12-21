@@ -8,6 +8,7 @@
 #include "calculations/VelocityCalculator.h"
 #include "spdlog/spdlog.h"
 #include "calculations/PositionCalculator.h"
+#include "Thermostat.h"
 #include <string>
 #include <chrono>
 #include <cfloat>

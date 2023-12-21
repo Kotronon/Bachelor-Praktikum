@@ -55,7 +55,7 @@ int LinkedCellContainer::cell_numbers() const {
  * @param z index of cell on z axis
  * @return number of molecules in cell
  */
-unsigned long LinkedCellContainer::Particles_in_cell(int x, int y, int z) {
+int LinkedCellContainer::Particles_in_cell(int x, int y, int z) {
     return cells[x ][y ][z ].size();
 }
 
