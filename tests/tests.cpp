@@ -83,7 +83,7 @@ TEST(ParticleGeneratorTest, ParticleGenerator){
     EXPECT_EQ(320, particles.size()) << "wrong number of particles generated in plain container";
     //Test of adding the right numbers of particles when generating a cuboid to linked cell container
     LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "r", "r", "r"});
-    ParticleGenerator::createCuboidInCells({0,0,0}, {0,0,0}, {40,8,1}, 2, 3, cells, 3.0, 1, 5, 0);
+    ParticleGenerator::createCuboidInCells({0,0,0}, {0,0,0}, {40,8,1}, 2, 3, cells, 1, 5, 0);
     int particles_num = 0;
     for (auto &x: cells) {
         for (auto &y: x) {
