@@ -39,7 +39,14 @@ Members:
 * 1: Added following timestamps in MolSim.cpp's main function : setup time, loop time (entire), single iteration time, position+velocity+force calculation time
 * Added following measurements : iterations per second
 * 2 : Linux cluster : Unfinished due to to login problems
-* 
+* 3: Profiling : 
+* * To be done with AMD uprof (my processor is an AMD ryzen) : https://www.amd.com/en/developer/uprof.html
+* * Downloaded the Windows GUI for better statistics
+* * download following package : mingw-64 version 8.0.0-1 
+* https://www.mingw-w64.org/downloads/ --> https://launchpad.net/ubuntu/+source/mingw-w64
+* * use command "x86_64-w64-mingw32-g++ <source file> -o <target executable name>.exe" instead of normal g++ to generate windows-executable .exe
+* * paste source path of .exe to AMD uprof main page, and run analysis
+
  
 ## Task 5 - Optimisation ##
 
