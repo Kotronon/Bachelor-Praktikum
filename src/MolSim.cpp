@@ -27,12 +27,13 @@ int dim = 2;
 double Grav = -12.44;
 
 //if you want to use directSum please use DBL_MAX for each direction
-std::array<double, 3> domain_size = {63, 36, 1};
+std::array<double, 3> domain_size = {50, 50, 1};
 //if you want to use directSum please use DBL_MAX
 double cutoff = 2.5 * 1.0;
 
-//boundary order (b):  left, right, up, down, behind, before
-//if you want to use directSum please use {"o", "o", "o", "o", "o", "o"}
+//boundary order:  left, right, up, down, behind, before
+//boundary types: "o"(outflow), "r"(reflective), "p"(periodic)
+//(if you want use directSum please use {"o", "o", "o", "o", "o", "o"})
 std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "o", "o"};
 
 //input file (file will be used if valid path is given and file is not empty)
@@ -44,17 +45,17 @@ int num_checkpoints = 1;
 //path to folder to be used for output of checkpoint files
 std::string outputDirectory = "../output";
 
-double initTemperature = 40;
+double initTemperature = 50;
 int nThermostat = 1000;
 bool applyBrownianMotion = true;
 
 //optional:
-bool targetTemperatureExists = false;
-double targetTemperature;
+bool targetTemperatureExists = true;
+double targetTemperature = 0;
 
 //optional:
-bool differenceTemperatureExists = false;
-double differenceTemperature;
+bool differenceTemperatureExists = true;
+double differenceTemperature = 10;
 
 //Cuboids/Disks have to be created manually in main
 
@@ -78,8 +79,8 @@ int main(int argc, char *argsv[]) {
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0, 0, 0}, {50, 14, 1}, 1.2, 1.0, cells, 1.0, 1, 1);
-    ParticleGenerator::createCuboidInCells({0.6, 19, 0}, {0, 0, 0}, {50, 14, 1}, 1.2, 2.0, cells, 0.9412, 1, 2);
+    //ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0, 0, 0}, {50, 14, 1}, 1.2, 1.0, cells, 1.0, 1, 1);
+    //ParticleGenerator::createCuboidInCells({0.6, 19, 0}, {0, 0, 0}, {50, 14, 1}, 1.2, 2.0, cells, 0.9412, 1, 2);
 
     double current_time = start_time;
     int iteration = 0;
@@ -87,9 +88,8 @@ int main(int argc, char *argsv[]) {
     //Pre-calculation of f
     ForceCalculator::LennardJonesForceCell(cells, Grav);
 
-    //Initialization with Brownian Motion
+    //Initialization with Brownian Motion (without temperature and with average velocity)
     //VelocityCalculator::BrownianMotionInitializationCell(cells, 1.1, dim);
-
 
     //Initialization with Brownian Motion / temperature
     if (applyBrownianMotion) {
