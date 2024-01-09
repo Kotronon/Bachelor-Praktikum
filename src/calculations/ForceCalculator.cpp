@@ -100,5 +100,43 @@ void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &cells, double g
     ForceCalculator::cutoff = cells.getCutoff();
     ForceCalculator::Ggrav = grav;
     cells.setZero();
-    cells.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, Ggrav);
+    cells.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, ForceCalculator::smoothedLennardJonesForcePairwise, Ggrav);
+}
+
+double ForceCalculator::smoothedLennardJonesPotential(Particle *p1, Particle *p2, double cutoff, double smoothedparameter) {
+    double eps = sqrt(p1->getEps() * p2->getEps());
+    double sig = (p1->getSig() + p2->getSig()) / 2;
+    double L2Norm_p1_p2 = ArrayUtils::L2Norm(p1->getX() - p2->getX());
+
+    double potential = 4 * eps * (pow((sig/L2Norm_p1_p2), 12) - pow((sig/L2Norm_p1_p2), 6));
+    if(L2Norm_p1_p2 <= smoothedparameter) return potential;
+    else if(L2Norm_p1_p2 >= cutoff) return 0;
+    else {
+        potential *= (1- (pow(L2Norm_p1_p2-smoothedparameter, 2)
+                * (3*cutoff-smoothedparameter-2*L2Norm_p1_p2))/pow(cutoff-smoothedparameter, 3));
+    }
+    return potential;
+}
+
+void ForceCalculator::smoothedLennardJonesForcePairwise(Particle *p1, Particle *p2, double cutoff,
+                                                        double smoothedparameter) {
+    std::array<double, 3> force = {0,0,0};
+    double L2Norm_p1_p2 = ArrayUtils::L2Norm(p1->getX() - p2->getX());
+
+    //make calculation if simple sum or distance between particles is smaller than the cutoff radius
+    if(L2Norm_p1_p2 < cutoff) {
+        double eps = sqrt(p1->getEps() * p2->getEps());
+        double sig = (p1->getSig() + p2->getSig()) / 2;
+
+        double potential = 4 * eps * (pow((sig/L2Norm_p1_p2), 12) - pow((sig/L2Norm_p1_p2), 6));
+        if(L2Norm_p1_p2 <= smoothedparameter) potential = potential;
+        else if(L2Norm_p1_p2 >= cutoff) potential = 0;
+        else {
+            potential *= (1- (pow(L2Norm_p1_p2-smoothedparameter, 2)
+                              * (3*cutoff-smoothedparameter-2*L2Norm_p1_p2))/pow(cutoff-smoothedparameter, 3));
+        }
+        force = potential *  (p1->getX() - p2->getX());
+        p1->setF(p1->getF() + force);
+        p2->setF(p2->getF() - force);
+    }
 }

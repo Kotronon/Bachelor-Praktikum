@@ -28,6 +28,7 @@ Particle::Particle(int type_arg) {
  */
 Particle::Particle(const Particle &other) {
   x = other.x;
+  oldX = other.oldX;
   v = other.v;
   f = other.f;
   old_f = other.old_f;
@@ -50,6 +51,7 @@ Particle::Particle(const Particle &other) {
 Particle::Particle(std::array<double, 3> x_arg, std::array<double, 3> v_arg,
                    double m_arg, double sigma, double epsilon, int type_arg) {
     x = x_arg;
+    oldX = x;
     v = v_arg;
     m = m_arg;
     type = type_arg;
@@ -69,6 +71,12 @@ Particle::~Particle() {
  * @return
  */
 const std::array<double, 3> &Particle::getX() const { return x; }
+
+/**
+ * returns previous x coordinates of particle
+ * @return
+ */
+const std::array<double, 3> &Particle::getOldX() const {return oldX;}
 
 /**
  * returns velocity of particle
@@ -150,6 +158,14 @@ std::ostream &operator<<(std::ostream &stream, Particle &p) {
 void Particle::setX(std::array<double, 3> x_arg) {
    x = x_arg;
  }
+
+/**
+* sets previous x coordinates of Particle
+* @param x_arg
+*/
+void Particle::setOldX(std::array<double, 3> newOldX) {
+    oldX = newOldX;
+}
 
  /**
   * sets velocity of Particle

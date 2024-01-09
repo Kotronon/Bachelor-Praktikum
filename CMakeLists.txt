@@ -59,6 +59,10 @@ target_link_libraries(MolSim
             xerces-c
 )
 
+find_package(PythonLibs 2.7)
+target_include_directories(MolSim PRIVATE ${PYTHON_INCLUDE_DIRS})
+target_link_libraries(MolSim ${PYTHON_LIBARIES})
+
 # activate all compiler warnings. Clean up your code :P
 # depending on the compiler different flags are used
 target_compile_options(MolSim

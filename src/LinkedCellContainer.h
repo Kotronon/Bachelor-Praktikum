@@ -15,7 +15,7 @@ public:
 
 
 
-    LinkedCellContainer(std::array<double, 3> N, double cutoff,  std::array<std::string, 6> b);
+    LinkedCellContainer(std::array<double, 3> N, double cutoff,  std::array<std::string, 6> b, double sLJparameter = -1);
 
     virtual ~LinkedCellContainer();
 
@@ -55,13 +55,18 @@ public:
 
     std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator end();
 
-    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation, double Grav);
+    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation,
+                            const std::function<void(Particle *, Particle *, double, double)> &smoothedforceCalculation, double Grav);
 
     bool applyMirrorBoundary(int particle, int x, int y, int z);
 
     void generateGhostCell(int index, int x, int y, int z);
 
     void deleteGhostCells();
+
+    double calculateDiffusion();
+
+    void calculateRDF(int intervalBegin, int intervalEnd, double deltaR);
 
 
 private:
@@ -73,6 +78,7 @@ private:
     double y_max;
     double z_max;
     int it = 0;
+    double smoothedRadius;
     std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
     std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
 

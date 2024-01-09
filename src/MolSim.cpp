@@ -20,21 +20,23 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 50;
+double end_time = 100;
 double delta_t = 0.0005;
 
-int dim = 2;
+int dim = 3;
 double Grav = -12.44;
 
 //if you want to use directSum please use DBL_MAX for each direction
-std::array<double, 3> domain_size = {300, 54, 1};
+std::array<double, 3> domain_size = {60, 60, 60};
 //if you want to use directSum please use DBL_MAX
-double cutoff = 2.5 * 1.2;
+double cutoff = 3 * 1.2;
+//if you want to use smoothed Lennard-Jones Potential use a positive value here
+double sLJRadius = -1;
 
 //boundary order:  left, right, up, down, behind, before
 //boundary types: "o"(outflow), "r"(reflective), "p"(periodic)
 //(if you want use directSum please use {"o", "o", "o", "o", "o", "o"})
-std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "o", "o"};
+std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "p", "p"};
 
 //input file (file will be used if valid path is given and file is not empty)
 std::string inputFile = "";
@@ -65,7 +67,7 @@ ParticleContainer container = ParticleContainer();
 int main(int argc, char *argsv[]) {
 
     //Creation of linked-cell container to be filled with all relevant particles
-    LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
+    LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary, sLJRadius);
 
     //Add Particles from input file
     if (!inputFile.empty()) {
@@ -79,8 +81,8 @@ int main(int argc, char *argsv[]) {
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0, 0, 0}, {250, 20, 1}, 1.2, 1.0, cells, 1.2, 1, 1);
-    ParticleGenerator::createCuboidInCells({0.6, 27, 0}, {0, 0, 0}, {250, 20, 1}, 1.2, 2.0, cells, 1.1, 1, 2);
+    ParticleGenerator::createCuboidInCells({0.6, 0.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 1.0, cells, 1.2, 1, 1);
+    ParticleGenerator::createCuboidInCells({0.6, 24.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 2.0, cells, 1.1, 1, 2);
 
     double current_time = start_time;
     int iteration = 0;
