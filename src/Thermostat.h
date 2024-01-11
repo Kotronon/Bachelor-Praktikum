@@ -22,6 +22,9 @@ public:
     static double calculateCurrentTemperature(int dimension, LinkedCellContainer cells);
 
     static void initializeTemperatureWithBrownianMotion(double initialTemperature, int dimension, LinkedCellContainer &cells);
+
+private:
+
 };
 
 

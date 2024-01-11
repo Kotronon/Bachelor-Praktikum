@@ -34,7 +34,7 @@ ParticleContainer::~ParticleContainer() { spdlog::info("Particle Container destr
 void ParticleContainer::addParticle(const Particle &particle) {
     const Particle& new_particle(particle);
     containedParticles.emplace_back(new_particle);
-    spdlog::info("Added copy of particle to container!");
+    //spdlog::info("Added copy of particle to container!");
 }
 
 /**

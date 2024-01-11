@@ -9,7 +9,11 @@
 #include "calculations/VelocityCalculator.h"
 #include "spdlog/spdlog.h"
 #include "calculations/PositionCalculator.h"
+#include "gnuplot-iostream.h"
 #include <string>
+#include <vector>
+#include <numeric>
+#include <matplot/matplot.h>
 
 /**
  * plot the particles to a xyz-file
@@ -20,44 +24,48 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 100;
-double delta_t = 0.0005;
+double end_time = 150;
+double delta_t = 0.001;
 
 int dim = 3;
-double Grav = -12.44;
+double Grav = 0;
 
 //if you want to use directSum please use DBL_MAX for each direction
-std::array<double, 3> domain_size = {60, 60, 60};
+std::array<double, 3> domain_size = {9.2, 9.2, 9.2};
 //if you want to use directSum please use DBL_MAX
-double cutoff = 3 * 1.2;
+double cutoff = 2.3;
 //if you want to use smoothed Lennard-Jones Potential use a positive value here
-double sLJRadius = -1;
+double sLJRadius = 1.9;
 
 //boundary order:  left, right, up, down, behind, before
 //boundary types: "o"(outflow), "r"(reflective), "p"(periodic)
 //(if you want use directSum please use {"o", "o", "o", "o", "o", "o"})
-std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "p", "p"};
+std::array<std::basic_string<char>, 6> boundary = {"p", "p", "p", "p", "p", "p"};
 
 //input file (file will be used if valid path is given and file is not empty)
 std::string inputFile = "";
 
 //checkpoints
-bool checkpointing = false;
+bool checkpointing = true;
 int num_checkpoints = 1;
 //path to folder to be used for output of checkpoint files
-std::string outputDirectory = "";
+std::string outputDirectory = "../input";
 
-double initTemperature = 40;
-int nThermostat = 1000;
+double initTemperature = 0.01;
+int nThermostat = 40;
 bool applyBrownianMotion = true;
 
 //optional:
-bool targetTemperatureExists = false;
-double targetTemperature = 0;
+bool targetTemperatureExists = true;
+double targetTemperature = 3.0;
 
 //optional:
-bool differenceTemperatureExists = false;
-double differenceTemperature = 10;
+bool differenceTemperatureExists = true;
+double differenceTemperature = 0.001;
+
+int intervalBegin = 0;
+int intervalEnd = 10;
+double deltaR = 1;
 
 //Cuboids/Disks have to be created manually in main
 
@@ -81,12 +89,21 @@ int main(int argc, char *argsv[]) {
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    ParticleGenerator::createCuboidInCells({0.6, 0.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 1.0, cells, 1.2, 1, 1);
-    ParticleGenerator::createCuboidInCells({0.6, 24.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 2.0, cells, 1.1, 1, 2);
-
+    ParticleGenerator::createCuboidInCells({0.575, 0.575, 0.575}, {0, 0, 0}, {8,8,8}, 1.15, 1.0, cells, 1, 1, 1);
+    //ParticleGenerator::createCuboidInCells({0.6, 24.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 2.0, cells, 1.1, 1, 2);
     double current_time = start_time;
     int iteration = 0;
+    //std::ofstream diffusion_file;
+    //diffusion_file.open("../input/diffusion.xls");
+    //std::ofstream RDF_file("../input/RDF.xls");
 
+    std::vector<int> x_axis_plot;
+    std::iota(std::begin(x_axis_plot), std::end(x_axis_plot), intervalBegin);
+    /*RDF_file << " ";
+    for(int i = intervalBegin; i <= intervalEnd; i++){
+        RDF_file << i;
+    }
+    RDF_file << '\t';*/
     //Pre-calculation of f
     ForceCalculator::LennardJonesForceCell(cells, Grav);
 
@@ -104,7 +121,7 @@ int main(int argc, char *argsv[]) {
         targetTemperature = initTemperature;
     }
 
-
+    //plotParticlesInCells(0, cells);
     //For this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
 
@@ -114,7 +131,7 @@ int main(int argc, char *argsv[]) {
             } else {
                 Thermostat::setTemperatureDirectly(targetTemperature, dim, cells);
             }
-            spdlog::info("Set temperature to " + std::to_string(Thermostat::calculateCurrentTemperature(2, cells)) +
+            spdlog::info("Set temperature to " + std::to_string(Thermostat::calculateCurrentTemperature(3, cells)) +
                          " Kelvin.");
         }
 
@@ -139,6 +156,21 @@ int main(int argc, char *argsv[]) {
             ParticleContainer currentState = cells.toContainer();
             FileWriter::writeFile(currentState, filename);
         }
+
+        if(iteration % 1000 == 0){
+           // diffusion_file << std::to_string(iteration);
+            double diffusion = cells.calculateDiffusion();
+            //diffusion_file << std::to_string(diffusion) << '\t';
+            //RDF_file << iteration;
+            std::vector< double> densities = cells.calculateRDF(intervalBegin, intervalEnd, deltaR, x_axis_plot);
+            /*for(int i = 0; i < densities.size(); i++){
+                RDF_file << densities[i];
+            }
+            RDF_file << '\t';*/
+            spdlog::info("Diffusion: {}", diffusion);
+        }
+
+
         current_time += delta_t;
     }
 
@@ -147,7 +179,9 @@ int main(int argc, char *argsv[]) {
               ParticleContainer currentState = cells.toContainer();
               FileWriter::writeFile(currentState, filename);
               }*/
-
+    matplot::legend();
+    matplot::save("../input/plot.pdf");
+    matplot::show();
     spdlog::info("Output written. Terminating...");
     return 0;
 }

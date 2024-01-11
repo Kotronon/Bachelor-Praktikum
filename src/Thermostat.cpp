@@ -15,7 +15,7 @@
  * @param cells LinkedCellContainer
  */
 void Thermostat::initializeTemperature(double initialTemperature, int dimension, LinkedCellContainer &cells) {
-    setTemperatureDirectly(initialTemperature, dimension,cells);
+   setTemperatureDirectly(initialTemperature, dimension,cells);
 }
 
 /**
@@ -90,7 +90,7 @@ void Thermostat::setTemperatureGradually(double targetTemperature, double temper
         }
         else {
             newTemperature -= temperatureDifference;
-        }
+            }
     }
 
     if (newTemperature < 0) {
@@ -98,7 +98,7 @@ void Thermostat::setTemperatureGradually(double targetTemperature, double temper
     }
 
     //Calculate the velocity scaling factor
-    double factor = std::sqrt(newTemperature/currentTemperature);
+    double factor = std::sqrt(newTemperature/targetTemperature);
 
     //Scale velocities of all particles
     for (auto x = cells.begin() + 1; x < cells.end() - 1; x++) {

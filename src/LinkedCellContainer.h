@@ -66,7 +66,7 @@ public:
 
     double calculateDiffusion();
 
-    void calculateRDF(int intervalBegin, int intervalEnd, double deltaR);
+    std::vector<double> calculateRDF(int intervalBegin, int intervalEnd, double deltaR,  std::vector<int> x_axis_plot);
 
 
 private:

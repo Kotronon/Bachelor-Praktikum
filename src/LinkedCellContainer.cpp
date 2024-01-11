@@ -10,7 +10,8 @@
 #include <utility>
 #include "utils/ArrayUtils.h"
 #include <omp.h>
-//#include "matplotlibcpp.h"
+#include <matplot/matplot.h>
+#include <vector>
 
 /**
  * create a new linked cell container based on the dimensions and boundary
@@ -614,33 +615,41 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
     if (x_coordinate > x_max && boundary[1] == "p") {
         periodic = true;
         oldX -= x_max;
-        x_coordinate -= x_max;
+        //x_coordinate -= floor(x_coordinate/x_max)*x_max;
+        x_coordinate = std::fmod(x_coordinate, x_max);
         //if(x_coordinate < 0 || x_coordinate > x_max) x_coordinate = 0;
     } else if (x_coordinate < 0 && boundary[0] == "p") {
         periodic = true;
-        x_coordinate += x_max;
+        //x_coordinate += ceil(-x_coordinate/x_max)*x_max;
+        x_coordinate = x_max - std::fmod(-x_coordinate, x_max);
         oldX += x_max;
         //if(x_coordinate < 0 || x_coordinate > x_max) x_coordinate = x_max;
     }
     if (y_coordinate > y_max && boundary[2] == "p") {
         periodic = true;
-        y_coordinate -= y_max;
+        //y_coordinate -= floor(y_coordinate/y_max)*y_max;
+        y_coordinate = std::fmod(y_coordinate, y_max);
         oldY -= y_max;
         //if(y_coordinate < 0 || y_coordinate >y_max) y_coordinate = 0;
     } else if (y_coordinate < 0 && boundary[3] == "p") {
         periodic = true;
-        y_coordinate += y_max;
+        //y_coordinate += ceil(-y_coordinate/y_max) *y_max;
+        y_coordinate *= -1;
+        y_coordinate = y_max - std::fmod(y_coordinate, y_max);
         oldY += y_max;
         //if(y_coordinate < 0 || y_coordinate >y_max) y_coordinate = y_max;
     }
     if (z_coordinate > z_max && boundary[5] == "p") {
         periodic = true;
-        z_coordinate -= z_max;
+        //z_coordinate -= floor(z_coordinate/z_max)*z_max;
+        z_coordinate = std::fmod(z_coordinate, z_max);
         oldZ -= z_max;
         // if(z_coordinate < 0 || z_coordinate > z_max) z_coordinate = 0;
     } else if (z_coordinate < 0 && boundary[4] == "p") {
         periodic = true;
-        z_coordinate += z_max;
+        //z_coordinate += ceil(-z_coordinate/z_max)*z_max;
+        z_coordinate *= -1;
+        z_coordinate= std::fmod(z_coordinate, z_max);
         oldZ += z_max;
         //if(z_coordinate < 0 || z_coordinate > z_max) z_coordinate = z_max;
     }
@@ -650,6 +659,7 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
         periodic = false;
         return;
     }
+
     if (periodic) {
         Particle new_particle ({x_coordinate, y_coordinate, z_coordinate}, p.getV(), p.getM(), p.getType(), p.getSig(),
                                p.getEps());
@@ -686,14 +696,12 @@ double LinkedCellContainer::calculateDiffusion() {
 /**
  * calculates the Radial Distribution Function
  */
-void LinkedCellContainer::calculateRDF(int intervalBegin, int intervalEnd, double deltaR) {
+std::vector<double> LinkedCellContainer::calculateRDF(int intervalBegin, int intervalEnd, double deltaR,  std::vector<int> x_axis_plot) {
     std::vector<double> densities;
-    std::vector<int> distances;
     ParticleContainer particles = toContainer();
     auto first = particles.begin();
     auto last = particles.end();
     for(int i = intervalBegin; i<= intervalEnd; i++){
-        distances.emplace_back(i);
         int num_particles = 0;
         for (; first != last; ++first) {
             for(auto next = std::next(first); next != last; ++next){
@@ -701,8 +709,12 @@ void LinkedCellContainer::calculateRDF(int intervalBegin, int intervalEnd, doubl
                 if(distance >= i && distance <= i+deltaR) num_particles++;
             }
         }
-        densities.emplace_back(num_particles/((4*M_PI/3) * (pow(i+deltaR, 3) - pow(i, 3))));
+        double new_density = num_particles/((4*M_PI/3) * (pow(i+deltaR, 3) - pow(i, 3)));
+        densities.emplace_back(new_density);
+        //RDF_file << new_density;
     }
-    //matplotlibcpp::plot(distances, densities);
-
+    //auto y = matplot::transform(x_axis_plot, densities);
+    matplot::plot(x_axis_plot, densities);
+    matplot::hold(matplot::on);
+    return densities;
 }
