@@ -35,7 +35,7 @@ if (NOT spdlog_POPULATED)
     add_subdirectory(${spdlog_SOURCE_DIR} ${spdlog_BINARY_DIR})
 endif ()
 
-find_package(spdlog REQUIRED)
+#find_package(spdlog REQUIRED)
 
 
 
@@ -44,8 +44,8 @@ find_package(spdlog REQUIRED)
 enable_testing()
 add_library(GTest::GTest INTERFACE IMPORTED)
 target_link_libraries(GTest::GTest INTERFACE gtest_main)
-find_package(GTest REQUIRED)
-
+#find_package(GTest REQUIRED)
+include(GoogleTest)
 include(CTest)
 add_executable(tests tests.cpp ../src/ParticleContainer.cpp ../src/ParticleGenerator.cpp ../src/Particle.cpp ../src/calculations/PositionCalculator.cpp ../src/calculations/VelocityCalculator.cpp ../src/calculations/ForceCalculator.cpp ../src/LinkedCellContainer.cpp ../src/Thermostat.cpp)
 

@@ -11,13 +11,15 @@
 class Thermostat {
 public:
 
+    Thermostat() = default;
+
     static void initializeTemperature(double initialTemperature, int dimension, LinkedCellContainer &cells);
 
     static void setTemperatureDirectly(double temperature, int dimension, LinkedCellContainer &cells);
 
-    static void
+    double
     setTemperatureGradually(double targetTemperature, double temperatureDifference, int dim,
-                            LinkedCellContainer &cells);
+                            LinkedCellContainer &cells, double newTemperature);
 
     static double calculateCurrentTemperature(int dimension, LinkedCellContainer cells);
 

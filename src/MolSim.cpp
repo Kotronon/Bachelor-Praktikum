@@ -63,8 +63,10 @@ double targetTemperature = 3.0;
 bool differenceTemperatureExists = true;
 double differenceTemperature = 0.001;
 
+Thermostat thermostat;
+
 int intervalBegin = 0;
-int intervalEnd = 10;
+int intervalEnd = 50;
 double deltaR = 1;
 
 //Cuboids/Disks have to be created manually in main
@@ -112,9 +114,9 @@ int main(int argc, char *argsv[]) {
 
     //Initialization with Brownian Motion / temperature
     if (applyBrownianMotion) {
-        Thermostat::initializeTemperatureWithBrownianMotion(initTemperature, dim, cells);
+        thermostat.initializeTemperatureWithBrownianMotion(initTemperature, dim, cells);
     } else {
-        Thermostat::initializeTemperature(initTemperature, dim, cells);
+        thermostat.initializeTemperature(initTemperature, dim, cells);
     }
 
     if (!targetTemperatureExists) {
@@ -127,12 +129,13 @@ int main(int argc, char *argsv[]) {
 
         if (iteration != 0 && iteration % nThermostat == 0) {
             if (differenceTemperatureExists) {
-                Thermostat::setTemperatureGradually(targetTemperature, differenceTemperature, dim, cells);
+                initTemperature = thermostat.setTemperatureGradually(targetTemperature, differenceTemperature, dim, cells, initTemperature);
             } else {
-                Thermostat::setTemperatureDirectly(targetTemperature, dim, cells);
+                thermostat.setTemperatureDirectly(targetTemperature, dim, cells);
             }
-            spdlog::info("Set temperature to " + std::to_string(Thermostat::calculateCurrentTemperature(3, cells)) +
+            spdlog::info("temperature with kinetic energy: " + std::to_string(thermostat.calculateCurrentTemperature(3, cells)) +
                          " Kelvin.");
+            spdlog::info("new temperature: " + std::to_string(initTemperature) + " Kelvin");
         }
 
         //Calculate new x

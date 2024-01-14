@@ -113,7 +113,7 @@ if (NOT spdlog_POPULATED)
     add_subdirectory(${spdlog_SOURCE_DIR} ${spdlog_BINARY_DIR})
 endif ()
 
-find_package(spdlog REQUIRED)
+#find_package(spdlog REQUIRED)
 
 
 target_link_libraries(MolSim PRIVATE spdlog::spdlog)

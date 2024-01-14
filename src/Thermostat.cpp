@@ -74,13 +74,13 @@ void Thermostat::setTemperatureDirectly(double newTemperature, int dimension, Li
  * @param dimension dimension of the simulation (possible values: 2 or 3)
  * @param cells LinkedCellContainer
  */
-void Thermostat::setTemperatureGradually(double targetTemperature, double temperatureDifference, int dimension, LinkedCellContainer &cells) {
+double Thermostat::setTemperatureGradually(double targetTemperature, double temperatureDifference, int dimension, LinkedCellContainer &cells, double newTemperature) {
 
     //Calculate current temperature
     double currentTemperature = calculateCurrentTemperature(dimension, cells);
 
     //Calculate the new temperature to set based on the allowed difference
-    double newTemperature = currentTemperature;
+    //double newTemperature = currentTemperature;
     if (std::abs(targetTemperature - currentTemperature) <= temperatureDifference) {
         newTemperature = targetTemperature;
     }
@@ -110,6 +110,7 @@ void Thermostat::setTemperatureGradually(double targetTemperature, double temper
             }
         }
     }
+    return newTemperature;
 }
 
 /**

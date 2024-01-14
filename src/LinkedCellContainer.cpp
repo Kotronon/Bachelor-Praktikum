@@ -701,14 +701,16 @@ std::vector<double> LinkedCellContainer::calculateRDF(int intervalBegin, int int
     ParticleContainer particles = toContainer();
     auto first = particles.begin();
     auto last = particles.end();
-    for(int i = intervalBegin; i<= intervalEnd; i++){
+    for(int i = intervalBegin; i<= intervalEnd-deltaR; i++){
         int num_particles = 0;
-        for (; first != last; ++first) {
-            for(auto next = std::next(first); next != last; ++next){
-                double distance = ArrayUtils::L2Norm(first->getX()-next->getX());
-                if(distance >= i && distance <= i+deltaR) num_particles++;
+        for (auto &p1 : particles) {
+            for(auto &p2: particles){
+                double distance = ArrayUtils::L2Norm(p1.getX()-p2.getX());
+                //spdlog::info("distance: " + std::to_string(distance));
+                if(distance >= i && distance <= i+deltaR && !(p1 == p2)) num_particles++;
             }
         }
+        //spdlog::info("num particles: " + std::to_string(num_particles));
         double new_density = num_particles/((4*M_PI/3) * (pow(i+deltaR, 3) - pow(i, 3)));
         densities.emplace_back(new_density);
         //RDF_file << new_density;
