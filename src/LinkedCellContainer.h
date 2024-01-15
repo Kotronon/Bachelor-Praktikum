@@ -64,9 +64,11 @@ public:
 
     void deleteGhostCells();
 
+    void moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle &p);
+
     double calculateDiffusion();
 
-    std::vector<double> calculateRDF(int intervalBegin, int intervalEnd, double deltaR,  std::vector<int> x_axis_plot);
+    std::vector<double> calculateRDF(int intervalBegin, int intervalEnd, double deltaR,  std::vector<int> x_axis_plot, std::ofstream  &filename);
 
 
 private:
@@ -82,6 +84,6 @@ private:
     std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
     std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
 
-    void moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle &p);
+
 };
 

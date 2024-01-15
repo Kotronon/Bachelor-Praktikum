@@ -696,7 +696,7 @@ double LinkedCellContainer::calculateDiffusion() {
 /**
  * calculates the Radial Distribution Function
  */
-std::vector<double> LinkedCellContainer::calculateRDF(int intervalBegin, int intervalEnd, double deltaR,  std::vector<int> x_axis_plot) {
+std::vector<double> LinkedCellContainer::calculateRDF(int intervalBegin, int intervalEnd, double deltaR,  std::vector<int> x_axis_plot, std::ofstream &filename) {
     std::vector<double> densities;
     ParticleContainer particles = toContainer();
     auto first = particles.begin();
@@ -712,9 +712,11 @@ std::vector<double> LinkedCellContainer::calculateRDF(int intervalBegin, int int
         }
         //spdlog::info("num particles: " + std::to_string(num_particles));
         double new_density = num_particles/((4*M_PI/3) * (pow(i+deltaR, 3) - pow(i, 3)));
+        filename << new_density;
         densities.emplace_back(new_density);
         //RDF_file << new_density;
     }
+    filename << "\n";
     //auto y = matplot::transform(x_axis_plot, densities);
     matplot::plot(x_axis_plot, densities);
     matplot::hold(matplot::on);

@@ -19,7 +19,7 @@ public:
 
     double
     setTemperatureGradually(double targetTemperature, double temperatureDifference, int dim,
-                            LinkedCellContainer &cells, double newTemperature);
+                            LinkedCellContainer &cells, double deltaT);
 
     static double calculateCurrentTemperature(int dimension, LinkedCellContainer cells);
 

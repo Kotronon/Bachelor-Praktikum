@@ -15,6 +15,8 @@
 #include <numeric>
 #include <matplot/matplot.h>
 
+
+
 /**
  * plot the particles to a xyz-file
  */
@@ -24,7 +26,7 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 150;
+double end_time = 250;
 double delta_t = 0.001;
 
 int dim = 3;
@@ -46,28 +48,29 @@ std::array<std::basic_string<char>, 6> boundary = {"p", "p", "p", "p", "p", "p"}
 std::string inputFile = "";
 
 //checkpoints
-bool checkpointing = true;
+bool checkpointing = false;
 int num_checkpoints = 1;
 //path to folder to be used for output of checkpoint files
 std::string outputDirectory = "../input";
 
-double initTemperature = 0.01;
+double initTemperature = 3.0;
 int nThermostat = 40;
 bool applyBrownianMotion = true;
 
 //optional:
 bool targetTemperatureExists = true;
-double targetTemperature = 3.0;
+double targetTemperature = 0.5;
 
 //optional:
 bool differenceTemperatureExists = true;
-double differenceTemperature = 0.001;
+double differenceTemperature = 7.8 * pow(10, -4);
 
 Thermostat thermostat;
 
 int intervalBegin = 0;
-int intervalEnd = 50;
+int intervalEnd = 20;
 double deltaR = 1;
+std::string filename = "../input/RDF.csv";
 
 //Cuboids/Disks have to be created manually in main
 
@@ -88,6 +91,7 @@ int main(int argc, char *argsv[]) {
     if (num_checkpoints < 0) checkpointing = false;
     int steps_between_checkpoints = int(end_time / delta_t) / num_checkpoints;
 
+    std::ofstream RDFFile (filename);
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
@@ -165,7 +169,7 @@ int main(int argc, char *argsv[]) {
             double diffusion = cells.calculateDiffusion();
             //diffusion_file << std::to_string(diffusion) << '\t';
             //RDF_file << iteration;
-            std::vector< double> densities = cells.calculateRDF(intervalBegin, intervalEnd, deltaR, x_axis_plot);
+            std::vector< double> densities = cells.calculateRDF(intervalBegin, intervalEnd, deltaR, x_axis_plot, RDFFile);
             /*for(int i = 0; i < densities.size(); i++){
                 RDF_file << densities[i];
             }
@@ -182,8 +186,13 @@ int main(int argc, char *argsv[]) {
               ParticleContainer currentState = cells.toContainer();
               FileWriter::writeFile(currentState, filename);
               }*/
-    matplot::legend();
+    RDFFile.close();
+    matplot::title("RDF");
     matplot::save("../input/plot.pdf");
+    //matplot::set_ylabel("Density");
+    const std::vector<double> leg ({0.5, -0.5});
+    matplot::legend();
+    matplot::save("../input/plot_legend.pdf");
     matplot::show();
     spdlog::info("Output written. Terminating...");
     return 0;
