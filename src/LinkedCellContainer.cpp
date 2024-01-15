@@ -346,7 +346,7 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                             //  -> that's the index of the current particle in the current cell negated and subtracted with one
                             if (cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() >= 0 ||
                                 cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() == -j - 1) {
-                                if (smoothedRadius >= 0)
+                                if (!smoothed)
                                     forceCalculation(&(cells[x][y][z][j]),
                                                      &(cells[neighbour[0]][neighbour[1]][neighbour[2]][l]));
                                 else
