@@ -59,7 +59,7 @@ bool applyBrownianMotion = true;
 
 //optional:
 bool targetTemperatureExists = true;
-double targetTemperature = 0.5;
+double targetTemperature = 4.5;
 
 //optional:
 bool differenceTemperatureExists = true;

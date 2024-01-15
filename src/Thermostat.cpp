@@ -86,7 +86,7 @@ double Thermostat::setTemperatureGradually(double targetTemperature, double temp
         return newTemperature;
     }
     else {
-        if (targetTemperature > currentTemperature) {
+        if (targetTemperature > newTemperature) {
             newTemperature += temperatureDifference;
         }
         else {
