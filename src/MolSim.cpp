@@ -26,7 +26,7 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 250;
+double end_time = 150;
 double delta_t = 0.001;
 
 int dim = 3;
@@ -48,22 +48,22 @@ std::array<std::basic_string<char>, 6> boundary = {"p", "p", "p", "p", "p", "p"}
 std::string inputFile = "";
 
 //checkpoints
-bool checkpointing = false;
+bool checkpointing = true;
 int num_checkpoints = 1;
 //path to folder to be used for output of checkpoint files
 std::string outputDirectory = "../input";
 
-double initTemperature = 3.0;
+double initTemperature = 0.01;
 int nThermostat = 40;
 bool applyBrownianMotion = true;
 
 //optional:
 bool targetTemperatureExists = true;
-double targetTemperature = 4.5;
+double targetTemperature = 3.0;
 
 //optional:
 bool differenceTemperatureExists = true;
-double differenceTemperature = 7.8 * pow(10, -4);
+double differenceTemperature = 0.001;
 
 Thermostat thermostat;
 

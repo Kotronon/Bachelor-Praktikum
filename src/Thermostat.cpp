@@ -83,7 +83,7 @@ double Thermostat::setTemperatureGradually(double targetTemperature, double temp
     //double newTemperature = currentTemperature ;
     if (std::abs(targetTemperature - currentTemperature) <= temperatureDifference) {
         newTemperature = targetTemperature;
-        return newTemperature;
+        //return newTemperature;
     }
     else {
         if (targetTemperature > newTemperature) {
@@ -100,7 +100,7 @@ double Thermostat::setTemperatureGradually(double targetTemperature, double temp
 
     //Calculate the velocity scaling factor
     double factor = std::sqrt(( newTemperature)/currentTemperature);
-    if(newTemperature == targetTemperature) return newTemperature;
+    //if(newTemperature == targetTemperature) return newTemperature;
 
     //Scale velocities of all particles
     for (auto x = cells.begin() + 1; x < cells.end() - 1; x++) {
