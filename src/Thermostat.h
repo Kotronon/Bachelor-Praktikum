@@ -17,7 +17,7 @@ public:
 
     static void setTemperatureDirectly(double temperature, int dimension, LinkedCellContainer &cells);
 
-    double
+    static double
     setTemperatureGradually(double targetTemperature, double temperatureDifference, int dim,
                             LinkedCellContainer &cells, double newTemperature);
 

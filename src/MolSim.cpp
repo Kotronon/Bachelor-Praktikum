@@ -9,7 +9,7 @@
 #include "calculations/VelocityCalculator.h"
 #include "spdlog/spdlog.h"
 #include "calculations/PositionCalculator.h"
-#include "gnuplot-iostream.h"
+//#include "gnuplot-iostream.h"
 #include <string>
 #include <vector>
 #include <numeric>
@@ -114,26 +114,25 @@ int main(int argc, char *argsv[]) {
 
     //Initialization with Brownian Motion / temperature
     if (applyBrownianMotion) {
-        thermostat.initializeTemperatureWithBrownianMotion(initTemperature, dim, cells);
+        Thermostat::initializeTemperatureWithBrownianMotion(initTemperature, dim, cells);
     } else {
-        thermostat.initializeTemperature(initTemperature, dim, cells);
+        Thermostat::initializeTemperature(initTemperature, dim, cells);
     }
 
     if (!targetTemperatureExists) {
         targetTemperature = initTemperature;
     }
 
-    //plotParticlesInCells(0, cells);
     //For this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
 
         if (iteration != 0 && iteration % nThermostat == 0) {
             if (differenceTemperatureExists) {
-                initTemperature = thermostat.setTemperatureGradually(targetTemperature, differenceTemperature, dim, cells, initTemperature);
+                initTemperature = Thermostat::setTemperatureGradually(targetTemperature, differenceTemperature, dim, cells, initTemperature);
             } else {
-                thermostat.setTemperatureDirectly(targetTemperature, dim, cells);
+                Thermostat::setTemperatureDirectly(targetTemperature, dim, cells);
             }
-            spdlog::info("temperature with kinetic energy: " + std::to_string(thermostat.calculateCurrentTemperature(3, cells)) +
+            spdlog::info("temperature with kinetic energy: " + std::to_string(Thermostat::calculateCurrentTemperature(3, cells)) +
                          " Kelvin.");
             spdlog::info("new temperature: " + std::to_string(initTemperature) + " Kelvin");
         }
