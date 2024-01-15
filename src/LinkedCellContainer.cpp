@@ -20,9 +20,10 @@
  * @param boundaryConditions boundary types of each side of the container
  */
 LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoffRadius,
-                                         std::array<std::string, 6> boundaryConditions, double sLJparameter) {
+                                         std::array<std::string, 6> boundaryConditions, bool smoothed, double sLJparameter) {
     //creating list cells[i][j]h length = number of cells
     cutoff = cutoffRadius;
+    this->smoothed = smoothed;
     smoothedRadius = sLJparameter;
     x_cells = ceil(N[0] / cutoff);
     y_cells = ceil(N[1] / cutoff);
@@ -329,7 +330,7 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                     //for all particles in current cell
                     for (int k = j + 1; k < int(cells[x][y][z].size()); k++) {
                         //calculate force with particles in current cell
-                        if (smoothedRadius >= 0)
+                        if (!smoothed)
                             forceCalculation(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
                         else
                             smoothedforceCalculation(&(cells[x][y][z][j]), &(cells[x][y][z][k]), cutoff,

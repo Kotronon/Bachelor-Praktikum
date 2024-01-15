@@ -36,8 +36,9 @@ double Grav = 0;
 std::array<double, 3> domain_size = {9.2, 9.2, 9.2};
 //if you want to use directSum please use DBL_MAX
 double cutoff = 2.3;
-//if you want to use smoothed Lennard-Jones Potential use a positive value here
+//if you want to use smoothed Lennard-Jones Potential make smoothLJ true
 double sLJRadius = 1.9;
+bool smoothLJ = true;
 
 //boundary order:  left, right, up, down, behind, before
 //boundary types: "o"(outflow), "r"(reflective), "p"(periodic)
@@ -80,7 +81,7 @@ ParticleContainer container = ParticleContainer();
 int main(int argc, char *argsv[]) {
 
     //Creation of linked-cell container to be filled with all relevant particles
-    LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary, sLJRadius);
+    LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary, smoothLJ, sLJRadius);
 
     //Add Particles from input file
     if (!inputFile.empty()) {

@@ -15,7 +15,7 @@ public:
 
 
 
-    LinkedCellContainer(std::array<double, 3> N, double cutoff,  std::array<std::string, 6> b, double sLJparameter = -1);
+    LinkedCellContainer(std::array<double, 3> N, double cutoff,  std::array<std::string, 6> b, bool smoothed = false, double sLJparameter = -1);
 
     virtual ~LinkedCellContainer();
 
@@ -81,6 +81,7 @@ private:
     double z_max;
     int it = 0;
     double smoothedRadius;
+    bool smoothed;
     std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
     std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
 
