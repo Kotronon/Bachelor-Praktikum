@@ -17,13 +17,7 @@ FetchContent_Declare(
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
-FETCHCONTENT_GETPROPERTIES(googletest)
-if(NOT googletest_POPULATED)
-    FetchContent_Populate(googletest)
-    add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BUILD_DIR} ${googletest_BINARY_DIR})
-endif ()
 
-include(FetchContent)
 FetchContent_Declare(
         spdlog
         GIT_REPOSITORY https://github.com/gabime/spdlog.git
@@ -35,17 +29,13 @@ if (NOT spdlog_POPULATED)
     add_subdirectory(${spdlog_SOURCE_DIR} ${spdlog_BINARY_DIR})
 endif ()
 
-find_package(spdlog REQUIRED)
-
-
 enable_testing()
 add_library(GTest::GTest INTERFACE IMPORTED)
 target_link_libraries(GTest::GTest INTERFACE gtest_main)
-find_package(GTest REQUIRED)
 
+include(GoogleTest)
 include(CTest)
 add_executable(tests tests.cpp ../src/ParticleContainer.cpp ../src/ParticleGenerator.cpp ../src/Particle.cpp ../src/calculations/PositionCalculator.cpp ../src/calculations/VelocityCalculator.cpp ../src/calculations/ForceCalculator.cpp ../src/LinkedCellContainer.cpp ../src/Thermostat.cpp)
 target_link_libraries(tests PRIVATE GTest::gtest_main gtest_main spdlog::spdlog )
 gtest_add_tests(TARGET tests)
 gtest_discover_tests(tests)
-#add_test((tests tests))
