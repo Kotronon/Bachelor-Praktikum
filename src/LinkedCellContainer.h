@@ -15,7 +15,7 @@ public:
 
 
 
-    LinkedCellContainer(std::array<double, 3> N, double cutoff,  std::array<std::string, 6> b, bool smoothed = false, double sLJparameter = -1);
+    LinkedCellContainer(std::array<double, 3> N, double cutoff,  std::array<std::string, 6> b);
 
     virtual ~LinkedCellContainer();
 
@@ -25,9 +25,9 @@ public:
     unsigned long Particles_in_cell(int x, int y, int z);
 
 
-    void addParticle(int x, int y, int z, std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg, double sig, double eps);
+    void addParticle(int x, int y, int z, std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg, double sig, double eps, bool fixed  = false);
 
-    void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg, double sig, double eps);
+    void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg, double sig, double eps, bool fixed = false);
 
     void addParticle(int x, int y, int z, Particle &p);
 
@@ -55,8 +55,7 @@ public:
 
     std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator end();
 
-    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation,
-                            const std::function<void(Particle *, Particle *, double, double)> &smoothedforceCalculation, double Grav);
+    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation, double Grav);
 
     bool applyMirrorBoundary(int particle, int x, int y, int z);
 
@@ -66,9 +65,9 @@ public:
 
     void moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle &p);
 
-    double calculateDiffusion();
+    std::array<double, 3> calcAverageVelocity();
 
-    std::vector<double> calculateRDF(int intervalBegin, int intervalEnd, double deltaR,  std::vector<int> x_axis_plot, std::ofstream  &filename);
+    void calcDVProfile(std::ofstream &file, double distance, int bins);
 
 
 private:

@@ -91,8 +91,8 @@ void ForceCalculator::LennardJonesForcePairwise(Particle *p1, Particle *p2) {
         force = force +
                 ((-24 * eps / pow(L2Norm_p1_p2, 2)) * (pow(sig / L2Norm_p1_p2, 6) - (2 * pow(sig / L2Norm_p1_p2, 12))) *
                  (p1->getX() - p2->getX()));
-        p1->setF(p1->getF() + force);
-        p2->setF(p2->getF() - force);
+        if(!p1->getFixed()) p1->setF(p1->getF() + force);
+        if(!p2->getFixed()) p2->setF(p2->getF() - force);
     }
 }
 
@@ -100,44 +100,5 @@ void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &cells, double g
     ForceCalculator::cutoff = cells.getCutoff();
     ForceCalculator::Ggrav = grav;
     cells.setZero();
-    cells.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, ForceCalculator::smoothedLennardJonesForcePairwise, Ggrav);
-}
-
-double ForceCalculator::smoothedLennardJonesPotential(Particle *p1, Particle *p2, double cutoff, double smoothedparameter) {
-    double eps = sqrt(p1->getEps() * p2->getEps());
-    double sig = (p1->getSig() + p2->getSig()) / 2;
-    double L2Norm_p1_p2 = ArrayUtils::L2Norm(p1->getX() - p2->getX());
-
-    double potential = 4 * eps * (pow((sig/L2Norm_p1_p2), 12) - pow((sig/L2Norm_p1_p2), 6));
-    if(L2Norm_p1_p2 <= smoothedparameter) return potential;
-    else if(L2Norm_p1_p2 >= cutoff) return 0;
-    else {
-        potential *= (1- (pow(L2Norm_p1_p2-smoothedparameter, 2)
-                * (3*cutoff-smoothedparameter-2*L2Norm_p1_p2))/pow(cutoff-smoothedparameter, 3));
-    }
-    return potential;
-}
-
-void ForceCalculator::smoothedLennardJonesForcePairwise(Particle *p1, Particle *p2, double cutoff,
-                                                        double smoothedparameter) {
-    std::array<double, 3> force = {0,0,0};
-    double L2Norm_p1_p2 = ArrayUtils::L2Norm(p1->getX() - p2->getX());
-
-    //make calculation if simple sum or distance between particles is smaller than the cutoff radius
-    if(L2Norm_p1_p2 <= cutoff) {
-        double eps = sqrt(p1->getEps() * p2->getEps());
-        double sig = (p1->getSig() + p2->getSig()) / 2;
-
-        double potential = 4 * eps * (pow((sig/L2Norm_p1_p2), 12) - pow((sig/L2Norm_p1_p2), 6));
-        if(L2Norm_p1_p2 <= smoothedparameter) force = ((-24 * eps / pow(L2Norm_p1_p2, 2)) * (pow(sig / L2Norm_p1_p2, 6) - (2 * pow(sig / L2Norm_p1_p2, 12))) *  (p1->getX() - p2->getX()));
-        else {
-            force  = force + ((24*pow(sig, 6) * eps) / (pow(L2Norm_p1_p2, 14) * pow(cutoff-smoothedparameter, 3))) *
-                    (cutoff - L2Norm_p1_p2) * (pow(cutoff, 2) * (2*pow(sig, 6) - pow(L2Norm_p1_p2, 6)) + cutoff * (3*smoothedparameter - L2Norm_p1_p2) *
-                    (pow(L2Norm_p1_p2, 6) - 2*pow(sig, 6)) + L2Norm_p1_p2 * (5*smoothedparameter * pow(sig, 6) - 2*smoothedparameter * pow(L2Norm_p1_p2, 6)-
-                    3*pow(sig, 6) * L2Norm_p1_p2 + pow(L2Norm_p1_p2, 7))) * (p2->getX() - p1->getX());
-        }
-        //force = potential;
-        p1->setF(p1->getF() + force);
-        p2->setF(p2->getF() - force);
-    }
+    cells.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, Ggrav);
 }

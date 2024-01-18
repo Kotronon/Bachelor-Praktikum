@@ -15,7 +15,8 @@
  */
 void PositionCalculator::PositionStoermerVerlet(ParticleContainer &container, double delta_t) {
     for (auto &p: container) {
-        p.setX(p.getX() + (delta_t * p.getV()) + ((delta_t*delta_t)/(2*p.getM())) * p.getF());
+        if(!p.getFixed())
+             p.setX(p.getX() + (delta_t * p.getV()) + ((delta_t*delta_t)/(2*p.getM())) * p.getF());
     }
 }
 
@@ -33,7 +34,8 @@ void PositionCalculator::PositionStoermerVerletCell(LinkedCellContainer &cells, 
                     std::array<double, 3> x_new = p.getX() + (delta_t * p.getV()) +
                                                   (((delta_t * delta_t) / (2 * p.getM())) *
                                                    p.getF());
-                    p.setX(x_new);
+                    if(!p.getFixed())
+                         p.setX(x_new);
                 }
             }
         }

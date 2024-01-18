@@ -25,6 +25,8 @@ public:
 
     static void initializeTemperatureWithBrownianMotion(double initialTemperature, int dimension, LinkedCellContainer &cells);
 
+
+
 private:
 
 };

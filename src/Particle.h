@@ -59,6 +59,11 @@ private:
      */
     double eps{};
 
+    /**
+     * true if the particle is fixed on a specific position (e.g. wall)
+     */
+    bool fixed;
+
 public:
     explicit Particle(int type = 0);
 
@@ -69,7 +74,7 @@ public:
             // for visualization, we need always 3 coordinates
             // -> in case of 2d, we use only the first and the second
             std::array<double, 3> x_arg, std::array<double, 3> v_arg,
-            double m_arg, double sig, double eps, int type = 0);
+            double m_arg, double sig, double eps, int type = 0, bool fixed = false);
 
     virtual ~Particle();
 
@@ -90,6 +95,8 @@ public:
     [[nodiscard]] double getSig() const;
 
     [[nodiscard]] double getEps() const;
+
+    [[nodiscard]] bool getFixed() const;
 
     bool operator==(Particle &other);
 

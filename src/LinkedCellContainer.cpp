@@ -20,11 +20,9 @@
  * @param boundaryConditions boundary types of each side of the container
  */
 LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoffRadius,
-                                         std::array<std::string, 6> boundaryConditions, bool smoothed, double sLJparameter) {
+                                         std::array<std::string, 6> boundaryConditions) {
     //creating list cells[i][j]h length = number of cells
     cutoff = cutoffRadius;
-    this->smoothed = smoothed;
-    smoothedRadius = sLJparameter;
     x_cells = ceil(N[0] / cutoff);
     y_cells = ceil(N[1] / cutoff);
     z_cells = ceil(N[2] / cutoff);
@@ -77,9 +75,8 @@ unsigned long LinkedCellContainer::Particles_in_cell(int x, int y, int z) {
  * @param sig sigma of new particle
  * @param eps epsilon of new particle
  */
-void LinkedCellContainer::addParticle(int x, int y, int z, std::array<double, 3> x_arg, std::array<double, 3> v_arg,
-                                      double m_arg, int type_arg, double sig, double eps) {
-    Particle new_particle = Particle(x_arg, v_arg, m_arg, sig, eps, type_arg);
+void LinkedCellContainer::addParticle(int x, int y, int z, std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg, double sig, double eps, bool fixed) {
+    Particle new_particle = Particle(x_arg, v_arg, m_arg, sig, eps, type_arg, fixed);
     cells[x][y][z].emplace_back(new_particle);
 }
 
@@ -94,8 +91,8 @@ void LinkedCellContainer::addParticle(int x, int y, int z, std::array<double, 3>
  */
 void
 LinkedCellContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg,
-                                 double sig, double eps) {
-    Particle new_particle = Particle(x_arg, v_arg, m_arg, sig, eps, type_arg);
+                                 double sig, double eps, bool fixed) {
+    Particle new_particle = Particle(x_arg, v_arg, m_arg, sig, eps, type_arg, fixed);
     cells[(int) floor(x_arg[0] / cutoff) + 1][(int) floor(x_arg[1] / cutoff) + 1][(int) floor(x_arg[2] / cutoff) +
                                                                                   1].emplace_back(new_particle);
 }
@@ -316,8 +313,6 @@ std::vector <std::vector<std::vector < std::vector < Particle>>>>
  * @param forceCalculation a function to apply the force calculations pairwise
  */
 void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation,
-                                             const std::function<void(Particle *, Particle *, double,
-                                                                      double)> &smoothedforceCalculation,
                                              double Grav) {
 #pragma omp parallel for collapse(3)
     //begin at 1 and end at x_cells to avoid calculating the force of ghost cells
@@ -330,11 +325,7 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                     //for all particles in current cell
                     for (int k = j + 1; k < int(cells[x][y][z].size()); k++) {
                         //calculate force with particles in current cell
-                        if (!smoothed)
                             forceCalculation(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
-                        else
-                            smoothedforceCalculation(&(cells[x][y][z][j]), &(cells[x][y][z][k]), cutoff,
-                                                     smoothedRadius);
                     }
                     for (auto &neighbour: neighbours) {
                         //with neighbour cells
@@ -346,19 +337,16 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                             //  -> that's the index of the current particle in the current cell negated and subtracted with one
                             if (cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() >= 0 ||
                                 cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() == -j - 1) {
-                                if (!smoothed)
                                     forceCalculation(&(cells[x][y][z][j]),
                                                      &(cells[neighbour[0]][neighbour[1]][neighbour[2]][l]));
-                                else
-                                    smoothedforceCalculation(&(cells[x][y][z][j]),
-                                                             &(cells[neighbour[0]][neighbour[1]][neighbour[2]][l]),
-                                                             cutoff, smoothedRadius);
                             }
                         }
                     }
                     //adds Ggrav force to force at the end
-                    std::array<double, 3> grav = {0, cells[x][y][z][j].getM() * Grav, 0};
-                    cells[x][y][z][j].setF(cells[x][y][z][j].getF() + grav);
+                    if(!cells[x][y][z][j].getFixed()) {
+                        std::array<double, 3> grav = {0, cells[x][y][z][j].getM() * Grav, 0};
+                        cells[x][y][z][j].setF(cells[x][y][z][j].getF() + grav);
+                    }
                 }
             }
         }
@@ -674,52 +662,41 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
     }
 }
 
-/**
- * calculates the average movement distance of all particles
- * @return the average movement distance
- */
-double LinkedCellContainer::calculateDiffusion() {
-    double var = 0;
-    int particles = 0;
-    for (int x = 1; x <= x_cells; x++) {
-        for (int y = 1; y <= y_cells; y++) {
-            for (int z = 1; z <= z_cells; z++) {
-                for (int p = 0; p < int(cells[x][y][z].size()); p++) {
-                    var+= pow(ArrayUtils::L2Norm(cells[x][y][z][p].getX() - cells[x][y][z][p].getOldX()), 2);
-                    particles++;
+std::array<double, 3> LinkedCellContainer::calcAverageVelocity() {
+    double num_particles;
+    std::array<double, 3> average_v = {};
+    for (auto x = cells.begin() + 1; x < cells.end() - 1; x++) {
+        for (auto y = x->begin() + 1; y < x->end() - 1; y++) {
+            for (auto z = y->begin() + 1; z < y->end() - 1; z++) {
+                for (auto p = z->begin(); p < z->end(); p++) {
+                    if(!p->getFixed()) {
+                        average_v = average_v + p->getV();
+                        num_particles++;
+                    }
                 }
             }
         }
     }
-    var /= particles;
-    return var;
+    return (1.0/num_particles) * average_v;
 }
-/**
- * calculates the Radial Distribution Function
- */
-std::vector<double> LinkedCellContainer::calculateRDF(int intervalBegin, int intervalEnd, double deltaR,  std::vector<int> x_axis_plot, std::ofstream &filename) {
-    std::vector<double> densities;
-    ParticleContainer particles = toContainer();
-    auto first = particles.begin();
-    auto last = particles.end();
-    for(int i = intervalBegin; i<= intervalEnd-deltaR; i++){
+
+void LinkedCellContainer::calcDVProfile(std::ofstream &file, double distance, int bins) {
+    double leftInterval = 0;
+    double rightInterval = distance;
+    ParticleContainer container = toContainer();
+    for(int i = 0; i < bins; i++){
         int num_particles = 0;
-        for (auto &p1 : particles) {
-            for(auto &p2: particles){
-                double distance = ArrayUtils::L2Norm(p1.getX()-p2.getX());
-                //spdlog::info("distance: " + std::to_string(distance));
-                if(distance >= i && distance <= i+deltaR && !(p1 == p2)) num_particles++;
+        std::array<double, 3> sum_v = {0,0,0};
+        for(auto &p : container){
+            if(p.getX()[0] > leftInterval && p.getX()[0] <= rightInterval){
+                num_particles++;
+                sum_v = sum_v + p.getV();
             }
         }
-        //spdlog::info("num particles: " + std::to_string(num_particles));
-        double new_density = num_particles/((4*M_PI/3) * (pow(i+deltaR, 3) - pow(i, 3)));
-        filename << new_density;
-        densities.emplace_back(new_density);
-        //RDF_file << new_density;
+        double average_v = ArrayUtils::L2Norm(sum_v);
+        file << average_v/num_particles << ",";
+        leftInterval += distance;
+        rightInterval += distance;
     }
-    filename << "\n";
-    //auto y = matplot::transform(x_axis_plot, densities);
-    matplot::plot(x_axis_plot, densities);
-    matplot::hold(matplot::on);
-    return densities;
+    file << "\n";
 }

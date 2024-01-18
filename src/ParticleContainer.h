@@ -28,7 +28,7 @@ public:
 
     void addParticle(int type_arg);
 
-    void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg, double sig, double eps);
+    void addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg, double sig, double eps, bool fixed = false);
 
     std::vector<Particle>::iterator begin();
 

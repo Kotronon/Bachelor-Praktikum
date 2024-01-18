@@ -49,7 +49,7 @@ Particle::Particle(const Particle &other) {
  * @param type_arg
  */
 Particle::Particle(std::array<double, 3> x_arg, std::array<double, 3> v_arg,
-                   double m_arg, double sigma, double epsilon, int type_arg) {
+                   double m_arg, double sigma, double epsilon, int type_arg, bool fixed) {
     x = x_arg;
     oldX = x;
     v = v_arg;
@@ -59,6 +59,7 @@ Particle::Particle(std::array<double, 3> x_arg, std::array<double, 3> v_arg,
     old_f = {0., 0., 0.};
     sig = sigma;
     eps = epsilon;
+    this->fixed = fixed;
     //spdlog::info("Particle generated!");
 }
 
@@ -118,6 +119,12 @@ int Particle::getType() const { return type; }
   * @return
   */
   double Particle::getEps() const {return eps;}
+
+  /**
+   * returns if the particle is fixed
+   * @return
+   */
+  bool Particle::getFixed() const {return fixed;}
 
 /**
  * returns particle as string

@@ -26,24 +26,21 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 100;
-double delta_t = 0.001;
+double end_time = 500;
+double delta_t = 0.0005;
 
 int dim = 3;
-double Grav = 0;
+double Grav = -0.8;
 
 //if you want to use directSum please use DBL_MAX for each direction
-std::array<double, 3> domain_size = {9.2, 9.2, 9.2};
+std::array<double, 3> domain_size = {30, 30, 12};
 //if you want to use directSum please use DBL_MAX
-double cutoff = 2.3;
-//if you want to use smoothed Lennard-Jones Potential make smoothLJ true
-double sLJRadius = 1.9;
-bool smoothLJ = true;
+double cutoff = 2.5 * 1.1;
 
 //boundary order:  left, right, up, down, behind, before
 //boundary types: "o"(outflow), "r"(reflective), "p"(periodic)
 //(if you want use directSum please use {"o", "o", "o", "o", "o", "o"})
-std::array<std::basic_string<char>, 6> boundary = {"p", "p", "p", "p", "p", "p"};
+std::array<std::basic_string<char>, 6> boundary = {"o", "o", "p", "p", "p", "p"};
 
 //input file (file will be used if valid path is given and file is not empty)
 std::string inputFile = "";// "../input/checkpoint1.txt";
@@ -54,24 +51,26 @@ int num_checkpoints = 1;
 //path to folder to be used for output of checkpoint files
 std::string outputDirectory = "../input";
 
-double initTemperature = 3.0;
-int nThermostat = 25;
+double initTemperature = 40;
+int nThermostat = 10;
 bool applyBrownianMotion = true;
 
 //optional:
-bool targetTemperatureExists = true;
+bool targetTemperatureExists = false;
 double targetTemperature = 0.02;
 
 //optional:
-bool differenceTemperatureExists = true;
+bool differenceTemperatureExists = false;
 double differenceTemperature = 2.5 / 1000;
 
 Thermostat thermostat;
 
-int intervalBegin = 0;
-int intervalEnd = 20;
-double deltaR = 1;
-std::string filename = "../input/RDF3_1.csv";
+std::string filename = "../input/density_velocity_profile.csv";
+
+bool calcDV = true;
+int number_of_bins = 50;
+double length_bin = domain_size[0] / number_of_bins;
+std::ofstream File(filename);
 
 //Cuboids/Disks have to be created manually in main
 
@@ -81,7 +80,7 @@ ParticleContainer container = ParticleContainer();
 int main(int argc, char *argsv[]) {
 
     //Creation of linked-cell container to be filled with all relevant particles
-    LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary, smoothLJ, sLJRadius);
+    LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
 
     //Add Particles from input file
     if (!inputFile.empty()) {
@@ -92,25 +91,20 @@ int main(int argc, char *argsv[]) {
     if (num_checkpoints < 0) checkpointing = false;
     int steps_between_checkpoints = int(end_time / delta_t) / num_checkpoints;
 
-    std::ofstream RDFFile (filename);
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    ParticleGenerator::createCuboidInCells({0.575, 0.575, 0.575}, {0, 0, 0}, {8,8,8}, 1.15, 1.0, cells, 1, 1, 1);
-    //ParticleGenerator::createCuboidInCells({0.6, 24.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 2.0, cells, 1.1, 1, 2);
+    ParticleGenerator::createCuboidInCells({1.0, 0.5, 0.5}, {0,0,0}, {2, 30, 12}, 1, 1, cells, 1.1, 2.0, 1, true);
+    ParticleGenerator::createCuboidInCells({27.2, 0.5, 0.5}, {0,0,0}, {2, 30, 12}, 1, 1, cells, 1.1, 2.0, 1, true);
+    ParticleGenerator::createCuboidInCells({3.2, 0.6, 0.6}, {0,0,0}, {20, 25, 10}, 1.2, 1, cells, 1.0, 1.0, 2, false);
+
     double current_time = start_time;
     int iteration = 0;
-    //std::ofstream diffusion_file;
-    //diffusion_file.open("../input/diffusion.xls");
-    //std::ofstream RDF_file("../input/RDF.xls");
 
-    std::vector<int> x_axis_plot;
-    std::iota(std::begin(x_axis_plot), std::end(x_axis_plot), intervalBegin);
-    /*RDF_file << " ";
-    for(int i = intervalBegin; i <= intervalEnd; i++){
-        RDF_file << i;
+    for(int i = 0; i < 49; i++){
+        File << i << ", ";
     }
-    RDF_file << '\t';*/
+    File << 50 << "\n";
     //Pre-calculation of f
     ForceCalculator::LennardJonesForceCell(cells, Grav);
 
@@ -165,36 +159,14 @@ int main(int argc, char *argsv[]) {
             FileWriter::writeFile(currentState, filename);
         }
 
-        if(iteration % 1000 == 0){
-           // diffusion_file << std::to_string(iteration);
-            double diffusion = cells.calculateDiffusion();
-            //diffusion_file << std::to_string(diffusion) << '\t';
-            //RDF_file << iteration;
-            std::vector< double> densities = cells.calculateRDF(intervalBegin, intervalEnd, deltaR, x_axis_plot, RDFFile);
-            /*for(int i = 0; i < densities.size(); i++){
-                RDF_file << densities[i];
-            }
-            RDF_file << '\t';*/
-            spdlog::info("Diffusion: {}", diffusion);
+        if(iteration % 10000 == 0 && calcDV){
+            cells.calcDVProfile(File, length_bin, number_of_bins);
+            spdlog::info("calculation of the density-velocity profile");
         }
-
-
         current_time += delta_t;
     }
 
-    /* if(checkpointing){
-      std::string filename = "../input/checkpointNew.txt";
-              ParticleContainer currentState = cells.toContainer();
-              FileWriter::writeFile(currentState, filename);
-              }*/
-    RDFFile.close();
-    matplot::title("RDF");
-    matplot::save("../input/plot3_1.pdf");
-    //matplot::set_ylabel("Density");
-    const std::vector<double> leg ({0.5, -0.5});
-    matplot::legend();
-    matplot::save("../input/plot3_1_legend.pdf");
-    matplot::show();
+
     spdlog::info("Output written. Terminating...");
     return 0;
 }
