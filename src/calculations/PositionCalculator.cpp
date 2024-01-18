@@ -30,7 +30,6 @@ void PositionCalculator::PositionStoermerVerletCell(LinkedCellContainer &cells, 
         for (auto &y: x) {
             for (auto &z: y) {
                 for (auto &p: z) {
-                    p.setOldX(p.getX());
                     std::array<double, 3> x_new = p.getX() + (delta_t * p.getV()) +
                                                   (((delta_t * delta_t) / (2 * p.getM())) *
                                                    p.getF());

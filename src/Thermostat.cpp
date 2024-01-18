@@ -36,8 +36,9 @@ void Thermostat::initializeTemperatureWithBrownianMotion(double initialTemperatu
 
                     factor = std::sqrt(initialTemperature / p->getM());
                     brownian_motion = maxwellBoltzmannDistributedVelocity(factor, dimension);
-                    if(!p->getFixed())
+                    if(!p->getFixed()) {
                         p->setV(p->getV() + brownian_motion);
+                    }
                 }
             }
         }
@@ -61,8 +62,9 @@ void Thermostat::setTemperatureDirectly(double newTemperature, int dimension, Li
         for (auto y = x->begin() + 1; y < x->end() - 1; y++) {
             for (auto z = y->begin() + 1; z < y->end() - 1; z++) {
                 for (auto p = z->begin(); p < z->end(); p++) {
-                    if(!p->getFixed())
+                    if(!p->getFixed()) {
                         p->setV(average_v + factor * (p->getV() - average_v));
+                    }
                 }
             }
         }
@@ -110,8 +112,9 @@ double Thermostat::setTemperatureGradually(double targetTemperature, double temp
         for (auto y = x->begin() + 1; y < x->end() - 1; y++) {
             for (auto z = y->begin() + 1; z < y->end() - 1; z++) {
                 for (auto p = z->begin(); p < z->end(); p++) {
-                    if(!p->getFixed())
-                        p->setV(average_v + factor * (p->getV()-average_v));
+                    if(!p->getFixed()) {
+                        p->setV(average_v + factor * (p->getV() - average_v));
+                    }
                 }
             }
         }
@@ -131,6 +134,7 @@ double Thermostat::calculateCurrentTemperature(int dimension, LinkedCellContaine
     std::array<double, 3> v_multiplication{};
     std::array<double, 3> average_v = cells.calcAverageVelocity();
 
+
     //Calculate current temperature with
     //T = (sum from i = 1 to #particles (m_i * <v_i,v_i>)) / #dimensions * #particles
 
@@ -140,8 +144,8 @@ double Thermostat::calculateCurrentTemperature(int dimension, LinkedCellContaine
                 for (auto p = z->begin(); p < z->end(); p++) {
                     if(!p->getFixed()) {
                         v_multiplication = (p->getV() - average_v) * (p->getV() - average_v);
-                        kineticEnergy += p->getM() * (v_multiplication[0] + v_multiplication[1] + v_multiplication[2]);
                         numberOfParticles++;
+                        kineticEnergy += p->getM() * (v_multiplication[0] + 0 * v_multiplication[1] + v_multiplication[2]);
                     }
                 }
             }

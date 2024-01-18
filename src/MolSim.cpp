@@ -166,7 +166,7 @@ int main(int argc, char *argsv[]) {
         current_time += delta_t;
     }
 
-
+    File.close();
     spdlog::info("Output written. Terminating...");
     return 0;
 }

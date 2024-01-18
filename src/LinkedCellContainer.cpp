@@ -154,31 +154,33 @@ void LinkedCellContainer::moveToNeighbour() {
         for (int y = 1; y < y_cells + 1; y++) {
             for (int z = 1; z < z_cells + 1; z++) {
                 for (int p = (int) cells[x][y][z].size() - 1; p >= 0; p--) {
-                    //calculate new x, y, z position on cell axis
-                    int x_now = floor(cells[x][y][z][p].getX()[0] / cutoff);
-                    int y_now = floor(cells[x][y][z][p].getX()[1] / cutoff);
-                    int z_now = floor(cells[x][y][z][p].getX()[2] / cutoff);
-                    //check if particle is in range of inner and boundary cells
-                    if ((x_now < x_cells && x_now >= 0 && cells[x][y][z][p].getX()[0] <= x_max) &&
-                        (y_now < y_cells && y_now >= 0 && cells[x][y][z][p].getX()[1] <= y_max) &&
-                        (z_now < z_cells && z_now >= 0 && cells[x][y][z][p].getX()[2] <= z_max)) {
-                        //check if particle needs to be moved to other cell
-                        if (x_now + 1 != x || y_now + 1 != y || z_now + 1 != z) {
-                            addParticle(x_now + 1, y_now + 1, z_now + 1, cells[x][y][z][p]);
-                            generateGhostCell((int) cells[x_now + 1][y_now + 1][z_now + 1].size() - 1, x_now + 1,
-                                              y_now + 1,
-                                              z_now + 1);
-                            cells[x][y][z].erase(cells[x][y][z].begin() + p);
+                    if(!cells[x][y][z][p].getFixed()) {
+                        //calculate new x, y, z position on cell axis
+                        int x_now = floor(cells[x][y][z][p].getX()[0] / cutoff);
+                        int y_now = floor(cells[x][y][z][p].getX()[1] / cutoff);
+                        int z_now = floor(cells[x][y][z][p].getX()[2] / cutoff);
+                        //check if particle is in range of inner and boundary cells
+                        if ((x_now < x_cells && x_now >= 0 && cells[x][y][z][p].getX()[0] <= x_max) &&
+                            (y_now < y_cells && y_now >= 0 && cells[x][y][z][p].getX()[1] <= y_max) &&
+                            (z_now < z_cells && z_now >= 0 && cells[x][y][z][p].getX()[2] <= z_max)) {
+                            //check if particle needs to be moved to other cell
+                            if (x_now + 1 != x || y_now + 1 != y || z_now + 1 != z) {
+                                addParticle(x_now + 1, y_now + 1, z_now + 1, cells[x][y][z][p]);
+                                generateGhostCell((int) cells[x_now + 1][y_now + 1][z_now + 1].size() - 1, x_now + 1,
+                                                  y_now + 1,
+                                                  z_now + 1);
+                                cells[x][y][z].erase(cells[x][y][z].begin() + p);
+                            } else {
+                                generateGhostCell(p, x, y, z);
+                            }
                         } else {
-                            generateGhostCell(p, x, y, z);
+                            //if(applyMirrorBoundary(p, x, y, z))
+                            //check if boundary is periodic and particle needs to be moved to other side
+                            moveIfPeriodic(cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1],
+                                           cells[x][y][z][p].getX()[2], cells[x][y][z][p]);
+                            cells[x][y][z].erase(cells[x][y][z].begin() + p);
+                            //}
                         }
-                    } else {
-                        //if(applyMirrorBoundary(p, x, y, z))
-                        //check if boundary is periodic and particle needs to be moved to other side
-                        moveIfPeriodic(cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1],
-                                       cells[x][y][z][p].getX()[2], cells[x][y][z][p]);
-                        cells[x][y][z].erase(cells[x][y][z].begin() + p);
-                        //}
                     }
                 }
             }
@@ -603,7 +605,6 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
     double oldZ = p.getOldX()[2];
     if (x_coordinate > x_max && boundary[1] == "p") {
         periodic = true;
-        oldX -= x_max;
         //x_coordinate -= floor(x_coordinate/x_max)*x_max;
         x_coordinate = std::fmod(x_coordinate, x_max);
         //if(x_coordinate < 0 || x_coordinate > x_max) x_coordinate = 0;
@@ -611,35 +612,30 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
         periodic = true;
         //x_coordinate += ceil(-x_coordinate/x_max)*x_max;
         x_coordinate = x_max - std::fmod(-x_coordinate, x_max);
-        oldX += x_max;
         //if(x_coordinate < 0 || x_coordinate > x_max) x_coordinate = x_max;
     }
     if (y_coordinate > y_max && boundary[2] == "p") {
         periodic = true;
         //y_coordinate -= floor(y_coordinate/y_max)*y_max;
         y_coordinate = std::fmod(y_coordinate, y_max);
-        oldY -= y_max;
         //if(y_coordinate < 0 || y_coordinate >y_max) y_coordinate = 0;
     } else if (y_coordinate < 0 && boundary[3] == "p") {
         periodic = true;
         //y_coordinate += ceil(-y_coordinate/y_max) *y_max;
         y_coordinate *= -1;
         y_coordinate = y_max - std::fmod(y_coordinate, y_max);
-        oldY += y_max;
         //if(y_coordinate < 0 || y_coordinate >y_max) y_coordinate = y_max;
     }
     if (z_coordinate > z_max && boundary[5] == "p") {
         periodic = true;
         //z_coordinate -= floor(z_coordinate/z_max)*z_max;
         z_coordinate = std::fmod(z_coordinate, z_max);
-        oldZ -= z_max;
         // if(z_coordinate < 0 || z_coordinate > z_max) z_coordinate = 0;
     } else if (z_coordinate < 0 && boundary[4] == "p") {
         periodic = true;
         //z_coordinate += ceil(-z_coordinate/z_max)*z_max;
         z_coordinate *= -1;
         z_coordinate= std::fmod(z_coordinate, z_max);
-        oldZ += z_max;
         //if(z_coordinate < 0 || z_coordinate > z_max) z_coordinate = z_max;
     }
     if (x_coordinate > x_max || x_coordinate < 0 || y_coordinate > y_max || y_coordinate < 0 || z_coordinate > z_max ||
