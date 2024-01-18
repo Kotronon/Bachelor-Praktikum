@@ -26,7 +26,7 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 250;
+double end_time = 100;
 double delta_t = 0.001;
 
 int dim = 3;
@@ -46,7 +46,7 @@ bool smoothLJ = true;
 std::array<std::basic_string<char>, 6> boundary = {"p", "p", "p", "p", "p", "p"};
 
 //input file (file will be used if valid path is given and file is not empty)
-std::string inputFile = "../input/checkpoint1.txt";
+std::string inputFile = "";// "../input/checkpoint1.txt";
 
 //checkpoints
 bool checkpointing = false;
@@ -55,23 +55,23 @@ int num_checkpoints = 1;
 std::string outputDirectory = "../input";
 
 double initTemperature = 3.0;
-int nThermostat = 50;
+int nThermostat = 25;
 bool applyBrownianMotion = true;
 
 //optional:
 bool targetTemperatureExists = true;
-double targetTemperature = 0.5;
+double targetTemperature = 0.02;
 
 //optional:
 bool differenceTemperatureExists = true;
-double differenceTemperature = 7.8 / 10000;
+double differenceTemperature = 2.5 / 1000;
 
 Thermostat thermostat;
 
 int intervalBegin = 0;
 int intervalEnd = 20;
 double deltaR = 1;
-std::string filename = "../input/RDF2.csv";
+std::string filename = "../input/RDF3_1.csv";
 
 //Cuboids/Disks have to be created manually in main
 
@@ -96,7 +96,7 @@ int main(int argc, char *argsv[]) {
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    //ParticleGenerator::createCuboidInCells({0.575, 0.575, 0.575}, {0, 0, 0}, {8,8,8}, 1.15, 1.0, cells, 1, 1, 1);
+    ParticleGenerator::createCuboidInCells({0.575, 0.575, 0.575}, {0, 0, 0}, {8,8,8}, 1.15, 1.0, cells, 1, 1, 1);
     //ParticleGenerator::createCuboidInCells({0.6, 24.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 2.0, cells, 1.1, 1, 2);
     double current_time = start_time;
     int iteration = 0;
@@ -189,11 +189,11 @@ int main(int argc, char *argsv[]) {
               }*/
     RDFFile.close();
     matplot::title("RDF");
-    matplot::save("../input/plot3.pdf");
+    matplot::save("../input/plot3_1.pdf");
     //matplot::set_ylabel("Density");
     const std::vector<double> leg ({0.5, -0.5});
     matplot::legend();
-    matplot::save("../input/plot3_legend.pdf");
+    matplot::save("../input/plot3_1_legend.pdf");
     matplot::show();
     spdlog::info("Output written. Terminating...");
     return 0;
