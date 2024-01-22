@@ -129,13 +129,15 @@ void ForceCalculator::smoothedLennardJonesForcePairwise(Particle *p1, Particle *
         double sig = (p1->getSig() + p2->getSig()) / 2;
 
         double potential = 4 * eps * (pow((sig/L2Norm_p1_p2), 12) - pow((sig/L2Norm_p1_p2), 6));
-        if(L2Norm_p1_p2 <= smoothedparameter) force = ((-24 * eps / pow(L2Norm_p1_p2, 2)) * (pow(sig / L2Norm_p1_p2, 6) - (2 * pow(sig / L2Norm_p1_p2, 12))) *  (p1->getX() - p2->getX()));
+       /* if(L2Norm_p1_p2 <= smoothedparameter) force = ((-24 * eps / pow(L2Norm_p1_p2, 2)) * (pow(sig / L2Norm_p1_p2, 6) - (2 * pow(sig / L2Norm_p1_p2, 12))) *  (p1->getX() - p2->getX()));
         else {
             force  = force + ((24*pow(sig, 6) * eps) / (pow(L2Norm_p1_p2, 14) * pow(cutoff-smoothedparameter, 3))) *
                     (cutoff - L2Norm_p1_p2) * (pow(cutoff, 2) * (2*pow(sig, 6) - pow(L2Norm_p1_p2, 6)) + cutoff * (3*smoothedparameter - L2Norm_p1_p2) *
                     (pow(L2Norm_p1_p2, 6) - 2*pow(sig, 6)) + L2Norm_p1_p2 * (5*smoothedparameter * pow(sig, 6) - 2*smoothedparameter * pow(L2Norm_p1_p2, 6)-
                     3*pow(sig, 6) * L2Norm_p1_p2 + pow(L2Norm_p1_p2, 7))) * (p2->getX() - p1->getX());
-        }
+        }*/
+       if(L2Norm_p1_p2 <= smoothedparameter) force = force + potential * (p1->getX() - p2->getX());
+       else force = force + potential * (1- (pow(L2Norm_p1_p2-smoothedparameter, 2) * (3*cutoff-smoothedparameter-2*L2Norm_p1_p2))/pow(cutoff-smoothedparameter, 3)) * (p1->getX() - p2->getX());
         //force = potential;
         p1->setF(p1->getF() + force);
         p2->setF(p2->getF() - force);

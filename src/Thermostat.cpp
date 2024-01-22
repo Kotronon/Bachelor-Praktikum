@@ -7,6 +7,7 @@
 #include <cmath>
 #include "utils/MaxwellBoltzmannDistribution.h"
 #include "utils/ArrayUtils.h"
+#include <spdlog/spdlog.h>
 
 /**
  * initialize the temperature in a LinkedCellContainer (velocities of particles should not be (0,0,0))
@@ -53,7 +54,7 @@ void Thermostat::setTemperatureDirectly(double newTemperature, int dimension, Li
 
     //Calculate current temperature and velocity scaling factor
     double currentTemperature = calculateCurrentTemperature(dimension, cells);
-    double factor = std::sqrt(newTemperature/currentTemperature);
+    double factor = std::sqrt( newTemperature/currentTemperature);
 
     //Scale velocities of all particles
     for (auto x = cells.begin() + 1; x < cells.end() - 1; x++) {
@@ -78,7 +79,6 @@ double Thermostat::setTemperatureGradually(double targetTemperature, double temp
 
     //Calculate current temperature
     double currentTemperature = calculateCurrentTemperature(dimension, cells);
-
     //Calculate the new temperature to set based on the allowed difference
     //double newTemperature = currentTemperature ;
     if (std::abs(targetTemperature - currentTemperature) <= temperatureDifference) {
@@ -99,7 +99,7 @@ double Thermostat::setTemperatureGradually(double targetTemperature, double temp
     }
 
     //Calculate the velocity scaling factor
-    double factor = std::sqrt(( newTemperature)/currentTemperature);
+    double factor = std::sqrt(std::abs(newTemperature)/currentTemperature);
     //if(newTemperature == targetTemperature) return newTemperature;
 
     //Scale velocities of all particles

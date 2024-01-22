@@ -26,7 +26,7 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 100;
+double end_time = 150;
 double delta_t = 0.001;
 
 int dim = 3;
@@ -54,24 +54,24 @@ int num_checkpoints = 1;
 //path to folder to be used for output of checkpoint files
 std::string outputDirectory = "../input";
 
-double initTemperature = 3.0;
-int nThermostat = 25;
+double initTemperature = 0.01;
+int nThermostat = 40;
 bool applyBrownianMotion = true;
 
 //optional:
 bool targetTemperatureExists = true;
-double targetTemperature = 0.02;
+double targetTemperature = 3.0;
 
 //optional:
 bool differenceTemperatureExists = true;
-double differenceTemperature = 2.5 / 1000;
+double differenceTemperature = 0.001;
 
 Thermostat thermostat;
 
 int intervalBegin = 0;
 int intervalEnd = 20;
 double deltaR = 1;
-std::string filename = "../input/RDF3_1.csv";
+std::string filename = "../input/RDF.xsl";
 
 //Cuboids/Disks have to be created manually in main
 
@@ -189,11 +189,11 @@ int main(int argc, char *argsv[]) {
               }*/
     RDFFile.close();
     matplot::title("RDF");
-    matplot::save("../input/plot3_1.pdf");
+    matplot::save("../input/plot1.pdf");
     //matplot::set_ylabel("Density");
     const std::vector<double> leg ({0.5, -0.5});
     matplot::legend();
-    matplot::save("../input/plot3_1_legend.pdf");
+    matplot::save("../input/plot1_legend.pdf");
     matplot::show();
     spdlog::info("Output written. Terminating...");
     return 0;

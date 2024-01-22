@@ -713,7 +713,7 @@ std::vector<double> LinkedCellContainer::calculateRDF(int intervalBegin, int int
         }
         //spdlog::info("num particles: " + std::to_string(num_particles));
         double new_density = num_particles/((4*M_PI/3) * (pow(i+deltaR, 3) - pow(i, 3)));
-        filename << new_density;
+        filename << new_density << ", ";
         densities.emplace_back(new_density);
         //RDF_file << new_density;
     }
