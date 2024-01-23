@@ -84,12 +84,12 @@ ASSERT_EQ(1, cells.Particles_in_cell(0, 0, 1));
 TEST(ParticleGeneratorTest, ParticleGenerator
 ){
 //Test of adding the right numbers of particles when generating a cuboid to plain container
-ParticleContainer particles = ParticleGenerator::createCuboid({0, 0, 0}, {0, 0, 0}, {40, 8, 1}, 2, 3, 1, 5, 0);
+ParticleContainer particles = ParticleGenerator::createCuboid({0, 0, 0}, {0, 0, 0}, {40, 8, 1}, 2, 3, 1, 5, 0, false);
 //test size
 EXPECT_EQ(320, particles.size()) << "wrong number of particles generated in plain container";
 //Test of adding the right numbers of particles when generating a cuboid to linked cell container
 LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "r", "r", "r"});
-ParticleGenerator::createCuboidInCells({ 0,0,0}, { 0,0,0}, { 40,8,1}, 2, 3, cells, 1, 5, 0);
+ParticleGenerator::createCuboidInCells({ 0,0,0}, { 0,0,0}, { 40,8,1}, 2, 3, cells, 1, 5, 0, false);
 int particles_num = 0;
 for (auto &x: cells) {
     for (auto &y: x) {
@@ -173,7 +173,7 @@ TEST(ThermostatTest, Thermostat){
 
 //Setting up LinkedCellContainer and some particles
 LinkedCellContainer cells = LinkedCellContainer({30, 30, 1}, 2.5, {"r,r,r,r,o,o"});
-ParticleGenerator::createDiskInCells({ 15, 15, 1}, { 0, 0, 0}, 1.0, 3, 1.2, cells, 1.0, 1.0, 1);
+ParticleGenerator::createDiskInCells({ 15, 15, 1}, { 0, 0, 0}, 1.0, 3, 1.2, cells, 1.0, 1.0, 1, false);
 
 //Setting up parameters
 double grav = -12.44;

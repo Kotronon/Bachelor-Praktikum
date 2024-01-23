@@ -14,6 +14,8 @@
 #include <vector>
 #include <numeric>
 #include <matplot/matplot.h>
+#include <iostream>
+#include <fstream>
 
 
 
@@ -64,6 +66,7 @@ bool differenceTemperatureExists = false;
 double differenceTemperature = 2.5 / 1000;
 
 Thermostat thermostat;
+//FixedThermostat fixedThermostat;
 
 std::string filename = "../input/density_velocity_profile.csv";
 
@@ -71,6 +74,8 @@ bool calcDV = true;
 int number_of_bins = 50;
 double length_bin = domain_size[0] / number_of_bins;
 std::ofstream File(filename);
+
+bool wallParticles = true;
 
 //Cuboids/Disks have to be created manually in main
 
@@ -115,7 +120,8 @@ int main(int argc, char *argsv[]) {
     if (applyBrownianMotion) {
         thermostat.initializeTemperatureWithBrownianMotion(initTemperature, dim, cells);
     } else {
-        thermostat.initializeTemperature(initTemperature, dim, cells);
+        if(wallParticles) thermostat.initializeTemperatureFixed(initTemperature, dim, cells);
+        else thermostat.initializeTemperature(initTemperature, dim, cells);
     }
 
     if (!targetTemperatureExists) {
@@ -128,13 +134,16 @@ int main(int argc, char *argsv[]) {
 
         if (iteration != 0 && iteration % nThermostat == 0) {
             if (differenceTemperatureExists) {
-                initTemperature = thermostat.setTemperatureGradually(targetTemperature, differenceTemperature, dim, cells, initTemperature);
+                if(wallParticles) initTemperature = thermostat.setTemperatureGraduallyFixed(targetTemperature, differenceTemperature, dim, cells, initTemperature);
+                else initTemperature = thermostat.setTemperatureGradually(targetTemperature, differenceTemperature, dim, cells, initTemperature);
             } else {
-                thermostat.setTemperatureDirectly(targetTemperature, dim, cells);
+                if(wallParticles) thermostat.setTemperatureDirectlyFixed(targetTemperature, dim, cells);
+                else thermostat.setTemperatureDirectly(targetTemperature, dim, cells);
             }
-            spdlog::info("temperature with kinetic energy: " + std::to_string(thermostat.calculateCurrentTemperature(3, cells)) +
+            if(wallParticles) spdlog::info("temperature with kinetic energy: " + std::to_string(thermostat.calculateCurrentTemperatureFixed(3, cells)) +
                          " Kelvin.");
-            spdlog::info("new temperature: " + std::to_string(initTemperature) + " Kelvin");
+            else spdlog::info("temperature with kinetic energy: " + std::to_string(thermostat.calculateCurrentTemperature(3, cells)) +
+                         " Kelvin.");
         }
 
         //Calculate new x
@@ -146,9 +155,9 @@ int main(int argc, char *argsv[]) {
         VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
 
         iteration++;
-        if (iteration % 10 == 0) {
+       // if (iteration % 10 == 0) {
             plotParticlesInCells(iteration, cells);
-        }
+        //}
         if (iteration % 100 == 0) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
         }

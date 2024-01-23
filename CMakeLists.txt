@@ -36,8 +36,6 @@ add_executable(MolSim ${MY_SRC}
         src/ParticleGenerator.h
         src/LinkedCellContainer.cpp
         src/LinkedCellContainer.h
-        src/Thermostat.cpp
-        src/Thermostat.h
 )
 
 # set cxx standard. You may raise this if you want.

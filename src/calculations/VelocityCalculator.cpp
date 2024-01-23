@@ -68,8 +68,9 @@ void VelocityCalculator::VelocityStoermerVerletCell(LinkedCellContainer &cells, 
             for (auto &z: y) {
                 for (auto &p: z) {
                     //vi (tn+1) = vi(tn) + ∆t * Fi(tn) + Fi(tn+1) / 2mi
-                    if(!p.getFixed())
+                    if(!p.getFixed()){
                         p.setV(p.getV() + ((delta_t / (2 * p.getM())) * (p.getOldF() + p.getF())));
+                    }
                 }
             }
         }

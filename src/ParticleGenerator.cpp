@@ -302,7 +302,7 @@ ParticleContainer ParticleGenerator::createSphere(std::array<double, 3> center, 
 void ParticleGenerator::createSphereInCells(std::array<double, 3> center, std::array<double, 3> v, double m,
                                                   int r, double h, LinkedCellContainer cells, double sig, double eps, int type, bool fixed) {
 
-    ParticleContainer container = ParticleGenerator::createSphere(center,v,m,r,h, sig, eps, type);
+    ParticleContainer container = ParticleGenerator::createSphere(center,v,m,r,h, sig, eps, type, fixed);
     for (auto p = container.begin(); p < container.end(); p++) {
         cells.addParticle(*p);
     }
