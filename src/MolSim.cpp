@@ -10,6 +10,7 @@
 #include "spdlog/spdlog.h"
 #include "calculations/PositionCalculator.h"
 #include <string>
+#include <omp.h>
 
 /**
  * plot the particles to a xyz-file
@@ -34,7 +35,7 @@ double cutoff = 3.0 * 1.2;
 //boundary order:  left, right, up, down, behind, before
 //boundary types: "o"(outflow), "r"(reflective), "p"(periodic)
 //(if you want use directSum please use {"o", "o", "o", "o", "o", "o"})
-std::array<std::basic_string<char>, 6> boundary = {"p", "p", "p", "p", "p", "p"};
+std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "p", "p"};
 
 //input file (file will be used if valid path is given and file is not empty)
 std::string inputFile = "";
@@ -81,7 +82,7 @@ int main(int argc, char *argsv[]) {
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
     ParticleGenerator::createCuboidInCells({0.6, 0.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 1.0, cells, 1.2, 1, 1);
-    ParticleGenerator::createCuboidInCells({0.6, 24.0, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 2.0, cells, 1.1, 1, 2);
+    ParticleGenerator::createCuboidInCells({0.6, 24.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 2.0, cells, 1.1, 1, 2);
 
     double current_time = start_time;
     int iteration = 0;
@@ -119,6 +120,7 @@ int main(int argc, char *argsv[]) {
 
         //Calculate new x
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
+
         //Calculate new f
         ForceCalculator::LennardJonesForceCell(cells, Grav);
 
