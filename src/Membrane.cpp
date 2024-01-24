@@ -46,6 +46,10 @@ std::array<double, 3> Membrane::diagonal_interaction(std::array<double, 3> x_i, 
     return result;
 }
 
+double Membrane::harmonic_potential(std::array<double, 3> x_i, std::array<double, 3> x_j) {
+    return k_/2 * (euklid_norm(x_i,x_j) - r_0_);
+}
+
 int main(int argc, char *argsv[]) {}
 
 

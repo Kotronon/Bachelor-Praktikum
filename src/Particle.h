@@ -54,6 +54,38 @@ private:
      */
     double eps{};
 
+    /**
+     * neighbours of a particle
+     */
+     Particle *neighbour_right;
+public:
+    Particle *getNeighbourRight() const;
+
+    Particle *getNeighbourLeft() const;
+
+    Particle *getNeighbourUp() const;
+
+    Particle *getNeighbourDown() const;
+
+    Particle *getNeighbourDiagonalRightDown() const;
+
+    Particle *getNeighbourDiagonalLeftDown() const;
+
+    Particle *getNeighbourDiagonalRightUp() const;
+
+    Particle *getNeighbourDiagonalLeftUp() const;
+
+private:
+    Particle *neighbour_left;
+     Particle *neighbour_up ;
+     Particle *neighbour_down;
+    Particle *neighbour_diagonal_right_down;
+    Particle *neighbour_diagonal_left_down;
+    Particle *neighbour_diagonal_right_up;
+    Particle *neighbour_diagonal_left_up;
+public:
+
+
 public:
     explicit Particle(int type = 0);
 
@@ -65,6 +97,7 @@ public:
             // -> in case of 2d, we use only the first and the second
             std::array<double, 3> x_arg, std::array<double, 3> v_arg,
             double m_arg, double sig, double eps, int type = 0);
+
 
     virtual ~Particle();
 
@@ -84,16 +117,22 @@ public:
 
     [[nodiscard]] double getEps() const;
 
+     void setNeighbours(Particle down, Particle up, Particle right, Particle left,
+                                     Particle diagonal_r_down, Particle diagonal_r_up,
+                                     Particle diagonal_l_down,
+                                     Particle diagonal_l_up);
+
+
     bool operator==(Particle &other);
 
     [[nodiscard]] std::string toString() const;
 
     void setX(std::array<double, 3> newX);
-
     void setV(std::array<double, 3> newV);
-
     void setF(std::array<double, 3> newF);
-
     void setOldF(std::array<double, 3> oldF);
+
+
+
 };
 

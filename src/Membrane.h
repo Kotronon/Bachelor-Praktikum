@@ -14,7 +14,7 @@ class Membrane {
 private :
     const double k_ = 0;
     const double r_0_ = 0;
-    const Particle grid[148][148][148];
+    const Particle grid[10][10][10];
 
 
     double euklid_norm
@@ -23,6 +23,8 @@ private :
 
 
 public :
+
+    double harmonic_potential(std::array<double, 3> x_i, std::array<double, 3> x_j);
 
     std::array<double, 3> force_calculation(std::array<double, 3> x_i, std::array<double, 3> x_j);
 
