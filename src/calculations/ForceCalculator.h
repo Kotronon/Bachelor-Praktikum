@@ -19,6 +19,9 @@ public:
     static void LennardJonesForceFaster(ParticleContainer &container, double eps, double sig, double Grav);
     static void LennardJonesForcePairwise(Particle *p1, Particle *p2);
     static void LennardJonesForceCell(LinkedCellContainer &cells, double Grav);
+    static void LennardJonesForceMembrane(LinkedCellContainer &cells, double Grav);
+
+
 };
 
 

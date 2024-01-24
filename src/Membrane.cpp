@@ -50,6 +50,19 @@ double Membrane::harmonic_potential(std::array<double, 3> x_i, std::array<double
     return k_/2 * (euklid_norm(x_i,x_j) - r_0_);
 }
 
+void Membrane::createGrid(int x, int y, int z) {
+       Particle grid [x][y][z];
+
+    for (int i = 0; i < x; ++i) {
+        for (int j = 0; j < y; ++j) {
+            for (int k = 0; k < z; ++k) {
+                grid[i][j][k] = Particle();
+            }
+        }
+    }
+
+}
+
 int main(int argc, char *argsv[]) {
 
 }

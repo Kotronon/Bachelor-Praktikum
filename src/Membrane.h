@@ -14,7 +14,6 @@ class Membrane {
 private :
     const double k_ = 0;
     const double r_0_ = 0;
-    const Particle grid[10][10][10];
 
 
     double euklid_norm
@@ -32,6 +31,8 @@ public :
     std::array<double, 3>
     diagonal_interaction(std::array<double, 3> x_i, std::array<double, 3> x_j);
 
+
+    void createGrid(int x, int y, int z);
 
 
 };

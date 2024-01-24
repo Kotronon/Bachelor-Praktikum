@@ -102,3 +102,13 @@ void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &cells, double g
     cells.setZero();
     cells.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, Ggrav);
 }
+
+void ForceCalculator::LennardJonesForceMembrane(LinkedCellContainer &cells, double Grav) {
+
+    ForceCalculator::cutoff = epsilon * (pow(2, (1/6)));
+    ForceCalculator::Ggrav = Grav;
+    cells.setZero();
+    cells.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, Ggrav);
+
+
+}
