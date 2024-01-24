@@ -38,7 +38,8 @@ add_executable(MolSim ${MY_SRC}
         src/LinkedCellContainer.h
         src/Thermostat.cpp
         src/Thermostat.h
-        )
+        src/Membrane.cpp
+        src/Membrane.h)
 
 # set cxx standard. You may raise this if you want.
 target_compile_features(MolSim
