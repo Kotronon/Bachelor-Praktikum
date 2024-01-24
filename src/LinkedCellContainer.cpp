@@ -151,7 +151,7 @@ void LinkedCellContainer::addContainer(ParticleContainer &container) {
  * checks if particle needs to be moved to another cell and moves or deletes them accordingly
  */
 void LinkedCellContainer::moveToNeighbour() {
-#pragma omp parallel for collapse(3)
+//#pragma omp parallel for collapse(3)
     //begin at 1 and end at x_cells to avoid moving ghost cells
     for (int x = 1; x < x_cells + 1; x++) {
         for (int y = 1; y < y_cells + 1; y++) {
@@ -319,8 +319,7 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                                              const std::function<void(Particle *, Particle *, double,
                                                                       double)> &smoothedforceCalculation,
                                              double Grav) {
-#pragma omp parallel for collapse(3)
-    //begin at 1 and end at x_cells to avoid calculating the force of ghost cells
+//begin at 1 and end at x_cells to avoid calculating the force of ghost cells
     for (int x = 1; x <= x_cells; x++) {
         for (int y = 1; y <= y_cells; y++) {
             for (int z = 1; z <= z_cells; z++) {

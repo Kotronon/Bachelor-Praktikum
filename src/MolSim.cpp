@@ -38,7 +38,7 @@ std::array<double, 3> domain_size = {9.2, 9.2, 9.2};
 double cutoff = 2.3;
 //if you want to use smoothed Lennard-Jones Potential make smoothLJ true
 double sLJRadius = 1.9;
-bool smoothLJ = true;
+bool smoothLJ = false;
 
 //boundary order:  left, right, up, down, behind, before
 //boundary types: "o"(outflow), "r"(reflective), "p"(periodic)
