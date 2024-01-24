@@ -25,15 +25,14 @@ LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoffR
     cutoff = cutoffRadius;
     this->smoothed = smoothed;
     smoothedRadius = sLJparameter;
-    x_cell_size = N[0] / cutoff;
-    y_cell_size = N[1] / cutoff;
-    z_cell_size = N[2] / cutoff;
+    x_cells = round(N[0] / cutoff);
+    y_cells = round(N[1] / cutoff);
+    z_cells = round(N[2] / cutoff);
 
+    x_cell_size = N[0] / x_cells;
+    y_cell_size = N[1] / y_cells;
+    z_cell_size = N[2] / z_cells;
 
-
-    x_cells = round(N[0] / x_cell_size);
-    y_cells = round(N[1] / y_cell_size);
-    z_cells = round(N[2] / z_cell_size);
     std::vector < std::vector < std::vector < std::vector < Particle >> >> x;
     for (int i = 0; i < x_cells + 2; i++) {
         std::vector < std::vector < std::vector < Particle>>> y;
@@ -277,19 +276,19 @@ void LinkedCellContainer::setZero() {
  * return cells on x_axis
  * @return
  */
-int LinkedCellContainer::getXCellSize() const { return x_cell_size; }
+double LinkedCellContainer::getXCellSize() const { return x_cell_size; }
 
 /**
  * return cells on y_axis
  * @return
  */
-int LinkedCellContainer::getYCellSize() const {return y_cell_size;}
+double LinkedCellContainer::getYCellSize() const {return y_cell_size;}
 
 /**
  * return cells on z_axis
  * @return
  */
-int LinkedCellContainer::getZCellSize() const {return z_cell_size;}
+double LinkedCellContainer::getZCellSize() const {return z_cell_size;}
 
 /**
  * returns cutoff radius

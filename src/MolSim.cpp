@@ -103,6 +103,7 @@ int main(int argc, char *argsv[]) {
     //std::ofstream diffusion_file;
     //diffusion_file.open("../input/diffusion.xls");
     //std::ofstream RDF_file("../input/RDF.xls");
+    cells.deleteGhostCells();
     plotParticlesInCells(iteration, cells);
     std::vector<int> x_axis_plot;
     std::iota(std::begin(x_axis_plot), std::end(x_axis_plot), intervalBegin);

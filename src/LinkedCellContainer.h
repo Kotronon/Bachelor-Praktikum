@@ -43,11 +43,11 @@ public:
 
     void setZero();
 
-    [[nodiscard]] int getXCellSize() const;
+    [[nodiscard]] double getXCellSize() const;
 
-    [[nodiscard]] int getYCellSize() const;
+    [[nodiscard]] double getYCellSize() const;
 
-    [[nodiscard]] int getZCellSize() const;
+    [[nodiscard]] double getZCellSize() const;
 
     [[nodiscard]] double getCutoff() const;
 
