@@ -43,11 +43,11 @@ public:
 
     void setZero();
 
-    [[nodiscard]] int getXMax() const;
+    [[nodiscard]] int getXCellSize() const;
 
-    [[nodiscard]] int getYMax() const;
+    [[nodiscard]] int getYCellSize() const;
 
-    [[nodiscard]] int getZMax() const;
+    [[nodiscard]] int getZCellSize() const;
 
     [[nodiscard]] double getCutoff() const;
 
@@ -84,7 +84,9 @@ private:
     bool smoothed;
     std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
     std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
-
+    double x_cell_size;
+    double y_cell_size;
+    double z_cell_size;
 
 };
 

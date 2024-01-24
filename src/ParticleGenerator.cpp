@@ -72,9 +72,9 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
     }
 
     std::array<double, 3> coordinate = x;
-    int x_axis = (int) floor(x[0] / cells.getCutoff()) + 1;
-    int y_axis = (int) floor(x[1] / cells.getCutoff()) + 1;
-    int z_axis = (int) floor(x[2] / cells.getCutoff()) + 1;
+    int x_axis = (int) floor(x[0] / cells.getXCellSize()) + 1;
+    int y_axis = (int) floor(x[1] / cells.getYCellSize()) + 1;
+    int z_axis = (int) floor(x[2] / cells.getZCellSize()) + 1;
     //to move to next cell
     int x_axis_tmp = x_axis;
     int y_axis_tmp = y_axis;
@@ -88,17 +88,17 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
                 //spdlog::info("added x_cell {}", x_axis_tmp);
                 coordinate[0] += h;
                 p++;
-                if(x_axis_tmp <= (floor(coordinate[0] / cells.getCutoff()))) x_axis_tmp ++;
+                if(x_axis_tmp <= (floor(coordinate[0] / cells.getXCellSize()))) x_axis_tmp ++;
             }
             coordinate[0] = x[0];
             x_axis_tmp = x_axis;
             coordinate[1] += h;
-            if(y_axis_tmp <= floor(coordinate[1] / cells.getCutoff())) y_axis_tmp ++;
+            if(y_axis_tmp <= floor(coordinate[1] / cells.getYCellSize())) y_axis_tmp ++;
         }
         coordinate[1] = x[1];
         y_axis_tmp = y_axis;
         coordinate[2] += h;
-        if(z_axis_tmp <= floor(coordinate[2] / cells.getCutoff())) z_axis_tmp ++;
+        if(z_axis_tmp <= floor(coordinate[2] / cells.getZCellSize())) z_axis_tmp ++;
     }
     //std::cout << p << std::endl;
 }
