@@ -31,9 +31,9 @@ LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoffR
 
 
 
-    x_cells = N[0] / x_cell_size;
-    y_cells = N[1] / y_cell_size;
-    z_cells = N[2] / z_cell_size;
+    x_cells = round(N[0] / x_cell_size);
+    y_cells = round(N[1] / y_cell_size);
+    z_cells = round(N[2] / z_cell_size);
     std::vector < std::vector < std::vector < std::vector < Particle >> >> x;
     for (int i = 0; i < x_cells + 2; i++) {
         std::vector < std::vector < std::vector < Particle>>> y;
