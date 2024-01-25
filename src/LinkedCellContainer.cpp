@@ -374,8 +374,9 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
  * @param forceCalculation a function to apply the force calculations pairwise
  */
 void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation,
-                                             double Grav) {
+                                             const double Grav) {
     //begin at 1 and end at x_cells to avoid calculating the force of ghost cells
+    #pragma omp parallel for collapse(3) default(none) shared(Grav, forceCalculation)
     for (int x = 1; x <= x_cells; x++) {
         for (int y = 1; y <= y_cells; y++) {
             for (int z = 1; z <= z_cells; z++) {

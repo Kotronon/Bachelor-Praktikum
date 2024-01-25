@@ -3,8 +3,6 @@ cmake_minimum_required(VERSION 3.14)
 # define project name, version
 project(PSEMolDyn_GroupH VERSION 0.0.1)
 
-
-
 # let ccmake and cmake-gui offer the default build type options
 set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug;Release;RelWithDebInfo;MinSizeRel")
 
@@ -135,3 +133,9 @@ OPTION(TEST_found "testing" on)
 if(TEST_found)
     add_subdirectory(tests)
 endif(TEST_found)
+
+# Add OpenMP
+find_package(OpenMP)
+if (OpenMP_CXX_FOUND)
+    target_link_libraries(MolSim PUBLIC OpenMP::OpenMP_CXX)
+endif()

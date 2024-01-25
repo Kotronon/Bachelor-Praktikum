@@ -91,8 +91,11 @@ void ForceCalculator::LennardJonesForcePairwise(Particle *p1, Particle *p2) {
         force = force +
                 ((-24 * eps / pow(L2Norm_p1_p2, 2)) * (pow(sig / L2Norm_p1_p2, 6) - (2 * pow(sig / L2Norm_p1_p2, 12))) *
                  (p1->getX() - p2->getX()));
-        p1->setF(p1->getF() + force);
-        p2->setF(p2->getF() - force);
+        #pragma omp critical
+        {
+            p1->setF(p1->getF() + force);
+            p2->setF(p2->getF() - force);
+        }
     }
 }
 
