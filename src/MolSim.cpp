@@ -21,7 +21,7 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 100;
+double end_time = 0.5;
 double delta_t = 0.0005;
 
 int dim = 3;

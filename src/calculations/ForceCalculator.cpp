@@ -33,7 +33,7 @@ void ForceCalculator::GravityForceCalculation(ParticleContainer &container) {
 }
 
 /**
- * Calculates the Lennord Jones force of all Particles in given ParticleContainer
+ * Calculates the Lennard Jones force of all Particles in given ParticleContainer
  * @param container
  * @param eps
  * @param sig

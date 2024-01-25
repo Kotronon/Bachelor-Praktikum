@@ -15,7 +15,7 @@ public:
 
 
 
-    LinkedCellContainer(std::array<double, 3> N, double cutoff,  std::array<std::string, 6> b);
+    LinkedCellContainer(std::array<double, 3> N, double cutoff,  std::array<std::string, 6> b, bool smoothed = false, double sLJparameter = -1);
 
     virtual ~LinkedCellContainer();
 
@@ -43,11 +43,11 @@ public:
 
     void setZero();
 
-    [[nodiscard]] int getXMax() const;
+    [[nodiscard]] double getXCellSize() const;
 
-    [[nodiscard]] int getYMax() const;
+    [[nodiscard]] double getYCellSize() const;
 
-    [[nodiscard]] int getZMax() const;
+    [[nodiscard]] double getZCellSize() const;
 
     [[nodiscard]] double getCutoff() const;
 
@@ -55,13 +55,18 @@ public:
 
     std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator end();
 
-    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation, double Grav);
+    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation,
+                            const std::function<void(Particle *, Particle *, double, double)> &smoothedforceCalculation, double Grav);
 
     bool applyMirrorBoundary(int particle, int x, int y, int z);
 
     void generateGhostCell(int index, int x, int y, int z);
 
     void deleteGhostCells();
+
+    void moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle &p);
+
+    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation, double Grav);
 
 
 private:
@@ -73,9 +78,12 @@ private:
     double y_max;
     double z_max;
     int it = 0;
+    double smoothedRadius;
+    bool smoothed;
     std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
     std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
-
-    void moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle &p);
+    double x_cell_size;
+    double y_cell_size;
+    double z_cell_size;
 };
 
