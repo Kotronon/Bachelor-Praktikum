@@ -60,6 +60,7 @@ void VelocityCalculator::BrownianMotionInitializationCell(LinkedCellContainer &c
  * @param delta_t
  */
 void VelocityCalculator::VelocityStoermerVerletCell(LinkedCellContainer &cells, double delta_t) {
+    //#pragma omp parallel for collapse(4) default(none) shared(cells, delta_t)
     for (auto &x: cells) {
         for (auto &y: x) {
             for (auto &z: y) {

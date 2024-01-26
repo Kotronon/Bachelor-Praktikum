@@ -375,12 +375,13 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
  */
 void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation,
                                              const double Grav) {
+    //iterating over each cell
     //begin at 1 and end at x_cells to avoid calculating the force of ghost cells
     #pragma omp parallel for collapse(3) default(none) shared(Grav, forceCalculation)
     for (int x = 1; x <= x_cells; x++) {
         for (int y = 1; y <= y_cells; y++) {
             for (int z = 1; z <= z_cells; z++) {
-                //get neighbour cells
+                //get neighbour cells for each cell
                 std::vector<std::array<int, 3>> neighbours = get_next_cells(x, y, z);
                 for (int j = 0; j < int(cells[x][y][z].size()); j++) {
                     //for all particles in current cell
@@ -388,6 +389,7 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                         //calculate force with particles in current cell
                         forceCalculation(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
                     }
+                    #pragma omp parallel default(none) shared(x,y,z,j,neighbours,forceCalculation,Grav)
                     for (auto &neighbour: neighbours) {
                         //with neighbour cells
                         for (int l = 0;
