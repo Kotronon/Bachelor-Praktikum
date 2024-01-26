@@ -101,8 +101,13 @@ void
 LinkedCellContainer::addParticle(std::array<double, 3> x_arg, std::array<double, 3> v_arg, double m_arg, int type_arg,
                                  double sig, double eps) {
     Particle new_particle = Particle(x_arg, v_arg, m_arg, sig, eps, type_arg);
-    cells[(int) floor(x_arg[0] / x_cell_size) + 1][(int) floor(x_arg[1] / y_cell_size) + 1][(int) floor(x_arg[2] / z_cell_size) +
-                                                                                  1].emplace_back(new_particle);
+    int x = (int) floor(x_arg[0] / x_cell_size) + 1;
+    if(x_arg[0] == x_max) x = x_cells;
+    int y = (int) floor(x_arg[1] / y_cell_size) + 1;
+    if(x_arg[1] == y_max) y = y_cells;
+    int z = (int) floor(x_arg[2] / z_cell_size) + 1;
+    if(x_arg[2] == z_max) z = z_cells;
+    cells[x][y][z].emplace_back(new_particle);
 }
 
 /**
@@ -123,8 +128,11 @@ void LinkedCellContainer::addParticle(int x, int y, int z, Particle &p) {
  */
 void LinkedCellContainer::addParticle(Particle &p) {
     int x = (int) floor(p.getX()[0] / x_cell_size) + 1;
+    if(p.getX()[0] == x_max) x = x_cells;
     int y = (int) floor(p.getX()[1] / y_cell_size) + 1;
+    if(p.getX()[1] == y_max) y = y_cells;
     int z = (int) floor(p.getX()[2] / z_cell_size) + 1;
+    if(p.getX()[2] == z_max) z = z_cells;
     cells[x][y][z].emplace_back(p);
 }
 
@@ -243,15 +251,15 @@ std::vector <std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int 
     if (z == 1 && boundary[4] == "r") vec.push_back({x, y, z - 1});
     //all behind halo cells if periodic
     if (z == 1 && boundary[4] == "p") {
-        vec.push_back({x, y, z - 1});
-        vec.push_back({x - 1, y, z - 1});
-        vec.push_back({x + 1, y, z - 1});
-        vec.push_back({x, y - 1, z - 1});
-        vec.push_back({x, y + 1, z - 1});
-        vec.push_back({x - 1, y - 1, z - 1});
-        vec.push_back({x - 1, y + 1, z - 1});
-        vec.push_back({x + 1, y - 1, z - 1});
-        vec.push_back({x + 1, y + 1, z - 1});
+        vec.push_back({x, y, z - 1}); //behind
+        vec.push_back({x - 1, y, z - 1}); //left behind
+        vec.push_back({x + 1, y, z - 1}); //right behind
+        vec.push_back({x, y - 1, z - 1}); //down behind
+        vec.push_back({x, y + 1, z - 1}); //up behind
+        vec.push_back({x - 1, y - 1, z - 1}); //left down behind
+        vec.push_back({x - 1, y + 1, z - 1}); //left up behind
+        vec.push_back({x + 1, y - 1, z - 1}); //right down behind
+        vec.push_back({x + 1, y + 1, z - 1}); //right up behind
     }
     return vec;
 }
@@ -620,48 +628,74 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
     if (x_coordinate > x_max && boundary[1] == "p") {
         periodic = true;
         oldX -= x_max;
-        //x_coordinate -= x_max;
-        x_coordinate = std::fmod(x_coordinate, x_max);
-        //if(x_coordinate < 0 || x_coordinate > x_max) x_coordinate = 0;
-    } else if (x_coordinate < 0 && boundary[0] == "p") {
+        //x_coordinate -= x_max; //won't work if values get to big
+        x_coordinate -= (floor(x_coordinate/x_max)) * x_max;
+        //x_coordinate = std::fmod(x_coordinate, x_max);
+        if(x_coordinate > x_max){
+            while(x_coordinate > x_max) x_coordinate -= x_max;
+        }
+    }
+    if (x_coordinate < 0 && boundary[0] == "p") {
         periodic = true;
-        //x_coordinate += ceil(-x_coordinate/x_max)*x_max;
-        x_coordinate = x_max - std::fmod(-x_coordinate, x_max);
-        //x_coordinate += x_max;
+        x_coordinate -= (floor(x_coordinate/x_max))*x_max;
+        //x_coordinate = x_max - std::fmod(-x_coordinate, x_max);
         oldX += x_max;
-        //if(x_coordinate < 0 || x_coordinate > x_max) x_coordinate = x_max;
+        //x_coordinate += x_max;
+        if(x_coordinate < 0 ) {
+            while(x_coordinate < 0) x_coordinate += x_max;
+        }
+        if(x_coordinate > x_max){
+            while(x_coordinate > x_max) x_coordinate -= x_max;
+        }
     }
     if (y_coordinate > y_max && boundary[2] == "p") {
         periodic = true;
-        //y_coordinate -= floor(y_coordinate/y_max)*y_max;
-        //y_coordinate -= y_max;
-        y_coordinate = std::fmod(y_coordinate, y_max);
+        y_coordinate -= (floor(y_coordinate/y_max))*y_max;
+        //y_coordinate = std::fmod(y_coordinate, y_max);
         oldY -= y_max;
-        //if(y_coordinate < 0 || y_coordinate >y_max) y_coordinate = 0;
-    } else if (y_coordinate < 0 && boundary[3] == "p") {
+        //y_coordinate -= y_max;
+        if(y_coordinate >y_max) {
+            while(y_coordinate > y_max) y_coordinate -= y_max;
+        }
+    }
+    if (y_coordinate < 0 && boundary[3] == "p") {
         periodic = true;
-        //y_coordinate += ceil(-y_coordinate/y_max) *y_max;
-        //y_coordinate *= -1;
-        y_coordinate = y_max - std::fmod(-y_coordinate, y_max);
-       // y_coordinate += y_max;
+        y_coordinate -= (floor(y_coordinate/y_max)) *y_max;
+        //y_coordinate = y_max - std::fmod(-y_coordinate, y_max);
+        //y_coordinate += y_max;
         oldY += y_max;
-        //if(y_coordinate < 0 || y_coordinate >y_max) y_coordinate = y_max;
+
+        if(y_coordinate < 0 ) {
+            while(y_coordinate < 0) y_coordinate += y_max;
+        }
+         if(y_coordinate >y_max) {
+            while(y_coordinate > y_max) y_coordinate -= y_max;
+        }
     }
     if (z_coordinate > z_max && boundary[5] == "p") {
         periodic = true;
-        //z_coordinate -= floor(z_coordinate/z_max)*z_max;
-        z_coordinate = std::fmod(z_coordinate, z_max);
-       //z_coordinate -= z_max;
+        z_coordinate -= (floor(z_coordinate/z_max))*z_max;
+        //z_coordinate = std::fmod(z_coordinate, z_max);
+        //z_coordinate -= z_max;
         oldZ -= z_max;
-        // if(z_coordinate < 0 || z_coordinate > z_max) z_coordinate = 0;
-    } else if (z_coordinate < 0 && boundary[4] == "p") {
+
+         if(z_coordinate > z_max) {
+             while(z_coordinate > z_max) z_coordinate -= z_max;
+         }
+    }
+    if (z_coordinate < 0 && boundary[4] == "p") {
         periodic = true;
-        //z_coordinate += ceil(-z_coordinate/z_max)*z_max;
-       // z_coordinate *= -1;
-        z_coordinate= std::fmod(-z_coordinate, z_max);
+        z_coordinate -= (floor(z_coordinate/z_max))*z_max;
+       // z_coordinate= std::fmod(-z_coordinate, z_max);
         //z_coordinate += z_max;
         oldZ += z_max;
-        //if(z_coordinate < 0 || z_coordinate > z_max) z_coordinate = z_max;
+
+        if(z_coordinate < 0 ) {
+            while(z_coordinate < 0) z_coordinate += z_max;
+        }
+        if(z_coordinate > z_max) {
+             while(z_coordinate > z_max) z_coordinate -= z_max;
+         }
     }
     if (x_coordinate > x_max || x_coordinate < 0 || y_coordinate > y_max || y_coordinate < 0 || z_coordinate > z_max ||
         z_coordinate < 0) {
@@ -676,8 +710,11 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
         new_particle.setOldX({oldX, oldY, oldZ});
         addParticle(new_particle);
         int x = (int) floor(x_coordinate / x_cell_size) + 1;
+        if(x_coordinate == x_max) x = x_cells;
         int y = (int) floor(y_coordinate / y_cell_size) + 1;
+        if(y_coordinate == y_max) y = y_cells;
         int z = (int) floor(z_coordinate / z_cell_size) + 1;
+        if(z_coordinate == z_max) z = z_cells;
         generateGhostCell((int) cells[x][y][z].size() - 1, x, y, z);
         return;
     }
