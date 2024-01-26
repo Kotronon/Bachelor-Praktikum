@@ -124,7 +124,7 @@ void ForceCalculator::smoothedLennardJonesForcePairwise(Particle *p1, Particle *
     double L2Norm_p1_p2 = ArrayUtils::L2Norm(p1->getX() - p2->getX());
 
     //make calculation if simple sum or distance between particles is smaller than the cutoff radius
-    if(L2Norm_p1_p2 <= cutoff) {
+    if(L2Norm_p1_p2 <= cutoff && (p1->getX()[0] != p2->getX()[0] || p1->getX()[1] != p2->getX()[1] || p1->getX()[2] != p2->getX()[2])) {
         double eps = sqrt(p1->getEps() * p2->getEps());
         double sig = (p1->getSig() + p2->getSig()) / 2;
 
