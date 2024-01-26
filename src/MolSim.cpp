@@ -50,7 +50,7 @@ std::array<std::basic_string<char>, 6> boundary = {"p", "p", "p", "p", "p", "p"}
 std::string inputFile = "";// "../input/checkpoint1.txt";
 
 //checkpoints
-bool checkpointing = false;
+bool checkpointing = true;
 int num_checkpoints = 1;
 //path to folder to be used for output of checkpoint files
 std::string outputDirectory = "../input";
@@ -107,9 +107,6 @@ int main(int argc, char *argsv[]) {
     //std::ofstream diffusion_file;
     //diffusion_file.open("../input/diffusion.xls");
     //std::ofstream RDF_file("../input/RDF.xls");
-
-    cells.deleteGhostCells();
-    plotParticlesInCells(iteration, cells);
     std::vector<int> x_axis_plot;
     std::iota(std::begin(x_axis_plot), std::end(x_axis_plot), intervalBegin);
 

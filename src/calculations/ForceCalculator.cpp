@@ -147,14 +147,15 @@ void ForceCalculator::smoothedLennardJonesForcePairwise(Particle *p1, Particle *
     double L2Norm_p1_p2 = ArrayUtils::L2Norm(p1->getX() - p2->getX());
 
     //make calculation if simple sum or distance between particles is smaller than the cutoff radius
-    if(L2Norm_p1_p2 <= cutoff) {
+    if(L2Norm_p1_p2 <= cutoff && (p1->getX()[0] != p2->getX()[0] || p1->getX()[1] != p2->getX()[1] || p1->getX()[2] != p2->getX()[2])) {
         double eps = sqrt(p1->getEps() * p2->getEps());
         double sig = (p1->getSig() + p2->getSig()) / 2;
 
         double potential = 4 * eps * (pow((sig/L2Norm_p1_p2), 12) - pow((sig/L2Norm_p1_p2), 6));
         if(L2Norm_p1_p2 <= smoothedparameter) force = ((-24 * eps / pow(L2Norm_p1_p2, 2)) * (pow(sig / L2Norm_p1_p2, 6) - (2 * pow(sig / L2Norm_p1_p2, 12))) *  (p1->getX() - p2->getX()));
         else {
-            force  = force + ((24*pow(sig, 6) * eps) / (pow(L2Norm_p1_p2, 14) * pow(cutoff-smoothedparameter, 3))) *
+
+            force  = force + ((-24*pow(sig, 6) * eps) / (pow(L2Norm_p1_p2, 14) * pow(cutoff-smoothedparameter, 3))) *
                     (cutoff - L2Norm_p1_p2) * (pow(cutoff, 2) * (2*pow(sig, 6) - pow(L2Norm_p1_p2, 6)) + cutoff * (3*smoothedparameter - L2Norm_p1_p2) *
                     (pow(L2Norm_p1_p2, 6) - 2*pow(sig, 6)) + L2Norm_p1_p2 * (5*smoothedparameter * pow(sig, 6) - 2*smoothedparameter * pow(L2Norm_p1_p2, 6)-
                     3*pow(sig, 6) * L2Norm_p1_p2 + pow(L2Norm_p1_p2, 7))) * (p2->getX() - p1->getX());
