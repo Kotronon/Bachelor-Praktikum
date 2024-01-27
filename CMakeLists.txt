@@ -146,6 +146,12 @@ if(NOT matplotplusplus_POPULATED)
 endif()
 target_link_libraries(MolSim PUBLIC matplot)
 
+# Add OpenMP
+find_package(OpenMP)
+if (OpenMP_CXX_FOUND)
+    target_link_libraries(MolSim PUBLIC OpenMP::OpenMP_CXX)
+endif()
+
 include(CTest)
 OPTION(TEST_found "testing" on)
 if(TEST_found)

@@ -10,6 +10,7 @@
 #include "spdlog/spdlog.h"
 #include "calculations/PositionCalculator.h"
 #include "gnuplot-iostream.h"
+#include <omp.h>
 #include <string>
 #include <vector>
 #include <numeric>
@@ -36,7 +37,7 @@ double Grav = 0;
 std::array<double, 3> domain_size = {9.2, 9.2, 9.2};
 //if you want to use directSum please use DBL_MAX
 double cutoff = 2.3;
-//if you want to use smoothed Lennard-Jones Potential make smoothLJ true
+//if you want to use smoothed Lennard-Jones Potential set smoothLJ to true
 double sLJRadius = 1.9;
 bool smoothLJ = true;
 
@@ -93,23 +94,28 @@ int main(int argc, char *argsv[]) {
     int steps_between_checkpoints = int(end_time / delta_t) / num_checkpoints;
 
     std::ofstream RDFFile (filename);
+
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
     ParticleGenerator::createCuboidInCells({0.575, 0.575, 0.575}, {0, 0, 0}, {8,8,8}, 1.15, 1.0, cells, 1, 1, 1);
     //ParticleGenerator::createCuboidInCells({0.6, 24.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 2.0, cells, 1.1, 1, 2);
+
     double current_time = start_time;
     int iteration = 0;
+
     //std::ofstream diffusion_file;
     //diffusion_file.open("../input/diffusion.xls");
     //std::ofstream RDF_file("../input/RDF.xls");
     std::vector<int> x_axis_plot;
     std::iota(std::begin(x_axis_plot), std::end(x_axis_plot), intervalBegin);
+
     /*RDF_file << " ";
     for(int i = intervalBegin; i <= intervalEnd; i++){
         RDF_file << i;
     }
     RDF_file << '\t';*/
+
     //Pre-calculation of f
     ForceCalculator::LennardJonesForceCell(cells, Grav);
 
@@ -118,16 +124,16 @@ int main(int argc, char *argsv[]) {
 
     //Initialization with Brownian Motion / temperature
     if (applyBrownianMotion) {
-        thermostat.initializeTemperatureWithBrownianMotion(initTemperature, dim, cells);
+        Thermostat::initializeTemperatureWithBrownianMotion(initTemperature, dim, cells);
     } else {
-        thermostat.initializeTemperature(initTemperature, dim, cells);
+        Thermostat::initializeTemperature(initTemperature, dim, cells);
     }
-
     if (!targetTemperatureExists) {
         targetTemperature = initTemperature;
     }
 
     //plotParticlesInCells(0, cells);
+
     //For this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
 
@@ -135,18 +141,16 @@ int main(int argc, char *argsv[]) {
             if (differenceTemperatureExists) {
                 initTemperature = thermostat.setTemperatureGradually(targetTemperature, differenceTemperature, dim, cells, initTemperature);
             } else {
-                thermostat.setTemperatureDirectly(targetTemperature, dim, cells);
+                Thermostat::setTemperatureDirectly(targetTemperature, dim, cells);
             }
-            spdlog::info("temperature with kinetic energy: " + std::to_string(thermostat.calculateCurrentTemperature(3, cells)) +
-                         " Kelvin.");
-            spdlog::info("new temperature: " + std::to_string(initTemperature) + " Kelvin");
+            //spdlog::info("Temperature with kinetic energy: " + std::to_string(Thermostat::calculateCurrentTemperature(3, cells)));
+            //spdlog::info("New temperature: " + std::to_string(initTemperature));
         }
 
         //Calculate new x
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
         //Calculate new f
         ForceCalculator::LennardJonesForceCell(cells, Grav);
-
         //Calculate new v
         VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
 

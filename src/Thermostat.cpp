@@ -4,10 +4,9 @@
 
 #include "Thermostat.h"
 #include "LinkedCellContainer.h"
-#include <cmath>
 #include "utils/MaxwellBoltzmannDistribution.h"
 #include "utils/ArrayUtils.h"
-#include <spdlog/spdlog.h>
+#include <cmath>
 
 /**
  * initialize the temperature in a LinkedCellContainer (velocities of particles should not be (0,0,0))
@@ -30,6 +29,7 @@ void Thermostat::initializeTemperatureWithBrownianMotion(double initialTemperatu
     double factor;
     std::array<double, 3> brownian_motion{};
 
+    //iterate over all particles (without ghost particles)
     for (auto x = cells.begin() + 1; x < cells.end() - 1; x++) {
         for (auto y = x->begin() + 1; y < x->end() - 1; y++) {
             for (auto z = y->begin() + 1; z < y->end() - 1; z++) {
@@ -46,7 +46,7 @@ void Thermostat::initializeTemperatureWithBrownianMotion(double initialTemperatu
 
 /**
  * set the temperature in a LinkedCellContainer directly to a certain value with velocity scaling (velocities should already be initialized)
- * @param newTemperature temperature in Kelvin
+ * @param newTemperature temperature
  * @param dimension dimension of the simulation (possible values: 2 or 3)
  * @param cells LinkedCellContainer
  */
@@ -56,7 +56,7 @@ void Thermostat::setTemperatureDirectly(double newTemperature, int dimension, Li
     double currentTemperature = calculateCurrentTemperature(dimension, cells);
     double factor = std::sqrt( newTemperature/currentTemperature);
 
-    //Scale velocities of all particles
+    //Scale velocities of all particles (without ghost particles)
     for (auto x = cells.begin() + 1; x < cells.end() - 1; x++) {
         for (auto y = x->begin() + 1; y < x->end() - 1; y++) {
             for (auto z = y->begin() + 1; z < y->end() - 1; z++) {
@@ -70,7 +70,7 @@ void Thermostat::setTemperatureDirectly(double newTemperature, int dimension, Li
 
 /**
  * set the temperature in a LinkedCellContainer gradually to a certain value with velocity scaling (velocities should already be initialized)
- * @param targetTemperature temperature to be reached eventually (in Kelvin)
+ * @param targetTemperature temperature to be reached eventually
  * @param temperatureDifference maximal absolute temperature change allowed for one application of the thermostat
  * @param dimension dimension of the simulation (possible values: 2 or 3)
  * @param cells LinkedCellContainer
@@ -80,10 +80,8 @@ double Thermostat::setTemperatureGradually(double targetTemperature, double temp
     //Calculate current temperature
     double currentTemperature = calculateCurrentTemperature(dimension, cells);
     //Calculate the new temperature to set based on the allowed difference
-    //double newTemperature = currentTemperature ;
     if (std::abs(targetTemperature - currentTemperature) <= temperatureDifference) {
         newTemperature = targetTemperature;
-        //return newTemperature;
     }
     else {
         if (targetTemperature > newTemperature) {
@@ -93,16 +91,14 @@ double Thermostat::setTemperatureGradually(double targetTemperature, double temp
             newTemperature -= temperatureDifference;
             }
     }
-
     if (newTemperature < 0) {
         newTemperature = 0;
     }
 
     //Calculate the velocity scaling factor
     double factor = std::sqrt(std::abs(newTemperature)/currentTemperature);
-    //if(newTemperature == targetTemperature) return newTemperature;
 
-    //Scale velocities of all particles
+    //Scale velocities of all particles (without ghost particles)
     for (auto x = cells.begin() + 1; x < cells.end() - 1; x++) {
         for (auto y = x->begin() + 1; y < x->end() - 1; y++) {
             for (auto z = y->begin() + 1; z < y->end() - 1; z++) {
