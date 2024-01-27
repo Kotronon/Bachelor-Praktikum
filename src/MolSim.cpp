@@ -143,8 +143,8 @@ int main(int argc, char *argsv[]) {
             } else {
                 Thermostat::setTemperatureDirectly(targetTemperature, dim, cells);
             }
-            spdlog::info("Temperature with kinetic energy: " + std::to_string(Thermostat::calculateCurrentTemperature(3, cells)));
-            spdlog::info("New temperature: " + std::to_string(initTemperature) + " Kelvin");
+            //spdlog::info("Temperature with kinetic energy: " + std::to_string(Thermostat::calculateCurrentTemperature(3, cells)));
+            //spdlog::info("New temperature: " + std::to_string(initTemperature));
         }
 
         //Calculate new x
