@@ -150,6 +150,7 @@ int main(int argc, char *argsv[]) {
         //Calculate new v
         VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
 
+        cells.calculateDiffusion();
         iteration++;
         if (iteration % 10 == 0) {
             plotParticlesInCells(iteration, cells);

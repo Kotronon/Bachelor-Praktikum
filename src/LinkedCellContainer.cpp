@@ -738,6 +738,10 @@ double LinkedCellContainer::calculateDiffusion() {
         }
     }
     var /= particles;
+    if(var > 100 ){
+        spdlog::info("diff: {} at iteration: {}", var, it);
+        throw std::invalid_argument("dif to big");
+    }
     return var;
 }
 /**
@@ -746,8 +750,8 @@ double LinkedCellContainer::calculateDiffusion() {
 std::vector<double> LinkedCellContainer::calculateRDF(int intervalBegin, int intervalEnd, double deltaR,  std::vector<int> x_axis_plot, std::ofstream &filename) {
     std::vector<double> densities;
     ParticleContainer particles = toContainer();
-    auto first = particles.begin();
-    auto last = particles.end();
+    //auto first = particles.begin();
+    //auto last = particles.end();
     for(int i = intervalBegin; i<= intervalEnd-deltaR; i++){
         int num_particles = 0;
         for (auto &p1 : particles) {
