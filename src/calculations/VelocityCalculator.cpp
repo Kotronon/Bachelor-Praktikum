@@ -67,7 +67,7 @@ void VelocityCalculator::VelocityStoermerVerletCell(LinkedCellContainer &cells, 
             for (auto z = y->begin() + 1; z < y->end() - 1; z++) {
                 for (auto p = z->begin(); p < z->end(); p++) {
                     //vi (tn+1) = vi(tn) + ∆t * Fi(tn) + Fi(tn+1) / 2mi
-                    p.setV(p.getV() + ((delta_t / (2 * p.getM())) * (p.getOldF() + p.getF())));
+                    p->setV(p->getV() + ((delta_t / (2 * p->getM())) * (p->getOldF() + p->getF())));
                    /* if(p.getV()[0] > 1000 || p.getV()[1] > 1000  || p.getV()[2] > 1000 ){
                         spdlog::info(p.toString());
                         throw std::invalid_argument("V is nan");
