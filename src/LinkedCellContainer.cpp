@@ -4,11 +4,10 @@
 
 
 #include "LinkedCellContainer.h"
-#include "calculations/ForceCalculator.h"
+#include "utils/ArrayUtils.h"
 #include <spdlog/spdlog.h>
 #include <cmath>
 #include <utility>
-#include "utils/ArrayUtils.h"
 #include <omp.h>
 #include <matplot/matplot.h>
 #include <vector>
@@ -18,23 +17,29 @@
  * @param N dimensions of the container
  * @param cutoffRadius radius of cutoff
  * @param boundaryConditions boundary types of each side of the container
+ * @param smoothed
+ * @param sLJparameter
  */
 LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoffRadius,
                                          std::array<std::string, 6> boundaryConditions, bool smoothed,
                                          double sLJparameter) {
-    //creating list cells[i][j]h length = number of cells
     cutoff = cutoffRadius;
     this->smoothed = smoothed;
     smoothedRadius = sLJparameter;
-    x_cells = round(N[0] / cutoff);
-    y_cells = round(N[1] / cutoff);
-    z_cells = round(N[2] / cutoff);
 
-    x_cell_size = N[0] / x_cells;
-    y_cell_size = N[1] / y_cells;
-    z_cell_size = N[2] / z_cells;
+    x_cells = (int) round(N[0] / cutoff);
+    y_cells = (int) round(N[1] / cutoff);
+    z_cells = (int) round(N[2] / cutoff);
 
-    std::vector<std::vector<std::vector<std::vector<Particle >> >> x;
+    x_max = N[0];
+    y_max = N[1];
+    z_max = N[2];
+
+    x_cell_size = x_max / x_cells;
+    y_cell_size = y_max / y_cells;
+    z_cell_size = z_max / z_cells;
+
+    std::vector<std::vector<std::vector<std::vector<Particle>>>> x;
     for (int i = 0; i < x_cells + 2; i++) {
         std::vector<std::vector<std::vector<Particle>>> y;
         for (int j = 0; j < y_cells + 2; j++) {
@@ -43,11 +48,9 @@ LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoffR
         }
         x.push_back(y);
     }
+
     cells = x;
     boundary = std::move(boundaryConditions);
-    x_max = N[0];
-    y_max = N[1];
-    z_max = N[2];
 }
 
 LinkedCellContainer::~LinkedCellContainer() = default;
@@ -72,7 +75,7 @@ unsigned long LinkedCellContainer::Particles_in_cell(int x, int y, int z) {
 }
 
 /**
- * adds new Particle to specific cell
+ * adds new particle to specific cell
  * @param x index of cell on x axis
  * @param y index of cell on y axis
  * @param z index of cell on z axis
@@ -137,13 +140,16 @@ void LinkedCellContainer::addParticle(Particle &p) {
     cells[x][y][z].emplace_back(p);
 }
 
+/**
+ * create a new ParticleContainer containing the same particles as this LinkedCellContainer
+ */
 ParticleContainer LinkedCellContainer::toContainer() {
     ParticleContainer container = ParticleContainer();
-    for (auto &x: cells) {
-        for (auto &y: x) {
-            for (auto &z: y) {
-                for (auto &particle: z) {
-                    container.addParticle(particle);
+    for (auto x = cells.begin() + 1; x < cells.end() - 1; x++) {
+        for (auto y = x->begin() + 1; y < x->end() - 1; y++) {
+            for (auto z = y->begin() + 1; z < y->end() - 1; z++) {
+                for (auto p = z->begin(); p < z->end(); p++) {
+                    container.addParticle(*p);
                 }
             }
         }
@@ -159,6 +165,50 @@ void LinkedCellContainer::addContainer(ParticleContainer &container) {
     for (auto &particle: container) {
         addParticle(particle);
     }
+}
+
+/**
+ * return cells on x_axis
+ * @return
+ */
+double LinkedCellContainer::getXCellSize() const { return x_cell_size; }
+
+/**
+ * return cells on y_axis
+ * @return
+ */
+double LinkedCellContainer::getYCellSize() const { return y_cell_size; }
+
+/**
+ * return cells on z_axis
+ * @return
+ */
+double LinkedCellContainer::getZCellSize() const { return z_cell_size; }
+
+/**
+ * returns cutoff radius
+ * @return
+ */
+double LinkedCellContainer::getCutoff() const { return cutoff; }
+
+/**
+ * returns the vector of all particles in the ParticleContainer with Pointer at first element
+ * @return
+ */
+std::vector<std::vector<std::vector<std::vector<Particle>>>>
+
+::iterator LinkedCellContainer::begin() {
+    return cells.begin();
+}
+
+/**
+ * returns the vector of all particles in the ParticleContainer with Pointer at last element
+ * @return
+ */
+std::vector<std::vector<std::vector<std::vector<Particle>>>>
+
+::iterator LinkedCellContainer::end() {
+    return cells.end();
 }
 
 /**
@@ -279,50 +329,6 @@ void LinkedCellContainer::setZero() {
             }
         }
     }
-}
-
-/**
- * return cells on x_axis
- * @return
- */
-double LinkedCellContainer::getXCellSize() const { return x_cell_size; }
-
-/**
- * return cells on y_axis
- * @return
- */
-double LinkedCellContainer::getYCellSize() const { return y_cell_size; }
-
-/**
- * return cells on z_axis
- * @return
- */
-double LinkedCellContainer::getZCellSize() const { return z_cell_size; }
-
-/**
- * returns cutoff radius
- * @return
- */
-double LinkedCellContainer::getCutoff() const { return cutoff; }
-
-/**
- * returns the vector of all particles in the ParticleContainer with Pointer at first element
- * @return
- */
-std::vector<std::vector<std::vector<std::vector<Particle>>>>
-
-::iterator LinkedCellContainer::begin() {
-    return cells.begin();
-}
-
-/**
- * returns the vector of all particles in the ParticleContainer with Pointer at last element
- * @return
- */
-std::vector<std::vector<std::vector<std::vector<Particle>>>>
-
-::iterator LinkedCellContainer::end() {
-    return cells.end();
 }
 
 /**
@@ -733,8 +739,8 @@ double LinkedCellContainer::calculateDiffusion() {
     for (int x = 1; x <= x_cells; x++) {
         for (int y = 1; y <= y_cells; y++) {
             for (int z = 1; z <= z_cells; z++) {
-                for (int p = 0; p < int(cells[x][y][z].size()); p++) {
-                    var += pow(ArrayUtils::L2Norm(cells[x][y][z][p].getX() - cells[x][y][z][p].getOldX()), 2);
+                for (const auto & p : cells[x][y][z]) {
+                    var += pow(ArrayUtils::L2Norm(p.getX() - p.getOldX()), 2);
                     particles++;
                 }
             }
@@ -771,7 +777,7 @@ LinkedCellContainer::calculateRDF(int intervalBegin, int intervalEnd, double del
     }
     filename << "\n";
     //auto y = matplot::transform(x_axis_plot, densities);
-    matplot::plot(x_axis_plot, densities);
+    matplot::plot(std::move(x_axis_plot), densities);
     matplot::hold(matplot::on);
     return densities;
 }

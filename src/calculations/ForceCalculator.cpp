@@ -150,7 +150,7 @@ void ForceCalculator::smoothedLennardJonesForcePairwise(Particle *p1, Particle *
         double eps = sqrt(p1->getEps() * p2->getEps());
         double sig = (p1->getSig() + p2->getSig()) / 2;
 
-        double potential = 4 * eps * (pow((sig/L2Norm_p1_p2), 12) - pow((sig/L2Norm_p1_p2), 6));
+        //double potential = 4 * eps * (pow((sig/L2Norm_p1_p2), 12) - pow((sig/L2Norm_p1_p2), 6));
         if(L2Norm_p1_p2 <= smoothedParameter) force = ((-24 * eps / pow(L2Norm_p1_p2, 2)) * (pow(sig / L2Norm_p1_p2, 6) - (2 * pow(sig / L2Norm_p1_p2, 12))) *  (p1->getX() - p2->getX()));
         else {
             force  = force + ((-24*pow(sig, 6) * eps) / (pow(L2Norm_p1_p2, 14) * pow(cutoff-smoothedParameter, 3))) *
