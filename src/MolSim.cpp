@@ -27,19 +27,19 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 150;
-double delta_t = 0.001;
+double end_time = 1;
+double delta_t = 0.0005;
 
 int dim = 3;
-double Grav = 0;
+double Grav = -12.44;
 
 //if you want to use directSum please use DBL_MAX for each direction
-std::array<double, 3> domain_size = {9.2, 9.2, 9.2};
+std::array<double, 3> domain_size = {60, 60, 60}; //{9.2, 9.2, 9.2};
 //if you want to use directSum please use DBL_MAX
-double cutoff = 2.3;
+double cutoff = 3.0 * 1.2; // 2.3
 //if you want to use smoothed Lennard-Jones Potential set smoothLJ to true
 double sLJRadius = 1.9;
-bool smoothLJ = true;
+bool smoothLJ = false;
 
 //boundary order:  left, right, up, down, behind, before
 //boundary types: "o"(outflow), "r"(reflective), "p"(periodic)
@@ -50,29 +50,29 @@ std::array<std::basic_string<char>, 6> boundary = {"p", "p", "p", "p", "p", "p"}
 std::string inputFile = "";// "../input/checkpoint1.txt";
 
 //checkpoints
-bool checkpointing = true;
+bool checkpointing = false;
 int num_checkpoints = 1;
 //path to folder to be used for output of checkpoint files
 std::string outputDirectory = "../input";
 
-double initTemperature = 0.01;
-int nThermostat = 40;
+double initTemperature = 40;
+int nThermostat = 1000;
 bool applyBrownianMotion = true;
 
 //optional:
-bool targetTemperatureExists = true;
+bool targetTemperatureExists = false;
 double targetTemperature = 3.0;
 
 //optional:
-bool differenceTemperatureExists = true;
-double differenceTemperature = 0.001;
+bool differenceTemperatureExists = false;
+double differenceTemperature = 0.001; // 7.8 * pow(10, -4);
 
 Thermostat thermostat;
 
 int intervalBegin = 0;
-int intervalEnd = 20;
+int intervalEnd = 80;
 double deltaR = 1;
-std::string filename = "../input/RDF.xsl";
+std::string filename = "../input/RDF1.xsl";
 
 //Cuboids/Disks have to be created manually in main
 
@@ -98,8 +98,9 @@ int main(int argc, char *argsv[]) {
     //Creation of cuboids/disks for simulation with linked-cell container
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    ParticleGenerator::createCuboidInCells({0.575, 0.575, 0.575}, {0, 0, 0}, {8,8,8}, 1.15, 1.0, cells, 1, 1, 1);
-    //ParticleGenerator::createCuboidInCells({0.6, 24.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 2.0, cells, 1.1, 1, 2);
+    //ParticleGenerator::createCuboidInCells({0.575, 0.575, 0.575}, {0, 0, 0}, {8,8,8}, 1.15, 1.0, cells, 1, 1, 1);
+    ParticleGenerator::createCuboidInCells({0.6, 0.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 1.0, cells, 1.2, 1, 1);
+    ParticleGenerator::createCuboidInCells({0.6, 24.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 2.0, cells, 1.1, 1, 2);
 
     double current_time = start_time;
     int iteration = 0;
