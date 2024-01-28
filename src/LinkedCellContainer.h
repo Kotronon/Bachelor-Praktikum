@@ -56,7 +56,7 @@ public:
     std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator end();
 
     void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation,
-                            const std::function<void(Particle *, Particle *, double, double)> &smoothedforceCalculation, double Grav);
+                            const std::function<void(Particle *, Particle *, double, double)> &smoothedForceCalculation, double Grav);
 
     bool applyMirrorBoundary(int particle, int x, int y, int z);
 

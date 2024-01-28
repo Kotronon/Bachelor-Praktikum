@@ -221,7 +221,6 @@ std::vector<std::vector<std::vector<std::vector<Particle>>>>
  * checks if particle needs to be moved to another cell and moves or deletes them accordingly
  */
 void LinkedCellContainer::moveToNeighbour() {
-//#pragma omp parallel for collapse(3)
     //begin at 1 and end at x_cells to avoid moving ghost cells
     for (int x = 1; x < x_cells + 1; x++) {
         for (int y = 1; y < y_cells + 1; y++) {
@@ -270,42 +269,56 @@ void LinkedCellContainer::moveToNeighbour() {
  */
 std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y, int z) const {
     std::vector<std::array<int, 3>> vec = {};
+
+    bool left = x > 1 || (x == 1 && boundary[0] == "p");
     bool right = x < x_cells || (x == x_cells && boundary[1] == "p");
     bool up = y < y_cells || (y == y_cells && boundary[2] == "p");
-    bool left = x > 1 || (x == 1 && boundary[0] == "p");
-    bool before = z < z_cells || (z == z_cells && boundary[5] == "p");
     bool down = y > 1 || (y == 1 && boundary[3] == "p");
+    bool before = z < z_cells || (z == z_cells && boundary[5] == "p");
+
     //get neighbour cells according to N3L
     if (right) vec.push_back({x + 1, y, z});
-    if (up) vec.push_back({x, y + 1, z});
     if (right && up) vec.push_back({x + 1, y + 1, z});
+    if (up) vec.push_back({x, y + 1, z});
     if (left && up) vec.push_back({x - 1, y + 1, z});
+
+    if (left && down && before) vec.push_back({x - 1, y - 1, z + 1});
+    if (down && before) vec.push_back({x, y - 1, z + 1});
+    if (right && down && before) vec.push_back({x + 1, y - 1, z + 1});
+
+    if (left && before) vec.push_back({x - 1, y, z + 1});
     if (before) vec.push_back({x, y, z + 1});
     if (right && before) vec.push_back({x + 1, y, z + 1});
+
+    if (left && up && before) vec.push_back({x - 1, y + 1, z + 1});
     if (up && before) vec.push_back({x, y + 1, z + 1});
     if (right && up && before) vec.push_back({x + 1, y + 1, z + 1});
-    if (left && up && before) vec.push_back({x - 1, y + 1, z + 1});
-    if (right && down && before) vec.push_back({x + 1, y - 1, z + 1});
-    if (down && before) vec.push_back({x, y - 1, z + 1});
-    if (left && down && before) vec.push_back({x - 1, y - 1, z + 1});
-    if (left && before) vec.push_back({x - 1, y, z + 1});
 
     //left halo cell
-    if (x == 1 && boundary[0] != "o") vec.push_back({0, y, z});
+    if (x == 1 && boundary[0] == "r") vec.push_back({0, y, z});
     //right halo cell
     if (x == x_cells && boundary[1] == "r") vec.push_back({x + 1, y, z});
-    //below halo cell
-    if (y == 1 && boundary[3] != "o") vec.push_back({x, y - 1, z});
-    //below right halo cell
-    if (y == 1 && x == x_cells && boundary[1] == "p" && boundary[3] == "p") vec.push_back({x + 1, y - 1, z});
-    //below left halo cell
-    if (y == 1 && x == 0 && boundary[0] == "p" && boundary[3] == "p") vec.push_back({x + 1, y - 1, z});
-    //up halo cell
+
+    //lower halo cell
+    if (y == 1 && boundary[3] == "r") vec.push_back({x, y - 1, z});
+    //lower right (corner) halo cell
+    if (y == 1 && x == x_cells && boundary[1] == "r" && boundary[3] == "r") vec.push_back({x + 1, y - 1, z});
+    //lower left (corner) halo cell
+    if (y == 1 && x == 0 && boundary[0] == "r" && boundary[3] == "r") vec.push_back({x - 1, y - 1, z});
+
+    //upper halo cell
     if (y == y_cells && boundary[2] == "r") vec.push_back({x, y + 1, z});
-    //before halo and normal cell
+    //upper right (corner) halo cell
+    if (y == y_cells && x == x_cells && boundary[1] == "r" && boundary[2] == "r") vec.push_back({x + 1, y + 1, z});
+    //upper left (corner) halo cell
+    if (y == y_cells && x == 0 && boundary[0] == "r" && boundary[2] == "r") vec.push_back({x - 1, y + 1, z});
+
+    //before halo cell
     if (z == z_cells && boundary[5] == "r") vec.push_back({x, y, z + 1});
     //behind halo cell
     if (z == 1 && boundary[4] == "r") vec.push_back({x, y, z - 1});
+
+    /*
     //all behind halo cells if periodic
     if (z == 1 && boundary[4] == "p") {
         vec.push_back({x, y, z - 1}); //behind
@@ -318,8 +331,11 @@ std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y
         vec.push_back({x + 1, y - 1, z - 1}); //right down behind
         vec.push_back({x + 1, y + 1, z - 1}); //right up behind
     }
+    */
+
     return vec;
 }
+
 
 /**
  * sets old force to current force and current force to zero
@@ -343,11 +359,11 @@ void LinkedCellContainer::setZero() {
  */
 void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation,
                                              const std::function<void(Particle *, Particle *, double,
-                                                                      double)> &smoothedforceCalculation,
+                                                                      double)> &smoothedForceCalculation,
                                              double Grav) {
 
     //begin at 1 and end at x_cells to avoid calculating the force of ghost cells
-    #pragma omp parallel for collapse(3) default(none) shared(Grav, forceCalculation, smoothedforceCalculation)
+    #pragma omp parallel for collapse(3) default(none) shared(Grav, forceCalculation, smoothedForceCalculation)
     for (int x = 1; x <= x_cells; x++) {
         for (int y = 1; y <= y_cells; y++) {
             for (int z = 1; z <= z_cells; z++) {
@@ -360,13 +376,12 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                         if (!smoothed)
                             forceCalculation(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
                         else
-                            smoothedforceCalculation(&(cells[x][y][z][j]), &(cells[x][y][z][k]), cutoff,
+                            smoothedForceCalculation(&(cells[x][y][z][j]), &(cells[x][y][z][k]), cutoff,
                                                      smoothedRadius);
                     }
                     for (auto &neighbour: neighbours) {
                         //with neighbour cells
-                        for (int l = 0;
-                             l < int(cells[neighbour[0]][neighbour[1]][neighbour[2]].size()); l++) {
+                        for (int l = 0; l < int(cells[neighbour[0]][neighbour[1]][neighbour[2]].size()); l++) {
                             //calculate force if neighbour particle is a normal particle or is the specific ghost cell to current particle
                             //if type is positive, it's a normal or a periodic ghost particle
                             //if its negative, it's a reflective ghost particle and then just the one according to the current particle should be used
@@ -377,7 +392,7 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                                     forceCalculation(&(cells[x][y][z][j]),
                                                      &(cells[neighbour[0]][neighbour[1]][neighbour[2]][l]));
                                 else
-                                    smoothedforceCalculation(&(cells[x][y][z][j]),
+                                    smoothedForceCalculation(&(cells[x][y][z][j]),
                                                              &(cells[neighbour[0]][neighbour[1]][neighbour[2]][l]),
                                                              cutoff, smoothedRadius);
                             }
