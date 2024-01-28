@@ -269,56 +269,42 @@ void LinkedCellContainer::moveToNeighbour() {
  */
 std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y, int z) const {
     std::vector<std::array<int, 3>> vec = {};
-
-    bool left = x > 1 || (x == 1 && boundary[0] == "p");
     bool right = x < x_cells || (x == x_cells && boundary[1] == "p");
     bool up = y < y_cells || (y == y_cells && boundary[2] == "p");
-    bool down = y > 1 || (y == 1 && boundary[3] == "p");
+    bool left = x > 1 || (x == 1 && boundary[0] == "p");
     bool before = z < z_cells || (z == z_cells && boundary[5] == "p");
-
+    bool down = y > 1 || (y == 1 && boundary[3] == "p");
     //get neighbour cells according to N3L
     if (right) vec.push_back({x + 1, y, z});
-    if (right && up) vec.push_back({x + 1, y + 1, z});
     if (up) vec.push_back({x, y + 1, z});
+    if (right && up) vec.push_back({x + 1, y + 1, z});
     if (left && up) vec.push_back({x - 1, y + 1, z});
-
-    if (left && down && before) vec.push_back({x - 1, y - 1, z + 1});
-    if (down && before) vec.push_back({x, y - 1, z + 1});
-    if (right && down && before) vec.push_back({x + 1, y - 1, z + 1});
-
-    if (left && before) vec.push_back({x - 1, y, z + 1});
     if (before) vec.push_back({x, y, z + 1});
     if (right && before) vec.push_back({x + 1, y, z + 1});
-
-    if (left && up && before) vec.push_back({x - 1, y + 1, z + 1});
     if (up && before) vec.push_back({x, y + 1, z + 1});
     if (right && up && before) vec.push_back({x + 1, y + 1, z + 1});
+    if (left && up && before) vec.push_back({x - 1, y + 1, z + 1});
+    if (right && down && before) vec.push_back({x + 1, y - 1, z + 1});
+    if (down && before) vec.push_back({x, y - 1, z + 1});
+    if (left && down && before) vec.push_back({x - 1, y - 1, z + 1});
+    if (left && before) vec.push_back({x - 1, y, z + 1});
 
     //left halo cell
-    if (x == 1 && boundary[0] == "r") vec.push_back({0, y, z});
+    if (x == 1 && boundary[0] != "o") vec.push_back({0, y, z});
     //right halo cell
     if (x == x_cells && boundary[1] == "r") vec.push_back({x + 1, y, z});
-
-    //lower halo cell
-    if (y == 1 && boundary[3] == "r") vec.push_back({x, y - 1, z});
-    //lower right (corner) halo cell
-    if (y == 1 && x == x_cells && boundary[1] == "r" && boundary[3] == "r") vec.push_back({x + 1, y - 1, z});
-    //lower left (corner) halo cell
-    if (y == 1 && x == 0 && boundary[0] == "r" && boundary[3] == "r") vec.push_back({x - 1, y - 1, z});
-
-    //upper halo cell
+    //below halo cell
+    if (y == 1 && boundary[3] != "o") vec.push_back({x, y - 1, z});
+    //below right halo cell
+    if (y == 1 && x == x_cells && boundary[1] == "p" && boundary[3] == "p") vec.push_back({x + 1, y - 1, z});
+    //below left halo cell
+    if (y == 1 && x == 0 && boundary[0] == "p" && boundary[3] == "p") vec.push_back({x - 1, y - 1, z});
+    //up halo cell
     if (y == y_cells && boundary[2] == "r") vec.push_back({x, y + 1, z});
-    //upper right (corner) halo cell
-    if (y == y_cells && x == x_cells && boundary[1] == "r" && boundary[2] == "r") vec.push_back({x + 1, y + 1, z});
-    //upper left (corner) halo cell
-    if (y == y_cells && x == 0 && boundary[0] == "r" && boundary[2] == "r") vec.push_back({x - 1, y + 1, z});
-
-    //before halo cell
+    //before halo and normal cell
     if (z == z_cells && boundary[5] == "r") vec.push_back({x, y, z + 1});
     //behind halo cell
     if (z == 1 && boundary[4] == "r") vec.push_back({x, y, z - 1});
-
-    /*
     //all behind halo cells if periodic
     if (z == 1 && boundary[4] == "p") {
         vec.push_back({x, y, z - 1}); //behind
@@ -331,8 +317,6 @@ std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y
         vec.push_back({x + 1, y - 1, z - 1}); //right down behind
         vec.push_back({x + 1, y + 1, z - 1}); //right up behind
     }
-    */
-
     return vec;
 }
 
