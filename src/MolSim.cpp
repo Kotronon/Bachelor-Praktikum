@@ -44,7 +44,7 @@ bool smoothLJ = false;
 //boundary order:  left, right, up, down, behind, before
 //boundary types: "o"(outflow), "r"(reflective), "p"(periodic)
 //(if you want use directSum please use {"o", "o", "o", "o", "o", "o"})
-std::array<std::basic_string<char>, 6> boundary = {"p", "p", "p", "p", "p", "p"};
+std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "p", "p"};
 
 //input file (file will be used if valid path is given and file is not empty)
 std::string inputFile = "";// "../input/checkpoint1.txt";

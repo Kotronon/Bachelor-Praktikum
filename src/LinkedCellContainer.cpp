@@ -665,7 +665,7 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
         y_coordinate -= y_max;
         if(y_coordinate > y_max ) y_coordinate = std::fmod(y_coordinate, y_max); // 0;
     }
-    if (y_coordinate < 0 && boundary[3] == "p") {
+    else if (y_coordinate < 0 && boundary[3] == "p") {
         periodic = true;
         //y_coordinate += (ceil(-y_coordinate/y_max)) *y_max;
         //y_coordinate = y_max - std::fmod(-y_coordinate, y_max);
@@ -681,7 +681,7 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
         oldZ -= z_max;
         if(z_coordinate > z_max) z_coordinate = std::fmod(z_coordinate, z_max); // 0;
     }
-    if (z_coordinate < 0 && boundary[4] == "p") {
+    else if (z_coordinate < 0 && boundary[4] == "p") {
         periodic = true;
         //z_coordinate += (ceil(-z_coordinate/z_max))*z_max;
         //z_coordinate= std::fmod(-z_coordinate, z_max);
@@ -691,16 +691,17 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
     }
     if (x_coordinate > x_max || x_coordinate < 0 || y_coordinate > y_max || y_coordinate < 0 || z_coordinate > z_max ||
         z_coordinate < 0) {
-        spdlog::info("needs to be deleted because x  {} y {} z {}", x_coordinate, y_coordinate, z_coordinate);
+        spdlog::info("needs to be deleted because x {} y {} z {}", x_coordinate, y_coordinate, z_coordinate);
         periodic = false;
         return;
     }
 
     if (periodic) {
-        Particle new_particle({x_coordinate, y_coordinate, z_coordinate}, p.getV(), p.getM(), p.getType(), p.getSig(),
-                              p.getEps());
+        Particle new_particle({x_coordinate, y_coordinate, z_coordinate}, p.getV(), p.getM(), p.getSig(),
+                              p.getEps(), p.getType());
+
         new_particle.setOldX({oldX, oldY, oldZ});
-        addParticle(new_particle);
+
         int x = (int) floor(x_coordinate / x_cell_size) + 1;
         if(x_coordinate == x_max) x = x_cells;
         if(x_coordinate == 0) x = 1;
@@ -710,6 +711,8 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
         int z = (int) floor(z_coordinate / z_cell_size) + 1;
         if(z_coordinate == z_max) z = z_cells;
         if(z_coordinate == 0) z = 1;
+
+        addParticle(x,y,z,new_particle);
         generateGhostCell((int) cells[x][y][z].size() - 1, x, y, z);
         return;
     }
