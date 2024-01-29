@@ -11,8 +11,7 @@
 
 class Membrane {
 
-private :
-      static double k_;
+private :static double k_;
    static double r_0_;
 
 

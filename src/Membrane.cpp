@@ -11,6 +11,8 @@
 
 
 const double sqrt_2 = std::sqrt(2);
+double Membrane::k_ = 300;
+double Membrane::r_0_ = 2;
 
 /**
  * Calculates the euclidean norm, eventhough it's already given*/
@@ -70,12 +72,6 @@ Membrane::Membrane(double k, double r_0) {
     k_ = k;
     r_0_ = r_0;
 }
-
-
-int main(int argc, char *argsv[]) {
-
-}
-
 
 
 
