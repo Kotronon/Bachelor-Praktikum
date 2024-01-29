@@ -10,13 +10,14 @@
 #include "spdlog/spdlog.h"
 #include "calculations/PositionCalculator.h"
 #include "gnuplot-iostream.h"
-#include <omp.h>
 #include <string>
 #include <vector>
 #include <numeric>
 #include <matplot/matplot.h>
 
-
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
 /**
  * plot the particles to a xyz-file
@@ -27,7 +28,7 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 1;
+double end_time = 100;
 double delta_t = 0.0005;
 
 int dim = 3;
@@ -50,8 +51,8 @@ std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "p", "p"}
 std::string inputFile = "";// "../input/checkpoint1.txt";
 
 //checkpoints
-bool checkpointing = false;
-int num_checkpoints = 1;
+bool checkpointing = true;
+int num_checkpoints = 200;
 //path to folder to be used for output of checkpoint files
 std::string outputDirectory = "../input";
 
@@ -67,8 +68,10 @@ double targetTemperature = 3.0;
 bool differenceTemperatureExists = false;
 double differenceTemperature = 0.001; // 7.8 * pow(10, -4);
 
-Thermostat thermostat;
+//Number of threads
+int num_threads = 16;
 
+bool calculateDiffusion = false;
 int intervalBegin = 0;
 int intervalEnd = 80;
 double deltaR = 1;
@@ -80,6 +83,10 @@ std::string filename = "../input/RDF1.xsl";
 ParticleContainer container = ParticleContainer();
 
 int main(int argc, char *argsv[]) {
+
+    #ifdef _OPENMP
+    omp_set_num_threads(num_threads);
+    #endif
 
     //Creation of linked-cell container to be filled with all relevant particles
     LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary, smoothLJ, sLJRadius);
@@ -105,17 +112,19 @@ int main(int argc, char *argsv[]) {
     double current_time = start_time;
     int iteration = 0;
 
-    //std::ofstream diffusion_file;
-    //diffusion_file.open("../input/diffusion.xls");
-    //std::ofstream RDF_file("../input/RDF.xls");
     std::vector<int> x_axis_plot;
-    std::iota(std::begin(x_axis_plot), std::end(x_axis_plot), intervalBegin);
+    if (calculateDiffusion) {
+        //std::ofstream diffusion_file;
+        //diffusion_file.open("../input/diffusion.xls");
+        //std::ofstream RDF_file("../input/RDF.xls");
+        std::iota(std::begin(x_axis_plot), std::end(x_axis_plot), intervalBegin);
 
-    /*RDF_file << " ";
-    for(int i = intervalBegin; i <= intervalEnd; i++){
-        RDF_file << i;
+        /*RDF_file << " ";
+        for(int i = intervalBegin; i <= intervalEnd; i++){
+            RDF_file << i;
+        }
+        RDF_file << '\t';*/
     }
-    RDF_file << '\t';*/
 
     //Pre-calculation of f
     ForceCalculator::LennardJonesForceCell(cells, Grav);
@@ -140,7 +149,7 @@ int main(int argc, char *argsv[]) {
 
         if (iteration != 0 && iteration % nThermostat == 0) {
             if (differenceTemperatureExists) {
-                initTemperature = thermostat.setTemperatureGradually(targetTemperature, differenceTemperature, dim, cells, initTemperature);
+                initTemperature = Thermostat::setTemperatureGradually(targetTemperature, differenceTemperature, dim, cells, initTemperature);
             } else {
                 Thermostat::setTemperatureDirectly(targetTemperature, dim, cells);
             }
@@ -169,9 +178,11 @@ int main(int argc, char *argsv[]) {
             FileWriter::writeFile(currentState, filename);
         }
 
-        if(iteration % 1000 == 0){
+        if(iteration % 1000 == 0 && calculateDiffusion){
            // diffusion_file << std::to_string(iteration);
+
             double diffusion = cells.calculateDiffusion();
+
             //diffusion_file << std::to_string(diffusion) << '\t';
             //RDF_file << iteration;
             std::vector< double> densities = cells.calculateRDF(intervalBegin, intervalEnd, deltaR, x_axis_plot, RDFFile);
@@ -191,14 +202,17 @@ int main(int argc, char *argsv[]) {
               ParticleContainer currentState = cells.toContainer();
               FileWriter::writeFile(currentState, filename);
               }*/
-    RDFFile.close();
-    matplot::title("RDF");
-    matplot::save("../input/plot1.pdf");
-    //matplot::set_ylabel("Density");
-    const std::vector<double> leg ({0.5, -0.5});
-    matplot::legend();
-    matplot::save("../input/plot1_legend.pdf");
-    matplot::show();
+    if (calculateDiffusion) {
+        RDFFile.close();
+        matplot::title("RDF");
+        matplot::save("../input/plot1.pdf");
+        //matplot::set_ylabel("Density");
+        const std::vector<double> leg ({0.5, -0.5});
+        matplot::legend();
+        matplot::save("../input/plot1_legend.pdf");
+        matplot::show();
+    }
+
     spdlog::info("Output written. Terminating...");
     return 0;
 }

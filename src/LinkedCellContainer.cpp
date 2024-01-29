@@ -8,9 +8,12 @@
 #include <spdlog/spdlog.h>
 #include <cmath>
 #include <utility>
-#include <omp.h>
 #include <matplot/matplot.h>
 #include <vector>
+
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
 /**
  * create a new linked cell container based on the dimensions and boundary
@@ -354,37 +357,38 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
                 //get neighbour cells
                 std::vector<std::array<int, 3>> neighbours = get_next_cells(x, y, z);
                 for (int j = 0; j < int(cells[x][y][z].size()); j++) {
+                    Particle* currentParticle = &(cells[x][y][z][j]);
                     //for all particles in current cell
                     for (int k = j + 1; k < int(cells[x][y][z].size()); k++) {
                         //calculate force with particles in current cell
                         if (!smoothed)
-                            forceCalculation(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
+                            forceCalculation(currentParticle, &(cells[x][y][z][k]));
                         else
-                            smoothedForceCalculation(&(cells[x][y][z][j]), &(cells[x][y][z][k]), cutoff,
+                            smoothedForceCalculation(currentParticle, &(cells[x][y][z][k]), cutoff,
                                                      smoothedRadius);
                     }
                     for (auto &neighbour: neighbours) {
                         //with neighbour cells
-                        for (int l = 0; l < int(cells[neighbour[0]][neighbour[1]][neighbour[2]].size()); l++) {
+                        for (auto & l : cells[neighbour[0]][neighbour[1]][neighbour[2]]) {
                             //calculate force if neighbour particle is a normal particle or is the specific ghost cell to current particle
                             //if type is positive, it's a normal or a periodic ghost particle
                             //if its negative, it's a reflective ghost particle and then just the one according to the current particle should be used
                             //  -> that's the index of the current particle in the current cell negated and subtracted with one
-                            if (cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() >= 0 ||
-                                cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() == -j - 1) {
+                            if (l.getType() >= 0 ||
+                                l.getType() == -j - 1) {
                                 if (!smoothed)
-                                    forceCalculation(&(cells[x][y][z][j]),
-                                                     &(cells[neighbour[0]][neighbour[1]][neighbour[2]][l]));
+                                    forceCalculation(currentParticle,
+                                                     &l);
                                 else
-                                    smoothedForceCalculation(&(cells[x][y][z][j]),
-                                                             &(cells[neighbour[0]][neighbour[1]][neighbour[2]][l]),
+                                    smoothedForceCalculation(currentParticle,
+                                                             &l,
                                                              cutoff, smoothedRadius);
                             }
                         }
                     }
                     //adds Ggrav force to force at the end
-                    std::array<double, 3> grav = {0, cells[x][y][z][j].getM() * Grav, 0};
-                    cells[x][y][z][j].setF(cells[x][y][z][j].getF() + grav);
+                    std::array<double, 3> grav = {0, currentParticle->getM() * Grav, 0};
+                    currentParticle->setF(currentParticle->getF() + grav);
                 }
             }
         }
