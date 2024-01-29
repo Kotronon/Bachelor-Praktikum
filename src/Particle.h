@@ -77,7 +77,25 @@ public:
 
 private:
     Particle *neighbour_left;
-     Particle *neighbour_up ;
+public:
+    void setNeighbourRight(Particle *neighbourRight);
+
+    void setNeighbourLeft(Particle *neighbourLeft);
+
+    void setNeighbourUp(Particle *neighbourUp);
+
+    void setNeighbourDown(Particle *neighbourDown);
+
+    void setNeighbourDiagonalRightDown(Particle *neighbourDiagonalRightDown);
+
+    void setNeighbourDiagonalLeftDown(Particle *neighbourDiagonalLeftDown);
+
+    void setNeighbourDiagonalRightUp(Particle *neighbourDiagonalRightUp);
+
+    void setNeighbourDiagonalLeftUp(Particle *neighbourDiagonalLeftUp);
+
+private:
+    Particle *neighbour_up ;
      Particle *neighbour_down;
     Particle *neighbour_diagonal_right_down;
     Particle *neighbour_diagonal_left_down;
@@ -117,7 +135,7 @@ public:
 
     [[nodiscard]] double getEps() const;
 
-     void setNeighbours(Particle down, Particle up, Particle right, Particle left,
+     void setNeighbours(Particle right, Particle left, Particle up, Particle down,
                                      Particle diagonal_r_down, Particle diagonal_r_up,
                                      Particle diagonal_l_down,
                                      Particle diagonal_l_up);

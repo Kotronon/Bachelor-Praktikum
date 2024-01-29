@@ -20,6 +20,9 @@ public:
     static void LennardJonesForcePairwise(Particle *p1, Particle *p2);
     static void LennardJonesForceCell(LinkedCellContainer &cells, double Grav);
     static void LennardJonesForceMembrane(LinkedCellContainer &cells, double Grav);
+    static void MembraneForceCalculation(LinkedCellContainer &cells, double Grav);
+    static void MembraneForceDiagonalCalculation(LinkedCellContainer &cells, double Grav);
+
 
 
 };

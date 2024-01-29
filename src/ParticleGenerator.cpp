@@ -304,3 +304,62 @@ void ParticleGenerator::createSphereInCells(std::array<double, 3> center, std::a
         cells.addParticle(*p);
     }
 }
+
+/**
+ * create the membrane
+ * @param x
+ * @param y
+ * @param z
+ * */
+
+ParticleContainer ParticleGenerator::createMembrane(std::array<int, 3> n, std::array<double, 3> x, std::array<double, 3> v, double m, double h,
+                                       LinkedCellContainer &cells, double eps, double sig,int type) {
+
+    ParticleContainer membrane = ParticleContainer();
+
+    if (n[0] == 0.0 || n[1] == 0.0 || n[2] == 0.0) {
+        return membrane;
+    }
+
+    std::array<double, 3> coordinate = x;
+
+    for (int z_i = 0; z_i < n[2]; z_i++) {
+        for (int y_i = 0; y_i < n[1]; y_i++) {
+            for (int x_i = 0; x_i < n[0]; x_i++) {
+                // std::array<double, 3> x_arg, std::array<double, 3> v_arg,
+                //            double m_arg, double sig, double eps, int type = 0
+                Particle p = {x,v,m,sig,eps,type};
+                membrane.addParticle(p);
+                membrane.SetAllNeighbours(p);
+                coordinate[0] += h;
+            }
+            coordinate[0] = x[0];
+            coordinate[1] += h;
+        }
+        coordinate[1] = x[1];
+        coordinate[2] += h;
+    }
+
+
+    for (auto p = membrane.begin(); p < membrane.end(); p++) {
+        cells.addParticle(*p);
+    }
+
+
+
+    for (int k = 0; k < n[2]; ++k) {
+        for (int j = 0; j < n[1]; ++j) {
+            for (int i = 0; i < n[0]; ++i) {
+
+            }
+        }
+    }
+
+
+
+
+}
+
+
+
+

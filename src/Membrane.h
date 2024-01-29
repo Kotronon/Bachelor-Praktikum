@@ -12,27 +12,28 @@
 class Membrane {
 
 private :
-    const double k_ = 0;
-    const double r_0_ = 0;
+      static double k_;
+   static double r_0_;
 
 
-    double euklid_norm
-    (std::array<double, 3> x_i,
-     std::array<double, 3> x_j);
+
 
 
 public :
 
+    Membrane(double k, double r_0);
+
+    static double euklid_norm
+            (std::array<double, 3> x_i,
+             std::array<double, 3> x_j);
+
     double harmonic_potential(std::array<double, 3> x_i, std::array<double, 3> x_j);
 
-    std::array<double, 3> force_calculation(std::array<double, 3> x_i, std::array<double, 3> x_j);
+    static void force_calculation(Particle *p1, Particle *p2);
 
 
-    std::array<double, 3>
-    diagonal_interaction(std::array<double, 3> x_i, std::array<double, 3> x_j);
-
-
-    void createGrid(int x, int y, int z);
+    static void
+    diagonal_interaction(Particle *p1, Particle *p2);
 
 
 };

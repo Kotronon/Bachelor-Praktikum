@@ -228,6 +228,38 @@ Particle *Particle::getNeighbourDiagonalLeftUp() const {
     return neighbour_diagonal_left_up;
 }
 
+void Particle::setNeighbourRight(Particle *neighbourRight) {
+    neighbour_right = neighbourRight;
+}
+
+void Particle::setNeighbourLeft(Particle *neighbourLeft) {
+    neighbour_left = neighbourLeft;
+}
+
+void Particle::setNeighbourUp(Particle *neighbourUp) {
+    neighbour_up = neighbourUp;
+}
+
+void Particle::setNeighbourDown(Particle *neighbourDown) {
+    neighbour_down = neighbourDown;
+}
+
+void Particle::setNeighbourDiagonalRightDown(Particle *neighbourDiagonalRightDown) {
+    neighbour_diagonal_right_down = neighbourDiagonalRightDown;
+}
+
+void Particle::setNeighbourDiagonalLeftDown(Particle *neighbourDiagonalLeftDown) {
+    neighbour_diagonal_left_down = neighbourDiagonalLeftDown;
+}
+
+void Particle::setNeighbourDiagonalRightUp(Particle *neighbourDiagonalRightUp) {
+    neighbour_diagonal_right_up = neighbourDiagonalRightUp;
+}
+
+void Particle::setNeighbourDiagonalLeftUp(Particle *neighbourDiagonalLeftUp) {
+    neighbour_diagonal_left_up = neighbourDiagonalLeftUp;
+}
+
 
 
 

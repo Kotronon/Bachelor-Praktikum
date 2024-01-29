@@ -7,6 +7,7 @@
 #include "../utils/ArrayUtils.h"
 #include <spdlog/spdlog.h>
 #include <cfloat>
+#include "Membrane.h"
 
 double ForceCalculator::epsilon = 5;
 double ForceCalculator::sigma = 1;
@@ -111,4 +112,18 @@ void ForceCalculator::LennardJonesForceMembrane(LinkedCellContainer &cells, doub
     cells.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, Ggrav);
 
 
+}
+
+void ForceCalculator::MembraneForceCalculation(LinkedCellContainer &cells, double Grav) {
+    ForceCalculator::Ggrav = Grav;
+    cells.setZero();
+    cells.applyForcePairwise(Membrane::force_calculation, Ggrav);
+
+
+}
+
+void ForceCalculator::MembraneForceDiagonalCalculation(LinkedCellContainer &cells, double Grav) {
+    ForceCalculator::Ggrav = Grav;
+    cells.setZero();
+    cells.applyForcePairwise(Membrane::diagonal_interaction, Ggrav);
 }

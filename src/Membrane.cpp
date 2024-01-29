@@ -9,32 +9,45 @@
 #include <vector>
 #include <array>
 
-double k_ = 300;
-double r_0_ = 3;
-double sqrt_2 = std::sqrt(2);
 
+const double sqrt_2 = std::sqrt(2);
+
+/**
+ * Calculates the euclidean norm, eventhough it's already given*/
 double Membrane::euklid_norm(std::array<double, 3> x_i,
                              std::array<double, 3> x_j) {
     return ArrayUtils::L2Norm(x_i - x_j);
 }
 
-std::array<double, 3> Membrane::force_calculation(std::array<double, 3> x_i, std::array<double, 3> x_j) {
+/**force calculation, formula 1 on the worksheet*/
+void Membrane::force_calculation(Particle *p1, Particle *p2) {
+    std::array<double, 3> x_i, x_j;
+
+    x_i = p1->getF();
+    x_j = p2->getF();
+
     std::array<double, 3> result = {0.0,0.0,0.0};
-        double norm = euklid_norm(x_i,x_j);
+    double norm = euklid_norm(x_i,x_j);
     double teil1 = Membrane::k_ * (norm - r_0_);
 
 
 
     result[0] = teil1 * (x_j[0] - x_i[0] / norm);
-    result[0] = teil1 * (x_j[1] - x_i[1] / norm);
-    result[0] = teil1 * (x_j[2] - x_i[2] / norm);
+    result[1] = teil1 * (x_j[1] - x_i[1] / norm);
+    result[2] = teil1 * (x_j[2] - x_i[2] / norm);
+
+    p1->setOldF(p1->getF());
+    p1->setF(result);
+
+    p2->setOldF(p2->getF());
+    p2->setF(result);
 
 
-
-    return result;
 }
 
-std::array<double, 3> Membrane::diagonal_interaction(std::array<double, 3> x_i, std::array<double, 3> x_j) {
+
+void Membrane::diagonal_interaction(Particle *p1, Particle *p2) {
+    std::array<double, 3> x_i, x_j;
     std::array<double, 3> result = {0.0,0.0,0.0};
     double norm = euklid_norm(x_i,x_j);
     double teil1 = Membrane::k_ * (norm - (sqrt_2*r_0_));
@@ -42,26 +55,22 @@ std::array<double, 3> Membrane::diagonal_interaction(std::array<double, 3> x_i, 
     result[0] = teil1 * (x_j[0] - x_i[0] / norm);
     result[0] = teil1 * (x_j[1] - x_i[1] / norm);
     result[0] = teil1 * (x_j[2] - x_i[2] / norm);
+    p1->setOldF(p1->getF());
+    p1->setF(result);
 
-    return result;
+    p2->setOldF(p2->getF());
+    p2->setF(result);
 }
 
 double Membrane::harmonic_potential(std::array<double, 3> x_i, std::array<double, 3> x_j) {
     return k_/2 * (euklid_norm(x_i,x_j) - r_0_);
 }
 
-void Membrane::createGrid(int x, int y, int z) {
-       Particle grid [x][y][z];
-
-    for (int i = 0; i < x; ++i) {
-        for (int j = 0; j < y; ++j) {
-            for (int k = 0; k < z; ++k) {
-                grid[i][j][k] = Particle();
-            }
-        }
-    }
-
+Membrane::Membrane(double k, double r_0) {
+    k_ = k;
+    r_0_ = r_0;
 }
+
 
 int main(int argc, char *argsv[]) {
 

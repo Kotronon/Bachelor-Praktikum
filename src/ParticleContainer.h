@@ -38,7 +38,10 @@ public:
 
     void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation, double Ggrav);
 
+    void SetAllNeighbours(Particle &p);
+
     void removeDuplicates();
+
 };
 
 

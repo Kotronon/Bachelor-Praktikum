@@ -111,3 +111,86 @@ int ParticleContainer::size() {
     return containedParticles.size();
 }
 
+/**
+ * iterate through the Particles and set the neighbours
+ * @param p Particle whose neighbours are supposed to be set
+ * */
+
+void ParticleContainer::SetAllNeighbours( Particle &p) {
+    double x = p.getX()[0];
+    double y = p.getX()[1];
+
+    if(containedParticles.size() >1) {
+        for (Particle particle: containedParticles) {
+            if (!particle.operator==(p)) {
+                double xp = particle.getX()[0];
+                double yp = particle.getX()[1];
+
+                if (xp == x + 1) {
+                    if (yp == y + 1) {
+                        p.setNeighbourDiagonalRightUp(&particle);
+                        particle.setNeighbourDiagonalLeftDown(&p);
+                    }
+                    if (yp == y) {
+                        p.setNeighbourRight(&particle);
+                        particle.setNeighbourLeft(&p);
+                    }
+
+                    if(yp == y -1){
+                        p.setNeighbourDiagonalRightDown(&particle);
+                        particle.setNeighbourDiagonalLeftUp(&p);
+                    }
+                }
+
+                if(xp == x){
+                    if (yp == y + 1) {
+                       p.setNeighbourUp(&particle);
+                       particle.setNeighbourDown(&p);
+                    }
+
+
+                    if(yp == y -1){
+                        p.setNeighbourDown(&particle);
+                        particle.setNeighbourUp(&p);
+                    }
+                }
+
+                if(xp == x-1){
+                    if (yp == y + 1) {
+                        p.setNeighbourDiagonalLeftUp(&particle);
+                        particle.setNeighbourDiagonalRightDown(&p);
+                    }
+                    if (yp == y) {
+                        p.setNeighbourLeft(&particle);
+                        particle.setNeighbourRight(&p);
+                    }
+
+                    if(yp == y -1){
+                        p.setNeighbourDiagonalLeftDown(&particle);
+                        particle.setNeighbourDiagonalRightUp(&p);
+                    }
+                }
+
+            }
+        }
+    }
+
+   /* for (int i = 0; i < size(); ++i) {
+        Particle p = containedParticles[i];
+
+        int x = p.getX()[0];
+        int y = p.getX()[1];
+        int z = p.getX()[2];
+
+        if(x ==0 && y == 0){
+            break;
+            return;
+
+        }
+        if(x ==0){
+
+        }
+
+    }*/
+
+}
