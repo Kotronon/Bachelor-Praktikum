@@ -117,7 +117,7 @@ void ForceCalculator::MembraneForceCalculation(LinkedCellContainer &cells, doubl
     ForceCalculator::Ggrav = Grav;
     cells.setZero();
     cells.applyForceToMembrane(
-            Membrane::force_calculation,Membrane::diagonal_interaction,
+            ForceCalculator::LateralForceCalculation,ForceCalculator::DiagonalForceCalculation,
             Ggrav);
 
 
