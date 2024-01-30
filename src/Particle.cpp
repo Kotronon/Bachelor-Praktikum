@@ -275,7 +275,7 @@ const std::vector<Particle> &Particle::getLateralNeighbours() const {
  * 0 means they're not neighbours,
  * 1 means they're lateral neighbours,
  * and 2 means they're diagonal neighbours*/
-int Particle::isNeighbours(Particle &p2) {
+int Particle::isNeighbours(Particle &p2,double h) {
     double x1 = this->getX()[0];
     double y1 = this->getX()[1];
 
@@ -284,14 +284,14 @@ int Particle::isNeighbours(Particle &p2) {
     double y2 = p2.getX()[1];
 
     //if they're lateral neighbours
-    if(x1 == x2 && (y1 == y2 + 1 || y2 == y1 +1 )){
+    if(x1 == x2 && (y1 == y2 + h || y2 == y1 +h )){
         return 1;
     }
-    if(y1 == y2 && (x1 == x2 + 1 || x2 == x1 +1 )){
+    if(y1 == y2 && (x1 == x2 + h || x2 == x1 +h )){
         return 1;
     }
-    if(x1 == x2 +1 || x2 == x1 +1){
-        if(y1 == y2 + 1 || y2 == y1 +1){
+    if(x1 == x2 +h || x2 == x1 +h){
+        if(y1 == y2 + h || y2 == y1 +h){
             return 2;
         }
 

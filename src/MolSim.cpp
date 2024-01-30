@@ -143,6 +143,7 @@ int main(int argc, char *argsv[]) {/*
     domain_size = {148,148,148};
     end_time = 10;
     Grav = -0.001;
+    double h = 2.2;
 
     //Creation of linked-cell container to be filled with all relevant particles
     LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
@@ -159,7 +160,7 @@ int main(int argc, char *argsv[]) {/*
     int iteration = 0;
 
     //Pre-calculation of f
-    ForceCalculator::LennardJonesForceMembrane(cells, Grav);
+    ForceCalculator::LennardJonesForceMembrane(cells, Grav, h);
 
     VelocityCalculator::BrownianMotionInitializationCell(cells, 1.1, dim);
 
@@ -170,8 +171,8 @@ int main(int argc, char *argsv[]) {/*
         //Calculate new x
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
         //Calculate new f
-        ForceCalculator::LennardJonesForceMembrane(cells, Grav);
-        ForceCalculator::MembraneForceCalculation(cells,Grav);
+        ForceCalculator::LennardJonesForceMembrane(cells, Grav,h);
+        ForceCalculator::MembraneForceCalculation(cells,Grav,h);
 
         //Calculate new v
         VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);

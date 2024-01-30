@@ -103,7 +103,7 @@ void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &cells, double g
     cells.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, Ggrav);
 }
 
-void ForceCalculator::LennardJonesForceMembrane(LinkedCellContainer &cells, double Grav) {
+void ForceCalculator::LennardJonesForceMembrane(LinkedCellContainer &cells, double Grav, double h) {
     spdlog::info("The method was called");
 
     ForceCalculator::sigma = sigma * (pow(2, (1/6)));
@@ -113,12 +113,12 @@ void ForceCalculator::LennardJonesForceMembrane(LinkedCellContainer &cells, doub
 
 }
 
-void ForceCalculator::MembraneForceCalculation(LinkedCellContainer &cells, double Grav) {
+void ForceCalculator::MembraneForceCalculation(LinkedCellContainer &cells, double Grav, double h) {
     ForceCalculator::Ggrav = Grav;
     cells.setZero();
     cells.applyForceToMembrane(
             ForceCalculator::LateralForceCalculation,ForceCalculator::DiagonalForceCalculation,
-            Ggrav);
+            Ggrav,h);
 
 
 }

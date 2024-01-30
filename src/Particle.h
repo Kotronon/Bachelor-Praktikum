@@ -152,12 +152,10 @@ public:
                                      Particle diagonal_l_down,
                                      Particle diagonal_l_up);
 
-    [[nodiscard]] std::string neighboursToString() const;
-
 
     bool operator==(Particle &other);
 
-    [[nodiscard]]int isNeighbours( Particle &p2);
+    [[nodiscard]]int isNeighbours( Particle &p2, double h);
 
     [[nodiscard]] std::string toString() const;
 

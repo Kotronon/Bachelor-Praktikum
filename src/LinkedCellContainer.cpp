@@ -633,7 +633,7 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
  * */
 void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle *, Particle *)> &forceCalculationLateral,
                                                const std::function<void(Particle *, Particle *)> &forceCalculationDiagonal,
-                                               double Grav) {
+                                               double Grav, double h) {
 
 
 
@@ -645,7 +645,7 @@ void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle
                 for (int j = 0; j < int(cells[x][y][z].size()); j++) {
                     //for all particles in current cell
                     for (int k = j + 1; k < int(cells[x][y][z].size()); k++) {
-                        if(cells[x][y][z][j].isNeighbours(cells[x][y][z][k]) == 1){
+                        if(cells[x][y][z][j].isNeighbours(cells[x][y][z][k],h) == 1){
                             //calculate force with particles in current cell
                             forceCalculationLateral(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
 
@@ -654,7 +654,7 @@ void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle
 
 
                         }
-                        else if(cells[x][y][z][j].isNeighbours(cells[x][y][z][k]) == 2){
+                        else if(cells[x][y][z][j].isNeighbours(cells[x][y][z][k],h) == 2){
                             //calculate force with particles in current cell
                             forceCalculationDiagonal(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
                             spdlog::info("The two cells are neighbours diagonally");

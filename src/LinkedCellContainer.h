@@ -59,7 +59,7 @@ public:
 
     void applyForceToMembrane(const std::function<void(Particle *, Particle *)> &forceCalculationLateral,
                               const std::function<void(Particle *, Particle *)> &forceCalculationDiagonal,
-                              double Grav);
+                              double Grav,double h);
 
     void applyThatOneForceInTheMembrane(Particle *p1, Particle *p2);
 

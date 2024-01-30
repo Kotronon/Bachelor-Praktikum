@@ -116,7 +116,7 @@ int ParticleContainer::size() {
  * @param p Particle whose neighbours are supposed to be set
  * */
 
-void ParticleContainer::SetAllNeighbours( Particle &p) {
+void ParticleContainer::SetAllNeighbours( Particle &p , double h) {
     double x = p.getX()[0];
     double y = p.getX()[1];
 
@@ -126,8 +126,8 @@ void ParticleContainer::SetAllNeighbours( Particle &p) {
                 double xp = particle.getX()[0];
                 double yp = particle.getX()[1];
 
-                if (xp == x + 1) {
-                    if (yp == y + 1) {
+                if (xp == x + h) {
+                    if (yp == y + h) {
                         p.setNeighbourDiagonalRightUp(&particle);
                         particle.setNeighbourDiagonalLeftDown(&p);
                     }
@@ -136,27 +136,27 @@ void ParticleContainer::SetAllNeighbours( Particle &p) {
                         particle.setNeighbourLeft(&p);
                     }
 
-                    if(yp == y -1){
+                    if(yp == y -h){
                         p.setNeighbourDiagonalRightDown(&particle);
                         particle.setNeighbourDiagonalLeftUp(&p);
                     }
                 }
 
                 if(xp == x){
-                    if (yp == y + 1) {
+                    if (yp == y + h) {
                        p.setNeighbourUp(&particle);
                        particle.setNeighbourDown(&p);
                     }
 
 
-                    if(yp == y -1){
+                    if(yp == y -h){
                         p.setNeighbourDown(&particle);
                         particle.setNeighbourUp(&p);
                     }
                 }
 
-                if(xp == x-1){
-                    if (yp == y + 1) {
+                if(xp == x-h){
+                    if (yp == y + h) {
                         p.setNeighbourDiagonalLeftUp(&particle);
                         particle.setNeighbourDiagonalRightDown(&p);
                     }
@@ -165,7 +165,7 @@ void ParticleContainer::SetAllNeighbours( Particle &p) {
                         particle.setNeighbourRight(&p);
                     }
 
-                    if(yp == y -1){
+                    if(yp == y -h){
                         p.setNeighbourDiagonalLeftDown(&particle);
                         particle.setNeighbourDiagonalRightUp(&p);
                     }
