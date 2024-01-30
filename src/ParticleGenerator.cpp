@@ -332,7 +332,7 @@ ParticleContainer ParticleGenerator::createMembrane(std::array<int, 3> n, std::a
         for (int y_i = 0; y_i < n[1]; y_i++) {
             for (int x_i = 0; x_i < n[0]; x_i++) {
 
-                Particle p = {x,v,m,sig,eps,type};
+                Particle p = {coordinate,v,m,sig,eps,type};
                 membrane.SetAllNeighbours(p);
                 spdlog::info("The neighbours are all set ");
                 membrane.addParticle(p);
