@@ -147,6 +147,7 @@ int main(int argc, char *argsv[]) {/*
     delta_t = 0.01;
     domain_size = {148,148,148};
     end_time = 500;
+    Grav = -0.001;
 
     //Creation of linked-cell container to be filled with all relevant particles
     LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
