@@ -28,16 +28,16 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 
 //Hardcoded values for now:
 constexpr double start_time = 0;
-double end_time = 100;
+double end_time = 10;
 double delta_t = 0.0005;
 
 int dim = 3;
 double Grav = -12.44;
 
 //if you want to use directSum please use DBL_MAX for each direction
-std::array<double, 3> domain_size = {60, 60, 60}; //{9.2, 9.2, 9.2};
+std::array<double, 3> domain_size = {60, 60, 60}; // {9.2, 9.2, 9.2}; //
 //if you want to use directSum please use DBL_MAX
-double cutoff = 3.0 * 1.2; // 2.3
+double cutoff =   3.0 * 1.2; //2.3; //
 //if you want to use smoothed Lennard-Jones Potential set smoothLJ to true
 double sLJRadius = 1.9;
 bool smoothLJ = false;
@@ -52,7 +52,7 @@ std::string inputFile = "";// "../input/checkpoint1.txt";
 
 //checkpoints
 bool checkpointing = true;
-int num_checkpoints = 200;
+int num_checkpoints = 20;
 //path to folder to be used for output of checkpoint files
 std::string outputDirectory = "../input";
 
@@ -71,9 +71,9 @@ double differenceTemperature = 0.001; // 7.8 * pow(10, -4);
 //Number of threads
 int num_threads = 16;
 
-bool calculateDiffusion = false;
+bool calculateDiffusion = true;
 int intervalBegin = 0;
-int intervalEnd = 80;
+int intervalEnd = 70;
 double deltaR = 1;
 std::string filename = "../input/RDF1.xsl";
 

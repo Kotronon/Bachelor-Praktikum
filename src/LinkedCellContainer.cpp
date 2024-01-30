@@ -494,7 +494,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
     double boundary_check = pow(2.0, 1.0 / 6.0) * cells[x][y][z][index].getSig();
     //if boundary is reflective, check if particle is nearer than 2^(1/6)*sig to boundary; one ghost particle per boundary
     //if periodic mirror particle to other sides (can be multiple ghost particles)
-    if (x == 1 && x_coordinate < boundary_check) {
+    if (x == 1) {
         if (boundary[0] == "r" && x_coordinate < boundary_check) {
             std::array<double, 3> ghost_x = {-cells[x][y][z][index].getX()[0],
                                              cells[x][y][z][index].getX()[1], cells[x][y][z][index].getX()[2]};
@@ -513,7 +513,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             x_new = x_cells + 1;
         }
     }
-    if (x == x_cells  && x_coordinate > (x_max - boundary_check)) {
+    if (x == x_cells) {
         if (boundary[1] == "r" && x_coordinate > (x_max - boundary_check)) {
             std::array<double, 3> ghost_x = {x_max + x_max - x_coordinate,
                                              cells[x][y][z][index].getX()[1], cells[x][y][z][index].getX()[2]};
@@ -532,7 +532,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             x_new = 0;
         }
     }
-    if (y == 1 && y_coordinate < boundary_check) {
+    if (y == 1) {
         if (boundary[3] == "r" && y_coordinate < boundary_check) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0],
                                              -cells[x][y][z][index].getX()[1],
@@ -553,7 +553,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             y_new = y_cells + 1;
         }
     }
-    if (y == y_cells  && y_coordinate > (y_max - boundary_check)) {
+    if (y == y_cells) {
         if (boundary[2] == "r" && y_coordinate > (y_max - boundary_check)) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0],
                                              y_max + y_max - y_coordinate,
@@ -574,7 +574,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             y_new = 0;
         }
     }
-    if (z == 1  && z_coordinate < boundary_check) {
+    if (z == 1) {
         if (boundary[4] == "r" && z_coordinate < boundary_check) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
                                              -cells[x][y][z][index].getX()[2]};
@@ -595,7 +595,7 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
             z_new = z_cells + 1;
         }
     }
-    if (z == z_cells && z_coordinate > z_max - boundary_check) {
+    if (z == z_cells) {
         if (boundary[5] == "r" && z_coordinate > z_max - boundary_check) {
             std::array<double, 3> ghost_x = {cells[x][y][z][index].getX()[0], cells[x][y][z][index].getX()[1],
                                              z_max + z_max - z_coordinate};
