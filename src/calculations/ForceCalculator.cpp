@@ -132,6 +132,21 @@ void ForceCalculator::LateralForceCalculation(Particle *p1, Particle *p2) {
 
 void ForceCalculator::DiagonalForceCalculation(Particle *p1, Particle *p2) {
     Membrane::diagonal_interaction(p1,p2);
+
+
+    std::array<double, 3> x_i, x_j;
+    std::array<double, 3> result = {0.0,0.0,0.0};
+    double norm = ArrayUtils::L2Norm(x_i - x_j);
+    double teil1 = 300 * (norm - (sqrt(2.0)*2.2));
+
+    result[0] = teil1 * (x_j[0] - x_i[0] / norm);
+    result[0] = teil1 * (x_j[1] - x_i[1] / norm);
+    result[0] = teil1 * (x_j[2] - x_i[2] / norm);
+    p1->setOldF(p1->getF());
+    p1->setF(result);
+
+    p2->setOldF(p2->getF());
+    p2->setF(result);
 }
 
 
