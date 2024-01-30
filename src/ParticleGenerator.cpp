@@ -331,8 +331,9 @@ ParticleContainer ParticleGenerator::createMembrane(std::array<int, 3> n, std::a
                 // std::array<double, 3> x_arg, std::array<double, 3> v_arg,
                 //            double m_arg, double sig, double eps, int type = 0
                 Particle p = {x,v,m,sig,eps,type};
-                membrane.addParticle(p);
                 membrane.SetAllNeighbours(p);
+                membrane.addParticle(p);
+
                 coordinate[0] += h;
             }
             coordinate[0] = x[0];
@@ -346,6 +347,8 @@ ParticleContainer ParticleGenerator::createMembrane(std::array<int, 3> n, std::a
     for (auto p = membrane.begin(); p < membrane.end(); p++) {
         cells.addParticle(*p);
     }
+
+    cells.addContainer(membrane);
 
 
 

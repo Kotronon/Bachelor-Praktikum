@@ -136,17 +136,12 @@ int main(int argc, char *argsv[]) {/*
         }
         current_time += delta_t;
     }
-
-    /* if(checkpointing){
-      std::string filename = "../input/checkpointNew.txt";
-              ParticleContainer currentState = cells.toContainer();
-              FileWriter::writeFile(currentState, filename);
-              }*/
+*/
 
     cutoff = 4.0;
     delta_t = 0.01;
     domain_size = {148,148,148};
-    end_time = 500;
+    end_time = 10;
     Grav = -0.001;
 
     //Creation of linked-cell container to be filled with all relevant particles
@@ -163,7 +158,8 @@ int main(int argc, char *argsv[]) {/*
     int steps_between_checkpoints = int(end_time / delta_t) / num_checkpoints;
 
 
-    ParticleGenerator::createMembrane({50,50,1},{15,15,1.5},{0,0,0},1.0,2.2,cells,1.0,1.0,300,2.2,1);
+    ParticleGenerator
+    ::createMembrane({50,50,1},{15,15,1.5},{0,0,0},1.0,2.2,cells,1.0,1.0,300,2.2,1);
 
     double current_time = start_time;
     int iteration = 0;
