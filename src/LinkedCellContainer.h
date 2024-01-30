@@ -11,10 +11,24 @@
 
 
 class LinkedCellContainer {
+private:
+    int x_cells;
+    int y_cells;
+    int z_cells;
+    double cutoff;
+    double x_max;
+    double y_max;
+    double z_max;
+    int it = 0;
+    double smoothedRadius;
+    bool smoothed;
+    std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
+    std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
+    double x_cell_size;
+    double y_cell_size;
+    double z_cell_size;
+
 public:
-
-
-
     LinkedCellContainer(std::array<double, 3> N, double cutoff,  std::array<std::string, 6> b, bool smoothed = false, double sLJparameter = -1);
 
     virtual ~LinkedCellContainer();
@@ -70,23 +84,12 @@ public:
 
     std::vector<double> calculateRDF(int intervalBegin, int intervalEnd, double deltaR,  std::vector<int> x_axis_plot, std::ofstream  &filename);
 
+    [[nodiscard]] int getXCells() const;
 
-private:
-    int x_cells;
-    int y_cells;
-    int z_cells;
-    double cutoff;
-    double x_max;
-    double y_max;
-    double z_max;
-    int it = 0;
-    double smoothedRadius;
-    bool smoothed;
-    std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
-    std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
-    double x_cell_size;
-    double y_cell_size;
-    double z_cell_size;
+    [[nodiscard]] int getYCells() const;
 
+    [[nodiscard]] int getZCells() const;
+
+    std::vector<Particle> getCell(int x, int y, int z);
 };
 

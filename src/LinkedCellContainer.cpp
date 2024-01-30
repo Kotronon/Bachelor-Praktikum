@@ -177,22 +177,54 @@ void LinkedCellContainer::addContainer(ParticleContainer &container) {
 }
 
 /**
- * return cells on x_axis
+ * return size of cells on x_axis
  * @return
  */
 double LinkedCellContainer::getXCellSize() const { return x_cell_size; }
 
 /**
- * return cells on y_axis
+ * return size of cells on y_axis
  * @return
  */
 double LinkedCellContainer::getYCellSize() const { return y_cell_size; }
 
 /**
- * return cells on z_axis
+ * return size of cells on z_axis
  * @return
  */
 double LinkedCellContainer::getZCellSize() const { return z_cell_size; }
+
+/**
+ * return number of cells on x_axis
+ * @return
+ */
+int LinkedCellContainer::getXCells() const {
+    return x_cells;
+}
+
+/**
+ * return number cells on y_axis
+ * @return
+ */
+int LinkedCellContainer::getYCells() const {
+    return y_cells;
+}
+
+/**
+ * return number of cells on z_axis
+ * @return
+ */
+int LinkedCellContainer::getZCells() const {
+    return z_cells;
+}
+
+/**
+ * returns a specific cell
+ * @return
+ */
+std::vector<Particle> LinkedCellContainer::getCell(int x, int y, int z) {
+    return cells[x][y][z];
+}
 
 /**
  * returns cutoff radius
@@ -211,7 +243,7 @@ std::vector<std::vector<std::vector<std::vector<Particle>>>>
 }
 
 /**
- * returns the vector of all particles in the ParticleContainer with Pointer at last element
+ * returns the vector of all particles in the LinkedCellContainer with Pointer at last element
  * @return
  */
 std::vector<std::vector<std::vector<std::vector<Particle>>>>
@@ -328,6 +360,7 @@ std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y
  * sets old force to current force and current force to zero
  */
 void LinkedCellContainer::setZero() {
+    #pragma omp parallel for collapse(3) default(none)
     for (int x = 1; x <= x_cells; x++) {
         for (int y = 1; y <= y_cells; y++) {
             for (int z = 1; z <= z_cells; z++) {

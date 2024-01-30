@@ -118,7 +118,6 @@ void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &cells, double g
  * @param smoothedParameter smoothed parameter
  */
 double ForceCalculator::smoothedLennardJonesPotential(Particle *p1, Particle *p2, double cutoff, double smoothedParameter) {
-
     double eps = sqrt(p1->getEps() * p2->getEps());
     double sig = (p1->getSig() + p2->getSig()) / 2;
     double L2Norm_p1_p2 = ArrayUtils::L2Norm(p1->getX() - p2->getX());

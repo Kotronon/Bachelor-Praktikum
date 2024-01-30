@@ -25,10 +25,11 @@ void PositionCalculator::PositionStoermerVerlet(ParticleContainer &container, do
  * @param delta_t
  */
 void PositionCalculator::PositionStoermerVerletCell(LinkedCellContainer &cells, double delta_t) {
-    for (auto &x: cells) {
-        for (auto &y: x) {
-            for (auto &z: y) {
-                for (auto &p: z) {
+    #pragma omp parallel for collapse(3) default(none) shared(cells, delta_t)
+    for (int x = 1; x <= cells.getXCells(); x++) {
+        for (int y = 1; y <= cells.getYCells(); y++) {
+            for (int z = 1; z <= cells.getZCells(); z++) {
+                for (auto &p: cells.getCell(x,y,z)) {
                     p.setOldX(p.getX());
                     std::array<double, 3> x_new = p.getX() + (delta_t * p.getV()) +
                                                   (((delta_t * delta_t) / (2 * p.getM())) *
