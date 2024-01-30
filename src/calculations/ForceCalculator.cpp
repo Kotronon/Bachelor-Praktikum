@@ -7,7 +7,6 @@
 #include "../utils/ArrayUtils.h"
 #include <spdlog/spdlog.h>
 #include <cfloat>
-#include "Membrane.h"
 
 double ForceCalculator::epsilon = 5;
 double ForceCalculator::sigma = 1;
@@ -135,6 +134,8 @@ void ForceCalculator::DiagonalForceCalculation(Particle *p1, Particle *p2) {
 
 
     std::array<double, 3> x_i, x_j;
+    x_i= p1->getX();
+    x_j = p2-> getX();
     std::array<double, 3> result = {0.0,0.0,0.0};
     double norm = ArrayUtils::L2Norm(x_i - x_j);
     double teil1 = 300 * (norm - (sqrt(2.0)*2.2));
