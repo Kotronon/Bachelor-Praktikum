@@ -123,3 +123,13 @@ void ForceCalculator::MembraneForceCalculation(LinkedCellContainer &cells, doubl
 
 }
 
+void ForceCalculator::LateralForceCalculation(Particle *p1, Particle *p2) {
+
+    Membrane::force_calculation(p1,p2);
+}
+
+void ForceCalculator::DiagonalForceCalculation(Particle *p1, Particle *p2) {
+    Membrane::diagonal_interaction(p1,p2);
+}
+
+

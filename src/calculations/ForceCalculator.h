@@ -15,6 +15,8 @@ private:
     static double Ggrav;
     static double cutoff;
 public:
+    static void LateralForceCalculation(Particle *p1, Particle *p2);
+    static void DiagonalForceCalculation(Particle *p1, Particle *p2);
     static void GravityForceCalculation(ParticleContainer &container);
     static void LennardJonesForce(ParticleContainer &container, double eps, double sig);
     static void LennardJonesForceFaster(ParticleContainer &container, double eps, double sig, double Grav);
