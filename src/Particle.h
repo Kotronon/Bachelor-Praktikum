@@ -9,6 +9,7 @@
 
 #include <array>
 #include <string>
+#include <vector>
 
 class Particle {
 
@@ -101,7 +102,18 @@ private:
     Particle *neighbour_diagonal_left_down;
     Particle *neighbour_diagonal_right_up;
     Particle *neighbour_diagonal_left_up;
+    std::vector<Particle> LateralNeighbours;
+    std::vector<Particle> DiagonalNeighbours;
 public:
+
+
+
+    const std::vector<Particle> &getDiagonalNeighbours() const;
+    const std::vector<Particle> &getLateralNeighbours() const;
+
+    std::vector<Particle*> setDiagonalNeighbours(Particle &p);
+    std::vector<Particle*> setLateralNeighbours(Particle &p);
+
 
 
 public:

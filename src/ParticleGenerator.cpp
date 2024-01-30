@@ -6,6 +6,7 @@
 #include "utils/ArrayUtils.h"
 #include "ParticleGenerator.h"
 #include "ParticleContainer.h"
+#include "Membrane.h"
 #include <cmath>
 #include <iostream>
 #include <spdlog/spdlog.h>
@@ -313,9 +314,11 @@ void ParticleGenerator::createSphereInCells(std::array<double, 3> center, std::a
  * */
 
 ParticleContainer ParticleGenerator::createMembrane(std::array<int, 3> n, std::array<double, 3> x, std::array<double, 3> v, double m, double h,
-                                       LinkedCellContainer &cells, double eps, double sig,int type) {
+                                       LinkedCellContainer &cells, double eps, double sig,double k, double r_0,int type) {
 
     ParticleContainer membrane = ParticleContainer();
+
+    Membrane membrane1 = Membrane(k,r_0);
 
     if (n[0] == 0.0 || n[1] == 0.0 || n[2] == 0.0) {
         return membrane;
@@ -347,16 +350,7 @@ ParticleContainer ParticleGenerator::createMembrane(std::array<int, 3> n, std::a
 
 
 
-    for (int k = 0; k < n[2]; ++k) {
-        for (int j = 0; j < n[1]; ++j) {
-            for (int i = 0; i < n[0]; ++i) {
-
-            }
-        }
-    }
-
-
-
+    return membrane;
 
 }
 

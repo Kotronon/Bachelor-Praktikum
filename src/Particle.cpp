@@ -260,6 +260,39 @@ void Particle::setNeighbourDiagonalLeftUp(Particle *neighbourDiagonalLeftUp) {
     neighbour_diagonal_left_up = neighbourDiagonalLeftUp;
 }
 
+const std::vector<Particle> &Particle::getDiagonalNeighbours() const {
+    return DiagonalNeighbours;
+}
+
+
+const std::vector<Particle> &Particle::getLateralNeighbours() const {
+    return LateralNeighbours;
+}
+
+std::vector<Particle*> setDiagonalNeighbours(Particle &p){
+    std::vector<Particle*> diagNeighbours;
+
+    diagNeighbours.push_back(p.getNeighbourDiagonalRightUp());
+    diagNeighbours.push_back(p.getNeighbourDiagonalRightDown());
+    diagNeighbours.push_back(p.getNeighbourDiagonalLeftUp());
+    diagNeighbours.push_back(p.getNeighbourDiagonalLeftDown());
+
+    return diagNeighbours;
+
+}
+std::vector<Particle*> setLateralNeighbours(Particle &p){
+    std::vector<Particle*> latNeighbours;
+
+    latNeighbours.push_back(p.getNeighbourRight());
+    latNeighbours.push_back(p.getNeighbourLeft());
+    latNeighbours.push_back(p.getNeighbourUp());
+    latNeighbours.push_back(p.getNeighbourDown());
+
+    return latNeighbours;
+}
+
+
+
 
 
 

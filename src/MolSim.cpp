@@ -62,8 +62,8 @@ double differenceTemperature = 10;
 //Creation of particle container to be filled with all relevant particles
 ParticleContainer container = ParticleContainer();
 
-int main(int argc, char *argsv[]) {
-
+int main(int argc, char *argsv[]) {/*
+    {
     //Creation of linked-cell container to be filled with all relevant particles
     LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
 
@@ -75,9 +75,6 @@ int main(int argc, char *argsv[]) {
     int checkpoint = 1;
     if (num_checkpoints < 0) checkpointing = false;
     int steps_between_checkpoints = int(end_time / delta_t) / num_checkpoints;
-
-    //Creation of cuboids/disks for simulation with linked-cell container
-    //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
     ParticleGenerator::createCuboidInCells({0.6, 2, 0}, {0, 0, 0}, {250, 20, 1}, 1.2, 1.0, cells, 1.2, 1, 1);
     ParticleGenerator::createCuboidInCells({0.6, 27, 0}, {0, 0, 0}, {250, 20, 1}, 1.2, 2.0, cells, 1.1, 1, 2);
@@ -146,9 +143,37 @@ int main(int argc, char *argsv[]) {
               FileWriter::writeFile(currentState, filename);
               }*/
 
+    //Creation of linked-cell container to be filled with all relevant particles
+    LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
+
+    //Add Particles from input file
+    if (!inputFile.empty()) {
+        FileReader::readFile(container, inputFile.data());
+        cells.addContainer(container);
+    }
+
+
+    ParticleGenerator::createMembrane({50,50,1},{15,15,1.5},{0,0,0},1.0,2.2,cells,1.0,1.0,300,2.2,1);
+
+    double current_time = start_time;
+    int iteration = 0;
+
+    //Pre-calculation of f
+    ForceCalculator::LennardJonesForceMembrane(cells, Grav);
+
+    // Particle generator create Mmebrane
+
+    // Lennard Jones force membrane
+
+    //
+
     spdlog::info("Output written. Terminating...");
     return 0;
-}
+    }
+
+
+
+
 
 void plotParticlesInCells(int iteration, LinkedCellContainer &cells) {
 

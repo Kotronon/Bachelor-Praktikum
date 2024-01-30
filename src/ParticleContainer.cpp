@@ -175,22 +175,5 @@ void ParticleContainer::SetAllNeighbours( Particle &p) {
         }
     }
 
-   /* for (int i = 0; i < size(); ++i) {
-        Particle p = containedParticles[i];
-
-        int x = p.getX()[0];
-        int y = p.getX()[1];
-        int z = p.getX()[2];
-
-        if(x ==0 && y == 0){
-            break;
-            return;
-
-        }
-        if(x ==0){
-
-        }
-
-    }*/
 
 }
