@@ -300,15 +300,7 @@ int Particle::isNeighbours(Particle &p2) {
     return 0;
 }
 
-std::string Particle::neighboursToString() const {
-
-
-
-
-    ;
-}
-
-std::vector<Particle*> setDiagonalNeighbours(Particle &p){
+std::vector<Particle *> Particle::setDiagonalNeighbours(Particle &p) {
     std::vector<Particle*> diagNeighbours;
 
     diagNeighbours.push_back(p.getNeighbourDiagonalRightUp());
@@ -317,9 +309,9 @@ std::vector<Particle*> setDiagonalNeighbours(Particle &p){
     diagNeighbours.push_back(p.getNeighbourDiagonalLeftDown());
 
     return diagNeighbours;
-
 }
-std::vector<Particle*> setLateralNeighbours(Particle &p){
+
+std::vector<Particle *> Particle::setLateralNeighbours(Particle &p) {
     std::vector<Particle*> latNeighbours;
 
     latNeighbours.push_back(p.getNeighbourRight());
@@ -329,9 +321,6 @@ std::vector<Particle*> setLateralNeighbours(Particle &p){
 
     return latNeighbours;
 }
-
-
-
 
 
 
