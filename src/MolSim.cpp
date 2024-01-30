@@ -158,6 +158,9 @@ int main(int argc, char *argsv[]) {/*
         cells.addContainer(container);
     }
 
+    int checkpoint = 1;
+    if (num_checkpoints < 0) checkpointing = false;
+    int steps_between_checkpoints = int(end_time / delta_t) / num_checkpoints;
 
 
     ParticleGenerator::createMembrane({50,50,1},{15,15,1.5},{0,0,0},1.0,2.2,cells,1.0,1.0,300,2.2,1);
@@ -189,6 +192,13 @@ int main(int argc, char *argsv[]) {/*
         }
         if (iteration % 100 == 0) {
             spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
+        }
+
+        if (iteration % steps_between_checkpoints == 0 && checkpointing) {
+            std::string filename = outputDirectory + "/checkpoint" + std::to_string(checkpoint) + ".txt";
+            checkpoint++;
+            ParticleContainer currentState = cells.toContainer();
+            FileWriter::writeFile(currentState, filename);
         }
 
         current_time += delta_t;
