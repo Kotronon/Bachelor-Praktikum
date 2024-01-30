@@ -7,7 +7,7 @@
 #include "../utils/ArrayUtils.h"
 #include <spdlog/spdlog.h>
 #include <cfloat>
-#include "Membrane.h"
+#include "../Membrane.h"
 
 double ForceCalculator::epsilon = 5;
 double ForceCalculator::sigma = 1;
