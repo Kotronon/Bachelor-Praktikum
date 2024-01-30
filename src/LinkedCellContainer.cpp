@@ -8,6 +8,7 @@
 #include <spdlog/spdlog.h>
 #include <cmath>
 #include <utility>
+#include <string>
 #include "utils/ArrayUtils.h"
 
 /**
@@ -137,7 +138,11 @@ ParticleContainer LinkedCellContainer::toContainer() {
 void LinkedCellContainer::addContainer(ParticleContainer &container) {
     for(auto &particle : container){
         addParticle(particle);
+        spdlog::info("The LinkedCellContainer added the particle ");
+        spdlog::info(tolower(particle.getX()[0]));
     }
+    spdlog::info("The LinkedCellContainer added the particle container");
+    spdlog::info(tolower(container.size()));
 }
 
 /**
@@ -339,6 +344,7 @@ void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *
         }
     }
     deleteGhostCells();
+    spdlog::info("The method was called");
 }
 
 /**
@@ -622,9 +628,14 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
     }
 }
 
+/**
+ * implements the forces between the particles in the membrane
+ * */
 void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle *, Particle *)> &forceCalculationLateral,
                                                const std::function<void(Particle *, Particle *)> &forceCalculationDiagonal,
                                                double Grav) {
+
+
 
     for (int x = 1; x <= x_cells; x++) {
         for (int y = 1; y <= y_cells; y++) {
@@ -637,10 +648,16 @@ void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle
                         if(cells[x][y][z][j].isNeighbours(cells[x][y][z][k]) == 1){
                             //calculate force with particles in current cell
                             forceCalculationLateral(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
+
+                            spdlog::info("The two cells are neighbours laterally");
+
+
+
                         }
                         else if(cells[x][y][z][j].isNeighbours(cells[x][y][z][k]) == 2){
                             //calculate force with particles in current cell
                             forceCalculationDiagonal(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
+                            spdlog::info("The two cells are neighbours diagonally");
                         }
 
                     }
@@ -653,7 +670,15 @@ void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle
         }
     }
     deleteGhostCells();
+    spdlog::info("The method was called");
 
+}
+
+void LinkedCellContainer::applyThatOneForceInTheMembrane(Particle *p1, Particle *p2) {
+    //For cells (17/24), (17/25), (18/24) and (18/25)
+    // F = {0.0,0.0,0.8}
+    // for time = 150
+    // steady velocity
 }
 
 

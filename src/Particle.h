@@ -152,6 +152,8 @@ public:
                                      Particle diagonal_l_down,
                                      Particle diagonal_l_up);
 
+    [[nodiscard]] std::string neighboursToString() const;
+
 
     bool operator==(Particle &other);
 

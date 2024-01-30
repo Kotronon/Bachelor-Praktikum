@@ -300,6 +300,14 @@ int Particle::isNeighbours(Particle &p2) {
     return 0;
 }
 
+std::string Particle::neighboursToString() const {
+
+
+
+
+    ;
+}
+
 std::vector<Particle*> setDiagonalNeighbours(Particle &p){
     std::vector<Particle*> diagNeighbours;
 

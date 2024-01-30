@@ -147,12 +147,6 @@ int main(int argc, char *argsv[]) {/*
     //Creation of linked-cell container to be filled with all relevant particles
     LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
 
-    //Add Particles from input file
-    if (!inputFile.empty()) {
-        FileReader::readFile(container, inputFile.data());
-        cells.addContainer(container);
-    }
-
     int checkpoint = 1;
     if (num_checkpoints < 0) checkpointing = false;
     int steps_between_checkpoints = int(end_time / delta_t) / num_checkpoints;

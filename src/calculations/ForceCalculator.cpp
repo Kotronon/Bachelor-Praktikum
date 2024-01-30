@@ -104,6 +104,7 @@ void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &cells, double g
 }
 
 void ForceCalculator::LennardJonesForceMembrane(LinkedCellContainer &cells, double Grav) {
+    spdlog::info("The method was called");
 
     ForceCalculator::sigma = sigma * (pow(2, (1/6)));
     ForceCalculator::Ggrav = Grav;
@@ -139,6 +140,7 @@ void ForceCalculator::LateralForceCalculation(Particle *p1, Particle *p2) {
 
     p2->setOldF(p2->getF());
     p2->setF(result);
+    spdlog::info("The method was called");
 }
 
 void ForceCalculator::DiagonalForceCalculation(Particle *p1, Particle *p2) {
@@ -158,6 +160,7 @@ void ForceCalculator::DiagonalForceCalculation(Particle *p1, Particle *p2) {
 
     p2->setOldF(p2->getF());
     p2->setF(result);
+    spdlog::info("The method was called");
 }
 
 

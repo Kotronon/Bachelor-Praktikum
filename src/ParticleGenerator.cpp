@@ -307,16 +307,19 @@ void ParticleGenerator::createSphereInCells(std::array<double, 3> center, std::a
 }
 
 /**
- * create the membrane
- * @param x
- * @param y
- * @param z
+ * create the membrane (a ParticleContainer) and sets the neighbours of all the particles,
+ * @param n dimension
+ * @param x was auch immer das ist
+ * @param v velocity
+ * @param m
+ * @returns a PArticleContainer with particles in it
  * */
 
 ParticleContainer ParticleGenerator::createMembrane(std::array<int, 3> n, std::array<double, 3> x, std::array<double, 3> v, double m, double h,
                                        LinkedCellContainer &cells, double eps, double sig,double k, double r_0,int type) {
 
     ParticleContainer membrane = ParticleContainer();
+    spdlog::info("created the membrane");
 
 
     if (n[0] == 0.0 || n[1] == 0.0 || n[2] == 0.0) {
@@ -328,10 +331,10 @@ ParticleContainer ParticleGenerator::createMembrane(std::array<int, 3> n, std::a
     for (int z_i = 0; z_i < n[2]; z_i++) {
         for (int y_i = 0; y_i < n[1]; y_i++) {
             for (int x_i = 0; x_i < n[0]; x_i++) {
-                // std::array<double, 3> x_arg, std::array<double, 3> v_arg,
-                //            double m_arg, double sig, double eps, int type = 0
+
                 Particle p = {x,v,m,sig,eps,type};
                 membrane.SetAllNeighbours(p);
+                spdlog::info("The neighbours are all set ");
                 membrane.addParticle(p);
 
                 coordinate[0] += h;
@@ -344,11 +347,12 @@ ParticleContainer ParticleGenerator::createMembrane(std::array<int, 3> n, std::a
     }
 
 
-    for (auto p = membrane.begin(); p < membrane.end(); p++) {
+    /*for (auto p = membrane.begin(); p < membrane.end(); p++) {
         cells.addParticle(*p);
-    }
+    }*/
 
     cells.addContainer(membrane);
+    spdlog::info("the container added all the particles");
 
 
 

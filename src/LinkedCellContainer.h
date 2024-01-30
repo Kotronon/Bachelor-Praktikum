@@ -61,6 +61,8 @@ public:
                               const std::function<void(Particle *, Particle *)> &forceCalculationDiagonal,
                               double Grav);
 
+    void applyThatOneForceInTheMembrane(Particle *p1, Particle *p2);
+
     bool applyMirrorBoundary(int particle, int x, int y, int z);
 
     void generateGhostCell(int index, int x, int y, int z);
