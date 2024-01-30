@@ -143,6 +143,11 @@ int main(int argc, char *argsv[]) {/*
               FileWriter::writeFile(currentState, filename);
               }*/
 
+    cutoff = 4.0;
+    delta_t = 0.01;
+    domain_size = {148,148,148};
+    end_time = 500;
+
     //Creation of linked-cell container to be filled with all relevant particles
     LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
 
@@ -153,6 +158,7 @@ int main(int argc, char *argsv[]) {/*
     }
 
 
+
     ParticleGenerator::createMembrane({50,50,1},{15,15,1.5},{0,0,0},1.0,2.2,cells,1.0,1.0,300,2.2,1);
 
     double current_time = start_time;
@@ -161,11 +167,32 @@ int main(int argc, char *argsv[]) {/*
     //Pre-calculation of f
     ForceCalculator::LennardJonesForceMembrane(cells, Grav);
 
-    // Particle generator create Mmebrane
+    VelocityCalculator::BrownianMotionInitializationCell(cells, 1.1, dim);
 
-    // Lennard Jones force membrane
+    //For this loop, we assume: current x, current f and current v are known
+    while (current_time < end_time) {
 
-    //
+
+        //Calculate new x
+        PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
+        //Calculate new f
+        ForceCalculator::LennardJonesForceMembrane(cells, Grav);
+        ForceCalculator::MembraneForceCalculation(cells,Grav);
+
+        //Calculate new v
+        VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
+
+        iteration++;
+        if (iteration % 10 == 0) {
+            plotParticlesInCells(iteration, cells);
+        }
+        if (iteration % 100 == 0) {
+            spdlog::info("Iteration " + std::to_string(iteration) + " finished.");
+        }
+
+        current_time += delta_t;
+    }
+
 
     spdlog::info("Output written. Terminating...");
     return 0;

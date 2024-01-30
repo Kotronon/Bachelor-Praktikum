@@ -111,19 +111,15 @@ void ForceCalculator::LennardJonesForceMembrane(LinkedCellContainer &cells, doub
     cells.setZero();
     cells.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, Ggrav);
 
-
 }
 
 void ForceCalculator::MembraneForceCalculation(LinkedCellContainer &cells, double Grav) {
     ForceCalculator::Ggrav = Grav;
     cells.setZero();
-    cells.applyForcePairwise(Membrane::force_calculation, Ggrav);
+    cells.applyForceToMembrane(
+            Membrane::force_calculation,Membrane::diagonal_interaction,
+            Ggrav);
 
 
 }
 
-void ForceCalculator::MembraneForceDiagonalCalculation(LinkedCellContainer &cells, double Grav) {
-    ForceCalculator::Ggrav = Grav;
-    cells.setZero();
-    cells.applyForcePairwise(Membrane::diagonal_interaction, Ggrav);
-}

@@ -57,6 +57,10 @@ public:
 
     void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation, double Grav);
 
+    void applyForceToMembrane(const std::function<void(Particle *, Particle *)> &forceCalculationLateral,
+                              const std::function<void(Particle *, Particle *)> &forceCalculationDiagonal,
+                              double Grav);
+
     bool applyMirrorBoundary(int particle, int x, int y, int z);
 
     void generateGhostCell(int index, int x, int y, int z);

@@ -621,3 +621,39 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
         return;
     }
 }
+
+void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle *, Particle *)> &forceCalculationLateral,
+                                               const std::function<void(Particle *, Particle *)> &forceCalculationDiagonal,
+                                               double Grav) {
+
+    for (int x = 1; x <= x_cells; x++) {
+        for (int y = 1; y <= y_cells; y++) {
+            for (int z = 1; z <= z_cells; z++) {
+                //get neighbour cells
+                std::vector<std::array<int, 3>> neighbours = get_next_cells(x, y, z);
+                for (int j = 0; j < int(cells[x][y][z].size()); j++) {
+                    //for all particles in current cell
+                    for (int k = j + 1; k < int(cells[x][y][z].size()); k++) {
+                        if(cells[x][y][z][j].isNeighbours(cells[x][y][z][k]) == 1){
+                            //calculate force with particles in current cell
+                            forceCalculationLateral(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
+                        }
+                        else if(cells[x][y][z][j].isNeighbours(cells[x][y][z][k]) == 2){
+                            //calculate force with particles in current cell
+                            forceCalculationDiagonal(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
+                        }
+
+                    }
+
+                    //adds Ggrav force to force at the end
+                    std::array<double, 3> grav = {0, cells[x][y][z][j].getM() * Grav, 0};
+                    cells[x][y][z][j].setF(cells[x][y][z][j].getF() + grav);
+                }
+            }
+        }
+    }
+    deleteGhostCells();
+
+}
+
+
