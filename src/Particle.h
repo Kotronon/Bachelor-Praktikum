@@ -155,6 +155,8 @@ public:
 
     bool operator==(Particle &other);
 
+    [[nodiscard]]int isNeighbours(Particle &p1, Particle &p2);
+
     [[nodiscard]] std::string toString() const;
 
     void setX(std::array<double, 3> newX);

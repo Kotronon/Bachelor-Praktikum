@@ -268,6 +268,37 @@ const std::vector<Particle> &Particle::getDiagonalNeighbours() const {
 const std::vector<Particle> &Particle::getLateralNeighbours() const {
     return LateralNeighbours;
 }
+/**
+ * calculates if two particles are neighbours
+ * @param p1,p2 = particles
+ * @result 0,1, or 2.
+ * 0 means they're not neighbours,
+ * 1 means they're lateral neighbours,
+ * and 2 means they're diagonal neighbours*/
+int Particle::isNeighbours(Particle &p1, Particle &p2) {
+    double x1 = p1.getX()[0];
+    double y1 = p1.getX()[1];
+
+
+    double x2 = p2.getX()[0];
+    double y2 = p2.getX()[1];
+
+    //if they're lateral neighbours
+    if(x1 == x2 && (y1 == y2 + 1 || y2 == y1 +1 )){
+        return 1;
+    }
+    if(y1 == y2 && (x1 == x2 + 1 || x2 == x1 +1 )){
+        return 1;
+    }
+    if(x1 == x2 +1 || x2 == x1 +1){
+        if(y1 == y2 + 1 || y2 == y1 +1){
+            return 2;
+        }
+
+    }
+
+    return 0;
+}
 
 std::vector<Particle*> setDiagonalNeighbours(Particle &p){
     std::vector<Particle*> diagNeighbours;
