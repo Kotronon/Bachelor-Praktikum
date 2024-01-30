@@ -28,7 +28,7 @@ public :
 
     double harmonic_potential(std::array<double, 3> x_i, std::array<double, 3> x_j);
 
-    static void force_calculation(Particle *p1, Particle *p2);
+     void force_calculation(Particle *p1, Particle *p2);
 
 
     static void
