@@ -72,9 +72,9 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
     }
 
     std::array<double, 3> coordinate = x;
-    int x_axis = floor(x[0] / cells.getXCellSize()) + 1;
-    int y_axis =  floor(x[1] / cells.getYCellSize()) + 1;
-    int z_axis = floor(x[2] / cells.getZCellSize()) + 1;
+    int x_axis = (int) floor(x[0] / cells.getXCellSize()) + 1;
+    int y_axis = (int) floor(x[1] / cells.getYCellSize()) + 1;
+    int z_axis = (int) floor(x[2] / cells.getZCellSize()) + 1;
     //to move to next cell
     int x_axis_tmp = x_axis;
     int y_axis_tmp = y_axis;

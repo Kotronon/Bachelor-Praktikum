@@ -62,13 +62,13 @@ void VelocityCalculator::BrownianMotionInitializationCell(LinkedCellContainer &c
  */
 void VelocityCalculator::VelocityStoermerVerletCell(LinkedCellContainer &cells, double delta_t) {
     //Calculate new velocities of all particles (without ghost particles)
-    #pragma omp parallel for collapse(3) default(none) shared(cells, delta_t)
-    for (int x = 1; x <= cells.getXCells(); x++) {
-        for (int y = 1; y <= cells.getYCells(); y++) {
-            for (int z = 1; z <= cells.getZCells(); z++) {
-                for (auto &p: cells.getCell(x,y,z)) {
+    //#pragma omp parallel for collapse(3) default(none) shared(cells, delta_t)
+    for (auto x = cells.begin() + 1; x < cells.end() - 1; x++) {
+        for (auto y = x->begin() + 1; y < x->end() - 1; y++) {
+            for (auto z = y->begin() + 1; z < y->end() - 1; z++) {
+                for (auto p = z->begin(); p < z->end(); p++) {
                     //vi (tn+1) = vi(tn) + ∆t * Fi(tn) + Fi(tn+1) / 2mi
-                    p.setV(p.getV() + ((delta_t / (2 * p.getM())) * (p.getOldF() + p.getF())));
+                    p->setV(p->getV() + ((delta_t / (2 * p->getM())) * (p->getOldF() + p->getF())));
                 }
             }
         }
