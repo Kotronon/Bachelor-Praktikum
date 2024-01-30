@@ -318,7 +318,6 @@ ParticleContainer ParticleGenerator::createMembrane(std::array<int, 3> n, std::a
 
     ParticleContainer membrane = ParticleContainer();
 
-    Membrane membrane1 = Membrane(k,r_0);
 
     if (n[0] == 0.0 || n[1] == 0.0 || n[2] == 0.0) {
         return membrane;

@@ -6,6 +6,7 @@
 
 #include "../ParticleContainer.h"
 #include "../LinkedCellContainer.h"
+#include "../Membrane.h"
 
 class ForceCalculator {
 private:
