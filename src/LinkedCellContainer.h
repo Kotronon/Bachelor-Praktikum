@@ -61,7 +61,7 @@ public:
                               const std::function<void(Particle *, Particle *)> &forceCalculationDiagonal,
                               double Grav,double h);
 
-    void applyThatOneForceInTheMembrane(Particle *p1, Particle *p2);
+    void applyThatOneForceInTheMembrane(const std::function<void(Particle *, Particle *, double)> &forceCalculation, double f_z);
 
     bool applyMirrorBoundary(int particle, int x, int y, int z);
 

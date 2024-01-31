@@ -671,11 +671,24 @@ void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle
 
 }
 
-void LinkedCellContainer::applyThatOneForceInTheMembrane(Particle *p1, Particle *p2) {
-    //For cells (17/24), (17/25), (18/24) and (18/25)
-    // F = {0.0,0.0,0.8}
-    // for time = 150
-    // steady velocity
+void
+LinkedCellContainer::applyThatOneForceInTheMembrane(const std::function<void(Particle *, Particle *, double)> &forceCalculation,
+                                                     double f_z) {
+
+    for (int i = 17; i < 19; ++i) {
+        for (int j = 24; j < 26; ++j) {
+            for (int k = 0; k < 1; ++k) {
+
+                for (int l = 0; l < cells[i][j][k].size(); ++l) {
+                    for (int m = l+1; m < cells[i][j][k].size(); ++m) {
+                        ForceCalculator::ThatOneForceCalculation(&(cells[i][j][k][l]), &(cells[i][j][k][m]), f_z);
+                    }
+                }
+            }
+        }
+    }
+
 }
+
 
 

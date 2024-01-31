@@ -13,6 +13,11 @@ double ForceCalculator::sigma = 1;
 double ForceCalculator::Ggrav = 0;
 double ForceCalculator::cutoff = DBL_MAX;
 
+double ForceCalculator::k = 300;
+double ForceCalculator::r_0 = 2.2;
+
+
+
 
 /**
  * Calculates the gravity force of all Particles in given ParticleContainer
@@ -103,13 +108,15 @@ void ForceCalculator::LennardJonesForceCell(LinkedCellContainer &cells, double g
     cells.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, Ggrav);
 }
 
-void ForceCalculator::LennardJonesForceMembrane(LinkedCellContainer &cells, double Grav, double h) {
+void ForceCalculator::LennardJonesForceMembrane(LinkedCellContainer &cells, double Grav) {
 
 
     ForceCalculator::sigma = sigma * (pow(2, (1/6)));
     ForceCalculator::Ggrav = Grav;
     cells.setZero();
     cells.applyForcePairwise(ForceCalculator::LennardJonesForcePairwise, Ggrav);
+
+
 
 }
 
@@ -123,6 +130,19 @@ void ForceCalculator::MembraneForceCalculation(LinkedCellContainer &cells, doubl
 
 }
 
+void ForceCalculator::ThatOneMembraneForceCalculation(LinkedCellContainer &cells, double Grav, double fZ) {
+
+    f_z = fZ;
+
+    cells.setZero();
+    cells.applyThatOneForceInTheMembrane(ForceCalculator::ThatOneForceCalculation, f_z);
+
+
+
+}
+
+
+
 void ForceCalculator::LateralForceCalculation(Particle *p1, Particle *p2) {
 
     std::array<double, 3> x_i, x_j;
@@ -130,7 +150,7 @@ void ForceCalculator::LateralForceCalculation(Particle *p1, Particle *p2) {
     x_j = p2-> getX();
     std::array<double, 3> result = {0.0,0.0,0.0};
     double norm = ArrayUtils::L2Norm(x_i - x_j);
-    double teil1 = 300 * (norm - (sqrt(2.0)*2.2));
+    double teil1 = k * (norm - (sqrt(2.0)*r_0));
 
     result[0] = teil1 * (x_j[0] - x_i[0] / norm);
     result[1] = teil1 * (x_j[1] - x_i[1] / norm);
@@ -150,7 +170,7 @@ void ForceCalculator::DiagonalForceCalculation(Particle *p1, Particle *p2) {
     x_j = p2-> getX();
     std::array<double, 3> result = {0.0,0.0,0.0};
     double norm = ArrayUtils::L2Norm(x_i - x_j);
-    double teil1 = 300 * (norm - (sqrt(2.0)*2.2));
+    double teil1 = k * (norm - (sqrt(2.0)*r_0));
 
     result[0] = teil1 * (x_j[0] - x_i[0] / norm);
     result[1] = teil1 * (x_j[1] - x_i[1] / norm);
@@ -162,5 +182,16 @@ void ForceCalculator::DiagonalForceCalculation(Particle *p1, Particle *p2) {
     p2->setF(result);
 
 }
+
+void ForceCalculator::ThatOneForceCalculation(Particle *p1, Particle *p2, double fZ) {
+    p1->setOldF(p1->getF());
+    p1->setF({0.0, 0.0, fZ});
+
+    p2->setOldF(p2->getF());
+    p2->setF({0.0, 0.0, fZ});
+}
+
+
+
 
 

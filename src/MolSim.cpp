@@ -23,7 +23,7 @@ constexpr double start_time = 0;
 double end_time = 50;
 double delta_t = 0.0005;
 
-int dim = 2;
+int dim = 3;
 double Grav = -12.44;
 
 //if you want to use directSum please use DBL_MAX for each direction
@@ -34,7 +34,7 @@ double cutoff = 2.5 * 1.2;
 //boundary order:  left, right, up, down, behind, before
 //boundary types: "o"(outflow), "r"(reflective), "p"(periodic)
 //(if you want use directSum please use {"o", "o", "o", "o", "o", "o"})
-std::array<std::basic_string<char>, 6> boundary = {"p", "p", "r", "r", "o", "o"};
+std::array<std::basic_string<char>, 6> boundary = {"r", "r", "r", "r", "r", "r"};
 
 //input file (file will be used if valid path is given and file is not empty)
 std::string inputFile = "";
@@ -141,9 +141,10 @@ int main(int argc, char *argsv[]) {/*
     cutoff = 4.0;
     delta_t = 0.01;
     domain_size = {148,148,148};
-    end_time = 10;
+    end_time = 100;
     Grav = -0.001;
     double h = 2.2;
+    double f_z = 0.8;
 
     //Creation of linked-cell container to be filled with all relevant particles
     LinkedCellContainer cells = LinkedCellContainer(domain_size, cutoff, boundary);
@@ -160,7 +161,7 @@ int main(int argc, char *argsv[]) {/*
     int iteration = 0;
 
     //Pre-calculation of f
-    ForceCalculator::LennardJonesForceMembrane(cells, Grav, h);
+    ForceCalculator::LennardJonesForceMembrane(cells, Grav);
 
     VelocityCalculator::BrownianMotionInitializationCell(cells, 1.1, dim);
 
@@ -171,8 +172,12 @@ int main(int argc, char *argsv[]) {/*
         //Calculate new x
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
         //Calculate new f
-        ForceCalculator::LennardJonesForceMembrane(cells, Grav,h);
+        ForceCalculator::LennardJonesForceMembrane(cells, Grav);
         ForceCalculator::MembraneForceCalculation(cells,Grav,h);
+
+        if(current_time < 150){
+            ForceCalculator::ThatOneMembraneForceCalculation(cells,Grav,f_z);
+        }
 
         //Calculate new v
         VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
