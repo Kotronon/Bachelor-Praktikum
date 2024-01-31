@@ -646,7 +646,7 @@ void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle
                 for (int j = 0; j < int(cells[x][y][z].size()); j++) {
                     //for all particles in current cell
                     for (int k = j + 1; k < int(cells[x][y][z].size()); k++) {
-                        spdlog::info("The forces are actually being calculated");
+                        //spdlog::info("The forces are actually being calculated");
                         if (cells[x][y][z][j].isNeighbours(cells[x][y][z][k], h) == 1) {
                             //calculate force with particles in current cell
                             forceCalculationLateral(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
@@ -687,6 +687,8 @@ void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle
                                                              &(cells[neighbour[0]][neighbour[1]][neighbour[2]][l]));
 
                                 }
+
+                                spdlog::info("This part of the function is being touched yay");
                             }
                         }
 
