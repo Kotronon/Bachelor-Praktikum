@@ -646,12 +646,18 @@ void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle
                 for (int j = 0; j < int(cells[x][y][z].size()); j++) {
                     //for all particles in current cell
                     for (int k = j + 1; k < int(cells[x][y][z].size()); k++) {
+                        spdlog::info("The forces are actually being calculated");
                         if (cells[x][y][z][j].isNeighbours(cells[x][y][z][k], h) == 1) {
                             //calculate force with particles in current cell
                             forceCalculationLateral(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
-                        } else if (cells[x][y][z][j].isNeighbours(cells[x][y][z][k], h) == 2) {
+
+                            spdlog::info("The two cells are neighbours laterally");
+
+                        }
+                        else if(cells[x][y][z][j].isNeighbours(cells[x][y][z][k],h) == 2){
                             //calculate force with particles in current cell
                             forceCalculationDiagonal(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
+                            spdlog::info("The two cells are neighbours diagonally");
                         }
 
 
