@@ -670,7 +670,6 @@ void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle
         }
     }
     deleteGhostCells();
-    spdlog::info("The method was called");
 
 }
 

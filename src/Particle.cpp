@@ -300,24 +300,24 @@ int Particle::isNeighbours(Particle &p2,double h) {
     return 0;
 }
 
-std::vector<Particle *> Particle::setDiagonalNeighbours(Particle &p) {
+std::vector<Particle *> Particle::setDiagonalNeighbours() {
     std::vector<Particle*> diagNeighbours;
 
-    diagNeighbours.push_back(p.getNeighbourDiagonalRightUp());
-    diagNeighbours.push_back(p.getNeighbourDiagonalRightDown());
-    diagNeighbours.push_back(p.getNeighbourDiagonalLeftUp());
-    diagNeighbours.push_back(p.getNeighbourDiagonalLeftDown());
+    diagNeighbours.push_back(getNeighbourDiagonalRightUp());
+    diagNeighbours.push_back(getNeighbourDiagonalRightDown());
+    diagNeighbours.push_back(getNeighbourDiagonalLeftUp());
+    diagNeighbours.push_back(getNeighbourDiagonalLeftDown());
 
     return diagNeighbours;
 }
 
-std::vector<Particle *> Particle::setLateralNeighbours(Particle &p) {
+std::vector<Particle *> Particle::setLateralNeighbours() {
     std::vector<Particle*> latNeighbours;
 
-    latNeighbours.push_back(p.getNeighbourRight());
-    latNeighbours.push_back(p.getNeighbourLeft());
-    latNeighbours.push_back(p.getNeighbourUp());
-    latNeighbours.push_back(p.getNeighbourDown());
+    latNeighbours.push_back(getNeighbourRight());
+    latNeighbours.push_back(getNeighbourLeft());
+    latNeighbours.push_back(getNeighbourUp());
+    latNeighbours.push_back(getNeighbourDown());
 
     return latNeighbours;
 }

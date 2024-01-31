@@ -111,8 +111,8 @@ public:
     const std::vector<Particle> &getDiagonalNeighbours() const;
     const std::vector<Particle> &getLateralNeighbours() const;
 
-    std::vector<Particle*> setDiagonalNeighbours(Particle &p);
-    std::vector<Particle*> setLateralNeighbours(Particle &p);
+    std::vector<Particle *> setDiagonalNeighbours();
+    std::vector<Particle *> setLateralNeighbours();
 
 
 

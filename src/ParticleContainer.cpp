@@ -175,8 +175,8 @@ void ParticleContainer::SetAllNeighbours( Particle &p , double h) {
         }
     }
 
-    p.setLateralNeighbours(p);
-    p.setDiagonalNeighbours(p);
+    p.setLateralNeighbours();
+    p.setDiagonalNeighbours();
 
 
 
