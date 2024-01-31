@@ -688,7 +688,7 @@ void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle
 
                                 }
 
-                                spdlog::info("This part of the function is being touched yay");
+                                //spdlog::info("This part of the function is being touched yay");
                             }
                         }
 
