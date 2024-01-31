@@ -15,6 +15,7 @@ double ForceCalculator::cutoff = DBL_MAX;
 
 double ForceCalculator::k = 300;
 double ForceCalculator::r_0 = 2.2;
+double ForceCalculator::f_z = 0.8;
 
 
 
