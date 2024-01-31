@@ -175,9 +175,9 @@ int main(int argc, char *argsv[]) {/*
         ForceCalculator::LennardJonesForceMembrane(cells, Grav);
         ForceCalculator::MembraneForceCalculation(cells,Grav,h);
 
-        if(current_time < 150){
-            ForceCalculator::ThatOneMembraneForceCalculation(cells,Grav,f_z);
-        }
+       // if(current_time < 150){
+         //   ForceCalculator::ThatOneMembraneForceCalculation(cells,Grav,f_z);
+        //}
 
         //Calculate new v
         VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);

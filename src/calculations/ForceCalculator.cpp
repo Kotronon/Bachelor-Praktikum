@@ -185,6 +185,8 @@ void ForceCalculator::DiagonalForceCalculation(Particle *p1, Particle *p2) {
 }
 
 void ForceCalculator::ThatOneForceCalculation(Particle *p1, Particle *p2, double fZ) {
+
+
     p1->setOldF(p1->getF());
     p1->setF({0.0, 0.0, fZ});
 

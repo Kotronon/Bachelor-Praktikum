@@ -628,11 +628,14 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
 
 /**
  * implements the forces between the particles in the membrane
+ * @param forceCalculationLateral = a calculation that calculates the lateral force
+ * @param forceCalculation Diagonal a diagonal force calculation
+ * @param Grav gravity
+ * @param h the h
  * */
 void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle *, Particle *)> &forceCalculationLateral,
                                                const std::function<void(Particle *, Particle *)> &forceCalculationDiagonal,
                                                double Grav, double h) {
-
 
 
     for (int x = 1; x <= x_cells; x++) {
@@ -643,52 +646,73 @@ void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle
                 for (int j = 0; j < int(cells[x][y][z].size()); j++) {
                     //for all particles in current cell
                     for (int k = j + 1; k < int(cells[x][y][z].size()); k++) {
-                        if(cells[x][y][z][j].isNeighbours(cells[x][y][z][k],h) == 1){
+                        if (cells[x][y][z][j].isNeighbours(cells[x][y][z][k], h) == 1) {
                             //calculate force with particles in current cell
                             forceCalculationLateral(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
-
-                            spdlog::info("The two cells are neighbours laterally");
-
-
-
-                        }
-                        else if(cells[x][y][z][j].isNeighbours(cells[x][y][z][k],h) == 2){
+                        } else if (cells[x][y][z][j].isNeighbours(cells[x][y][z][k], h) == 2) {
                             //calculate force with particles in current cell
                             forceCalculationDiagonal(&(cells[x][y][z][j]), &(cells[x][y][z][k]));
-                            spdlog::info("The two cells are neighbours diagonally");
                         }
 
+
                     }
 
-                    //adds Ggrav force to force at the end
-                    std::array<double, 3> grav = {0, cells[x][y][z][j].getM() * Grav, 0};
-                    cells[x][y][z][j].setF(cells[x][y][z][j].getF() + grav);
+                    for (auto &neighbour: neighbours) {
+                        //with neighbour cells
+                        for (int l = 0;
+                             l < int(cells[neighbour[0]][neighbour[1]][neighbour[2]].size()); l++) {
+                            //calculate force if neighbour particle is a normal particle or is the specific ghost cell to current particle
+                            //if type is positive, it's a normal or a periodic ghost particle
+                            //if its negative, it's a reflective ghost particle and then just the one according to the current particle should be used
+                            //  -> that's the index of the current particle in the current cell negated and subtracted with one
+                            if (cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() >= 0 ||
+                                cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() == -j - 1) {
+
+                                if (cells[x][y][z][j].isNeighbours(cells[neighbour[0]][neighbour[1]][neighbour[2]][l],
+                                                                   h) == 1) {
+                                    //calculate force with particles in current cell
+                                    forceCalculationLateral(&(cells[x][y][z][j]),
+                                                            &(cells[neighbour[0]][neighbour[1]][neighbour[2]][l]));
+
+                                } else if (cells[x][y][z][j].isNeighbours(
+                                        cells[neighbour[0]][neighbour[1]][neighbour[2]][l], h) == 2) {
+                                    //calculate force with particles in current cell
+                                    forceCalculationDiagonal(&(cells[x][y][z][j]),
+                                                             &(cells[neighbour[0]][neighbour[1]][neighbour[2]][l]));
+
+                                }
+                            }
+                        }
+
+                        //adds Ggrav force to force at the end
+                        std::array<double, 3> grav = {0, cells[x][y][z][j].getM() * Grav, 0};
+                        cells[x][y][z][j].setF(cells[x][y][z][j].getF() + grav);
+                    }
                 }
             }
         }
-    }
-    deleteGhostCells();
+        deleteGhostCells();
 
+    }
 }
 
-void
-LinkedCellContainer::applyThatOneForceInTheMembrane(const std::function<void(Particle *, Particle *, double)> &forceCalculation,
-                                                     double f_z) {
 
-    for (int i = 17; i < 19; ++i) {
-        for (int j = 24; j < 26; ++j) {
-            for (int k = 0; k < 1; ++k) {
+    void
+    LinkedCellContainer::applyThatOneForceInTheMembrane(
+            const std::function<void(Particle *, Particle *, double)> &forceCalculation,
+            double f_z) {
 
-                for (int l = 0; l < cells[i][j][k].size(); ++l) {
-                    for (int m = l+1; m < cells[i][j][k].size(); ++m) {
-                        ForceCalculator::ThatOneForceCalculation(&(cells[i][j][k][l]), &(cells[i][j][k][m]), f_z);
+        for (int i = 17; i < 19; ++i) {
+            for (int j = 24; j < 26; ++j) {
+                for (int k = 0; k < 1; ++k) {
+
+                    for (int l = 0; l < cells[i][j][k].size(); ++l) {
+                        for (int m = l + 1; m < cells[i][j][k].size(); ++m) {
+                            ForceCalculator::ThatOneForceCalculation(&(cells[i][j][k][l]), &(cells[i][j][k][m]), f_z);
+                        }
                     }
                 }
             }
         }
+
     }
-
-}
-
-
-
