@@ -32,7 +32,7 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 //Time:
 //----------------------------------------------------------------------------------------------------------------------
 constexpr double start_time = 0;
-double end_time = 150;
+double end_time = 250;
 double delta_t = 0.001;
 
 //Number of threads
@@ -42,14 +42,14 @@ int num_threads = 8;
 
 //Checkpointing:
 //----------------------------------------------------------------------------------------------------------------------
-bool checkpointing = true;
+bool checkpointing = false;
 int num_checkpoints = 1;
 
 //Path to folder to be used for output of checkpoint files
 std::string outputDirectory = "../input";
 
 //Input file (file will be used if valid path is given and file is not empty)
-bool useInput = false;
+bool useInput = true;
 std::string inputFile = "../input/checkpoint1.txt";
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -85,19 +85,19 @@ double sLJRadius = 1.9;
 //Thermostat:
 //----------------------------------------------------------------------------------------------------------------------
 //Initialization
-bool applyBrownianMotion = true;
-double initTemperature = 0.01;
+bool applyBrownianMotion = false;
+double initTemperature = 3.0;
 
 //Time steps between applications
-int nThermostat = 40;
+int nThermostat = 50;
 
 //Optional target temperature
 bool targetTemperatureExists = true;
-double targetTemperature = 3.0;
+double targetTemperature = 0.5;
 
 //Optional temperature difference
 bool differenceTemperatureExists = true;
-double differenceTemperature = 0.001; // 7.8 * pow(10, -4);
+double differenceTemperature = 7.8 * pow(10, -4);
 //----------------------------------------------------------------------------------------------------------------------
 
 //Diffusion:
@@ -135,9 +135,6 @@ int main(int argc, char *argsv[]) {
     //------------------------------------------------------------------------------------------------------------------
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
-    ParticleGenerator::createCuboidInCells({0.575, 0.575, 0.575}, {0, 0, 0}, {8,8,8}, 1.15, 1.0, cells, 1, 1, 1);
-    //ParticleGenerator::createCuboidInCells({0.6, 0.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 1.0, cells, 1.2, 1, 1);
-    //ParticleGenerator::createCuboidInCells({0.6, 24.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 2.0, cells, 1.1, 1, 2);
     //------------------------------------------------------------------------------------------------------------------
 
     double current_time = start_time;
@@ -158,6 +155,7 @@ int main(int argc, char *argsv[]) {
     ForceCalculator::LennardJonesForceCell(cells, Grav);
 
     //Initialization with Brownian Motion / temperature
+    /*
     if (applyBrownianMotion) {
         Thermostat::initializeTemperatureWithBrownianMotion(initTemperature, dim, cells);
     } else {
@@ -166,6 +164,7 @@ int main(int argc, char *argsv[]) {
     if (!targetTemperatureExists) {
         targetTemperature = initTemperature;
     }
+    */
 
     while (current_time < end_time) {
 
