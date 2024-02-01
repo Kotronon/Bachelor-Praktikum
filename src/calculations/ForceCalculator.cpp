@@ -124,7 +124,8 @@ void ForceCalculator::LennardJonesForceMembrane(LinkedCellContainer &cells, doub
 void ForceCalculator::MembraneForceCalculation(LinkedCellContainer &cells, double Grav, double h) {
     ForceCalculator::Ggrav = Grav;
     cells.setZero();
-    cells.applyForceToMembrane(ForceCalculator::LateralForceCalculation,ForceCalculator::DiagonalForceCalculation,Ggrav,h);
+    cells.applyForceToMembrane(ForceCalculator::LateralForceCalculation, ForceCalculator::DiagonalForceCalculation,
+                               Ggrav, h, 0.8);
 
 
 }
