@@ -713,11 +713,35 @@ void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle
         for (int i = 17; i < 19; ++i) {
             for (int j = 24; j < 26; ++j) {
                 for (int k = 0; k < 1; ++k) {
-
+                    std::vector<std::array<int, 3>> neighbours = get_next_cells(i, j, k);
                     for (int l = 0; l < cells[i][j][k].size(); ++l) {
                         for (int m = l + 1; m < cells[i][j][k].size(); ++m) {
                             ForceCalculator::ThatOneForceCalculation(&(cells[i][j][k][l]), &(cells[i][j][k][m]), f_z);
+
                         }
+                        for (auto &neighbour: neighbours) {
+                            //with neighbour cells
+                            for (int l = 0;
+                                 l < int(cells[neighbour[0]][neighbour[1]][neighbour[2]].size()); l++) {
+                                //calculate force if neighbour particle is a normal particle or is the specific ghost cell to current particle
+                                //if type is positive, it's a normal or a periodic ghost particle
+                                //if its negative, it's a reflective ghost particle and then just the one according to the current particle should be used
+                                //  -> that's the index of the current particle in the current cell negated and subtracted with one
+                                if (cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() >= 0 ||
+                                    cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() == -j - 1) {
+
+                                    ForceCalculator::ThatOneForceCalculation(&(cells[i][j][k][l]), &(cells[neighbour[0]][neighbour[1]][neighbour[2]][l]), f_z);
+
+                                    //spdlog::info("This part of the function is being touched yay");
+
+                                    //adds Ggrav force to force at the end
+                                    std::array<double, 3> Grav = {0, cells[i][j][k][l].getM() * (double) -0.0001, 0};
+                                    cells[i][j][k][l].setF(cells[i][j][k][l].getF() + Grav);
+                                }
+                            }
+
+                        }
+
                     }
                 }
             }
