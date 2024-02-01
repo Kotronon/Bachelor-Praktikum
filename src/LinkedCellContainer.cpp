@@ -707,8 +707,6 @@ std::vector<double> LinkedCellContainer::calculateRDF(int intervalBegin, int int
                                   std::ofstream &filename) {
     std::vector<double> densities;
     ParticleContainer particles = toContainer();
-    auto first = particles.begin();
-    auto last = particles.end();
     for (int i = intervalBegin; i <= intervalEnd - deltaR; i++) {
         int num_particles = 0;
         for (auto &p1: particles) {
