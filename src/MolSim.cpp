@@ -161,10 +161,11 @@ int main(int argc, char *argsv[]) {
     } else {
         Thermostat::initializeTemperature(initTemperature, dim, cells);
     }
+    */
+
     if (!targetTemperatureExists) {
         targetTemperature = initTemperature;
     }
-    */
 
     while (current_time < end_time) {
 
