@@ -71,9 +71,9 @@ Members:
 
 ## Task 3 ##
 * Rayleigh-Taylor instability in 3d
-  * simulation could not be run completely due to simulation time not being reasonable (>70h)
-  * this is most likely due to the optimization task from the last worksheet not being completed
-  * video provided shows the first 100 000 iterations instead of the full 200 000
+  * Simulation could not be run completely due to simulation time not being reasonable (>70h)
+  * This is most likely due to the optimization task from the last worksheet not being completed
+  * Video provided shows the first 20 000 iterations instead of the full 200 000
   * Link to video: (TODO)
 
 ## Task 4 ##

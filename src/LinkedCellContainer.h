@@ -34,8 +34,6 @@ private:
     bool smoothed;
     double smoothedRadius;
 
-    int it = 0;
-
 public:
     LinkedCellContainer(std::array<double, 3> N, double cutoff,  std::array<std::string, 6> b, bool smoothed = false, double sLJparameter = -1);
 

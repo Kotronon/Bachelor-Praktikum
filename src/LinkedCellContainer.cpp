@@ -220,7 +220,6 @@ void LinkedCellContainer::moveToNeighbour() {
             }
         }
     }
-    it++;
 }
 
 
