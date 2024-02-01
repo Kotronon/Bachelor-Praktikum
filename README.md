@@ -78,16 +78,16 @@ Members:
 
 ## Task 4 ##
 * Nano-scale flow simulation (Option A - not chosen)
-* We gegan with this task but decided to make Task 5
-* The walls are working and also the new temperature calculations were done.
-* But due to failures we didn't finisch them
-* The code can be found in Branch Task4 (https://github.com/Kotronon/Bachelor-Praktikum/tree/Task4)
+* We started with this task but decided to switch to task 5
+* The walls are working and the new temperature calculations were done as well
+* But due to some issues we did not finish all the tasks
+* The uncompleted code can be found in branch Task4 (https://github.com/Kotronon/Bachelor-Praktikum/tree/Task4)
 
 ## Task 5 ##
 * Crystallization of Argon (Option B - chosen)
-* The new force calculations were done
+* The new force calculations had to be added
 * While computing the simulations we noticed multiple mistakes in the 3D computations
-* Therefore we needed to add more ghost particles 
-* We also changed oure LinkedCell structure like you suggested
+* To solve this we needed to add more ghost particles and make sure all functions in LinkedCellContainer work properly in a 3d space
+* We improved our LinkedCell structure like you suggested by changing the cell sizes accordingly
 
 
