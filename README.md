@@ -16,10 +16,6 @@ Members:
 * Compiler: gcc 11.4.0
 
 # Run Code #
-* packages to install:
-  * sudo apt install libspdlog-dev
-  * sudo apt-get install libgtest-dev
-  * unfortunately only using fetchContent doesn't prevent from installing them
 * to run the program:
   * ./MolSim
   * due to the xml input being incomplete it is only possible at the moment to change parameters in the main method manually as well as create cuboids/disks there
@@ -73,25 +69,29 @@ Members:
 * Rayleigh-Taylor instability in 3d
   * Simulation could not be run completely due to simulation time not being reasonable (>70h)
   * This is most likely due to the optimization task from the last worksheet not being completed
-  * Video provided shows the first 20 000 iterations instead of the full 200 000
-  * Link to video: (TODO)
+  * Video provided in submission shows the first 20 000 iterations instead of the full 200 000
+* Branch to run simulation: simulation_rayleigh_taylor_instability_3d
 
 ## Task 4 ##
 * Nano-scale flow simulation (Option A - not chosen)
-* We started with this task but decided to switch to task 5
-* The walls are working and the new temperature calculations were done as well
-* But due to some issues we did not finish all the tasks
-* The uncompleted code can be found in branch Task4 (https://github.com/Kotronon/Bachelor-Praktikum/tree/Task4)
+  * We started with this task but decided to switch to task 5
+  * The walls are working and the new temperature calculations were done as well
+  * But due to some issues we did not finish all the tasks
+  * The uncompleted code can be found in branch Task4 (https://github.com/Kotronon/Bachelor-Praktikum/tree/Task4)
 
 ## Task 5 ##
 * Crystallization of Argon (Option B - chosen)
-* The new force calculations had to be added
-* While computing the simulations we noticed multiple mistakes in the 3D computations
-* To solve this we needed to add more ghost particles and make sure all functions in LinkedCellContainer work properly in a 3d space
-* We improved our LinkedCell structure like you suggested by changing the cell sizes accordingly
-* Equilibration: gets gaseous after 8 seconds in our video. That equals 30000 iterations
-* Cooling: begins to get solid after 25 seconds in our video. That equals  125000 iterations
-* Supercooling: gets solid after 6 seconds in our video. That equals 25000 iterations
+  * The new force calculations had to be added
+  * While computing the simulations we noticed multiple mistakes in the 3D computations
+  * To solve this we needed to add more ghost particles and make sure all functions in LinkedCellContainer work properly in a 3d space
+  * We improved our LinkedCell structure like you suggested by changing the cell sizes accordingly
+  * Equilibration: gets gaseous after 8 seconds in our video. That equals 30000 iterations
+  * Cooling: begins to get solid after 25 seconds in our video. That equals  125000 iterations
+  * Supercooling: gets solid after 6 seconds in our video. That equals 25000 iterations
+* Branches to run simulations:
+    * simulation_argon_equilibration
+    * simulation_argon_cooling
+    * simulation_argon_supercooling
 
 ## Misc ##
 * We needed to comment out the thermostat tests because it suddenly would not work anymore, and we could not find the mistake in time
