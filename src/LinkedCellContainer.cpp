@@ -721,23 +721,26 @@ void LinkedCellContainer::applyForceToMembrane(const std::function<void(Particle
                         }
                         for (auto &neighbour: neighbours) {
                             //with neighbour cells
-                            for (int l = 0;
-                                 l < int(cells[neighbour[0]][neighbour[1]][neighbour[2]].size()); l++) {
+                            for (int n = 0;
+                                 n < int(cells[neighbour[0]][neighbour[1]][neighbour[2]].size()); n++) {
                                 //calculate force if neighbour particle is a normal particle or is the specific ghost cell to current particle
                                 //if type is positive, it's a normal or a periodic ghost particle
                                 //if its negative, it's a reflective ghost particle and then just the one according to the current particle should be used
                                 //  -> that's the index of the current particle in the current cell negated and subtracted with one
-                                if (cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() >= 0 ||
-                                    cells[neighbour[0]][neighbour[1]][neighbour[2]][l].getType() == -j - 1) {
+                                if (cells[neighbour[0]][neighbour[1]][neighbour[2]][n].getType() >= 0 ||
+                                    cells[neighbour[0]][neighbour[1]][neighbour[2]][n].getType() == -j - 1) {
 
-                                    ForceCalculator::ThatOneForceCalculation(&(cells[i][j][k][l]), &(cells[neighbour[0]][neighbour[1]][neighbour[2]][l]), f_z);
+                                    ForceCalculator::ThatOneForceCalculation(&(cells[i][j][k][l]), &(cells[neighbour[0]][neighbour[1]][neighbour[2]][n]), f_z);
 
                                     //spdlog::info("This part of the function is being touched yay");
+                                    }
 
-                                    //adds Ggrav force to force at the end
-                                    std::array<double, 3> Grav = {0, cells[i][j][k][l].getM() * (double) -0.0001, 0};
-                                    cells[i][j][k][l].setF(cells[i][j][k][l].getF() + Grav);
-                                }
+
+
+                                //adds Ggrav force to force at the end
+                                 std::array<double, 3> Grav = {0, cells[i][j][k][n].getM() * (double) -0.0001, 0};
+                                 cells[i][j][k][n].setF(cells[i][j][k][n].getF() + Grav);
+
                             }
 
                         }
