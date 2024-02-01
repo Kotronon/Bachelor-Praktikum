@@ -12,21 +12,29 @@
 
 class LinkedCellContainer {
 private:
+    double cutoff;
+    std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
+    std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
+
+    //number of cells
     int x_cells;
     int y_cells;
     int z_cells;
-    double cutoff;
+
+    //highest value for each axis
     double x_max;
     double y_max;
     double z_max;
-    int it = 0;
-    double smoothedRadius;
-    bool smoothed;
-    std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
-    std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
+
+    //cell size
     double x_cell_size;
     double y_cell_size;
     double z_cell_size;
+
+    bool smoothed;
+    double smoothedRadius;
+
+    int it = 0;
 
 public:
     LinkedCellContainer(std::array<double, 3> N, double cutoff,  std::array<std::string, 6> b, bool smoothed = false, double sLJparameter = -1);

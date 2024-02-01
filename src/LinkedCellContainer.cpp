@@ -20,8 +20,8 @@
  * @param N dimensions of the container
  * @param cutoffRadius radius of cutoff
  * @param boundaryConditions boundary types of each side of the container
- * @param smoothed
- * @param sLJparameter
+ * @param smoothed option to enable smoothed Lennard-Jones potential in force calculation
+ * @param sLJparameter parameter for smoothed Lennard-Jones potential
  */
 LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoffRadius,
                                          std::array<std::string, 6> boundaryConditions, bool smoothed,
@@ -30,6 +30,7 @@ LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoffR
     this->smoothed = smoothed;
     smoothedRadius = sLJparameter;
 
+    //calculate number of cells on each axis
     x_cells = (int) round(N[0] / cutoff);
     y_cells = (int) round(N[1] / cutoff);
     z_cells = (int) round(N[2] / cutoff);
@@ -38,10 +39,12 @@ LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoffR
     y_max = N[1];
     z_max = N[2];
 
+    //calculate cell size in each direction
     x_cell_size = x_max / x_cells;
     y_cell_size = y_max / y_cells;
     z_cell_size = z_max / z_cells;
 
+    //create cell structure according to calculated parameters
     std::vector<std::vector<std::vector<std::vector<Particle>>>> x;
     for (int i = 0; i < x_cells + 2; i++) {
         std::vector<std::vector<std::vector<Particle>>> y;
@@ -56,6 +59,9 @@ LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoffR
     boundary = std::move(boundaryConditions);
 }
 
+/**
+ * destructs LinkedCellContainer
+ */
 LinkedCellContainer::~LinkedCellContainer() = default;
 
 /**
@@ -151,6 +157,7 @@ void LinkedCellContainer::addParticle(Particle &p) {
 
 /**
  * create a new ParticleContainer containing the same particles as this LinkedCellContainer
+ * @return ParticleContainer with particles
  */
 ParticleContainer LinkedCellContainer::toContainer() {
     ParticleContainer container = ParticleContainer();
@@ -168,88 +175,12 @@ ParticleContainer LinkedCellContainer::toContainer() {
 
 /**
  * adds all Particles of given ParticleContainer
- * @param container
+ * @param container ParticleContainer
  */
 void LinkedCellContainer::addContainer(ParticleContainer &container) {
     for (auto &particle: container) {
         addParticle(particle);
     }
-}
-
-/**
- * return size of cells on x_axis
- * @return
- */
-double LinkedCellContainer::getXCellSize() const { return x_cell_size; }
-
-/**
- * return size of cells on y_axis
- * @return
- */
-double LinkedCellContainer::getYCellSize() const { return y_cell_size; }
-
-/**
- * return size of cells on z_axis
- * @return
- */
-double LinkedCellContainer::getZCellSize() const { return z_cell_size; }
-
-/**
- * return number of cells on x_axis
- * @return
- */
-int LinkedCellContainer::getXCells() const {
-    return x_cells;
-}
-
-/**
- * return number cells on y_axis
- * @return
- */
-int LinkedCellContainer::getYCells() const {
-    return y_cells;
-}
-
-/**
- * return number of cells on z_axis
- * @return
- */
-int LinkedCellContainer::getZCells() const {
-    return z_cells;
-}
-
-/**
- * returns a specific cell
- * @return
- */
-std::vector<Particle> LinkedCellContainer::getCell(int x, int y, int z) {
-    return cells[x][y][z];
-}
-
-/**
- * returns cutoff radius
- * @return
- */
-double LinkedCellContainer::getCutoff() const { return cutoff; }
-
-/**
- * returns the vector of all particles in the ParticleContainer with Pointer at first element
- * @return
- */
-std::vector<std::vector<std::vector<std::vector<Particle>>>>
-
-::iterator LinkedCellContainer::begin() {
-    return cells.begin();
-}
-
-/**
- * returns the vector of all particles in the LinkedCellContainer with Pointer at last element
- * @return
- */
-std::vector<std::vector<std::vector<std::vector<Particle>>>>
-
-::iterator LinkedCellContainer::end() {
-    return cells.end();
 }
 
 /**
@@ -280,12 +211,10 @@ void LinkedCellContainer::moveToNeighbour() {
                             generateGhostCell(p, x, y, z);
                         }
                     } else {
-                        //if(applyMirrorBoundary(p, x, y, z))
                         //check if boundary is periodic and particle needs to be moved to other side
                         moveIfPeriodic(cells[x][y][z][p].getX()[0], cells[x][y][z][p].getX()[1],
                                        cells[x][y][z][p].getX()[2], cells[x][y][z][p]);
                         cells[x][y][z].erase(cells[x][y][z].begin() + p);
-                        //}
                     }
                 }
             }
@@ -304,11 +233,13 @@ void LinkedCellContainer::moveToNeighbour() {
  */
 std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y, int z) const {
     std::vector<std::array<int, 3>> vec = {};
+
     bool right = x < x_cells || (x == x_cells && boundary[1] == "p");
     bool up = y < y_cells || (y == y_cells && boundary[2] == "p");
     bool left = x > 1 || (x == 1 && boundary[0] == "p");
     bool before = z < z_cells || (z == z_cells && boundary[5] == "p");
     bool down = y > 1 || (y == 1 && boundary[3] == "p");
+
     //get neighbour cells according to N3L
     if (right) vec.push_back({x + 1, y, z});
     if (up) vec.push_back({x, y + 1, z});
@@ -360,7 +291,6 @@ std::vector<std::array<int, 3>> LinkedCellContainer::get_next_cells(int x, int y
  * sets old force to current force and current force to zero
  */
 void LinkedCellContainer::setZero() {
-    #pragma omp parallel for collapse(3) default(none)
     for (int x = 1; x <= x_cells; x++) {
         for (int y = 1; y <= y_cells; y++) {
             for (int z = 1; z <= z_cells; z++) {
@@ -376,6 +306,7 @@ void LinkedCellContainer::setZero() {
 /**
  * applies the force calculation according to N3L
  * @param forceCalculation a function to apply the force calculations pairwise
+ * * @param smoothedForceCalculation a function to apply the smoothed force calculations pairwise
  */
 void LinkedCellContainer::applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation,
                                              const std::function<void(Particle *, Particle *, double,
@@ -633,7 +564,6 @@ void LinkedCellContainer::generateGhostCell(int index, int x, int y, int z) {
                             cells[x][y][z][index].getM(), cells[x][y][z][index].getType(), cells[x][y][z][index].getSig(),
                             cells[x][y][z][index].getEps());
             }
-
         }
         addParticle(x_new, y_new, z_new,{x_coordinate, y_coordinate, z_coordinate}, cells[x][y][z][index].getV(),
                     cells[x][y][z][index].getM(), cells[x][y][z][index].getType(), cells[x][y][z][index].getSig(),
@@ -663,11 +593,10 @@ void LinkedCellContainer::deleteGhostCells() {
             cells[x][y][z_cells + 1].clear();
         }
     }
-
 }
 
 /**
- * moves the particle if it's behind a periodic boundary
+ * moves the particle if it is behind a periodic boundary
  * @param x_coordinate x_coordinate of current particle
  * @param y_coordinate y_coordinate of current particle
  * @param z_coordinate z_coordinate of current particle
@@ -675,53 +604,43 @@ void LinkedCellContainer::deleteGhostCells() {
  */
 void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle &p) {
     bool periodic = false;
+
     double oldX = p.getOldX()[0];
     double oldY = p.getOldX()[1];
     double oldZ = p.getOldX()[2];
+
     if (x_coordinate > x_max && boundary[1] == "p") {
         periodic = true;
         oldX -= x_max;
-        x_coordinate -= x_max; //won't work if values get to big
-        //x_coordinate -= (floor(x_coordinate/x_max)) * x_max;
-        //x_coordinate = std::fmod(x_coordinate, x_max);
+        x_coordinate -= x_max;
         if(x_coordinate > x_max) x_coordinate = std::fmod(x_coordinate, x_max); //0;
     }
     else if (x_coordinate < 0 && boundary[0] == "p") {
         periodic = true;
-        //x_coordinate += (ceil(-x_coordinate/x_max))*x_max;
-        //x_coordinate = x_max - std::fmod(-x_coordinate, x_max);
         oldX += x_max;
         x_coordinate += x_max;
         if(x_coordinate < 0) x_coordinate = x_max - std::fmod(-x_coordinate, x_max);//x_max;
     }
     if (y_coordinate > y_max && boundary[2] == "p") {
         periodic = true;
-        //y_coordinate -= (floor(y_coordinate/y_max))*y_max;
-        //y_coordinate = std::fmod(y_coordinate, y_max);
         oldY -= y_max;
         y_coordinate -= y_max;
         if(y_coordinate > y_max ) y_coordinate = std::fmod(y_coordinate, y_max); // 0;
     }
     else if (y_coordinate < 0 && boundary[3] == "p") {
         periodic = true;
-        //y_coordinate += (ceil(-y_coordinate/y_max)) *y_max;
-        //y_coordinate = y_max - std::fmod(-y_coordinate, y_max);
         y_coordinate += y_max;
         oldY += y_max;
         if(y_coordinate < 0 ) y_coordinate = y_max - std::fmod(-y_coordinate, y_max); //y_max;
     }
     if (z_coordinate > z_max && boundary[5] == "p") {
         periodic = true;
-        //z_coordinate -= (floor(z_coordinate/z_max))*z_max;
-        //z_coordinate = std::fmod(z_coordinate, z_max);
         z_coordinate -= z_max;
         oldZ -= z_max;
         if(z_coordinate > z_max) z_coordinate = std::fmod(z_coordinate, z_max); // 0;
     }
     else if (z_coordinate < 0 && boundary[4] == "p") {
         periodic = true;
-        //z_coordinate += (ceil(-z_coordinate/z_max))*z_max;
-        //z_coordinate= std::fmod(-z_coordinate, z_max);
         z_coordinate += z_max;
         oldZ += z_max;
         if(z_coordinate < 0) z_coordinate = z_max - std::fmod(-z_coordinate, z_max); //z_max;
@@ -756,7 +675,7 @@ void LinkedCellContainer::moveIfPeriodic(double x_coordinate, double y_coordinat
 }
 
 /**
- * calculates the average movement distance of all particles
+ * calculates the average movement distance (diffusion) of all particles
  * @return the average movement distance
  */
 double LinkedCellContainer::calculateDiffusion() {
@@ -778,9 +697,14 @@ double LinkedCellContainer::calculateDiffusion() {
 
 /**
  * calculates the Radial Distribution Function
+ * @param intervalBegin
+ * @param intervalEnd
+ * @param deltaR
+ * @param x_axis_plot plot to add results to
+ * @param filename name of file to save results into
+ * @return densities
  */
-std::vector<double>
-LinkedCellContainer::calculateRDF(int intervalBegin, int intervalEnd, double deltaR, std::vector<int> x_axis_plot,
+std::vector<double> LinkedCellContainer::calculateRDF(int intervalBegin, int intervalEnd, double deltaR, std::vector<int> x_axis_plot,
                                   std::ofstream &filename) {
     std::vector<double> densities;
     ParticleContainer particles = toContainer();
@@ -791,19 +715,90 @@ LinkedCellContainer::calculateRDF(int intervalBegin, int intervalEnd, double del
         for (auto &p1: particles) {
             for (auto &p2: particles) {
                 double distance = ArrayUtils::L2Norm(p1.getX() - p2.getX());
-                //spdlog::info("distance: " + std::to_string(distance));
                 if (distance >= i && distance <= i + deltaR && !(p1 == p2)) num_particles++;
             }
         }
-        //spdlog::info("num particles: " + std::to_string(num_particles));
         double new_density = num_particles / ((4 * M_PI / 3) * (pow(i + deltaR, 3) - pow(i, 3)));
         filename << new_density << ", ";
         densities.emplace_back(new_density);
-        //RDF_file << new_density;
     }
     filename << "\n";
-    //auto y = matplot::transform(x_axis_plot, densities);
     matplot::plot(std::move(x_axis_plot), densities);
     matplot::hold(matplot::on);
     return densities;
+}
+
+/**
+ * return size of cells on x_axis
+ * @return size of cells on x_axis
+ */
+double LinkedCellContainer::getXCellSize() const { return x_cell_size; }
+
+/**
+ * return size of cells on y_axis
+ * @return size of cells on y_axis
+ */
+double LinkedCellContainer::getYCellSize() const { return y_cell_size; }
+
+/**
+ * return size of cells on z_axis
+ * @return size of cells on z_axis
+ */
+double LinkedCellContainer::getZCellSize() const { return z_cell_size; }
+
+/**
+ * return number of cells on x_axis
+ * @return number of cells on x_axis
+ */
+int LinkedCellContainer::getXCells() const {
+    return x_cells;
+}
+
+/**
+ * return number cells on y_axis
+ * @return number cells on y_axis
+ */
+int LinkedCellContainer::getYCells() const {
+    return y_cells;
+}
+
+/**
+ * return number of cells on z_axis
+ * @return number of cells on z_axis
+ */
+int LinkedCellContainer::getZCells() const {
+    return z_cells;
+}
+
+/**
+ * returns a specific cell
+ * @param x x-coordinate of cell
+ * @param y y-coordinate of cell
+ * @param z z-coordinate of cell
+ * @return cell
+ */
+std::vector<Particle> LinkedCellContainer::getCell(int x, int y, int z) {
+    return cells[x][y][z];
+}
+
+/**
+ * returns cutoff radius
+ * @return cutoff
+ */
+double LinkedCellContainer::getCutoff() const { return cutoff; }
+
+/**
+ * returns the vector of all particles (including ghost particles) in the ParticleContainer with Pointer at first element
+ * @return start pointer
+ */
+std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator LinkedCellContainer::begin() {
+    return cells.begin();
+}
+
+/**
+ * returns the vector of all particles (including ghost particles) in the LinkedCellContainer with pointer at last element
+ * @return end pointer
+ */
+std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator LinkedCellContainer::end() {
+    return cells.end();
 }
