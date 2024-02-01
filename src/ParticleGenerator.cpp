@@ -2,14 +2,12 @@
 // Created by maraconda on 12.11.23.
 //
 
-#define _USE_MATH_DEFINES
 #include "utils/ArrayUtils.h"
 #include "ParticleGenerator.h"
 #include "ParticleContainer.h"
 #include <cmath>
 #include <iostream>
 #include <spdlog/spdlog.h>
-
 
 /**
  * creates a cuboid and stores it in a ParticleContainer
@@ -21,7 +19,7 @@
  * @param sig sigma for each particle
  * @param eps epsilon for each particle
  * @param type type for each particle
- * @return
+ * @return ParticleContainer with created cuboid
  */
 ParticleContainer ParticleGenerator::createCuboid(std::array<double, 3> x, std::array<double, 3> v,
                                                   std::array<int, 3> N, double h, double m, double sig, double eps, int type) {
@@ -52,7 +50,7 @@ ParticleContainer ParticleGenerator::createCuboid(std::array<double, 3> x, std::
 
 
 /**
- * create a cuboid and stores it in the given cell grid
+ * creates a cuboid and stores it in the given LinkedCellContainer
  * @param x position of left front corner
  * @param v initial velocity
  * @param N dimension of the cuboid
@@ -75,19 +73,17 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
     int x_axis = (int) floor(x[0] / cells.getXCellSize()) + 1;
     int y_axis = (int) floor(x[1] / cells.getYCellSize()) + 1;
     int z_axis = (int) floor(x[2] / cells.getZCellSize()) + 1;
+
     //to move to next cell
     int x_axis_tmp = x_axis;
     int y_axis_tmp = y_axis;
     int z_axis_tmp = z_axis;
-    int p = 0;
 
     for (int z_i = 0; z_i < N[2]; z_i++) {
         for (int y_i = 0; y_i < N[1]; y_i++) {
             for (int x_i = 0; x_i < N[0]; x_i++) {
                 cells.addParticle(x_axis_tmp, y_axis_tmp, z_axis_tmp, coordinate, v, m, type, sig, eps);
-                //spdlog::info("added x_cell {}", x_axis_tmp);
                 coordinate[0] += h;
-                p++;
                 if(x_axis_tmp <= (floor(coordinate[0] / cells.getXCellSize()))) x_axis_tmp ++;
             }
             coordinate[0] = x[0];
@@ -100,11 +96,10 @@ void ParticleGenerator::createCuboidInCells(std::array<double, 3> x, std::array<
         coordinate[2] += h;
         if(z_axis_tmp <= floor(coordinate[2] / cells.getZCellSize())) z_axis_tmp ++;
     }
-    //std::cout << p << std::endl;
 }
 
 /**
- * creates a 2-dimensional sphere/disk and stores it in a ParticleContainer based on Bresenham
+ * creates a 2-dimensional sphere/disk and stores it in a ParticleContainer based on Bresenham algorithm (faulty)
  * @param center position of center
  * @param v initial velocity
  * @param m mass of each particle
@@ -206,7 +201,6 @@ ParticleContainer ParticleGenerator::createDisk(std::array<double, 3> center, st
         x += h;
 
     }
-
     return *disk;
 }
 
@@ -288,7 +282,7 @@ ParticleContainer ParticleGenerator::createSphere(std::array<double, 3> center, 
 }
 
 /**
- * creates a 3-dimensional sphere and stores it in a LinkedCellContainer (not functional yet)
+ * creates a 3-dimensional sphere and stores it in a LinkedCellContainer
  * @param x position of center
  * @param v initial velocity
  * @param m mass of each particle

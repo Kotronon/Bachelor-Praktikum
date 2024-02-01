@@ -10,7 +10,7 @@
 
 /**
  * initialize the temperature in a LinkedCellContainer (velocities of particles should not be (0,0,0))
- * @param initialTemperature temperature to initialize in Kelvin
+ * @param initialTemperature temperature to initialize
  * @param dimension dimension of the simulation (possible values: 2 or 3)
  * @param cells LinkedCellContainer
  */
@@ -20,7 +20,7 @@ void Thermostat::initializeTemperature(double initialTemperature, int dimension,
 
 /**
  * initialize the temperature in a LinkedCellContainer with Brownian Motion (velocities of particles should be (0,0,0))
- * @param initialTemperature temperature to initialize in Kelvin
+ * @param initialTemperature temperature to initialize
  * @param dimension dimension of the simulation (possible values: 2 or 3)
  * @param averageVelocity average velocity of the Brownian Motion
  * @param cells LinkedCellContainer
@@ -74,11 +74,14 @@ void Thermostat::setTemperatureDirectly(double newTemperature, int dimension, Li
  * @param temperatureDifference maximal absolute temperature change allowed for one application of the thermostat
  * @param dimension dimension of the simulation (possible values: 2 or 3)
  * @param cells LinkedCellContainer
+ * @param newTemperature the last applied temperature
+ * @returns new applied temperature
  */
 double Thermostat::setTemperatureGradually(double targetTemperature, double temperatureDifference, int dimension, LinkedCellContainer &cells, double newTemperature) {
 
     //Calculate current temperature
     double currentTemperature = calculateCurrentTemperature(dimension, cells);
+
     //Calculate the new temperature to set based on the allowed difference
     if (std::abs(targetTemperature - currentTemperature) <= temperatureDifference) {
         newTemperature = targetTemperature;
@@ -109,14 +112,15 @@ double Thermostat::setTemperatureGradually(double targetTemperature, double temp
             }
         }
     }
+
     return newTemperature;
 }
 
 /**
- * calculate the current temperature in a LinkedCellContainer
+ * Calculate the current temperature in a LinkedCellContainer
  * @param dimension dimension of the simulation (possible values: 2 or 3)
  * @param cells LinkedCellContainer
- * @return current temperature in the LinkedCellContainer in Kelvin
+ * @return current temperature in the LinkedCellContainer
  */
 double Thermostat::calculateCurrentTemperature(int dimension, LinkedCellContainer cells) {
     double kineticEnergy = 0;
