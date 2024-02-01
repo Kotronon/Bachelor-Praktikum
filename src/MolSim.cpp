@@ -168,16 +168,17 @@ int main(int argc, char *argsv[]) {/*
     //For this loop, we assume: current x, current f and current v are known
     while (current_time < end_time) {
 
-
+        //apply that one force in the membrane
+        if(current_time < 150){
+            ForceCalculator::ThatOneMembraneForceCalculation(cells,Grav,f_z);
+        }
         //Calculate new x
         PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
         //Calculate new f
         ForceCalculator::LennardJonesForceMembrane(cells, Grav);
         ForceCalculator::MembraneForceCalculation(cells,Grav,h);
 
-        if(current_time < 150){
-           ForceCalculator::ThatOneMembraneForceCalculation(cells,Grav,f_z);
-        }
+
 
         //Calculate new v
         VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
