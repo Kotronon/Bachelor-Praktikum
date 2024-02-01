@@ -34,6 +34,9 @@ LinkedCellContainer::LinkedCellContainer(std::array<double, 3> N, double cutoffR
     x_cells = (int) round(N[0] / cutoff);
     y_cells = (int) round(N[1] / cutoff);
     z_cells = (int) round(N[2] / cutoff);
+    if(x_cells == 0) x_cells ++;
+    if(y_cells == 0) y_cells ++;
+    if(z_cells == 0) z_cells ++;
 
     x_max = N[0];
     y_max = N[1];

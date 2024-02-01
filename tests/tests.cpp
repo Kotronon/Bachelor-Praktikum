@@ -179,7 +179,7 @@ double L2Norm_p1_p2 = 2;
 //between cutoff and smoothedLJ value
 particles.addParticle({ 5, 5, 0}, { 0, 0, 0}, 50, 0, 1, 5);
 particles.addParticle({ 5, 7, 0}, { 0, 0, 0}, 50, 0, 1, 5);
-double resSLJ = ((24 * pow(sig, 6) * eps) / (pow(L2Norm_p1_p2, 14) * pow(cutoff - smoothedparameter, 3))) *
+double resSLJ = ((-24 * pow(sig, 6) * eps) / (pow(L2Norm_p1_p2, 14) * pow(cutoff - smoothedparameter, 3))) *
                 (cutoff - L2Norm_p1_p2) * (pow(cutoff, 2) * (2 * pow(sig, 6) - pow(L2Norm_p1_p2, 6)) +
                 cutoff * (3 * smoothedparameter - L2Norm_p1_p2) * (pow(L2Norm_p1_p2, 6) - 2 * pow(sig, 6)) + L2Norm_p1_p2 *
                 (5 * smoothedparameter * pow(sig, 6) - 2 * smoothedparameter * pow(L2Norm_p1_p2, 6) -
@@ -190,7 +190,7 @@ std::array<double, 3> resSLJ2 = {0, -resSLJ, 0};
 //between cutoff and smoothedLJ value in zaxis
 particles.addParticle({ 5, 15, 2}, { 0, 0, 0}, 50, 0, 1, 5);
 particles.addParticle({ 5, 15, 4}, { 0, 0, 0}, 50, 0, 1, 5);
-double resSLJZ = ((24 * pow(sig, 6) * eps) / (pow(L2Norm_p1_p2, 14) * pow(cutoff - smoothedparameter, 3))) *
+double resSLJZ = ((-24 * pow(sig, 6) * eps) / (pow(L2Norm_p1_p2, 14) * pow(cutoff - smoothedparameter, 3))) *
                 (cutoff - L2Norm_p1_p2) * (pow(cutoff, 2) * (2 * pow(sig, 6) - pow(L2Norm_p1_p2, 6)) +
                 cutoff * (3 * smoothedparameter - L2Norm_p1_p2) * (pow(L2Norm_p1_p2, 6) - 2 * pow(sig, 6)) + L2Norm_p1_p2 *
                 (5 * smoothedparameter * pow(sig, 6) - 2 * smoothedparameter * pow(L2Norm_p1_p2, 6) -
@@ -281,6 +281,6 @@ ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 10) < 0
 }
 
 int main() {
-   //testing::InitGoogleTest();
-   //return RUN_ALL_TESTS();
+   testing::InitGoogleTest();
+   return RUN_ALL_TESTS();
 }
