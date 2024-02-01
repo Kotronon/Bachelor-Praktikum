@@ -19,6 +19,11 @@ private:
     std::array<double, 3> x{};
 
     /**
+     * Previous position of the particle
+     */
+    std::array<double , 3> oldX{};
+
+    /**
      * Velocity of the particle
      */
     std::array<double, 3> v{};
@@ -70,6 +75,8 @@ public:
 
     [[nodiscard]] const std::array<double, 3> &getX() const;
 
+    [[nodiscard]] const std::array<double, 3> &getOldX() const;
+
     [[nodiscard]] const std::array<double, 3> &getV() const;
 
     [[nodiscard]] const std::array<double, 3> &getF() const;
@@ -89,6 +96,8 @@ public:
     [[nodiscard]] std::string toString() const;
 
     void setX(std::array<double, 3> newX);
+
+    void setOldX(std::array<double, 3> newOldX);
 
     void setV(std::array<double, 3> newV);
 

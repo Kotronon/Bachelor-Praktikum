@@ -36,6 +36,17 @@ target_link_libraries(GTest::GTest INTERFACE gtest_main)
 include(GoogleTest)
 include(CTest)
 add_executable(tests tests.cpp ../src/ParticleContainer.cpp ../src/ParticleGenerator.cpp ../src/Particle.cpp ../src/calculations/PositionCalculator.cpp ../src/calculations/VelocityCalculator.cpp ../src/calculations/ForceCalculator.cpp ../src/LinkedCellContainer.cpp ../src/Thermostat.cpp)
+
+FetchContent_Declare(matplotplusplus
+        GIT_REPOSITORY https://github.com/alandefreitas/matplotplusplus
+        GIT_TAG origin/master) # or whatever tag you want
+FetchContent_GetProperties(matplotplusplus)
+if(NOT matplotplusplus_POPULATED)
+    FetchContent_Populate(matplotplusplus)
+    add_subdirectory(${matplotplusplus_SOURCE_DIR} ${matplotplusplus_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()
+target_link_libraries(tests PUBLIC matplot)
+
 target_link_libraries(tests PRIVATE GTest::gtest_main gtest_main spdlog::spdlog )
 gtest_add_tests(TARGET tests)
 gtest_discover_tests(tests)

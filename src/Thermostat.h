@@ -5,19 +5,21 @@
 #ifndef PSEMOLDYN_GROUPH_THERMOSTAT_H
 #define PSEMOLDYN_GROUPH_THERMOSTAT_H
 
-
 #include "LinkedCellContainer.h"
 
 class Thermostat {
+private:
 public:
+
+    Thermostat() = default;
 
     static void initializeTemperature(double initialTemperature, int dimension, LinkedCellContainer &cells);
 
     static void setTemperatureDirectly(double temperature, int dimension, LinkedCellContainer &cells);
 
-    static void
+    static double
     setTemperatureGradually(double targetTemperature, double temperatureDifference, int dim,
-                            LinkedCellContainer &cells);
+                            LinkedCellContainer &cells, double deltaT);
 
     static double calculateCurrentTemperature(int dimension, LinkedCellContainer cells);
 

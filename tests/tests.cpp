@@ -8,66 +8,71 @@
 #include "../src/LinkedCellContainer.h"
 #include "src/Thermostat.h"
 #include <math.h>
+#include <spdlog/spdlog.h>
 //@TODO write tests with TEST()
 //To compile tests write cmake --build . in terminal and afterwarts ctest works
 
 /**
  * Test for plain Particle Container for addParticle, begin(), end() and size() functions
  */
-TEST(ParticleContainerTest, ParticleContainer){
-    ParticleContainer particles = ParticleContainer();
-    //test addParticle
-    Particle particle({0, 0, 0}, {0, 3, 0}, 50, 0, 1, 5);
-    particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0, 1, 5);
-    //test begin
-    //ASSERT_TRUE(particles.begin().base()->operator==(particle)) << "didn't point on only element in container";
-    //test end
-    ASSERT_FALSE(particles.end().base()->operator==(particle)) << "didn't point on only element in container";
-    //test size
-    EXPECT_EQ(1, particles.size()) << "wrong size";
+TEST(ParticleContainerTest, ParticleContainer
+){
+ParticleContainer particles = ParticleContainer();
+//test addParticle
+Particle particle({0, 0, 0}, {0, 3, 0}, 50, 0, 1, 5);
+particles.addParticle({ 0, 0, 0}, { 0, 3, 0}, 50, 0, 1, 5);
+//test begin
+//ASSERT_TRUE(particles.begin().base()->operator==(particle)) << "didn't point on only element in container";
+//test end
+ASSERT_FALSE(particles.end().base()->operator==(particle)) << "didn't point on only element in container";
+//test size
+EXPECT_EQ(1, particles.size()) << "wrong size";
 }
 
 /**
  * Test for linked cell container for addParticle, begin(), end() and size() functions as well as to calculate position and move particle to next cell
  */
 TEST(cellTest, LinkedCellContainer){
-    LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "o", "r", "r"});
-    //test cells size
-    EXPECT_EQ(1800, cells.cell_numbers()) << "wrong size";
-    //test addParticle
-    Particle particle({0, 0, 0}, {0, 3, 0}, 50, 0, 1, 5);
-    cells.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0, 1, 5);
-    EXPECT_EQ(1, cells.Particles_in_cell(1,1,1));
-    //test calculate position and move particle to next cell
-    Particle particle2({0, 3, 0}, {0, 3, 0}, 50, 0, 1, 5);
-    PositionCalculator::PositionStoermerVerletCell(cells, 1);
-    EXPECT_EQ(0, cells.Particles_in_cell(1,1,1));
-    EXPECT_EQ(1, cells.Particles_in_cell(1,2,1));
-    EXPECT_EQ(0, cells.Particles_in_cell(1,3,1));
+LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "o", "r", "r"});
+//test cells size
+EXPECT_EQ(1800, cells.cell_numbers()) << "wrong size";
+//test addParticle
+Particle particle({0, 0, 0}, {0, 3, 0}, 50, 0, 1, 5);
+cells.addParticle({ 0, 0, 0}, { 0, 3, 0}, 50, 0, 1, 5);
+EXPECT_EQ(1, cells.Particles_in_cell(1,1,1));
+//test calculate position and move particle to next cell
+Particle particle2({0, 3, 0}, {0, 3, 0}, 50, 0, 1, 5);
+PositionCalculator::PositionStoermerVerletCell(cells,
+1);
+EXPECT_EQ(0, cells.Particles_in_cell(1,1,1));
+EXPECT_EQ(1, cells.Particles_in_cell(1,2,1));
+EXPECT_EQ(0, cells.Particles_in_cell(1,3,1));
 
 }
 /**
  * Test for outflow, reflective and periodic boundary
  */
-TEST(Boundary, Boundry){
-    LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "p", "p", "o", "r", "r"});
-    //test outflow
-    cells.addParticle({0, 0, 0}, {0, -1, 0}, 50, 0, 1, 5);
-    EXPECT_EQ(1, cells.Particles_in_cell(1,1,1));
-    PositionCalculator::PositionStoermerVerletCell(cells, 1);
-    EXPECT_EQ(0, cells.Particles_in_cell(1,1,1));
-    //test reflective boundary
-    cells.addParticle({0, 0, 0}, {-1, 3, 0}, 50, 0, 1, 5);
-    ASSERT_EQ(1, cells.Particles_in_cell(1,1,1));
-    cells.generateGhostCell(0, 1, 1, 1);
-    Particle ghost ({-0.0000000001, 0, 0}, {0, 0, 0}, 50, 1, 5, -1);
-    EXPECT_EQ(1, cells.Particles_in_cell(0,1,1));
-    //test periodic
-    cells.addParticle({179, 89, 0}, {1,1,0}, 50, 0, 1, 5);
-    cells.generateGhostCell(0, 60, 30, 1);
-    ASSERT_EQ(1, cells.Particles_in_cell(60, 0, 1));
-    ASSERT_EQ(1, cells.Particles_in_cell(0, 30, 1));
-    ASSERT_EQ(1, cells.Particles_in_cell(0, 0, 1));
+TEST(Boundary, Boundry
+){
+LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "p", "p", "o", "r", "r"});
+//test outflow
+cells.addParticle({ 0, 0, 0}, { 0, -1, 0}, 50, 0, 1, 5);
+EXPECT_EQ(1, cells.Particles_in_cell(1,1,1));
+PositionCalculator::PositionStoermerVerletCell(cells,
+1);
+EXPECT_EQ(0, cells.Particles_in_cell(1,1,1));
+//test reflective boundary
+cells.addParticle({ 0, 0, 0}, { -1, 3, 0}, 50, 0, 1, 5);
+ASSERT_EQ(1, cells.Particles_in_cell(1,1,1));
+cells.generateGhostCell(0, 1, 1, 1);
+Particle ghost({-0.0000000001, 0, 0}, {0, 0, 0}, 50, 1, 5, -1);
+EXPECT_EQ(1, cells.Particles_in_cell(0,1,1));
+//test periodic
+cells.addParticle({ 179, 89, 0}, { 1,1,0}, 50, 0, 1, 5);
+cells.generateGhostCell(0, 60, 30, 1);
+ASSERT_EQ(1, cells.Particles_in_cell(60, 0, 1));
+ASSERT_EQ(1, cells.Particles_in_cell(0, 30, 1));
+ASSERT_EQ(1, cells.Particles_in_cell(0, 0, 1));
 
 }
 
@@ -76,84 +81,143 @@ TEST(Boundary, Boundry){
  * test for creating a cuboid and adding it to a linked cell container
  * test for creating a sphere and adding it to a linked cell container
  */
-TEST(ParticleGeneratorTest, ParticleGenerator){
-    //Test of adding the right numbers of particles when generating a cuboid to plain container
-    ParticleContainer particles = ParticleGenerator::createCuboid({0,0,0}, {0,0,0}, {40,8,1}, 2, 3, 1, 5, 0);
-    //test size
-    EXPECT_EQ(320, particles.size()) << "wrong number of particles generated in plain container";
-    //Test of adding the right numbers of particles when generating a cuboid to linked cell container
-    LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "r", "r", "r"});
-    ParticleGenerator::createCuboidInCells({0,0,0}, {0,0,0}, {40,8,1}, 2, 3, cells, 1, 5, 0);
-    int particles_num = 0;
-    for (auto &x: cells) {
-        for (auto &y: x) {
-            for (auto &z: y) {
-                for (auto &p: z) {
-                    particles_num++;
-                }
+TEST(ParticleGeneratorTest, ParticleGenerator
+){
+//Test of adding the right numbers of particles when generating a cuboid to plain container
+ParticleContainer particles = ParticleGenerator::createCuboid({0, 0, 0}, {0, 0, 0}, {40, 8, 1}, 2, 3, 1, 5, 0);
+//test size
+EXPECT_EQ(320, particles.size()) << "wrong number of particles generated in plain container";
+//Test of adding the right numbers of particles when generating a cuboid to linked cell container
+LinkedCellContainer cells = LinkedCellContainer({180, 90, 1}, 3.0, {"r", "r", "r", "r", "r", "r"});
+ParticleGenerator::createCuboidInCells({ 0,0,0}, { 0,0,0}, { 40,8,1}, 2, 3, cells, 1, 5, 0);
+int particles_num = 0;
+for (auto &x: cells) {
+    for (auto &y: x) {
+        for (auto &z: y) {
+            for (auto &p: z) {
+                particles_num++;
             }
         }
     }
-    EXPECT_EQ(320, particles_num) << "wrong number of particles generated in linked cell container";
+}
+EXPECT_EQ(320, particles_num) << "wrong number of particles generated in linked cell container";
 }
 /**
  * Test for calculation the new Position of a particle
  */
 TEST(PositionTest, stroemerVelvet){
-    //Checking the correctness of the stoemer velvet position calculation
-    //for force = 0
-    ParticleContainer particles;
-    particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0, 1, 5);
-    std::array<double, 3> res = {0, 0.042, 0};
-    PositionCalculator::PositionStoermerVerlet(particles, 0.014);
-    auto particleVector =  particles.begin();
-    EXPECT_EQ(res, particleVector.base()->getX()) << "wrong position calculated";
+//Checking the correctness of the stoemer velvet position calculation
+//for force = 0
+ParticleContainer particles;
+particles.addParticle({ 0, 0, 0}, { 0, 3, 0}, 50, 0, 1, 5);
+std::array<double, 3> res = {0, 0.042, 0};
+PositionCalculator::PositionStoermerVerlet(particles,
+0.014);
+auto particleVector = particles.begin();
+EXPECT_EQ(res, particleVector.base()->getX()) << "wrong position calculated";
 
 }
 /**
  * Test for the calculation of the velocity of a particle
  */
 TEST(VelocityTest, stroemerVelvet) {
-    //Checking the correctness of the stoemer velvet velocity calculation
-    //for force = 0
-    ParticleContainer particles;
-    particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0, 1, 5);
-    std::array<double, 3> res = {0, 3, 0};
-    VelocityCalculator::VelocityStoermerVerlet(particles, 0.014);
-    auto particleVector = particles.begin();
-    EXPECT_EQ(res, particleVector.base()->getV()) << "wrong velocity calculated";
+//Checking the correctness of the stoemer velvet velocity calculation
+//for force = 0
+ParticleContainer particles;
+particles.addParticle({ 0, 0, 0}, { 0, 3, 0}, 50, 0, 1, 5);
+std::array<double, 3> res = {0, 3, 0};
+VelocityCalculator::VelocityStoermerVerlet(particles,
+0.014);
+auto particleVector = particles.begin();
+EXPECT_EQ(res, particleVector.base()->getV()) << "wrong velocity calculated";
 }
 
 /**
  * Test for the calculation of gravity force
  */
 TEST(ForceTest, SimpleForceCalculation){
-    ParticleContainer particles;
-    particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0, 1, 5);
-    particles.addParticle({0, 3, 0}, {4, 3, 5}, 20, 0, 1, 5);
-    double res = (50.0*20.0*3.0)/27.0;
-    std::array<double, 3> res1 = {0, res, 0};
-    std::array<double, 3> res2 = {0, -res, 0};
-    ForceCalculator::GravityForceCalculation(particles);
-    auto particleVector = particles.begin();
-    EXPECT_EQ(res1, particleVector.base()->getF());
-    EXPECT_EQ(res2, std::next(particleVector.base())->getF()) << "wrong force calculated";
+ParticleContainer particles;
+particles.addParticle({ 0, 0, 0}, { 0, 3, 0}, 50, 0, 1, 5);
+particles.addParticle({ 0, 3, 0}, { 4, 3, 5}, 20, 0, 1, 5);
+double res = (50.0 * 20.0 * 3.0) / 27.0;
+std::array<double, 3> res1 = {0, res, 0};
+std::array<double, 3> res2 = {0, -res, 0};
+ForceCalculator::GravityForceCalculation(particles);
+auto particleVector = particles.begin();
+EXPECT_EQ(res1, particleVector.base()->getF());
+EXPECT_EQ(res2, std::next(particleVector.base())->getF()) << "wrong force calculated";
 }
 
 /**
  * Test for the Lennard Jones force calculation
  */
-TEST(ForceTest, LennardJonesForce){
-    ParticleContainer particles;
-    particles.addParticle({0, 0, 0}, {0, 3, 0}, 50, 0, 1, 5);
-    particles.addParticle({0, 3, 0}, {4, 3, 5}, 20, 0, 1, 5);
-    double res = (24.0/9.0)*(pow(1.0/3.0, 6.0)-2*pow(1.0/3.0, 12.0)) * 3;
-    std::array<double, 3> res1 = {0, res, 0};
-    std::array<double, 3> res2 = {0, -res, 0};
-    ForceCalculator::LennardJonesForce(particles, 1, 1);
-    auto particleVector = particles.begin();
-    EXPECT_EQ(res1, particleVector.base()->getF());
-    EXPECT_EQ(res2, std::next(particleVector.base())->getF()) << "wrong force calculated";
+TEST(ForceTest, LennardJonesForce
+){
+ParticleContainer particles;
+particles.addParticle({ 0, 0, 0}, { 0, 3, 0}, 50, 0, 1, 5);
+particles.addParticle({ 0, 3, 0}, { 4, 3, 5}, 20, 0, 1, 5);
+double res = (24.0 / 9.0) * (pow(1.0 / 3.0, 6.0) - 2 * pow(1.0 / 3.0, 12.0)) * 3;
+std::array<double, 3> res1 = {0, res, 0};
+std::array<double, 3> res2 = {0, -res, 0};
+ForceCalculator::LennardJonesForce(particles,
+1, 1);
+auto particleVector = particles.begin();
+EXPECT_EQ(res1, particleVector.base()->getF());
+EXPECT_EQ(res2, std::next(particleVector.base())->getF()) << "wrong force calculated";
+}
+
+/**
+ * Test for the smooth Lennard Jones force calculation
+ */
+TEST(ForceTest, smoothLennardJonesForce){
+LinkedCellContainer particles = LinkedCellContainer({20, 20, 10}, 3, {"o", "o", "o", "o", "o", "o"}, true, 1.5);
+double sig = 1;
+double eps = 5;
+double cutoff = 3;
+double smoothedparameter = 1.5;
+double L2Norm_p1_p2 = 2;
+//between cutoff and smoothedLJ value
+particles.addParticle({ 5, 5, 0}, { 0, 0, 0}, 50, 0, 1, 5);
+particles.addParticle({ 5, 7, 0}, { 0, 0, 0}, 50, 0, 1, 5);
+double resSLJ = ((24 * pow(sig, 6) * eps) / (pow(L2Norm_p1_p2, 14) * pow(cutoff - smoothedparameter, 3))) *
+                (cutoff - L2Norm_p1_p2) * (pow(cutoff, 2) * (2 * pow(sig, 6) - pow(L2Norm_p1_p2, 6)) +
+                cutoff * (3 * smoothedparameter - L2Norm_p1_p2) * (pow(L2Norm_p1_p2, 6) - 2 * pow(sig, 6)) + L2Norm_p1_p2 *
+                (5 * smoothedparameter * pow(sig, 6) - 2 * smoothedparameter * pow(L2Norm_p1_p2, 6) -
+                3 * pow(sig, 6) * L2Norm_p1_p2 + pow(L2Norm_p1_p2, 7))) *2;
+std::array<double, 3> resSLJ1 = {0, resSLJ, 0};
+std::array<double, 3> resSLJ2 = {0, -resSLJ, 0};
+
+//between cutoff and smoothedLJ value in zaxis
+particles.addParticle({ 5, 15, 2}, { 0, 0, 0}, 50, 0, 1, 5);
+particles.addParticle({ 5, 15, 4}, { 0, 0, 0}, 50, 0, 1, 5);
+double resSLJZ = ((24 * pow(sig, 6) * eps) / (pow(L2Norm_p1_p2, 14) * pow(cutoff - smoothedparameter, 3))) *
+                (cutoff - L2Norm_p1_p2) * (pow(cutoff, 2) * (2 * pow(sig, 6) - pow(L2Norm_p1_p2, 6)) +
+                cutoff * (3 * smoothedparameter - L2Norm_p1_p2) * (pow(L2Norm_p1_p2, 6) - 2 * pow(sig, 6)) + L2Norm_p1_p2 *
+                (5 * smoothedparameter * pow(sig, 6) - 2 * smoothedparameter * pow(L2Norm_p1_p2, 6) -
+                3 * pow(sig, 6) * L2Norm_p1_p2 + pow(L2Norm_p1_p2, 7))) *2;
+std::array<double, 3> resSLJZ1 = {0, 0, resSLJZ};
+std::array<double, 3> resSLJZ2 = {0, 0, -resSLJZ};
+
+//smaller than smoothedLJ value
+particles.addParticle({ 0, 0, 0}, { 0, 3, 0}, 50, 0, 1, 5);
+particles.addParticle({ 0, 1.5, 0}, { 4, 3, 5}, 20, 0, 1, 5);
+double resLJ = (24 * eps / pow(1.5, 2)) * (pow(1 / 1.5, 6) - 2 * ( pow(1 / 1.5, 12))) * 1.5;
+std::array<double, 3> resLJ1 = {0, resLJ, 0};
+std::array<double, 3> resLJ2 = {0, -resLJ, 0};
+ForceCalculator::LennardJonesForceCell(particles, 0);
+ParticleContainer container = particles.toContainer();
+
+auto particleVector = container.begin();
+EXPECT_EQ(resLJ1, particleVector.base()->getF());
+EXPECT_EQ(resLJ2, std::next(particleVector.base())->getF()) << "wrong force calculated";
+particleVector += 2;
+EXPECT_EQ(resSLJ1, particleVector.base()->getF());
+particleVector++;
+EXPECT_EQ(resSLJ2, particleVector.base()->getF());
+particleVector++;
+EXPECT_EQ(resSLJZ1, particleVector.base()->getF());
+particleVector++;
+EXPECT_EQ(resSLJZ2, particleVector.base()->getF());
 }
 
 /**
@@ -161,63 +225,62 @@ TEST(ForceTest, LennardJonesForce){
  */
 TEST(ThermostatTest, Thermostat){
 
-    //Setting up LinkedCellContainer and some particles
-    LinkedCellContainer cells = LinkedCellContainer({30,30,1},2.5,{"r,r,r,r,o,o"});
-    ParticleGenerator::createDiskInCells({15, 15, 1}, {0, 0, 0}, 1.0, 3, 1.2, cells, 1.0, 1.0, 1);
+//Setting up LinkedCellContainer and some particles
+LinkedCellContainer cells = LinkedCellContainer({30, 30, 1}, 2.5, {"r,r,r,r,o,o"});
+ParticleGenerator::createDiskInCells({ 15, 15, 1}, { 0, 0, 0}, 1.0, 3, 1.2, cells, 1.0, 1.0, 1);
 
-    //Setting up parameters
-    double grav = -12.44;
-    double delta_t = 0.0005;
-    double init_T = 20;
-    double higher_T = 30;
-    double lower_T = 10;
+//Setting up parameters
+double grav = -12.44;
+double delta_t = 0.0005;
+double init_T = 20;
+double higher_T = 30;
+double lower_T = 10;
 
-    //Setup before first iteration and initialization with Brownian Motion to a temperature of 20 Kelvin
-    ForceCalculator::LennardJonesForceCell(cells, grav);
-    Thermostat::initializeTemperatureWithBrownianMotion(init_T, 2, cells);
+//Setup before first iteration and initialization with Brownian Motion to a temperature of 20 Kelvin
+ForceCalculator::LennardJonesForceCell(cells, grav);
+Thermostat::initializeTemperatureWithBrownianMotion(init_T,2, cells);
 
-    //Check initial setting of temperature
-    ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 20) < 5) << "wrong temperature after temperature initialization";
+//Check initial setting of temperature
+ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 20) < 5) << "wrong temperature after temperature initialization";
 
-    //Iteration 1 (Holding the temperature)
-    PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
-    ForceCalculator::LennardJonesForceCell(cells, grav);
-    VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
-    Thermostat::setTemperatureDirectly(init_T,2,cells);
+//Iteration 1 (Holding the temperature)
+PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
+ForceCalculator::LennardJonesForceCell(cells, grav);
+VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
+Thermostat::setTemperatureDirectly(init_T,2,cells);
 
-    //Check temperature after first iteration
-    ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 20) < 0.05) << "wrong temperature while holding temperature";
+//Check temperature after first iteration
+ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 20) < 0.05) << "wrong temperature while holding temperature";
 
-    //Iteration 2 (Holding the temperature)
-    PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
-    ForceCalculator::LennardJonesForceCell(cells, grav);
-    VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
-    Thermostat::setTemperatureDirectly(init_T,2,cells);
+//Iteration 2 (Holding the temperature)
+PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
+ForceCalculator::LennardJonesForceCell(cells, grav);
+VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
+Thermostat::setTemperatureDirectly(init_T,2,cells);
 
-    //Check temperature after second iteration
-    ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 20) < 0.05) << "wrong temperature while holding temperature";
+//Check temperature after second iteration
+ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 20) < 0.05) << "wrong temperature while holding temperature";
 
-    //Iteration 3 (heating up the simulation)
-    PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
-    ForceCalculator::LennardJonesForceCell(cells, grav);
-    VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
-    Thermostat::setTemperatureDirectly(higher_T,2,cells);
+//Iteration 3 (heating up the simulation)
+PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
+ForceCalculator::LennardJonesForceCell(cells, grav);
+VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
+Thermostat::setTemperatureDirectly(higher_T,2,cells);
 
-    //Check temperature after third iteration
-    ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 30) < 0.05) << "wrong temperature while heating up";
+//Check temperature after third iteration
+ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 30) < 0.05) << "wrong temperature while heating up";
 
-    //Iteration 4 (cooling down the simulation)
-    PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
-    ForceCalculator::LennardJonesForceCell(cells, grav);
-    VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
-    Thermostat::setTemperatureDirectly(lower_T,2,cells);
+//Iteration 4 (cooling down the simulation)
+PositionCalculator::PositionStoermerVerletCell(cells, delta_t);
+ForceCalculator::LennardJonesForceCell(cells, grav);
+VelocityCalculator::VelocityStoermerVerletCell(cells, delta_t);
+Thermostat::setTemperatureDirectly(lower_T,2,cells);
 
-    //Check temperature after fourth iteration
-    ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 10) < 0.05) << "wrong temperature while cooling down";
+//Check temperature after fourth iteration
+ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 10) < 0.05) << "wrong temperature while cooling down";
 }
 
-int main(){
-    testing::InitGoogleTest();
-    return RUN_ALL_TESTS();
-   // return 0;
+int main() {
+   testing::InitGoogleTest();
+   return RUN_ALL_TESTS();
 }

@@ -11,11 +11,33 @@
 
 
 class LinkedCellContainer {
+private:
+    double cutoff;
+    std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
+    std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
+
+    //number of cells
+    int x_cells;
+    int y_cells;
+    int z_cells;
+
+    //highest value for each axis
+    double x_max;
+    double y_max;
+    double z_max;
+
+    //cell size
+    double x_cell_size;
+    double y_cell_size;
+    double z_cell_size;
+
+    bool smoothed;
+    double smoothedRadius;
+
+    int it = 0;
+
 public:
-
-
-
-    LinkedCellContainer(std::array<double, 3> N, double cutoff,  std::array<std::string, 6> b);
+    LinkedCellContainer(std::array<double, 3> N, double cutoff,  std::array<std::string, 6> b, bool smoothed = false, double sLJparameter = -1);
 
     virtual ~LinkedCellContainer();
 
@@ -43,11 +65,11 @@ public:
 
     void setZero();
 
-    [[nodiscard]] int getXMax() const;
+    [[nodiscard]] double getXCellSize() const;
 
-    [[nodiscard]] int getYMax() const;
+    [[nodiscard]] double getYCellSize() const;
 
-    [[nodiscard]] int getZMax() const;
+    [[nodiscard]] double getZCellSize() const;
 
     [[nodiscard]] double getCutoff() const;
 
@@ -55,7 +77,8 @@ public:
 
     std::vector<std::vector<std::vector<std::vector<Particle>>>>::iterator end();
 
-    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation, double Grav);
+    void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation,
+                            const std::function<void(Particle *, Particle *, double, double)> &smoothedForceCalculation, double Grav);
 
     bool applyMirrorBoundary(int particle, int x, int y, int z);
 
@@ -63,19 +86,18 @@ public:
 
     void deleteGhostCells();
 
-
-private:
-    int x_cells;
-    int y_cells;
-    int z_cells;
-    double cutoff;
-    double x_max;
-    double y_max;
-    double z_max;
-    int it = 0;
-    std::array<std::string, 6> boundary = {"o", "o", "o", "o", "o", "o"};
-    std::vector<std::vector<std::vector<std::vector<Particle>>>> cells;
-
     void moveIfPeriodic(double x_coordinate, double y_coordinate, double z_coordinate, Particle &p);
+
+    double calculateDiffusion();
+
+    std::vector<double> calculateRDF(int intervalBegin, int intervalEnd, double deltaR,  std::vector<int> x_axis_plot, std::ofstream  &filename);
+
+    [[nodiscard]] int getXCells() const;
+
+    [[nodiscard]] int getYCells() const;
+
+    [[nodiscard]] int getZCells() const;
+
+    std::vector<Particle> getCell(int x, int y, int z);
 };
 

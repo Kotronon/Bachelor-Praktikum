@@ -10,7 +10,7 @@
 
 class ParticleContainer {
 private:
-    /**
+  /**
    * List of all particles inside this particle container
    */
     std::vector<Particle> containedParticles{};
@@ -22,7 +22,7 @@ public:
 
     virtual ~ParticleContainer();
 
-    int size();
+    unsigned long size();
 
     void addParticle(const Particle &particle);
 
@@ -37,8 +37,6 @@ public:
     void addParticleContainer(ParticleContainer &container);
 
     void applyForcePairwise(const std::function<void(Particle *, Particle *)> &forceCalculation, double Ggrav);
-
-    void removeDuplicates();
 };
 
 
