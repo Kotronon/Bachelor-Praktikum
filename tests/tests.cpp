@@ -281,7 +281,6 @@ ASSERT_TRUE(std::abs(Thermostat::calculateCurrentTemperature(2, cells) - 10) < 0
 }
 
 int main() {
-   // testing::InitGoogleTest();
-   // return RUN_ALL_TESTS();
-    // return 0;
+   testing::InitGoogleTest();
+   return RUN_ALL_TESTS();
 }
