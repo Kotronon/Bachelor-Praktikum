@@ -32,7 +32,7 @@ void plotParticlesInCells(int iteration, LinkedCellContainer &cells);
 //Time:
 //----------------------------------------------------------------------------------------------------------------------
 constexpr double start_time = 0;
-double end_time = 150;
+double end_time = 100;
 double delta_t = 0.001;
 
 //Number of threads
@@ -42,14 +42,14 @@ int num_threads = 8;
 
 //Checkpointing:
 //----------------------------------------------------------------------------------------------------------------------
-bool checkpointing = true;
+bool checkpointing = false;
 int num_checkpoints = 1;
 
 //Path to folder to be used for output of checkpoint files
 std::string outputDirectory = "../input";
 
 //Input file (file will be used if valid path is given and file is not empty)
-bool useInput = false;
+bool useInput = true;
 std::string inputFile = "../input/checkpoint1.txt";
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -85,19 +85,19 @@ double sLJRadius = 1.9;
 //Thermostat:
 //----------------------------------------------------------------------------------------------------------------------
 //Initialization
-bool applyBrownianMotion = true;
-double initTemperature = 0.01;
+bool applyBrownianMotion = false;
+double initTemperature = 3.0;
 
 //Time steps between applications
-int nThermostat = 40;
+int nThermostat = 25;
 
 //Optional target temperature
 bool targetTemperatureExists = true;
-double targetTemperature = 3.0;
+double targetTemperature = 0.02;
 
 //Optional temperature difference
 bool differenceTemperatureExists = true;
-double differenceTemperature = 0.001; // 7.8 * pow(10, -4);
+double differenceTemperature = 2.5 * pow(10, -3);
 //----------------------------------------------------------------------------------------------------------------------
 
 //Diffusion:
@@ -157,12 +157,15 @@ int main(int argc, char *argsv[]) {
     //Pre-calculation of f
     ForceCalculator::LennardJonesForceCell(cells, Grav);
 
+    /*
     //Initialization with Brownian Motion / temperature
     if (applyBrownianMotion) {
         Thermostat::initializeTemperatureWithBrownianMotion(initTemperature, dim, cells);
     } else {
         Thermostat::initializeTemperature(initTemperature, dim, cells);
     }
+    */
+
     if (!targetTemperatureExists) {
         targetTemperature = initTemperature;
     }
