@@ -97,14 +97,14 @@ double targetTemperature = 3.0;
 
 //Optional temperature difference
 bool differenceTemperatureExists = true;
-double differenceTemperature = 0.001; // 7.8 * pow(10, -4);
+double differenceTemperature = 0.001;
 //----------------------------------------------------------------------------------------------------------------------
 
 //Diffusion:
 //----------------------------------------------------------------------------------------------------------------------
 bool calculateDiffusion = true;
 int intervalBegin = 0;
-int intervalEnd = 80;
+int intervalEnd = 15;
 double deltaR = 1;
 std::string filename = "../input/RDF1.xsl";
 //----------------------------------------------------------------------------------------------------------------------
@@ -136,8 +136,6 @@ int main(int argc, char *argsv[]) {
     //Use either ParticleGenerator::createCuboidInCells or ParticleGenerator::createDiskInCells
 
     ParticleGenerator::createCuboidInCells({0.575, 0.575, 0.575}, {0, 0, 0}, {8,8,8}, 1.15, 1.0, cells, 1, 1, 1);
-    //ParticleGenerator::createCuboidInCells({0.6, 0.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 1.0, cells, 1.2, 1, 1);
-    //ParticleGenerator::createCuboidInCells({0.6, 24.6, 0.6}, {0, 0, 0}, {50, 20, 50}, 1.2, 2.0, cells, 1.1, 1, 2);
     //------------------------------------------------------------------------------------------------------------------
 
     double current_time = start_time;
