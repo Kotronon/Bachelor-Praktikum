@@ -12,7 +12,7 @@ Members:
 # Code #
 * Link:     https://github.com/Kotronon/Bachelor-Praktikum
 * Branch:   master
-* Revision: e80650f
+* Revision: a0ea2fd
 * Compiler: gcc 11.4.0
 
 # Run Code #
@@ -89,10 +89,10 @@ Members:
 * While computing the simulations we noticed multiple mistakes in the 3D computations
 * To solve this we needed to add more ghost particles and make sure all functions in LinkedCellContainer work properly in a 3d space
 * We improved our LinkedCell structure like you suggested by changing the cell sizes accordingly
-* Equilibration: gets  gaseous after 8 seconds in our video. That equals 30000 iterations
-* Cooling: begins to get fest after 25 seconds in our video. That equals  125000 iterations
-* Supercooling: gets fest after 6 seconds in our video. That equals 25000 iterations
+* Equilibration: gets gaseous after 8 seconds in our video. That equals 30000 iterations
+* Cooling: begins to get solid after 25 seconds in our video. That equals  125000 iterations
+* Supercooling: gets solid after 6 seconds in our video. That equals 25000 iterations
 
 ## Misc ##
-* We needed to commend out the thermostat test because it wouldn't work and we didn't find the mistake.
-* All other test are perfectly fine so we were very confused.
+* We needed to comment out the thermostat tests because it suddenly would not work anymore, and we could not find the mistake in time
+* All other test worked perfectly fine, so we were quite confused since the temperature in our simulations seemed to be calculated correctly
