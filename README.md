@@ -12,7 +12,7 @@ Members:
 # Code #
 * Link:     https://github.com/Kotronon/Bachelor-Praktikum
 * Branch:   Aufgabe_1_Samhitha
-* Revision: e80650f
+* Revision: d265ea6ba09ad14e12987a062cc813a07c2a1a7a
 * Compiler: gcc 11.4.0
 
 # Run Code #
