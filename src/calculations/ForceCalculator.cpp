@@ -6,8 +6,6 @@
 #include "../utils/ArrayUtils.h"
 #include <cfloat>
 
-double ForceCalculator::epsilon = 5;
-double ForceCalculator::sigma = 1;
 double ForceCalculator::gravity = 0;
 double ForceCalculator::cutoff = DBL_MAX;
 
@@ -33,13 +31,10 @@ void ForceCalculator::GravityForceCalculation(ParticleContainer &container) {
 /**
  * Calculates the Lennard-Jones force of all Particles in given ParticleContainer
  * @param container
- * @param eps
- * @param sig
+ * @param eps epsilon
+ * @param sig sigma
  */
 void ForceCalculator::LennardJonesForce(ParticleContainer &container, double eps, double sig) {
-    ForceCalculator::epsilon = eps;
-    ForceCalculator::sigma = sig;
-
     std::array<double, 3> force{};
     double L2Norm_p1_p2;
     for (auto &p1: container) {
@@ -57,13 +52,10 @@ void ForceCalculator::LennardJonesForce(ParticleContainer &container, double eps
 
 /**
  * Faster calculation of the the Lennard Jones force of all Particles in given ParticleContainer
- * @param container
- * @param eps
- * @param sig
+ * @param container ParticleContainer
+ * @param grav gravitational force
  */
-void ForceCalculator::LennardJonesForceFaster(ParticleContainer &container, double eps, double sig, double grav) {
-    ForceCalculator::epsilon = eps;
-    ForceCalculator::sigma = sig;
+void ForceCalculator::LennardJonesForceFaster(ParticleContainer &container, double grav) {
     ForceCalculator::gravity = grav;
     std::array<double, 3> zero = {0,0,0};
     for (auto &p: container) {
@@ -83,12 +75,11 @@ void ForceCalculator::LennardJonesForcePairwise(Particle *p1, Particle *p2) {
 
     //make calculation if simple sum or distance between particles is smaller than the cutoff radius
     if(L2Norm_p1_p2 < cutoff) {
-        std::array<double, 3> force = {0,0,0};
         double eps = sqrt(p1->getEps() * p2->getEps());
         double sig = (p1->getSig() + p2->getSig()) / 2;
 
-        force = ((-24 * eps / pow(L2Norm_p1_p2, 2)) * (pow(sig / L2Norm_p1_p2, 6) - (2 * pow(sig / L2Norm_p1_p2, 12))) *
-                 (p1->getX() - p2->getX()));
+        std::array<double, 3> force = ((-24 * eps / pow(L2Norm_p1_p2, 2)) * (pow(sig / L2Norm_p1_p2, 6)
+                - (2 * pow(sig / L2Norm_p1_p2, 12))) * (p1->getX() - p2->getX()));
 
         #pragma omp critical
         {
@@ -149,7 +140,6 @@ void ForceCalculator::smoothedLennardJonesForcePairwise(Particle *p1, Particle *
         double eps = sqrt(p1->getEps() * p2->getEps());
         double sig = (p1->getSig() + p2->getSig()) / 2;
 
-        //double potential = 4 * eps * (pow((sig/L2Norm_p1_p2), 12) - pow((sig/L2Norm_p1_p2), 6));
         if(L2Norm_p1_p2 <= smoothedParameter) force = ((-24 * eps / pow(L2Norm_p1_p2, 2)) * (pow(sig / L2Norm_p1_p2, 6) - (2 * pow(sig / L2Norm_p1_p2, 12))) *  (p1->getX() - p2->getX()));
         else {
             force  = force + ((-24*pow(sig, 6) * eps) / (pow(L2Norm_p1_p2, 14) * pow(cutoff-smoothedParameter, 3))) *
@@ -157,9 +147,7 @@ void ForceCalculator::smoothedLennardJonesForcePairwise(Particle *p1, Particle *
                     (pow(L2Norm_p1_p2, 6) - 2*pow(sig, 6)) + L2Norm_p1_p2 * (5*smoothedParameter * pow(sig, 6) - 2*smoothedParameter * pow(L2Norm_p1_p2, 6)-
                     3*pow(sig, 6) * L2Norm_p1_p2 + pow(L2Norm_p1_p2, 7))) * (p2->getX() - p1->getX());
         }
-       //if(L2Norm_p1_p2 <= smoothedParameter) force = force + potential * (p1->getX() - p2->getX());
-        //else force = force + potential * (1- (pow(L2Norm_p1_p2-smoothedParameter, 2) * (3*cutoff-smoothedparameter-2*L2Norm_p1_p2))/pow(cutoff-smoothedparameter, 3)) * (p1->getX() - p2->getX());
-        //force = potential;
+
         #pragma omp critical
         {
             p1->setF(p1->getF() + force);

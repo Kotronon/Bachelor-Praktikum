@@ -3,15 +3,14 @@
 //
 
 #include "PositionCalculator.h"
-#include "../ParticleContainer.h"
 #include "../utils/ArrayUtils.h"
 #include <spdlog/spdlog.h>
 #include <cmath>
 
 /**
  * Calculation of the new position of all molecules in the given ParticleContainer
- * @param container
- * @param delta_t
+ * @param container LinkedCellContainer
+ * @param delta_t time difference
  */
 void PositionCalculator::PositionStoermerVerlet(ParticleContainer &container, double delta_t) {
     for (auto &p: container) {
@@ -21,11 +20,10 @@ void PositionCalculator::PositionStoermerVerlet(ParticleContainer &container, do
 
 /**
  * Calculation of the new position of all molecules in the given LinkedCellContainer
- * @param cells
- * @param delta_t
+ * @param cells LinkedCellContainer
+ * @param delta_t time difference
  */
 void PositionCalculator::PositionStoermerVerletCell(LinkedCellContainer &cells, double delta_t) {
-    //#pragma omp parallel for collapse(3) default(none) shared(cells, delta_t)
     for (auto x = cells.begin() + 1; x < cells.end() - 1; x++) {
         for (auto y = x->begin() + 1; y < x->end() - 1; y++) {
             for (auto z = y->begin() + 1; z < y->end() - 1; z++) {

@@ -41,12 +41,12 @@ Particle::Particle(const Particle &other) {
 
 /**
  * creates a new Particle
- * @param x_arg
- * @param v_arg
- * @param m_arg
- * @param sig
- * @param eps
- * @param type_arg
+ * @param x_arg position coordinates
+ * @param v_arg velocity
+ * @param m_arg mass
+ * @param sig sigma
+ * @param eps epsilon
+ * @param type_arg particle type
  */
 Particle::Particle(std::array<double, 3> x_arg, std::array<double, 3> v_arg,
                    double m_arg, double sigma, double epsilon, int type_arg) {
@@ -59,69 +59,66 @@ Particle::Particle(std::array<double, 3> x_arg, std::array<double, 3> v_arg,
     old_f = {0., 0., 0.};
     sig = sigma;
     eps = epsilon;
-    //spdlog::info("Particle generated!");
 }
 
-Particle::~Particle() {
-    //spdlog::info("Particle destructed!");
-}
+Particle::~Particle() = default;
 
 /**
- * returns x coordinates of particle
- * @return
+ * returns current position of particle
+ * @return current position coordinates
  */
 const std::array<double, 3> &Particle::getX() const { return x; }
 
 /**
- * returns previous x coordinates of particle
- * @return
+ * returns previous position of particle
+ * @return previous position coordinates
  */
 const std::array<double, 3> &Particle::getOldX() const {return oldX;}
 
 /**
  * returns velocity of particle
- * @return
+ * @return velocity
  */
 const std::array<double, 3> &Particle::getV() const { return v; }
 
 /**
  * returns force of particle
- * @return
+ * @return force
  */
 const std::array<double, 3> &Particle::getF() const { return f; }
 
 /**
  * returns old force of particle
- * @return
+ * @return old force
  */
 const std::array<double, 3> &Particle::getOldF() const { return old_f; }
 
 /**
  * returns mass of particle
- * @return
+ * @return mass
  */
 double Particle::getM() const { return m; }
 
 /**
  * returns type of particle
- * @return
+ * @return type
  */
 int Particle::getType() const { return type; }
 
 /**
  * returns sigma of particle
- * @return
+ * @return sigma
  */
  double Particle::getSig() const {return sig;}
 
  /**returns epsilon of particle
-  * @return
+  * @return epsilon
   */
   double Particle::getEps() const {return eps;}
 
 /**
  * returns particle as string
- * @return
+ * @return string representation
  */
 std::string Particle::toString() const {
   std::stringstream stream;
@@ -131,8 +128,8 @@ std::string Particle::toString() const {
 }
 
 /**
- * comparision with another particle
- * @param other
+ * comparison with another particle
+ * @param other particle to compare to
  * @return
  */
 bool Particle::operator==(Particle &other) {
@@ -142,9 +139,9 @@ bool Particle::operator==(Particle &other) {
 
 /**
  * adds Particle to an given stream as string
- * @param stream
- * @param p
- * @return
+ * @param stream stream
+ * @param p particle
+ * @return stream
  */
 std::ostream &operator<<(std::ostream &stream, Particle &p) {
   stream << p.toString();
@@ -152,16 +149,16 @@ std::ostream &operator<<(std::ostream &stream, Particle &p) {
 }
 
 /**
- * sets x coordinates of Particle
- * @param x_arg
+ * sets position coordinates of Particle
+ * @param x_arg new position coordinates
  */
 void Particle::setX(std::array<double, 3> x_arg) {
    x = x_arg;
  }
 
 /**
-* sets previous x coordinates of Particle
-* @param x_arg
+* sets previous position coordinates of Particle
+* @param x_arg old position coordinates
 */
 void Particle::setOldX(std::array<double, 3> newOldX) {
     oldX = newOldX;
@@ -169,7 +166,7 @@ void Particle::setOldX(std::array<double, 3> newOldX) {
 
  /**
   * sets velocity of Particle
-  * @param v_arg
+  * @param v_arg new velocity
   */
 void Particle::setV(std::array<double, 3> v_arg) {
   v = v_arg; 
@@ -177,7 +174,7 @@ void Particle::setV(std::array<double, 3> v_arg) {
 
 /**
  * sets force of Particle
- * @param f_arg
+ * @param f_arg new force
  */
 void Particle::setF(std::array<double, 3> f_arg){
   f = f_arg;
@@ -185,7 +182,7 @@ void Particle::setF(std::array<double, 3> f_arg){
 
 /**
  * sets old force of Particle
- * @param old_f_arg
+ * @param old_f_arg old force
  */
 void Particle::setOldF(std::array<double, 3> old_f_arg) {
   old_f = old_f_arg;

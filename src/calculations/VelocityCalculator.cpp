@@ -3,13 +3,12 @@
 //
 
 #include "VelocityCalculator.h"
-#include "../ParticleContainer.h"
 #include "../utils/ArrayUtils.h"
 #include "../utils/MaxwellBoltzmannDistribution.h"
 #include <spdlog/spdlog.h>
 
 /**
- * Calculation of the new velocity of all molecule in the given ParticleContainer according to Brownian Motion Initialization
+ * Calculation of the new velocity of all particles in the given ParticleContainer according to Brownian Motion initialization
  * @param container
  * @param avg_v
  */
@@ -22,9 +21,9 @@ void VelocityCalculator::BrownianMotionInitialization(ParticleContainer &contain
 }
 
 /**
- * Calculation of the new velocity of all molecule in the given ParticleContainer according to Strömer Verlet
- * @param container
- * @param delta_t
+ * Calculation of the new velocity of all particles in the given ParticleContainer according to Störmer Verlet
+ * @param container LinkedCellContainer
+ * @param delta_t time difference
  */
 void VelocityCalculator::VelocityStoermerVerlet(ParticleContainer &container, double delta_t) {
     for (auto &p: container) {
@@ -34,10 +33,10 @@ void VelocityCalculator::VelocityStoermerVerlet(ParticleContainer &container, do
 }
 
 /**
- * Calculation of the new velocity of all molecule in the given LinkedCellContainer according to Brownian Motion Initialization
- * @param cells
- * @param avg_v
- * @param dim
+ * Calculation of the new velocity of all particles in the given LinkedCellContainer according to Brownian Motion initialization
+ * @param cells LinkedCellContainer
+ * @param avg_v average velocity
+ * @param dim dimension (2 or 3)
  */
 void VelocityCalculator::BrownianMotionInitializationCell(LinkedCellContainer &cells, double avg_v, int dim) {
     std::array<double, 3> brownian_motion{};
@@ -56,13 +55,12 @@ void VelocityCalculator::BrownianMotionInitializationCell(LinkedCellContainer &c
 }
 
 /**
- * Calculation of the new velocity of all molecule in the given LinkedCellContainer according to Störmer Verlet
- * @param cells
- * @param delta_t
+ * Calculation of the new velocity of all particles in the given LinkedCellContainer according to Störmer Verlet
+ * @param cells LinkedCellContainer
+ * @param delta_t time difference
  */
 void VelocityCalculator::VelocityStoermerVerletCell(LinkedCellContainer &cells, double delta_t) {
     //Calculate new velocities of all particles (without ghost particles)
-    //#pragma omp parallel for collapse(3) default(none) shared(cells, delta_t)
     for (auto x = cells.begin() + 1; x < cells.end() - 1; x++) {
         for (auto y = x->begin() + 1; y < x->end() - 1; y++) {
             for (auto z = y->begin() + 1; z < y->end() - 1; z++) {
